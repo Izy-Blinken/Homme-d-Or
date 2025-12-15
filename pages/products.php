@@ -14,11 +14,14 @@ $products = getAllProducts();
         body {
             background-color:gainsboro;
         }
+        h1{
+            color:goldenrod;
+        }
         
     </style>
     <link rel="stylesheet" href="../assets/css/style.css">
 </head>
-<h1>All Products</h1>
+<h1> All Products</h1>
 
 <div class="product-list">
     <?php foreach ($products as $product): ?>
