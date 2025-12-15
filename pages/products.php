@@ -12,7 +12,7 @@ $products = getAllProducts();
     <title>Homme d'Or - Products</title>
     <style>
         body {
-            background-color: lightgrey;
+            background-color:gainsboro;
         }
         
     </style>
