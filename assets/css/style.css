@@ -1,0 +1,31 @@
+@font-face {
+    font-family: 'Cinzel';
+    src: url('..fonts/Cinzel/Cinzel-Bold.woff2') format('woff2'),
+         url('..fonts/Cinzel/Cinzel-Bold.woff') format('woff');
+    font-weight: 300;
+    font-style: normal;
+    font-display: swap;
+}
+
+/* not yet done. di pa nag-aappear yung format */
+.brand-name {
+    font-family: 'Cinzel', serif;
+    font-weight: 300;
+    letter-spacing: 6px;
+    text-transform: uppercase;
+    color: #1a1a1a;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family:'Cinzel', sans-serif;
+}
+
+h1{
+    font-size: 50px;
+    line-height: 64px;
+    color: #222;
+    
+}
