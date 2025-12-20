@@ -1,17 +1,18 @@
 @font-face {
     font-family: 'Cinzel';
     src: url('..fonts/Cinzel/Cinzel-Bold.woff2') format('woff2'),
-         url('..fonts/Cinzel/Cinzel-Bold.woff') format('woff');
+         url('..fonts/Cinzel/Cinzel-Bold.woff') format('woff'),
+         url('..fonts/Spartan/LeagueSpartan-Regular.woff') format('woff'),
+         url('..fonts/Spartan/LeagueSpartan-Regular.woff2') format('woff2');
     font-weight: 300;
     font-style: normal;
     font-display: swap;
 }
 
-/* not yet done. di pa nag-aappear yung format */
 .brand-name {
     font-family: 'Cinzel', serif;
     font-weight: 300;
-    letter-spacing: 6px;
+    letter-spacing: 3px;
     text-transform: uppercase;
     color: #1a1a1a;
 }
@@ -20,12 +21,69 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family:'Cinzel', sans-serif;
+    font-family:'Spartan', sans-serif;
 }
 
 h1{
     font-size: 50px;
     line-height: 64px;
     color: #222;
-    
 }
+
+h2{
+    font-size: 46px;
+    line-height: 54px;
+    color: #222;
+}
+
+p{
+    font-size: 16px;
+    margin: 15px 0 20px 0;
+    color: #555;
+}
+
+body{
+    width: 100%;
+}
+
+.logo {
+    position: relative;
+   
+    left: -20px;    /* Move left */
+}
+
+#header{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 30px;
+    background: #000938;
+        
+        /*linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.5)),
+        url('../images/brand_images/headerBG.png'); eto yung image sa pencil for header
+
+    background-size: cover;
+    background-position: center;
+    
+    color: #C9A961;  Gold text */
+    box-shadow: 0 5px 15px rgba(0,0,0,0.06);
+}
+
+#navbar{
+    display: flex;
+    align-items: center;
+    justify-content: center;;
+}
+
+#navbar li{
+    list-style: none;
+    padding: 0 20px;
+}
+
+#navbar li a{
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: 200;
+    color: white;
+}
+

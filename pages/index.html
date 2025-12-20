@@ -1,19 +1,52 @@
 <!DOCTYPE html>
 <html lang = "en">
-    <head>
+    <head> <!--from here-->
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Homme d'Or</title>
-        <link rel="stylesheet" href="style.css">
+        
+        <link rel="stylesheet" href="/Homme_dOr/assets/css/style.css">
 
     </head>
-    <body>
+    <body> <!--to here ay standard ng system ang code. 
+            Then, the following ay nasa tutorial na sesend ko.
+            And nagdagdag ako mga files for navigation bar options(yung nasa pages folder). 
+            For the mean time, dito ko muna inaayos yung header bar pero gagawin rin syang reusable after maayos.
+            You can still edit here since this is the homepage file. Lahat ng need sa homepage, dito eedit, and kung ibang page naman, you can add it sa Pages folder.
+            Basta be careful sa mga ciniclick and watch tutorial din how to do everything.
+            You can also use Claude(.)ai for help or other AIs as long as naiintindihan niyu mga nangyayari.
+            Just dont forget the step: terminal-> git commit-> git pull-> then work na-> (if ssave na:) git commit again-> git pull-> git add . -> git commit -m "describe what you changed here pero mas better kung i-comment din like this"-> then git push
+            Yun lng thankiess
+            -->
 
-       
+        <section id = "header">
+            <a href="#">
+                <img src = "../assets/images/brand_images/logo.png" class="logo" alt = "Brand Logo" width = "130px" height = "130px">
+
+            </a>
+
+            <div>
+                <ul id="navbar">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="index.html">Shop</a></li> 
+                    <li><a href="blog.html">Blog</a></li>
+                    <li><a href="AboutUs.html">About Us</a></li>
+                    <li><a href="ContactUs.html">Contact Us</a></li>
+                    <li><a href="countrycurrency.html">Country/Currency</a></li>
+                    <li><a href="wishlist.html">Wishlist</a></li>
+                    <li><a href="cart.html"><img src="../assets/images/icons/shopping-cart.png" class="icons" alt ="Shopping Cart" width ="25px" height="25px"></a></li>
+
+                </ul>
+            </div>
+        </section>
+
         <script src="script.js"></script>
     </body>
         
 </html>
 
-//standard start lang yung nasa taas(matic ba).
+<!--
+1. Sample navbar yung nasa taas.
+2. Dropdown yung Shop: Sale, New Arrivals, Top Picks, Daily Wear, Premium
+-->
