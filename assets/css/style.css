@@ -1,21 +1,13 @@
 @font-face {
-    font-family: 'Cinzel';
-    src: url('..fonts/Cinzel/Cinzel-Bold.woff2') format('woff2'),
-         url('..fonts/Cinzel/Cinzel-Bold.woff') format('woff'),
-         url('..fonts/Spartan/LeagueSpartan-Regular.woff') format('woff'),
-         url('..fonts/Spartan/LeagueSpartan-Regular.woff2') format('woff2');
+    font-family: 'Spartan';
+    src: url('../fonts/Spartan/LeagueSpartan-Regular.woff2') format('woff2'),
+         url('../fonts/Spartan/LeagueSpartan-Regular.woff') format('woff');
+        
     font-weight: 300;
     font-style: normal;
     font-display: swap;
 }
 
-.brand-name {
-    font-family: 'Cinzel', serif;
-    font-weight: 300;
-    letter-spacing: 3px;
-    text-transform: uppercase;
-    color: #1a1a1a;
-}
 
 * {
     margin: 0;
@@ -48,11 +40,13 @@ body{
 
 .logo {
     position: relative;
-   
-    left: -20px;    /* Move left */
+    
+    height: 175px;
+    width: 175px;
 }
 
 #header{
+    
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -66,24 +60,56 @@ body{
     background-position: center;
     
     color: #C9A961;  Gold text */
-    box-shadow: 0 5px 15px rgba(0,0,0,0.06);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.09);
+    height: 75px;
+}
+
+.nav-wrapper {
+    display: flex;
+    align-items: center;
+    flex: 1;
+    justify-content: flex-end;
 }
 
 #navbar{
     display: flex;
     align-items: center;
-    justify-content: center;;
+    flex:1;
+    margin-right: auto;  
+    margin-left: 115px;
+    
+}
+
+#navbar-right {
+    display: flex; 
+    align-items: center;  
 }
 
 #navbar li{
     list-style: none;
-    padding: 0 20px;
+    padding: 0 30px;
 }
 
-#navbar li a{
+#navbar-right li{
+    list-style: none;
+    padding: 0 10px;
+}
+
+#navbar li a,
+#navbar-right li a{
     text-decoration: none;
-    font-size: 16px;
+    font-size: 17px;
     font-weight: 200;
-    color: white;
+    color: whitesmoke;
+    transition: all 0.2s ease; 
+    display: inline-block;
+}
+
+#navbar li a:hover,
+#navbar-right li a:hover,
+#navbar li a.active,
+#navbar-right li a.active {
+    color: #f8e189;  
+    transform: scale(1.1);
 }
 
