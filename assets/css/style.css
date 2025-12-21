@@ -28,6 +28,12 @@ h2{
     color: #222;
 }
 
+h4{
+    font-size: 24px;
+    line-height:14px ;
+    color: #222;
+}
+
 p{
     font-size: 16px;
     margin: 15px 0 20px 0;
@@ -113,3 +119,13 @@ body{
     transform: scale(1.1);
 }
 
+#hero {
+    background: url('../images/brand_images/heroBG.png') no-repeat center center/cover;
+    height: 500px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    color: white;
+}
