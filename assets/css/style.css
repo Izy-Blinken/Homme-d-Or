@@ -8,6 +8,7 @@
     font-display: swap;
 }
 
+/*GLOBAL STYLES*/
 
 * {
     margin: 0;
@@ -44,6 +45,8 @@ body{
     width: 100%;
 }
 
+/*HEADER*/
+
 .logo {
     position: relative;
     
@@ -69,6 +72,8 @@ body{
     box-shadow: 0 5px 15px rgba(0,0,0,0.09);
     height: 90px;
 }
+
+/*NAVBAR*/
 
 .nav-wrapper {
     display: flex;
@@ -107,7 +112,7 @@ body{
     font-size: 17px;
     font-weight: 200;
     color: whitesmoke;
-    transition: all 0.2s ease; 
+    transition: all 0.3s ease; 
     display: inline-block;
 }
 
@@ -117,7 +122,10 @@ body{
 #navbar-right li a.active {
     color: #f8e189;  
     transform: scale(1.1);
+    
 }
+
+/*HERO SECTION*/
 
 #hero {
     background-image: url('../images/brand_images/heroBG1.png');
@@ -135,6 +143,7 @@ body{
 
 #hero h1{
     color: black
+
 }
 
 #hero h2{
@@ -143,6 +152,7 @@ body{
 
 #hero h4{
     color: goldenrod;
+    padding-bottom: 15px;
 }
 
 #hero p{
@@ -185,4 +195,102 @@ body{
     color: goldenrod;
     border-color: gold;
     box-shadow: 0 0 20px gold;
+}
+
+/*FOOTER*/
+
+#footer {
+    background-color: #0e101f;
+    color: whitesmoke;
+    padding: 40px 80px 20px;
+    margin-top: 80px;
+}
+
+.footer-content {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 30px;
+    margin-bottom: 30px;
+}
+
+.footer-section {
+    flex: 1;
+    min-width: 200px;
+}
+
+.footer-section h3 {
+    color: #f8e189;
+    font-size: 20px;
+    margin-bottom: 15px;
+    font-weight: 600;
+}
+
+.footer-section p {
+    color: whitesmoke;
+    font-size: 14px;
+    line-height: 1.6;
+    margin: 10px 0;
+}
+
+.footer-section ul {
+    list-style: none;
+    padding: 0;
+}
+
+.footer-section ul li {
+    margin-bottom: 10px;
+}
+
+.footer-section ul li a {
+    color: whitesmoke;
+    text-decoration: none;
+    font-size: 14px;
+    transition: all 0.3s ease;
+    display: inline-block;
+}
+
+.footer-section ul li a:hover {
+    color: #f8e189;
+    transform: scale(1.1);
+
+}
+
+.social-icons {
+    display: flex;
+    gap: 15px;
+}
+
+.social-icons a {
+    color: whitesmoke;
+    font-size: 24px;
+    transition: all 0.3s ease;
+}
+
+.social-icons a:hover {
+    color: #f8e189;
+    transform: scale(1.1);
+}
+
+.footer-bottom {
+    text-align: center;
+    padding-top: 20px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.footer-bottom p {
+    color: whitesmoke;
+    font-size: 14px;
+    margin: 0;
+}
+
+
+@media (max-width: 768px) {
+    .footer-content {
+        flex-direction: column;
+    }
+    
+    #footer {
+        padding: 30px 20px 15px;
+    }
 }
