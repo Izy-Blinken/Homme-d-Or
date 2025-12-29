@@ -48,4 +48,11 @@
 1. Done reusable footer and header. Design not final.
 2. Changed pages files from .html to .php for reusability. Now, di na marrun yung html directly sa vs code.
 3. Kapag magrrun, direct sa browser: localhost/Homme_dor/pages/index.php or kung paano yung structure ng folders sa inyo.
+
+12/29/25
+1. Frontend: Checkout and order again page done.
+2. Dropdown menu for shop and country/currency options done. 
+
+For all changes: Design not final. Placeholders pa lahat.
+
 -->
