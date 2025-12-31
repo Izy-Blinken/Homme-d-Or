@@ -55,4 +55,8 @@
 
 For all changes: Design not final. Placeholders pa lahat.
 
+12/31/25
+1. Blog Page done.
+
+For all changes: Design not final. Placeholders pa lahat.
 -->
