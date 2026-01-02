@@ -59,4 +59,9 @@ For all changes: Design not final. Placeholders pa lahat.
 1. Blog Page done.
 
 For all changes: Design not final. Placeholders pa lahat.
+
+01/02/2026
+1. About Us page in progress.
+
+For all changes: Design not final. Placeholders pa lahat.
 -->
