@@ -1016,4 +1016,39 @@ body{
     color: black;
 }
 
+/*ABOUT US PAGE*/
+.aboutUs-container {
+    max-width: 1200px;
+    margin: 50px;
+    padding: 20px;
+    height: 600px;
+    background-color: #989797;
+    display: flex;
+    gap: 20px;
+}
 
+.aboutUs-text {
+    flex: 1; 
+}
+
+.aboutUs-container h3 {
+    font-size: 36px;
+    margin-left: 200px;
+    margin-top: 80px;
+    margin-bottom: 40px;
+    color: #0e101f;
+}
+
+.aboutUs-container p {
+    font-size: 18px;
+    line-height: 1.7;
+    margin-left: 30px;
+    color: #0e101f;
+    text-align: justify;
+}
+
+.aboutUs-container img {
+    width: 50%;
+    height: auto;
+    object-fit: cover;
+}
