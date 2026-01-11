@@ -13,18 +13,36 @@
 
         <div class="aboutUs-container">
             <div class="aboutUs-text">
-            <h3>Our Story</h3>
-            <p>Founded in 2020, Homme d'Or has been dedicated to providing high-quality
-            products and exceptional service to our customers. Founded in 2020, Homme d'Or has been dedicated to providing high-quality
-            products and exceptional service to our customers. Founded in 2020, Homme d'Or has been dedicated to providing high-quality
-            products and exceptional service to our customers. Founded in 2020, Homme d'Or has been dedicated to providing high-quality
-            products and exceptional service to our customers. Founded in 2020, Homme d'Or has been dedicated to providing high-quality
-            products and exceptional service to our customers.</p>
+                <h3>Our Story</h3>
+                <p>Founded in 2020, Homme d'Or has been dedicated to providing high-quality
+                products and exceptional service to our customers. Founded in 2020, Homme d'Or has been dedicated to providing high-quality
+                products and exceptional service to our customers. Founded in 2020, Homme d'Or has been dedicated to providing high-quality
+                products and exceptional service to our customers. Founded in 2020, Homme d'Or has been dedicated to providing high-quality
+                products and exceptional service to our customers. Founded in 2020, Homme d'Or has been dedicated to providing high-quality
+                products and exceptional service to our customers.</p>
             </div>
 
             <img src="../assets/images/brand_images/collab_image.png" alt = "Our Story Image">
 
         </div>
+
+        <div class="shopDesc">
+
+            <img src="../assets/images/products_images/ad1.png" alt="Shop Description">
+            
+            <div class="shopDesc-text">
+                <h3>About Us</h3>
+                <p>Founded in 2020, Homme d'Or has been dedicated to providing high-quality
+                products and exceptional service to our customers. Founded in 2020, Homme d'Or has been dedicated to providing high-quality
+                products and exceptional service to our customers. Founded in 2020, Homme d'Or has been dedicated to providing high-quality
+                products and exceptional service to our customers. Founded in 2020, Homme d'Or has been dedicated to providing high-quality
+                products and exceptional service to our customers. Founded in 2020, Homme d'Or has been dedicated to providing high-quality
+                products and exceptional service to our customers.
+                </p>
+            </div>
+
+        </div>
+
         </main>
 
         <?php include '../components/footer.php'; ?>

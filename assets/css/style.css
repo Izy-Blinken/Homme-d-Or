@@ -1017,6 +1017,8 @@ body{
 }
 
 /*ABOUT US PAGE*/
+
+/*Our Story style*/
 .aboutUs-container {
     max-width: 1200px;
     margin: 50px;
@@ -1051,4 +1053,51 @@ body{
     width: 50%;
     height: auto;
     object-fit: cover;
+}
+
+/*Shop Description style*/
+.shopDesc{
+    position: relative; 
+    height: 90vh;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 100px; 
+    padding: 20px;
+}
+
+.shopDesc img{
+    max-height: 600px;
+    max-width: 1130px;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    margin-right: 100px; 
+    margin-left: 100px;
+}
+
+.shopDesc-text{
+    position: absolute;
+    top: 50%; 
+    right: 5%; 
+    transform: translateY(-50%);
+    padding: 40px 80px;
+    max-width: 45%; 
+    text-align: center;
+}
+
+.shopDesc-text h3{
+    font-size: 36px;
+    margin-left: 0; 
+    margin-top: 0;
+    margin-bottom: 40px;
+    color: #060606;
+}
+
+.shopDesc-text p{
+    font-size: 18px;
+    line-height: 1.7;
+    color: #09090a;
+    text-align: justify;
 }
