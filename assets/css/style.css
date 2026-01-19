@@ -832,6 +832,8 @@ body{
 
 #blog-header img {
     flex-shrink: 0; 
+    box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+    overflow: hidden;
 }
 
 #blog-header div h2 {
@@ -863,6 +865,7 @@ body{
     display: grid;
     grid-template-columns: repeat(2, 1fr); 
     gap: 30px;
+    
 }
 
 .comment-box.center {
@@ -875,6 +878,7 @@ body{
     display: flex;
     gap: 10px;
     align-items: flex-start;
+    
 }
 
 .comment-box img {
@@ -928,7 +932,16 @@ body{
     width: 100%;
     aspect-ratio: 1 / 1; 
     background: white;
-    border: 2px solid #666; 
+    
+    box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    
+}
+
+.highlight-item:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.7);
 }
 
 .highlight-item img {
@@ -1027,6 +1040,9 @@ body{
     background-color: #989797;
     display: flex;
     gap: 20px;
+    border-radius: 4px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+    overflow: hidden;
 }
 
 .aboutUs-text {
@@ -1075,6 +1091,8 @@ body{
     object-fit: contain;
     margin-right: 100px; 
     margin-left: 100px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+    
 }
 
 .shopDesc-text{
@@ -1100,4 +1118,75 @@ body{
     line-height: 1.7;
     color: #09090a;
     text-align: justify;
+}
+
+.authors{
+    position: relative;
+    display: flex;
+    justify-content: center;
+    margin-top: 100px;
+    flex-direction: column;
+    align-items: center;
+    padding: 0 20px 60px; 
+}
+
+.authTitle {
+    text-align: center;
+    width: 100%;
+}
+
+.authTitle h3{
+    font-size: 36px;
+    margin-bottom: 40px;
+    color: #030303;
+    font-weight: 600;
+    letter-spacing: 1px;
+}
+
+.authContainer {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 100%;
+    max-width: 1100px;
+}
+
+
+.authBox {
+    background-color: rgb(216, 214, 214);
+    position: relative;
+    display: flex;
+    width: 250px;
+    height: 350px;
+    border-radius: 4px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    
+}
+
+.authBox:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.7);
+}
+
+
+.authDescription {
+    background: #d3d3d3;
+    padding: 30px 50px;
+    text-align: center;
+    margin-top: 50px;
+    max-width: 800px;
+}
+
+.authDescription h3 {
+    margin: 0 0 20px 0;
+    font-size: 1.2rem;
+}
+
+.authDescription p {
+    margin-top: 0;
+    line-height: 1.6;
+    text-align: justify; 
 }
