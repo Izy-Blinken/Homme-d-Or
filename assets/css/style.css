@@ -980,6 +980,8 @@ body{
     grid-template-columns: repeat(2, 1fr); 
     gap: 30px;
     margin-bottom: 40px;
+    max-width: 1920px;
+    max-height: 500px;
 }
 
 .ad-box {
@@ -1069,6 +1071,7 @@ body{
     width: 50%;
     height: auto;
     object-fit: cover;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.5);
 }
 
 /*Shop Description style*/

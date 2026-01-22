@@ -22,13 +22,13 @@
                 products and exceptional service to our customers.</p>
             </div>
 
-            <img src="../assets/images/brand_images/collab_image.png" alt = "Our Story Image">
+            <img src="../assets/images/brand_images/ourStory.png" alt = "Our Story Image">
 
         </div>
 
         <div class="shopDesc">
 
-            <img src="../assets/images/products_images/ad1.png" alt="Shop Description">
+            <img src="../assets/images/brand_images/headerBG.png" alt="Shop Description">
             
             <div class="shopDesc-text">
                 <h3>About Us</h3>

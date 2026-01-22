@@ -76,22 +76,22 @@
 
                 <div class="highlights-grid">
                     <div class="highlight-item">
-                        <img src="../assets/images/products_images/customerPic.png" alt="Highlight 1">
+                        <img src="../assets/images/brand_images/blog1.jpg" alt="Highlight 1">
                     </div>
                     <div class="highlight-item">
-                        <img src="../assets/images/products_images/customerPic.png" alt="Highlight 2">
+                        <img src="../assets/images/brand_images/blog2.jpg" alt="Highlight 2">
                     </div>
                     <div class="highlight-item">
-                        <img src="../assets/images/products_images/nocturne.png" alt="Highlight 3">
+                        <img src="../assets/images/brand_images/blog3.jpg" alt="Highlight 3">
                     </div>
                     <div class="highlight-item">
-                        <img src="../assets/images/products_images/nocturne.png" alt="Highlight 4">
+                        <img src="../assets/images/brand_images/blog4.jpg" alt="Highlight 4">
                     </div>
                     <div class="highlight-item">
-                        <img src="../assets/images/products_images/customerPic.png" alt="Highlight 5">
+                        <img src="../assets/images/brand_images/blog5.jpg" alt="Highlight 5">
                     </div>
                     <div class="highlight-item">
-                        <img src="../assets/images/products_images/customerPic.png" alt="Highlight 6">
+                        <img src="../assets/images/brand_images/blog6.jpg" alt="Highlight 6">
                     </div>
                 </div>
                 
