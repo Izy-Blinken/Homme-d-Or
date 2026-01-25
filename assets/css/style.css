@@ -421,6 +421,8 @@ body{
     font-size: 20px;
     margin-bottom: 15px;
     font-weight: 600;
+    font-family:'Spartan', sans-serif;
+
 }
 
 .footer-section p {
@@ -428,6 +430,8 @@ body{
     font-size: 14px;
     line-height: 1.6;
     margin: 10px 0;
+    font-family:'Spartan', sans-serif;
+
 }
 
 .footer-section ul {
@@ -445,6 +449,8 @@ body{
     font-size: 14px;
     transition: all 0.3s ease;
     display: inline-block;
+    font-family:'Spartan', sans-serif;
+
 }
 
 .footer-section ul li a:hover {
@@ -544,6 +550,8 @@ body{
     color: whitesmoke;
     transition: all 0.3s ease; 
     display: inline-block;
+    font-family:'Spartan', sans-serif;
+
 }
 
 #COnavbar li a:hover,
@@ -570,6 +578,7 @@ body{
     color: whitesmoke;
     transition: all 0.3s ease; 
     display: inline-block;
+    font-family:'Spartan', sans-serif;
 }
 
 #COnavbar-right li a:hover,
@@ -604,6 +613,7 @@ body{
     margin-bottom: 20px;
     font-size: 24px;
     color: #0e101f;
+    font-family:'Spartan', sans-serif;
 }
 
 .orderItems {
@@ -634,18 +644,21 @@ body{
     margin: 0 0 8px 0;
     font-size: 16px;
     color: #0e101f;
+    font-family:'Spartan', sans-serif;
 }
 
 .itemDetails p {
     margin: 4px 0;
     font-size: 14px;
     color: #666;
+    font-family:'Spartan', sans-serif;
 }
 
 .itemPrice p {
     font-weight: 600;
     font-size: 16px;
     color: #0e101f;
+    font-family:'Spartan', sans-serif;
 }
 
 .orderTotal {
@@ -682,6 +695,7 @@ body{
 .billingInfo h2 {
     margin-bottom: 25px;
     font-size: 24px;
+    font-family:'Spartan', sans-serif;
     color: #0e101f;
 }
 
@@ -695,6 +709,7 @@ body{
     font-size: 14px;
     font-weight: 500;
     color: #0e101f;
+    font-family:'Spartan', sans-serif;
 }
 
 .formGroup input,
@@ -704,6 +719,7 @@ body{
     border: 1px solid #ddd;
     font-size: 15px;
     transition: border-color 0.3s;
+    font-family:'Spartan', sans-serif;
 }
 
 .formGroup input:focus,
@@ -732,6 +748,7 @@ body{
     cursor: pointer;
     transition: all 0.3s ease;
     margin-top: 10px;
+    font-family:'Spartan', sans-serif;
 }
 
 .placeOrderBtn:hover {
@@ -786,12 +803,14 @@ body{
     font-size: 32px;
     color: #0e101f;
     margin-bottom: 15px;
+    font-family:'Spartan', sans-serif;
 }
 
 .orderNumber {
     font-size: 18px;
     color: #666;
     margin-bottom: 30px;
+    font-family:'Spartan', sans-serif;
 }
 
 .statusMessage {
@@ -802,17 +821,20 @@ body{
     background: #fff3cd;
     padding: 15px 20px;
     margin-bottom: 25px;
+    font-family:'Spartan', sans-serif;
 }
 
 .statusMessage i {
     font-size: 24px;
     color: #856404;
+    font-family:'Spartan', sans-serif;
 }
 
 .statusMessage p {
     font-size: 16px;
     font-weight: 500;
     color: #856404;
+    font-family:'Spartan', sans-serif;
     margin: 0;
 }
 
@@ -821,6 +843,7 @@ body{
     color: #666;
     line-height: 1.6;
     margin-bottom: 40px;
+    font-family:'Spartan', sans-serif;
 }
 
 .actionButtons {
@@ -907,6 +930,7 @@ body{
     margin-top: 0;
     margin-bottom: 15px;
     font-size: 2rem; 
+    font-family:'Spartan', sans-serif;
 }
 
 #blog-header div p {
@@ -914,6 +938,7 @@ body{
     font-size: 1.1rem; 
     color: #414141; 
     text-align: justify;
+    font-family:'Spartan', sans-serif;
 }
 
 /*Top comments*/
@@ -926,6 +951,7 @@ body{
 #top-comments h2 {
     font-size: 2rem;
     margin-bottom: 40px;
+    font-family:'Spartan', sans-serif;
 }
 
 .comments-container {
@@ -968,11 +994,13 @@ body{
 .comment-text h4 {
     margin: 0 0 10px 0;
     font-size: 19px;
+    font-family:'Spartan', sans-serif;
 }
 
 .comment-text p {
     margin: 0;
     line-height: 1.6;
+    font-family:'Spartan', sans-serif;
 }
 
 /*Highlights*/
@@ -987,6 +1015,7 @@ body{
     font-size: 2rem;
     margin-bottom: 40px;
     text-align: center;
+    font-family:'Spartan', sans-serif;
 }
 
 .highlights-grid {
@@ -1027,12 +1056,14 @@ body{
 .description h3 {
     margin: 0 0 20px 0;
     font-size: 1.2rem;
+    font-family:'Spartan', sans-serif;
 }
 
 .description p {
     margin: 0;
     line-height: 1.6;
-    text-align: justify; 
+    text-align: justify;
+    font-family:'Spartan', sans-serif; 
 }
 
 /* Advertisements */
@@ -1085,6 +1116,7 @@ body{
     color: rgb(63, 62, 62);
     margin-bottom: 15px;
     font-size: 1.2rem;
+    font-family:'Spartan', sans-serif;
 }
 
 .content-item p {
@@ -1092,6 +1124,7 @@ body{
     line-height: 1.6;
     margin-bottom: 15px;
     text-align: justify;
+    font-family:'Spartan', sans-serif;
 }
 
 .content-item button {
@@ -1134,6 +1167,7 @@ body{
     margin-left: 200px;
     margin-top: 80px;
     margin-bottom: 40px;
+    font-family:'Spartan', sans-serif;
     color: #0e101f;
 }
 
@@ -1143,6 +1177,7 @@ body{
     margin-left: 30px;
     color: #0e101f;
     text-align: justify;
+    font-family:'Spartan', sans-serif;
 }
 
 .aboutUs-container img {
@@ -1191,6 +1226,7 @@ body{
     margin-left: 0; 
     margin-top: 0;
     margin-bottom: 40px;
+    font-family:'Spartan', sans-serif;
     color: #060606;
 }
 
@@ -1199,6 +1235,7 @@ body{
     line-height: 1.7;
     color: #09090a;
     text-align: justify;
+    font-family:'Spartan', sans-serif;
 }
 
 .authors{
@@ -1214,6 +1251,7 @@ body{
 .authTitle {
     text-align: center;
     width: 100%;
+    font-family:'Spartan', sans-serif;
 }
 
 .authTitle h3{
@@ -1222,6 +1260,7 @@ body{
     color: #030303;
     font-weight: 600;
     letter-spacing: 1px;
+    font-family:'Spartan', sans-serif;
 }
 
 .authContainer {
@@ -1259,17 +1298,20 @@ body{
     text-align: center;
     margin-top: 50px;
     max-width: 800px;
+
 }
 
 .authDescription h3 {
     margin: 0 0 20px 0;
     font-size: 1.2rem;
+    font-family:'Spartan', sans-serif;
 }
 
 .authDescription p {
     margin-top: 0;
     line-height: 1.6;
     text-align: justify; 
+    font-family:'Spartan', sans-serif;
 }
 
 /* PRODUCT DETAILS */
@@ -1285,6 +1327,7 @@ body{
     font-weight: 700;     
     color: #0e101f;        
     margin-bottom: 15px;   
+    font-family:'Spartan', sans-serif;
 }
 
 .product-details-container {
@@ -1309,12 +1352,14 @@ body{
 .product-info h2 {
     font-size: 2rem;
     margin-bottom: 10px;
+    font-family:'Spartan', sans-serif;
 }
 
 .product-info h4 {
     font-size: 1.5rem;
     color: #C9A961;
     margin-bottom: 20px;
+    font-family:'Spartan', sans-serif;
 }
 
 .product-info p {
@@ -1322,6 +1367,7 @@ body{
     line-height: 1.6;
     color: #333;
     margin-bottom: 20px;
+    font-family:'Spartan', sans-serif;
 }
 
 .product-actions button {
@@ -1337,6 +1383,7 @@ body{
 .product-actions a {
     text-decoration: none; 
     display: inline-block; 
+    font-family:'Spartan', sans-serif;
 }
  
 .buynow {
@@ -1386,6 +1433,7 @@ body{
 
 #details-section h2 {
     margin-bottom: 30px;
+    font-family:'Spartan', sans-serif;
 }
 .details-grid {
     display: flex;
@@ -1411,6 +1459,7 @@ body{
 
 #reviews-section h2{
     margin-bottom: 30px;
+    font-family:'Spartan', sans-serif;
 }
 
 .reviews-container {
@@ -1438,12 +1487,14 @@ body{
 .review-text h4 {
     margin: 0 0 5px 0;
     font-size: 1.1rem;
+    font-family:'Spartan', sans-serif;
 }
 
 .review-text p {
     margin: 0;
     font-size: 0.95rem;
     line-height: 1.4;
+    font-family:'Spartan', sans-serif;
 }
 
 @media (max-width: 900px) {
@@ -1520,6 +1571,7 @@ body{
     margin-bottom: 6px;
     font-size: 1rem;
     font-weight: 600;
+    font-family:'Spartan', sans-serif;
     color: #0e101f;
 }
 
@@ -1527,6 +1579,7 @@ body{
     margin-bottom: 12px;
     font-size: 0.85rem;
     color: #666;
+    font-family:'Spartan', sans-serif;
 }
 
 .cart-actions {
@@ -1594,6 +1647,7 @@ body{
 .cart-summary h3 {
     margin-bottom: 20px;
     color: #0e101f;
+    font-family:'Spartan', sans-serif;
 }
 
 .summary-row {
@@ -1636,7 +1690,7 @@ body{
     }
 }
 
-/*SIGN UP*/
+/*SIGN UP
 .signupTitle{
     text-align: center;
     margin: 5%;
@@ -1802,7 +1856,7 @@ body{
 
 }
 
-/*LOGIN*/
+/*LOGIN
 
 
 .signupContainerlog{
@@ -2014,9 +2068,10 @@ body{
     box-shadow: 0 8px 16px rgba(0, 12, 105, 0.5);
     font-size: 18px;
 }
+*/
 
 
-
+/*REGISTER MODAL*/
 /*REGISTER MODAL*/
 .modal {
     display: none;
@@ -2060,7 +2115,7 @@ body{
 
 .close:hover,
 .close:focus {
-    color: #060263;
+    color: rgb(3, 3, 84);
 }
 
 /*Modal Title*/
@@ -2068,14 +2123,15 @@ body{
     text-align: center;
     margin: 0 0 40px 0;
     padding-bottom: 20px;
-    border-bottom: 2px solid #060263;
+    border-bottom: 2px solid rgb(255, 221, 30) ;
 }
 
 .modal .signupTitle h2 {
-    color: #060263;
+    color: rgb(3, 3, 84);
     font-size: 28px;
     letter-spacing: 3px;
     font-weight: 600;
+    font-family:'Spartan', sans-serif;
     margin: 0;
 }
 
@@ -2110,13 +2166,14 @@ body{
     border-bottom: 2px solid #ddd;
     outline: none;
     background: transparent;
+    font-family:'Spartan', sans-serif;
     transition: border-color 0.3s;
 }
 
 .modal .inputGroup input:focus,
-.modal .inputGroupBD input:focus
+.modal .inputGroupBD input:focus,
 .modal .inputGroupCP input:focus {
-    border-bottom-color: #060263;
+    border-bottom-color: rgb(3, 3, 84);
 }
 
 .modal .inputGroup label, .modal .inputGroupCP label {
@@ -2126,6 +2183,7 @@ body{
     font-size: 14px;
     color: #777;
     pointer-events: none;
+    font-family:'Spartan', sans-serif;
     transition: 0.3s;
     letter-spacing: 1px;
 }
@@ -2139,6 +2197,7 @@ body{
     pointer-events: none;
     transition: 0.3s;
     letter-spacing: 1px;
+    font-family:'Spartan', sans-serif;
     font-weight: 500;
 }
 
@@ -2147,7 +2206,7 @@ body{
 .modal .inputGroupCP input:valid ~ label {
     top: -10px;
     font-size: 11px;
-    color: #060263;
+    color: rgb(3, 3, 84);
     font-weight: 500;
 }
 
@@ -2161,14 +2220,14 @@ body{
     margin-top: 10px;
     padding: 15px;
     background-color: #f8f8f8;
-    border-left: 3px solid #060263;
+    border-left: 3px solid rgb(255, 221, 30);
 }
 
 .modal .inputGroupCheckbox input {
     width: 18px;
     height: 18px;
     cursor: pointer;
-    accent-color: #060263;
+    accent-color: rgb(3, 3, 84);
 }
 
 .modal .inputGroupCheckbox label {
@@ -2176,17 +2235,20 @@ body{
     color: #555;
     line-height: 1.5;
     margin: 0;
+    font-family:'Spartan', sans-serif;
 }
 
 .modal .inputGroupCheckbox a {
-    color: #060263;
+    color: rgb(3, 3, 84);
     text-decoration: none;
     font-weight: 500;
     transition: all 0.3s;
+    font-family:'Spartan', sans-serif;
 }
 
 .modal .inputGroupCheckbox a:hover {
     color: #0404a8;
+    font-size: 14px;
 }
 
 /*Captcha Container*/
@@ -2221,7 +2283,7 @@ body{
     padding: 16px;
     margin: 0 auto;
     display:block;
-    background-color: #060263;
+    background-color: rgb(3, 3, 84);
     color: white;
     border: none;
     font-size: 16px;
@@ -2253,18 +2315,22 @@ body{
 .modal .regLog label {
     font-size: 14px;
     color: #666;
+    font-family:'Spartan', sans-serif;
 }
 
 .modal .regLog a {
-    color: #060263;
+    color: rgb(3, 3, 84);
     text-decoration: none;
     font-weight: 600;
     margin: 0 8px;
+    border-bottom: 1px solid rgb(3, 3, 84);
     transition: all 0.3s;
+    font-family:'Spartan', sans-serif;
 }
 
 .modal .regLog a:hover {
     color: #0404a8;
+    font-size: 18px;
     
 }
 
@@ -2324,6 +2390,7 @@ body{
     font-size: 14px;
     color: #777;
     pointer-events: none;
+    font-family:'Spartan', sans-serif;
     transition: 0.3s;
     letter-spacing: 1px;
 }
@@ -2335,6 +2402,7 @@ body{
     font-size: 11px;
     color: #060263;
     font-weight: 500;
+    
 }
 
 .checkbox-remember {
@@ -2358,14 +2426,14 @@ body{
     position: static;
     font-size: 14px;
     color: #666;
+    font-family:'Spartan', sans-serif;
 }
 
 /*Forgot Password*/
 .modal .forgotP {
-    position: relative ;
     grid-column: 1 / -1;
-    top: -55px;
-    left: -65px;
+    text-align: right;
+    margin-top: -5px;
     margin-bottom: 10px;
 }
 
@@ -2374,6 +2442,7 @@ body{
     text-decoration: none;
     font-size: 13px;
     font-weight: 500;
+    font-family:'Spartan', sans-serif;
     transition: all 0.3s;
 }
 
@@ -2385,7 +2454,7 @@ body{
 /*OR container*/
 .orContainer {
     grid-column: 1 / -1;
-    margin-top: 30px;
+    margin: 0;
 }
 
 .or-divider {
@@ -2414,7 +2483,7 @@ body{
 
 .or-divider span {
     background-color: white;
-    padding: 0 15px;
+    padding: 0 30px;
     color: #999;
     font-size: 14px;
     text-transform: lowercase;
@@ -2425,10 +2494,11 @@ body{
 /*Member exclusive*/
 .member-exclusive {
     background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
-    padding: 30px;
+    padding: 30px 0;
     padding-bottom: 15px;
     text-align: center;
-    border-left: 3px solid #060263;
+    border-left: 3px solid rgb(255, 221, 30);
+    
 }
 
 .member-exclusive h3 {
@@ -2436,14 +2506,15 @@ body{
     font-size: 20px;
     margin: 0 0 15px 0;
     letter-spacing: 1px;
+    font-family:'Spartan', sans-serif;
 }
 
 .member-description {
     font-size: 13px;
     line-height: 1.7;
     color: #555;
-    margin: 0 0 20px 0;
-    text-align: justify;
+    margin: 0 5px 20px 5px;
+    font-family:'Spartan', sans-serif;
 }
 
 /*discover btn*/
@@ -2471,7 +2542,7 @@ body{
 
 /*create acc btn (in login modal) */
 .create-account-btn {
-    width: 100%;
+    width: 90%;
     padding: 14px;
     background-color: #5bc0de;
     color: white;
@@ -2504,8 +2575,8 @@ body{
 .modal-content-login {
     transform: translateY(100px);
     opacity: 0;
-    transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1), 
-                opacity 1.2s ease;
+    transition: transform 1.0s cubic-bezier(0.16, 1, 0.3, 1), 
+                opacity 1.0s ease;
 }
 
 .modal.show .modal-content,
@@ -2519,3 +2590,110 @@ body{
     transform: translateY(100px);
     opacity: 0;
 }
+
+/*PROFILE*/
+.profileContainer{
+    display: grid;  
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: repeat(3, minmax(180px, auto));
+    gap: 20px; 
+    max-width: 1200px; 
+    width: 95%;
+    height: 200vh;
+    margin: 20px auto 0 auto;
+    padding: 20px;
+}
+.profileContainer{
+    display: flex;
+    gap: 20px; 
+    max-width: 1200px; 
+    width: 95%;
+    margin: 20px auto 0 auto;
+    padding: 20px;
+}
+
+.profileContainer .colFirst{
+    background-color: rgb(232, 232, 232);
+    flex: 1; 
+    padding: 15px;
+    overflow-y: auto;
+    
+}
+
+.profileContainer .colFirst .dividerF{
+    width: 95%;
+    height: 1px;
+    background-color:rgb(198, 198, 198);
+    margin: 17px auto;
+}
+
+.profileContainer .rightSide{
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.profileContainer .colFirst,
+.profileContainer .colSecond,
+.profileContainer .colThird,
+.profileContainer .colFourth {
+    background-color: rgb(237, 237, 237);
+    flex: 1; 
+    padding: 15px;
+    overflow-y: auto;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+}
+
+
+
+.profileContainer .colSecond .divider,
+.profileContainer .colThird .divider,
+.profileContainer .colFourth .divider
+{
+    width: 95%;
+    height: 1px;
+    background-color:rgb(198, 198, 198);
+    margin: 17px auto;
+
+    
+}
+
+.profileContainer .colSecond{
+    position: relative;
+}
+
+.profileContainer h3 {
+    margin-top: 12px; 
+    margin-left: 15px;
+    font-family:'Spartan', sans-serif;
+    color: rgb(76, 76, 76);
+    
+}
+
+.profileContainer .colSecond .headerRow,
+.profileContainer .colThird .headerRow,
+.profileContainer .colFourth .headerRow {
+    display: flex;
+    justify-content: space-between; 
+    align-items: center; 
+}
+
+
+.profileContainer .viewAllBtn {
+    font-family: 'Spartan', sans-serif;
+    border: none;
+    border-bottom: 1px solid rgb(3, 3, 84);
+    cursor: pointer;
+    margin-right: 15px;
+    transition: 0.3s;
+    color: rgb(76, 76, 76);
+
+} 
+
+.profileContainer .viewAllBtn:hover{
+    font-size: 16px;
+    color:rgb(3, 3, 130)
+}
+
+

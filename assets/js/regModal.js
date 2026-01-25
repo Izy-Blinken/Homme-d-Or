@@ -25,7 +25,7 @@ function closeSignupModal() {
             signupModal.style.display = 'none';
             signupModal.classList.remove('closing');
             document.body.style.overflow = 'auto';
-        }, 500);
+        }, 1000);
     }
 }
 

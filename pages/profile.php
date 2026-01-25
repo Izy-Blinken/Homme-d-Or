@@ -10,7 +10,9 @@
         <?php include '../components/header.php'; ?>
         <main>
 
-        <!--Next agenda-->
+            <div class="profileContainer">
+
+            </div>
 
         </main>
 

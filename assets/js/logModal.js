@@ -22,7 +22,7 @@ function closeLoginModal() {
             loginModal.style.display = 'none';
             loginModal.classList.remove('closing');
             document.body.style.overflow = 'auto';
-        }, 500);
+        }, 1000);
     }
 }
 
