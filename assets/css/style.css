@@ -2520,7 +2520,7 @@ body{
 }
 
 .member-exclusive h3 {
-    color: #060263;
+    color: rgb(3, 3, 84);
     font-size: 20px;
     margin: 0 0 15px 0;
     letter-spacing: 1px;
@@ -2540,8 +2540,8 @@ body{
     display: inline-block;
     padding: 5px 3px;
     background-color: transparent;
-    color: #060263;
-    border-bottom: 2px solid #060263;
+    color: rgb(3, 3, 84);
+    border-bottom: 2px solid rgb(3, 3, 84);
     text-decoration: none;
     font-size: 12px;
     font-weight: 600;
@@ -2552,7 +2552,7 @@ body{
 }
 
 .discover-btn:hover {
-    background-color: #060263;
+    background-color: rgb(3, 3, 84);
     color: white;
     transform: translateY(-2px);
     box-shadow: 0 4px 8px rgba(6, 2, 99, 0.2);
@@ -2692,7 +2692,7 @@ body{
     font-size: 14px;
     font-weight: 500;
     padding: 12px 40px;
-    background-color: rgb(13, 0, 69);
+    background-color: rgb(3, 3, 84);
     color: white;
     border: none;
     cursor: pointer;
@@ -2743,7 +2743,7 @@ body{
 
 .profileContainer .viewAllBtn:hover {
     color: #c9a961;
-    border-bottom-color: #1a237e;
+    border-bottom-color: rgb(3, 3, 84);
 }
 
 /*orders*/
@@ -2811,7 +2811,7 @@ body{
     padding: 18px 15px;
     background-color: white;
     margin-bottom: 12px;
-    border-left: 2px solid #1a237e;
+    border-left: 2px solid rgb(3, 3, 84);
     transition: 0.3s;
 }
 
@@ -2912,7 +2912,7 @@ body{
     font-weight: 500;
     padding: 12px 20px;
     background-color: white;
-    color: #000324;
+    color: rgb(3, 3, 84);
     border: 1px solid #000324;
     cursor: pointer;
     transition: 0.3s;
@@ -2921,8 +2921,446 @@ body{
 }
 
 .signOutBtn:hover {
-    background-color: #000324;
+    background-color: rgb(3, 3, 84);
     color: white;
 }
 
+
+/*EDIT PROFILE MODAL*/
+
+.editProfileModal {
+    display: flex;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1000;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+#editProfileForm {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    min-height: 0;
+}
+
+.editProfileModal.active {
+    opacity: 1;
+}
+
+.editProfileModal.closing {
+    opacity: 0;
+}
+
+/* Modal Overlay */
+.editModalOverlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(15, 23, 42, 0.7);
+    backdrop-filter: blur(4px);
+}
+
+/* Modal Content */
+.editModalContent {
+    position: relative;
+    background-color: #ffffff;
+    width: 90%;
+    max-width: 600px;
+    height: 90vh;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+    display: flex;
+    flex-direction: column;
+    transform: translateX(100%);
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    overflow: hidden;
+}
+
+.editProfileModal.active .editModalContent {
+    transform: translateX(0);
+}
+
+.editProfileModal.closing .editModalContent {
+    transform: translateX(100%);
+}
+
+/* Modal Header */
+.editModalHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 24px;
+    border-bottom: 1px solid #e5e7eb;
+    flex-shrink: 0;
+}
+
+.editModalHeader h2 {
+    margin: 0;
+    font-size: 24px;
+    font-weight: 600;
+    color: #000000;
+}
+
+.editModalCloseBtn {
+    background: none;
+    border: none;
+    font-size: 32px;
+    color: #6b7280;
+    cursor: pointer;
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 4px;
+    transition: all 0.2s ease;
+    padding: 0;
+    line-height: 1;
+}
+
+.editModalCloseBtn:hover {
+    background-color: #f3f4f6;
+    color: rgb(3, 3, 84);
+}
+
+
+.editModalBody {
+    flex: 1;
+    overflow-y: auto;
+    padding: 24px;
+    min-height: 0;
+}
+
+/*Scrollbar*/
+.editModalBody::-webkit-scrollbar {
+    width: 8px;
+}
+
+.editModalBody::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+.editModalBody::-webkit-scrollbar-thumb {
+    background: #060263;
+}
+
+.editModalBody::-webkit-scrollbar-thumb:hover {
+    background: #0404a8;
+}
+
+/* Profile Photo Section */
+.editModalPhotoSection {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 32px;
+    padding-bottom: 24px;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.editModalPhotoFrame {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 3px solid rgb(3, 3, 84);
+    background-color: #f9fafb;
+}
+
+.editModalPhotoFrame img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.uploadPhotoBtn,
+.removePhotoBtn {
+    padding: 8px 20px;
+    border: none;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.uploadPhotoBtn {
+    background-color: rgb(3, 3, 84);
+    color: #ffffff;
+}
+
+.uploadPhotoBtn:hover {
+    background-color: #d4af37;
+}
+
+.removePhotoBtn {
+    background-color: transparent;
+    color: #6b7280;
+    border: 1px solid #d1d5db;
+}
+
+.removePhotoBtn:hover {
+    background-color: #f3f4f6;
+    color: rgb(3, 3, 84);
+}
+
+/* Form Sections */
+.editModalFormSection {
+    margin-bottom: 28px;
+}
+
+.editModalFormSection h3 {
+    margin: 0 0 16px 0;
+    font-size: 16px;
+    font-weight: 600;
+    color: #000000;
+}
+
+/* Form Groups */
+.editModalFormGroup {
+    margin-bottom: 16px;
+}
+
+.editModalFormGroup label {
+    display: block;
+    margin-bottom: 6px;
+    font-size: 14px;
+    font-weight: 500;
+    color: #000000;
+}
+
+.editModalFormGroup input {
+    width: 100%;
+    padding: 10px 14px;
+    border: 1px solid #d1d5db;
+    font-size: 14px;
+    color: #000000;
+    background-color: #ffffff;
+    transition: all 0.2s ease;
+    box-sizing: border-box;
+}
+
+.editModalFormGroup input:focus {
+    outline: none;
+    border-color: #000000;
+    box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.1);
+}
+
+.editModalFormGroup textarea {
+    resize: vertical;
+    font-family: inherit;
+}
+
+.passwordNote {
+    margin: 0 0 16px 0;
+    font-size: 13px;
+    color: #6b7280;
+    font-style: italic;
+}
+
+/* Confirmation msg */
+.confirmationModal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1100;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.confirmationModal.show {
+    display: flex;
+}
+
+.confirmationBox {
+    background: white;
+    padding: 24px;
+    max-width: 400px;
+    width: 90%;
+    text-align: center;
+}
+
+.confirmationBox h3 {
+    margin: 0 0 12px 0;
+    font-size: 18px;
+    color: #000000;
+}
+
+.confirmationBox p {
+    margin: 0 0 24px 0;
+    font-size: 14px;
+    color: #6b7280;
+}
+
+.confirmationButtons {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+}
+
+.confirmBtn,
+.cancelConfirmBtn {
+    padding: 10px 24px;
+    border: none;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.cancelConfirmBtn {
+    background-color: #f3f4f6;
+    color: #6b7280;
+}
+
+.cancelConfirmBtn:hover {
+    background-color: #e5e7eb;
+}
+
+.confirmBtn {
+    background-color: rgb(3, 3, 84);
+    color: white;
+}
+
+.confirmBtn:hover {
+    background-color: rgb(2, 2, 69);
+}
+
+/* Toast msg */
+.toastMessage {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    background-color: white;
+    color: rgb(3, 3, 84);
+    padding: 16px 24px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    z-index: 2000;
+    transform: translateY(100px);
+    opacity: 0;
+    transition: all 0.3s ease;
+    border-left: 4px solid rgb(3, 3, 84);
+    font-size: 14px;
+}
+
+.toastMessage.show {
+    transform: translateY(0);
+    opacity: 1;
+}
+
+.toastMessage.success {
+    border-left-color: #10b981;
+}
+
+.toastMessage.info {
+    border-left-color: rgb(3, 3, 84);
+}
+
+/* Modal Footer */
+.editModalFooter {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    padding: 20px 24px;
+    border-top: 1px solid #e5e7eb;
+    flex-shrink: 0;
+}
+
+.editModalCancelBtn,
+.editModalSaveBtn {
+    padding: 10px 24px;
+    border: none;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.editModalCancelBtn {
+    background-color: transparent;
+    color: #6b7280;
+    border: 1px solid #d1d5db;
+}
+
+.editModalCancelBtn:hover {
+    background-color: #f3f4f6;
+    color: rgb(3, 3, 84);
+}
+
+.editModalSaveBtn {
+    background-color: rgb(3, 3, 84);
+    color: #ffffff;
+}
+
+.editModalSaveBtn:hover {
+    background-color: rgb(3, 3, 84);
+}
+
+/* Success Message */
+.profileSuccessMessage {
+    position: fixed;
+    top: 24px;
+    right: 24px;
+    background-color: rgb(3, 3, 84);
+    color: #ffffff;
+    padding: 16px 24px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    z-index: 2000;
+    transform: translateX(400px);
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    font-size: 14px;
+    font-weight: 500;
+    border-left: 4px solid #d4af37;
+}
+
+.profileSuccessMessage.show {
+    transform: translateX(0);
+}
+
+/*Responsive */
+@media (max-width: 640px) {
+    .editModalContent {
+        width: 95%;
+        height: 95vh;
+    }
+    
+    .editModalHeader {
+        padding: 20px;
+    }
+    
+    .editModalHeader h2 {
+        font-size: 20px;
+    }
+    
+    .editModalBody {
+        padding: 20px;
+    }
+    
+    .editModalFooter {
+        padding: 16px 20px;
+        flex-direction: column;
+    }
+    
+    .editModalCancelBtn,
+    .editModalSaveBtn {
+        width: 100%;
+    }
+    
+    .profileSuccessMessage {
+        right: 16px;
+        left: 16px;
+        top: 16px;
+    }
+}
 

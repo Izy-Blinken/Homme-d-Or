@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Blog</title>
+        <title>Profile</title>
         <link rel="stylesheet" href="../assets/css/style.css">
         <link rel="stylesheet" href="../assets/icons/fontawesome/css/all.min.css">
     </head>
@@ -19,47 +19,41 @@
                     
                     <div class="profileImageSection">
                         <div class="profileImageFrame">
-                            <img src="../assets/images/default-profile.png" alt="Profile" class="profileImage">
+                            <img src="../assets/images/products_images/customerPic.png" alt="Profile" class="profileImage" id="currentProfileImage">
                         </div>
-                        <button class="addProfileBtn">Add Profile Photo</button>
+                        <button class="addProfileBtn" onclick="document.getElementById('profilePhotoInput').click()">Add Profile Photo</button>
                     </div>
 
                     <div class="profileInfo">
                         <div class="infoGroup">
                             <label>Name</label>
-                            <p>John Doe</p>
+                            <p id="displayName">John Doe</p>
                         </div>
 
                         <div class="infoGroup">
                             <label>Birthday</label>
-                            <p>January 16, 1995</p>
+                            <p id="displayBirthday">January 16, 1995</p>
                         </div>
 
                         <div class="infoGroup">
                             <label>Contact Number</label>
-                            <p>+63 912 345 6789</p>
+                            <p id="displayContact">+63 912 345 6789</p>
                         </div>
 
                         <div class="infoGroup">
                             <label>Email</label>
-                            <p>johndoe@gmail.com</p>
+                            <p id="displayEmail">johndoe@gmail.com</p>
                         </div>
-
-                        <div class="infoGroup">
-                            <label>Address</label>
-                            <p>123, hahaha, heaha, Province</p>
-                        </div>
+                        
                     </div>
 
                     <div class="profileActions">
-                        <button class="editProfileBtn">Edit Profile</button>
+                        <button class="editProfileBtn" onclick="openEditModal()">Edit Profile</button>
                     </div>
-                    
                     
                 </div>
 
                 <div class="rightSide">
-
                     <div class="colSecond">
                         <div class="headerRow">
                             <h3>Orders</h3>
@@ -68,7 +62,7 @@
                         <div class="divider"></div>
 
                         <div class="orderOverview">
-                            <div class="orderedItem">
+                            <div class="orderItem">
                                 <div class="orderIcon">
                                     <i class="fas fa-box"></i>
                                 </div>
@@ -78,7 +72,7 @@
                                 </div>
                             </div>
 
-                            <div class="orderedItem">
+                            <div class="orderItem">
                                 <div class="orderIcon">
                                     <i class="fas fa-star"></i>
                                 </div>
@@ -88,7 +82,7 @@
                                 </div>
                             </div>
 
-                            <div class="orderedItem">
+                            <div class="orderItem">
                                 <div class="orderIcon">
                                     <i class="fas fa-check-circle"></i>
                                 </div>
@@ -137,10 +131,10 @@
                     <div class="colFourth">
                         <div class="headerRow">
                             <h3>Wishlist</h3>
-                            <button class="viewAllBtn" onclick="window.location.href='wishlist.php'">View All</button>
+                            <button class="viewAllBtn" onclick="window.location.href='viewWishlist.php'">View All</button>
                         </div>
-
                         <div class="divider"></div>
+
                         <div class="wishlistGrid">
                             <div class="wishlistItem">
                                 <div class="wishlistImage">
@@ -173,9 +167,117 @@
                 </div>
             </div>
 
-            
         </main>
 
+        <!-- Edit Profile Modal -->
+        <div id="editProfileModal" class="editProfileModal">
+            <div class="editModalOverlay" onclick="closeEditModal()"></div>
+            <div class="editModalContent">
+                <div class="editModalHeader">
+                    <h2>Edit Profile</h2>
+                    <button class="editModalCloseBtn" onclick="closeEditModal()">×</button>
+                </div>
+
+                <form id="editProfileForm" onsubmit="saveProfile(event)">
+                    <div class="editModalBody">
+                        
+                        <!-- Profile Photo -->
+                        <div class="editModalPhotoSection">
+                            <div class="editModalPhotoFrame">
+                                <img src="../assets/images/default-profile.png" alt="Profile" id="modalProfileImage">
+                            </div>
+                            <input type="file" id="profilePhotoInput" accept="image/*" style="display: none;">
+                            <button type="button" class="uploadPhotoBtn" onclick="document.getElementById('profilePhotoInput').click()">
+                                Upload Photo
+                            </button>
+                            <button type="button" class="removePhotoBtn" onclick="removePhoto()">
+                                Remove Photo
+                            </button>
+                        </div>
+
+                        <!-- Personal Information -->
+                        <div class="editModalFormSection">
+                            <h3>Personal Information</h3>
+                            
+                            <div class="editModalFormGroup">
+                                <label>Full Name</label>
+                                <input type="text" id="editName" placeholder="Enter full name">
+                            </div>
+
+                            <div class="editModalFormGroup">
+                                <label>Birthday</label>
+                                <input type="date" id="editBirthday">
+                            </div>
+                        </div>
+
+                        <!-- Contact Information -->
+                        <div class="editModalFormSection">
+                            <h3>Contact Information</h3>
+                            
+                            <div class="editModalFormGroup">
+                                <label>Contact Number</label>
+                                <input type="tel" id="editContact" placeholder="09123456789" maxlength="11">
+                            </div>
+
+                            <div class="editModalFormGroup">
+                                <label>Email Address</label>
+                                <input type="email" id="editEmail" placeholder="email@example.com">
+                            </div>
+                        </div>
+
+                        <!-- Password -->
+                        <div class="editModalFormSection">
+                            <h3>Change Password</h3>
+                            <p class="passwordNote">Leave blank if you don't want to change your password</p>
+                            
+                            <div class="editModalFormGroup">
+                                <label>Current Password</label>
+                                <input type="password" id="currentPassword" placeholder="Enter current password">
+                            </div>
+
+                            <div class="editModalFormGroup">
+                                <label>New Password</label>
+                                <input type="password" id="newPassword" placeholder="Enter new password">
+                            </div>
+
+                            <div class="editModalFormGroup">
+                                <label>Confirm New Password</label>
+                                <input type="password" id="confirmPassword" placeholder="Confirm new password">
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="editModalFooter">
+                        <button type="button" class="editModalCancelBtn" onclick="closeEditModal()">Cancel</button>
+                        <button type="submit" class="editModalSaveBtn">Save Changes</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Success msg -->
+        <div id="successMessage" class="profileSuccessMessage">
+            Profile updated successfully!
+        </div>
+
+        <!-- Confirmation msg -->
+        <div id="confirmationModal" class="confirmationModal">
+            <div class="confirmationBox">
+                <h3>Discard Changes?</h3>
+                <p>You have unsaved changes. Are you sure you want to close?</p>
+                <div class="confirmationButtons">
+                    <button class="cancelConfirmBtn" onclick="cancelDiscard()">Keep Editing</button>
+                    <button class="confirmBtn" onclick="confirmDiscard()">Discard</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Toast msg -->
+        <div id="toastMessage" class="toastMessage"></div>
+
         <?php include '../components/footer.php'; ?>
+
+        <script src="../assets/js/editProfile.js"></script>
     </body>
 </html>
