@@ -8,8 +8,8 @@
 
     <body>
         <?php include '../components/header.php'; ?>
-        <main>
 
+        <main>
             <div class="profileContainer">
                 <div class="colFirst">
                     <div class="headerRow">
@@ -44,7 +44,7 @@
                             <label>Email</label>
                             <p id="displayEmail">johndoe@gmail.com</p>
                         </div>
-                        
+
                     </div>
 
                     <div class="profileActions">
@@ -167,7 +167,7 @@
                 </div>
             </div>
 
-        </main>
+        
 
         <!-- Edit Profile Modal -->
         <div id="editProfileModal" class="editProfileModal">
@@ -279,5 +279,7 @@
         <?php include '../components/footer.php'; ?>
 
         <script src="../assets/js/editProfile.js"></script>
+        
+        </main>
     </body>
 </html>
