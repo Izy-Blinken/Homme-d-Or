@@ -15,7 +15,6 @@ function openSignupModal() {
     }
 }
 
-// close signup modal
 function closeSignupModal() {
     if (signupModal) {
         signupModal.classList.remove('show');

@@ -10,107 +10,212 @@
         <?php include '../components/checkoutHeader.php'; ?>
         <main>
 
-        <div id="checkoutContainer">
-            <!--order summary--> 
-            <div class="orderSummary">
-                <h2>Order Summary</h2>
-                
-                <div class="orderItems">
-                    <!-- Placeholders (below is for single item pa lang) -->
-                    <div class="orderItem">
-                        <img src="product-image.jpg" alt="Product">
-                        <div class="itemDetails">
-                            <h4>Product Name</h4>
-                            <p>Size: M | Color: Black</p>
-                            <p>Qty: 1</p>
+            <div class="checkoutWrapper">
+                <div class="checkoutHeader">
+                    <h1>Checkout</h1>
+                    <div class="checkoutSteps">
+                        <div class="step active">
+                            <div class="stepNumber">1</div>
+                            <span>Information</span>
                         </div>
-                        <div class="itemPrice">
-                            <p>₱1,299.00</p>
+                        <div class="stepLine"></div>
+                        <div class="step">
+                            <div class="stepNumber">2</div>
+                            <span>Payment</span>
                         </div>
-                    </div>
-                    
-                </div>
-                
-                <div class="orderTotal">
-                    <div class="totalRow">
-                        <span>Subtotal:</span>
-                        <span>₱1,299.00</span>
-                    </div>
-                    <div class="totalRow">
-                        <span>Shipping:</span>
-                        <span>₱150.00</span>
-                    </div>
-                    <div class="totalRow totalFinal">
-                        <span>Total:</span>
-                        <span>₱1,449.00</span>
+                        <div class="stepLine"></div>
+                        <div class="step">
+                            <div class="stepNumber">3</div>
+                            <span>Confirmation</span>
+                        </div>
                     </div>
                 </div>
-            </div>   
-                
-            <!--billing information--> 
-            <div class="billingInfo">
-                <h2>Billing Information</h2>
-                
-                <form id="checkoutForm"  action="orderAgain.php" method="POST">
-                    <div class="formGroup">
-                        <label for="fullName">Full Name *</label>
-                        <input type="text" id="fullName" name="fullName" >
-                    </div>
-                    
-                    <div class="formGroup">
-                        <label for="email">Email Address *</label>
-                        <input type="email" id="email" name="email" >
-                    </div>
-                    
-                    <div class="formGroup">
-                        <label for="phone">Phone Number *</label>
-                        <input type="tel" id="phone" name="phone" >
-                    </div>
-                    
-                    <div class="formGroup">
-                        <label for="address">Street Address *</label>
-                        <input type="text" id="address" name="address" >
-                    </div>
-                    
-                    <div class="formRow">
-                        <div class="formGroup">
-                            <label for="city">City *</label>
-                            <input type="text" id="city" name="city" >
+
+                <div id="checkoutContainer">
+
+                    <!--billing information--> 
+                    <div class="billingInfo">
+                        <div class="sectionHeader">
+                            
+                            <h2>Billing Information</h2>
                         </div>
                         
-                        <div class="formGroup">
-                            <label for="province">Province *</label>
-                            <input type="text" id="province" name="province" >
-                        </div>
+                        <form id="checkoutForm" action="orderAgain.php" method="POST">
+                            <div class="formSection">
+                                <h3>Contact Details</h3>
+                                
+                                <div class="formGroup">
+                                    <label for="fullName">Full Name <span class="required">*</span></label>
+                                    <input type="text" id="fullName" name="fullName" placeholder="ex. John Doe" >
+                                </div>
+                                
+                                <div class="formRow">
+                                    <div class="formGroup">
+                                        <label for="email">Email Address <span class="required">*</span></label>
+                                        <input type="email" id="email" name="email" placeholder="ex. johndoe@example.com" >
+                                    </div>
+                                    
+                                    <div class="formGroup">
+                                        <label for="phone">Phone Number <span class="required">*</span></label>
+                                        <input type="tel" id="phone" name="phone" placeholder="ex. +63 912 345 6789" >
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="formSection">
+                                <h3>Shipping Address</h3>
+                                
+                                <div class="formGroup">
+                                    <label for="address">Street Address <span class="required">*</span></label>
+                                    <input type="text" id="address" name="address" placeholder="ex. 123 Main Street">
+                                </div>
+                                
+                                <div class="formRow">
+                                    <div class="formGroup">
+                                        <label for="city">City <span class="required">*</span></label>
+                                        <input type="text" id="city" name="city" placeholder="ex. Manila" >
+                                    </div>
+                                    
+                                    <div class="formGroup">
+                                        <label for="province">Province <span class="required">*</span></label>
+                                        <input type="text" id="province" name="province" placeholder="ex. Metro Manila" >
+                                    </div>
+                                </div>
+                                
+                                <div class="formRow">
+                                    <div class="formGroup">
+                                        <label for="zipCode">Zip Code <span class="required">*</span></label>
+                                        <input type="text" id="zipCode" name="zipCode" placeholder="ex. 1000" >
+                                    </div>
+                                    
+                                    <div class="formGroup">
+                                        <label for="country">Country <span class="required">*</span></label>
+                                        <select>
+                                            <option>Select Country</option>
+                                            <option>Philippines</option>
+                                            <option>Japan</option>
+                                            <option>Switzerland</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="formSection">
+                                <h3>Payment Method</h3>
+                                
+                                <div class="paymentOptions">
+                                    <label class="paymentOption">
+                                        <input type="radio" name="paymentMethod" value="cod" required>
+                                        <div class="paymentCard">
+                                            <div class="paymentInfo">
+                                                <span class="paymentName">Cash on Delivery</span>
+                                                <span class="paymentDesc">Pay when you receive</span>
+                                            </div>
+                                        </div>
+                                    </label>
+
+                                    <label class="paymentOption">
+                                        <input type="radio" name="paymentMethod" value="gcash">
+                                        <div class="paymentCard">
+                                            <div class="paymentInfo">
+                                                <span class="paymentName">GCash</span>
+                                                <span class="paymentDesc">Digital wallet payment</span>
+                                            </div>
+                                        </div>
+                                    </label>
+
+                                    <label class="paymentOption">
+                                        <input type="radio" name="paymentMethod" value="card">
+                                        <div class="paymentCard">
+                                            <div class="paymentInfo">
+                                                <span class="paymentName">Credit/Debit Card</span>
+                                                <span class="paymentDesc">Visa, Mastercard, etc.</span>
+                                            </div>
+                                        </div>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="formActions">
+                                <button type="button" class="backToCartBtn" onclick="window.location.href='cart.php'">
+                                    <i class="fas fa-arrow-left"></i> Back to Cart
+                                </button>
+                                <button type="submit" class="placeOrderBtn" onclick="openSignupModal()">
+                                    Place Order
+                                </button>
+                            </div>
+                        </form>
                     </div>
-                    
-                    <div class="formRow">
-                        <div class="formGroup">
-                            <label for="zipCode">Zip Code *</label>
-                            <input type="text" id="zipCode" name="zipCode" >
+
+                    <!--order summary--> 
+                    <div class="orderSummary">
+                        <div class="sectionHeader">
+
+                        <h2>Order Summary</h2>
                         </div>
                         
-                        <div class="formGroup">
-                            <label for="country">Country *</label>
-                            <input type="text" id="country" name="country" >
+                        <div class="orderItems">
+                            <div class="orderItem">
+                                <img src="../assets/images/products_images/nocturne.png" alt="Product">
+                                <div class="itemDetails">
+                                    <h4>Nocturne Eau de Parfum</h4>
+                                    <p class="itemVariant">50ml | Premium Collection</p>
+                                    <div class="itemQuantity">
+                                        <span>Qty: 1</span>
+                                    </div>
+                                </div>
+                                <div class="itemPrice">
+                                    <p>₱1,299.00</p>
+                                </div>
+                            </div>
+
+                            <div class="orderItem">
+                                <img src="../assets/images/products_images/nocturne.png" alt="Product">
+                                <div class="itemDetails">
+                                    <h4>Classic Cologne</h4>
+                                    <p class="itemVariant">100ml | Signature Line</p>
+                                    <div class="itemQuantity">
+                                        <span>Qty: 2</span>
+                                    </div>
+                                </div>
+                                <div class="itemPrice">
+                                    <p>₱2,400.00</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="promoSection">
+                            <input type="text" placeholder="Enter promo code" class="promoInput">
+                            <button class="applyPromoBtn">Apply</button>
+                        </div>
+                        
+                        <div class="orderTotal">
+                            <div class="totalRow">
+                                <span>Subtotal:</span>
+                                <span>₱3,699.00</span>
+                            </div>
+                            <div class="totalRow">
+                                <span>Shipping:</span>
+                                <span>₱150.00</span>
+                            </div>
+                            <div class="totalRow discount">
+                                <span>Discount:</span>
+                                <span>- ₱0.00</span>
+                            </div>
+                            <div class="totalDivider"></div>
+                            <div class="totalRow totalFinal">
+                                <span>Total:</span>
+                                <span>₱3,849.00</span>
+                            </div>
+                        </div>
+
+                        <div class="securityBadge">
+                            <i class="fas fa-lock"></i>
+                            <span>Secure checkout powered by SSL encryption</span>
                         </div>
                     </div>
-                    
-                    <div class="formGroup">
-                        <label for="paymentMethod">Payment Method *</label>
-                        <select id="paymentMethod" name="paymentMethod">
-                            <option value="">Select Payment Method</option>
-                            <option value="cod">Cash on Delivery</option>
-                            <option value="gcash">GCash</option>
-                            <option value="card">Credit/Debit Card</option>
-                        </select>
-                    </div>
-                    
-                    <button type="submit" class="placeOrderBtn">Place Order</button>
-                    
-                </form>
+                </div>
             </div>
-        </div>
 
         </main>
 

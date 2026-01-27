@@ -30,11 +30,11 @@
                     </p>
                     
                     <div class="actionButtons">
-                        <a href="index.php" class="btn btnPrimary">
-                            <i class="fa-solid fa-box"></i> View My Order
+                        <a href="profileViewOrders.php" class="btn btnPrimary">
+                             View My Order
                         </a>
                         <a href="index.php" class="btn btnSecondary">
-                            <i class="fa-solid fa-repeat"></i> Order Again
+                             Order Again
                         </a>
                     </div>
                 </div>

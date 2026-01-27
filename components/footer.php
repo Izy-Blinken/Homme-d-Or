@@ -61,7 +61,7 @@
                 <label>
                     <a href="#" onclick="event.preventDefault(); openLoginModal();">LOGIN</a>
                     or
-                    <a href="#" onclick="event.preventDefault(); closeSignupModal();">CANCEL</a>
+                    <a href="#" onclick="event.preventDefault(); closeSignupModal();">CONTINUE AS GUEST</a>
                 </label>
             </div>
         </form>
