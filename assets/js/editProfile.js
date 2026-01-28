@@ -34,6 +34,7 @@ function confirmDiscard() {
     document.getElementById('confirmationModal').classList.remove('show');
     forceCloseModal();
     showToast('Changes discarded', 'info');
+
 }
 
 function forceCloseModal() {

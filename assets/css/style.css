@@ -20,13 +20,13 @@
 h1{
     font-size: 50px;
     line-height: 64px;
-    color: #222;
+    color: #000000;
 }
 
 h2{
     font-size: 46px;
     line-height: 54px;
-    color: #222;
+    color: #000000;
 }
 
 h4{
@@ -61,14 +61,6 @@ body{
     justify-content: space-between;
     padding: 20px 30px;
     background: rgb(14, 16, 31);
-        
-        /*linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.5)),
-        url('../images/brand_images/headerBG.png'); eto yung image sa pencil for header
-
-    background-size: cover;
-    background-position: center;
-    
-    color: #C9A961;  Gold text */
     box-shadow: 0 5px 15px rgba(0,0,0,0.09);
     height: 85px;
     z-index: 999;
@@ -264,7 +256,6 @@ body{
     width: 280px;
     box-shadow: 0 8px 16px rgba(51, 51, 51, 0.5);
     padding: 0;
-    margin-top: 10px;
     z-index: 1000;
     border-radius: 0;
 }
@@ -706,7 +697,6 @@ body{
     background: white;
     padding: 35px;
     box-shadow: 0 2px 15px rgba(0, 0, 0, 0.08);
-    border-radius: 8px;
 }
 
 .formSection {
@@ -749,7 +739,6 @@ body{
     width: 100%;
     padding: 12px 15px;
     border: 1px solid #e0e0e0;
-    border-radius: 4px;
     font-family: 'Spartan', sans-serif;
     font-size: 14px;
     color: rgb(76, 76, 76);
@@ -799,7 +788,6 @@ body{
     gap: 15px;
     padding: 18px 20px;
     border: 2px solid #e0e0e0;
-    border-radius: 8px;
     background-color: white;
     transition: all 0.3s;
 }
@@ -857,7 +845,6 @@ body{
     background-color: white;
     color: #000000;
     border: 2px solid #000000;
-    border-radius: 4px;
     font-family: 'Spartan', sans-serif;
     font-size: 14px;
     font-weight: 600;
@@ -880,7 +867,6 @@ body{
     background-color: #000000;
     color: white;
     border: none;
-    border-radius: 4px;
     font-family: 'Spartan', sans-serif;
     font-size: 16px;
     font-weight: 700;
@@ -906,7 +892,6 @@ body{
     background: white;
     padding: 35px;
     box-shadow: 0 2px 15px rgba(0, 0, 0, 0.08);
-    border-radius: 8px;
     position: sticky;
     top: 20px;
 }
@@ -926,12 +911,10 @@ body{
 
 .orderItems::-webkit-scrollbar-track {
     background: #f5f5f5;
-    border-radius: 3px;
 }
 
 .orderItems::-webkit-scrollbar-thumb {
     background: #c9a961;
-    border-radius: 3px;
 }
 
 .orderItem {
@@ -952,7 +935,6 @@ body{
     width: 80px;
     height: 80px;
     object-fit: cover;
-    border-radius: 6px;
     background-color: #f5f5f5;
 }
 
@@ -1003,7 +985,6 @@ body{
     flex: 1;
     padding: 10px 15px;
     border: 1px solid #e0e0e0;
-    border-radius: 4px;
     font-family: 'Spartan', sans-serif;
     font-size: 13px;
 }
@@ -1018,7 +999,6 @@ body{
     background-color: white;
     color: #000000;
     border: 1px solid #000000;
-    border-radius: 4px;
     font-family: 'Spartan', sans-serif;
     font-size: 13px;
     font-weight: 600;
@@ -1075,7 +1055,6 @@ body{
     margin-top: 20px;
     padding: 12px;
     background-color: #f5f7ff;
-    border-radius: 6px;
 }
 
 .securityBadge i {
@@ -1432,6 +1411,7 @@ body{
     box-shadow: 0 4px 10px rgba(0,0,0,0.5);
     overflow: hidden;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
     
 }
 
@@ -1490,6 +1470,7 @@ body{
     box-shadow: 0 4px 10px rgba(0,0,0,0.5);
     overflow: hidden;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
 }
 
 .ad-box img {
@@ -1509,6 +1490,7 @@ body{
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 30px;
+
 }
 
 .content-item h3 {
@@ -1543,7 +1525,7 @@ body{
 
 /*ABOUT US PAGE*/
 
-/*Our Story style*/
+/*Our Story*/
 .aboutUs-container {
     max-width: 1200px;
     margin: 50px;
@@ -1552,7 +1534,6 @@ body{
     background-color: #c2c2c2;
     display: flex;
     gap: 20px;
-    border-radius: 4px;
     box-shadow: 0 4px 10px rgba(0,0,0,0.5);
     overflow: hidden;
 }
@@ -1671,14 +1652,12 @@ body{
     max-width: 1100px;
 }
 
-
 .authBox {
     background-color: rgb(216, 214, 214);
     position: relative;
     display: flex;
     width: 250px;
     height: 350px;
-    border-radius: 4px;
     box-shadow: 0 4px 10px rgba(0,0,0,0.5);
     overflow: hidden;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
@@ -2293,7 +2272,7 @@ body{
 .modal .regBtn {
     grid-column: 1 / -1;
     margin-top: 10px;
-   
+    
 }
 
 .modal .regBtn button {
@@ -2309,6 +2288,7 @@ body{
     letter-spacing: 2px;
     transition: all 0.3s;
     text-transform: uppercase;
+    cursor: pointer;
 }
 
 .modal .regBtn button:hover {
@@ -2388,7 +2368,6 @@ body{
     width: 100%;
     padding: 12px 0;
     font-size: 15px;
-    
     color: #333;
     border: none;
     border-bottom: 2px solid #ddd;
@@ -2569,6 +2548,7 @@ body{
     font-weight: 600;
     letter-spacing: 2px;
     transition: all 0.3s;
+    cursor: pointer;
 }
 
 .create-account-btn:hover {
@@ -2593,8 +2573,7 @@ body{
 .modal-content-login {
     transform: translateY(100px);
     opacity: 0;
-    transition: transform 1.0s cubic-bezier(0.16, 1, 0.3, 1), 
-                opacity 1.0s ease;
+    transition: transform 1.0s cubic-bezier(0.16, 1, 0.3, 1), opacity 1.0s ease;
 }
 
 .modal.show .modal-content,
@@ -3234,7 +3213,7 @@ body{
 }
 
 .confirmBtn:hover {
-    background-color: rgb(2, 2, 69);
+    background-color: #d4af37;
 }
 
 /* Toast msg */
@@ -3304,7 +3283,7 @@ body{
 }
 
 .editModalSaveBtn:hover {
-    background-color: rgb(3, 3, 84);
+    background-color: #d4af37;
 }
 
 /* Success Message */
