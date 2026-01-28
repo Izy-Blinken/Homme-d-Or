@@ -8,16 +8,19 @@
         
         <link rel="stylesheet" href="../assets/icons/fontawesome/css/all.min.css">
         <link rel="stylesheet" href="../assets/css/style.css">
+        <link rel="stylesheet" href="../assets/css/HeaderHeroFooterStyle.css">
+        <link rel="stylesheet" href="../assets/css/CheckoutPageStyle.css">
+        <link rel="stylesheet" href="../assets/css/OrderAgainStyle.css">
+        <link rel="stylesheet" href="../assets/css/BlogPageStyle.css">
+        <link rel="stylesheet" href="../assets/css/AboutUsPageStyle.css">
+        <link rel="stylesheet" href="../assets/css/ProductDetailsStyle.css">
+        <link rel="stylesheet" href="../assets/css/CartPageStyle.css">
+        <link rel="stylesheet" href="../assets/css/RegLoginModalStyle.css">
+        <link rel="stylesheet" href="../assets/css/ProfilePageStyle.css">
 
     </head>
-    <body> <!--to here ay standard ng system ang code. 
-            Then, the following ay nasa tutorial na sesend ko.
-            And nagdagdag ako mga files for navigation bar options(yung nasa pages folder). 
-            You can still edit here since this is the homepage file. Lahat ng need sa homepage, dito eedit, and kung ibang page naman, you can add it sa Pages folder.
-            Basta be careful sa mga ciniclick and watch tutorial din how to do everything.
-            You can also use Claude(.)ai for help or other AIs as long as naiintindihan niyu mga nangyayari.
-            Just dont forget the step: terminal -> git pull -> then work na -> (if save na:) git add . -> git commit -m "describe what you changed here pero mas better kung i-comment din like this" -> git pull -> then git push
-            Yun lng thankiess
+    <body> <!--Steps from starting to saving: 
+            terminal -> git pull -> then work na -> (if save na:) git add . -> git commit -m "describe what you changed here pero mas better kung i-comment din like this" -> git pull -> then git push
             -->
 
         <?php include '../components/header.php'; ?>
@@ -47,26 +50,20 @@
 </html>
 
 <!--
-1. Done reusable footer and header. Design not final.
-2. Changed pages files from .html to .php for reusability. Now, di na marrun yung html directly sa vs code.
-3. Kapag magrrun, direct sa browser: localhost/Homme_dor/pages/index.php or kung paano yung structure ng folders sa inyo.
 
-12/29/25
-1. Frontend: Checkout and order again page done.
-2. Dropdown menu for shop and country/currency options done. 
-
-For all changes: Design not final. Placeholders pa lahat.
-
-12/31/25
-1. Blog Page done.
-
-For all changes: Design not final. Placeholders pa lahat.
-
-01/20/2026
-1. About Us page in done.
-
-For all changes: Design not final. Placeholders pa lahat.
-
-01/25/26
-1. login and signup done, pero yung nagppop-up yung nakaconnect.
+    Parts na wala pa:
+    1. wishlist page
+    2. order history (profile page)
+    3. admin pages:
+        - Dashboard: Overview of total revenue, products, orders, customers
+                   : Recent activities/orders
+        - Product Management: Product lists with filter and categories
+                            : Buttons for Adding/Updating/Deleting of products
+                            : Status for each product(Low stock, Out of Stock, In Stock)
+        - Order Management: Order lists with filter (Customers' info included)
+        - Customers: Customers reviews with filter (Customers' info included)
+        - Sales Report: Sales report (Daily, Weekly, Monthly)
+                      : Top products
+        - Admin Profile: Brand info
+                       : Same overview ng nasa dashboard
 -->

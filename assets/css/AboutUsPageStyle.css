@@ -1,0 +1,169 @@
+
+/*ABOUT US PAGE*/
+
+/*Our Story*/
+.aboutUs-container {
+    max-width: 1200px;
+    margin: 50px;
+    padding: 20px;
+    height: 600px;
+    background-color: #c2c2c2;
+    display: flex;
+    gap: 20px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+    overflow: hidden;
+}
+
+.aboutUs-text {
+    flex: 1; 
+}
+
+.aboutUs-container h3 {
+    font-size: 36px;
+    margin-left: 200px;
+    margin-top: 80px;
+    margin-bottom: 40px;
+    font-family:'Spartan', sans-serif;
+    color: #0e101f;
+}
+
+.aboutUs-container p {
+    font-size: 18px;
+    line-height: 1.7;
+    margin-left: 30px;
+    color: #0e101f;
+    text-align: justify;
+    font-family:'Spartan', sans-serif;
+}
+
+.aboutUs-container img {
+    width: 50%;
+    height: auto;
+    object-fit: cover;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+}
+
+/*Shop Description style*/
+.shopDesc{
+    position: relative; 
+    height: 90vh;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 100px; 
+    padding: 20px;
+}
+
+.shopDesc img{
+    max-height: 600px;
+    max-width: 1130px;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    margin-right: 100px; 
+    margin-left: 100px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+    
+}
+
+.shopDesc-text{
+    position: absolute;
+    top: 50%; 
+    right: 5%; 
+    transform: translateY(-50%);
+    padding: 40px 80px;
+    max-width: 45%; 
+    text-align: center;
+}
+
+.shopDesc-text h3{
+    font-size: 36px;
+    margin-left: 0; 
+    margin-top: 0;
+    margin-bottom: 40px;
+    font-family:'Spartan', sans-serif;
+    color: #060606;
+}
+
+.shopDesc-text p{
+    font-size: 18px;
+    line-height: 1.7;
+    color: #09090a;
+    text-align: justify;
+    font-family:'Spartan', sans-serif;
+}
+
+.authors{
+    position: relative;
+    display: flex;
+    justify-content: center;
+    margin-top: 100px;
+    flex-direction: column;
+    align-items: center;
+    padding: 0 20px 60px; 
+}
+
+.authTitle {
+    text-align: center;
+    width: 100%;
+    font-family:'Spartan', sans-serif;
+}
+
+.authTitle h3{
+    font-size: 36px;
+    margin-bottom: 40px;
+    color: #030303;
+    font-weight: 600;
+    letter-spacing: 1px;
+    font-family:'Spartan', sans-serif;
+}
+
+.authContainer {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 100%;
+    max-width: 1100px;
+}
+
+.authBox {
+    background-color: rgb(216, 214, 214);
+    position: relative;
+    display: flex;
+    width: 250px;
+    height: 350px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    
+}
+
+.authBox:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.7);
+}
+
+
+.authDescription {
+    background: #d3d3d3;
+    padding: 30px 50px;
+    text-align: center;
+    margin-top: 50px;
+    max-width: 800px;
+
+}
+
+.authDescription h3 {
+    margin: 0 0 20px 0;
+    font-size: 1.2rem;
+    font-family:'Spartan', sans-serif;
+}
+
+.authDescription p {
+    margin-top: 0;
+    line-height: 1.6;
+    text-align: justify; 
+    font-family:'Spartan', sans-serif;
+}
