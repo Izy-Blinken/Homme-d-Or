@@ -13,11 +13,12 @@
         <link rel="stylesheet" href="../assets/css/CartPageStyle.css">
         <link rel="stylesheet" href="../assets/css/RegLoginModalStyle.css">
         <link rel="stylesheet" href="../assets/css/ProfilePageStyle.css">
+        <link rel="stylesheet" href="../assets/css/HomepageStyle.css">
     </head>
 
     <body>
         <?php include '../components/header.php'; ?>
-        <main>
+        <main class="mainBG">
             <section id = "blog-header"> 
                 <img src="../assets/images/brand_images/collab_image.png" alt="Blog Header Image" width = "500px" height = "500px">
             <div>
@@ -113,33 +114,36 @@
                 </div>
             </section>
 
-            <section id="ads-section">
-    
-                <div class="ads-container">
-                    <div class="ad-box">
-                        <img src="../assets/images/products_images/ad1.png" alt="Advertisement 1">
+            
+            <div class="promo-arrivals-wrapper-2">
+                <section class="promo-cards-section-2">
+                    <div class="promo-cards-container-2">
+                        <!-- Card 1 -->
+                        <div class="promo-card">
+                            <div class="promo-image">
+                                <img src="../assets/images/brand_images/nocturne.png" alt="Holiday Gifts">
+                            </div>
+                            <div class="promo-content">
+                                <h3>Engraving Compliment</h3>
+                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. In commodo porta mi, ut vestibulum urna eros. Nam in lacinia est, vestibulum urna eros, sagittis et mollis gravida, tincidunt a lorem.</p>
+                                <a href="#" class="promo-link">DISCOVER</a>
+                            </div>
+                        </div>
+                        
+                        <!-- Card 2 -->
+                        <div class="promo-card">
+                            <div class="promo-image">
+                                <img src="../assets/images/brand_images/elegperf.jpg" alt="Exclusive Offers">
+                            </div>
+                            <div class="promo-content">
+                                <h3>Art of Gifting</h3>
+                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. In commodo porta mi, ut vestibulum urna eros. Nam in lacinia est, vestibulum urna eros, sagittis et mollis gravida, tincidunt a lorem.</p>
+                                <a href="#" class="promo-link">DISCOVER</a>
+                            </div>
+                        </div>
                     </div>
-                    <div class="ad-box">
-                        <img src="../assets/images/products_images/ad2.png" alt="Advertisement 2">
-                    </div>
-                </div>
-                
-               
-                <div class="content-container">
-                    <div class="content-item">
-                        <h3>Holiday gifts selection</h3>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Item in bonitat vel, nostrum erat sed, sagittis et metus gravida, blandiquet a lorem.</p>
-                        <button>DISCOVER</button>
-                    </div>
-                    
-                    <div class="content-item">
-                        <h3>Holiday gifts selection</h3>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Item in bonitat vel, nostrum erat sed, sagittis et metus gravida, blandiquet a lorem.</p>
-                        <button>DISCOVER</button>
-                    </div>
-                </div>
-            </section>
-
+                </section>
+            </div>
         </main>
 
         <?php include '../components/footer.php'; ?>

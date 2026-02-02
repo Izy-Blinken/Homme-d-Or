@@ -1,5 +1,48 @@
-
 /*PROFILE*/
+
+.mainBG{
+    position: relative;
+    background-image: url('../images/brand_images/bg-image.jpg');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    min-height: 100vh;
+}
+
+.profileContainer {
+    max-width: 1600px;
+    margin: 0 auto;
+    padding: 100px 80px;
+    display: grid;
+    grid-template-columns: 350px 1fr;
+    gap: 40px;
+}
+
+.colFirst {
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    padding: 40px;
+    height: fit-content;
+    position: sticky;
+    top: 120px;
+}
+
+.rightSide {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+}
+
+.colSecond,
+.colThird,
+.colFourth {
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    padding: 40px;
+}
 
 .profileImageSection {
     display: flex;
@@ -13,11 +56,16 @@
     height: 150px;
     border-radius: 50%;
     overflow: hidden;
-    border: 3px solid #000000;
-    background-color: white;
+    border: 3px solid #ffffff;
+    background-color: rgba(255, 255, 255, 0.1);
     display: flex;
     align-items: center;
     justify-content: center;
+    transition: transform 0.3s ease;
+}
+
+.profileImageFrame:hover {
+    transform: scale(1.05);
 }
 
 .profileImageFrame .profileImage {
@@ -30,13 +78,13 @@
     margin-top: 15px;
     font-family: 'Spartan', sans-serif;
     font-size: 13px;
-    color: #000000;
+    color: #ffffff;
     background: none;
     border: none;
-    border-bottom: 1px solid #000000;
+    border-bottom: 1px solid #ffffff;
     cursor: pointer;
     transition: 0.3s;
-    padding: 0;
+    padding: 5px 0;
 }
 
 .addProfileBtn:hover {
@@ -45,7 +93,7 @@
 }
 
 .profileInfo {
-    margin: 20px 15px;
+    margin: 20px 0;
 }
 
 .infoGroup {
@@ -66,15 +114,16 @@
 .infoGroup p {
     font-family: 'Spartan', sans-serif;
     font-size: 15px;
-    color: rgb(76, 76, 76);
+    color: #ffffff;
     margin: 0;
     padding-left: 2px;
+    font-weight: 300;
 }
 
 .profileActions {
     display: flex;
     justify-content: center;
-    margin: 30px 15px 20px 15px;
+    margin: 30px 0 20px 0;
 }
 
 .editProfileBtn {
@@ -82,16 +131,18 @@
     font-size: 14px;
     font-weight: 500;
     padding: 12px 40px;
-    background-color: rgb(3, 3, 84);
+    background-color: transparent;
     color: white;
-    border: none;
+    border: 2px solid white;
     cursor: pointer;
-    transition: 0.3s;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
 }
 
 .editProfileBtn:hover {
-    background-color: #c9a961;
-    color: white;
+    background-color: white;
+    color: #000;
 }
 
 /*section headers*/
@@ -99,41 +150,42 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-top: 12px;
-    margin-bottom: 8px;
-    padding: 0 15px;
+    margin-bottom: 30px;
 }
 
 .profileContainer h3 {
     font-family: 'Spartan', sans-serif;
-    font-size: 18px;
-    font-weight: 600;
-    color: #000000;
+    font-size: 1.8rem;
+    font-weight: 400;
+    color: #ffffff;
     text-transform: uppercase;
-    letter-spacing: 1px;
-    margin-top: 20px;
+    letter-spacing: 2px;
+    margin: 0;
+}
+
+.divider,
+.dividerF {
+    display: none;
 }
 
 /*view all btn*/
 .profileContainer .viewAllBtn {
     font-family: 'Spartan', sans-serif;
     font-size: 13px;
-    font-weight: 500;
+    font-weight: 400;
     background: none;
     border: none;
-    border-bottom: 1px solid #000000;
+    border-bottom: 1px solid #ffffff;
     cursor: pointer;
     transition: 0.3s;
-    color: #000000;
+    color: #ffffff;
     padding: 0;
     white-space: nowrap;
-    margin-top: 20px;
-    margin-right: 1%;
 } 
 
 .profileContainer .viewAllBtn:hover {
     color: #c9a961;
-    border-bottom-color: rgb(3, 3, 84);
+    border-bottom-color: #c9a961;
 }
 
 /*orders*/
@@ -141,22 +193,23 @@
     display: flex;
     flex-direction: column;
     gap: 20px;
-    padding: 10px 15px;
 }
 
 .orderedItem {
     display: flex;
     align-items: center;
     gap: 20px;
-    padding: 15px;
-    background-color: white;
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
     border-left: 3px solid #c9a961;
-    transition: 0.3s;
+    transition: all 0.3s ease;
 }
 
 .orderedItem:hover {
     transform: translateX(5px);
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    background: rgba(255, 255, 255, 0.15);
 }
 
 .orderIcon {
@@ -165,56 +218,60 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: #f5f5f5;
+    background-color: rgba(255, 255, 255, 0.1);
     border-radius: 50%;
 }
 
 .orderIcon i {
     font-size: 24px;
-    color: #000000;
+    color: #ffffff;
 }
 
 .orderDetails h4 {
     font-family: 'Spartan', sans-serif;
     font-size: 16px;
-    font-weight: 600;
-    color: #000000;
+    font-weight: 500;
+    color: #ffffff;
     margin: 0 0 5px 0;
 }
 
 .orderDetails p {
     font-family: 'Spartan', sans-serif;
     font-size: 13px;
-    color: rgb(120, 120, 120);
+    color: rgba(255, 255, 255, 0.7);
     margin: 0;
+    font-weight: 300;
 }
 
 /*history*/
 .historyList {
-    padding: 10px 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
 }
 
 .historyItem {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 18px 15px;
-    background-color: white;
-    margin-bottom: 12px;
-    border-left: 2px solid rgb(3, 3, 84);
-    transition: 0.3s;
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-left: 2px solid #ffffff;
+    transition: all 0.3s ease;
 }
 
 .historyItem:hover {
     transform: translateX(5px);
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    background: rgba(255, 255, 255, 0.15);
 }
 
 .historyDate {
     font-family: 'Spartan', sans-serif;
     font-size: 12px;
     font-weight: 600;
-    color: #000000;
+    color: #c9a961;
     text-transform: uppercase;
     letter-spacing: 0.5px;
     min-width: 90px;
@@ -228,15 +285,16 @@
 .historyProduct {
     font-family: 'Spartan', sans-serif;
     font-size: 14px;
-    color: rgb(76, 76, 76);
+    color: rgba(255, 255, 255, 0.9);
     margin: 0 0 5px 0;
+    font-weight: 300;
 }
 
 .historyPrice {
     font-family: 'Spartan', sans-serif;
     font-size: 15px;
-    font-weight: 600;
-    color: #000000;
+    font-weight: 500;
+    color: #ffffff;
     margin: 0;
 }
 
@@ -244,29 +302,31 @@
 .wishlistGrid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 15px;
-    padding: 10px 15px;
-    margin-bottom: 20px;
+    gap: 20px;
+    margin-bottom: 30px;
 }
 
 .wishlistItem {
-    background-color: white;
-    padding: 15px;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    padding: 20px;
     text-align: center;
-    transition: 0.3s;
+    transition: all 0.3s ease;
     border-top: 2px solid transparent;
 }
 
 .wishlistItem:hover {
     border-top-color: #c9a961;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    background: rgba(255, 255, 255, 0.15);
+    transform: translateY(-5px);
 }
 
 .wishlistImage {
     width: 100%;
-    height: 120px;
-    background-color: #f5f5f5;
-    margin-bottom: 12px;
+    height: 150px;
+    background-color: rgba(0, 0, 0, 0.3);
+    margin-bottom: 15px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -282,37 +342,40 @@
 .wishlistName {
     font-family: 'Spartan', sans-serif;
     font-size: 13px;
-    color: rgb(76, 76, 76);
+    color: rgba(255, 255, 255, 0.9);
     margin: 0 0 8px 0;
+    font-weight: 300;
 }
 
 .wishlistPrice {
     font-family: 'Spartan', sans-serif;
     font-size: 14px;
-    font-weight: 600;
-    color: #000000;
+    font-weight: 500;
+    color: #ffffff;
     margin: 0;
 }
 
 /*sign out*/
 .signOutBtn {
-    width: calc(100% - 30px);
+    width: 100%;
     font-family: 'Spartan', sans-serif;
     font-size: 14px;
     font-weight: 500;
     padding: 12px 20px;
     background-color: white;
-    color: rgb(3, 3, 84);
-    border: 1px solid #000324;
+    color: #000;
+    border: 2px solid white;
     cursor: pointer;
-    transition: 0.3s;
-    margin: 0 15px 15px 15px;
-    margin-top: 50px;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
 }
 
 .signOutBtn:hover {
-    background-color: rgb(3, 3, 84);
+    background-color: rgb(0,0,78);
     color: white;
+    border: 2px solid rgb(0,0,78);
+
 }
 
 
@@ -419,7 +482,6 @@
     background-color: #f3f4f6;
     color: rgb(3, 3, 84);
 }
-
 
 .editModalBody {
     flex: 1;
@@ -719,7 +781,46 @@
 }
 
 /*Responsive */
-@media (max-width: 640px) {
+
+/* Tablet */
+@media (max-width: 1024px) {
+    .profileContainer {
+        grid-template-columns: 1fr;
+        padding: 80px 40px;
+        gap: 30px;
+    }
+    
+    .colFirst {
+        position: static;
+    }
+    
+    .wishlistGrid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+    .profileContainer {
+        padding: 60px 20px;
+        gap: 25px;
+    }
+    
+    .colFirst,
+    .colSecond,
+    .colThird,
+    .colFourth {
+        padding: 30px 25px;
+    }
+    
+    .profileContainer h3 {
+        font-size: 1.5rem;
+    }
+    
+    .wishlistGrid {
+        grid-template-columns: 1fr;
+    }
+    
     .editModalContent {
         width: 95%;
         height: 95vh;
@@ -751,5 +852,39 @@
         right: 16px;
         left: 16px;
         top: 16px;
+    }
+}
+
+/* Small Mobile */
+@media (max-width: 480px) {
+    .profileContainer {
+        padding: 40px 20px;
+    }
+    
+    .colFirst,
+    .colSecond,
+    .colThird,
+    .colFourth {
+        padding: 25px 20px;
+    }
+    
+    .profileContainer h3 {
+        font-size: 1.3rem;
+    }
+    
+    .profileImageFrame {
+        width: 120px;
+        height: 120px;
+    }
+    
+    .historyItem {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+    
+    .historyInfo {
+        text-align: left;
+        width: 100%;
     }
 }

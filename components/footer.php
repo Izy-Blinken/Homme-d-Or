@@ -1,3 +1,4 @@
+
 <!--Register Modal-->
 
 <div id="signupModal" class="modal">
@@ -126,47 +127,130 @@
 </div>
 
 
+
+        
+            <div class="chatWidget">
+                
+                <button class="chatBubble" id="chatBubbleID">
+                    <i class="fa-solid fa-message"></i>
+                </button>
+
+                <div class="chatBox" id="chatBoxID">
+                    
+                    <div class="chatHeader">
+                        <div class="chatHeaderInfo">
+                            <div class="chatAvatar">
+                                <i class="fa-solid fa-user"></i>
+                            </div>
+                            <div class="chatHeaderText">
+                                <h3>Customer Support</h3>
+                                <p class="chatStatus">Online</p>
+                            </div>
+                        </div>
+                        <button class="chatCloseBtn" id="chatCloseID">
+                            <i class="fa-solid fa-xmark"></i>
+                        </button>
+                    </div>
+                    
+                    <div class="chatMessages" id="chatMessagesID">
+                        <div class="chatMessage chatMessageLeft">
+                            <div class="chatMessageAvatar">
+                                <i class="fa-solid fa-user"></i>
+                            </div>
+                            
+                        </div>
+                    </div>
+                    
+                    <div class="chatInput">
+                        <input type="text" id="chatInputField" placeholder="Type your message...">
+                        <button id="chatSendBtn">
+                            <i class="fa-solid fa-paper-plane"></i>
+                        </button>
+                    </div>
+                    
+                </div>
+            </div>
+
+<link rel="stylesheet" href="../assets/css/msgStyle.css">
 <script src="../assets/js/regModal.js"></script>
 <script src="../assets/js/logModal.js"></script>
+<script src="../assets/js/ChatBubble.js"></script>
 
 
 <footer id="footer">
-    <div class="footer-content">
-        <div class="footer-section">
-            <h3>About Us</h3>
-            <p>Homme d'Or is a bla bla bla. We provide quality products and excellent service.</p>
-        </div>
-        
-        <div class="footer-section">
-            <h3>Quick Links</h3>
-            <ul>
-                <li><a href="index.php">Home</a></li>
-                <li><a href="shop.php">Shop</a></li>
-                <li><a href="AboutUs.php">About Us</a></li>
-                <li><a href="ContactUs.php">Contact</a></li>
-                <li><a href="blog.php">Blog</a></li>
-            </ul>
-        </div>
-        
-        <div class="footer-section">
-            <h3>Follow Us</h3>
-            <div class="social-icons">
-                <a href="#"><i class="fa-brands fa-facebook"></i></a>
-                <a href="#"><i class="fa-brands fa-instagram"></i></a>
-                <a href="#"><i class="fa-brands fa-twitter"></i></a>
-                <a href="#"><i class="fa-brands fa-youtube"></i></a>
-            </div>
-        </div>
-        
-        <div class="footer-section">
-            <h3>Contact Info</h3>
-            <p><i class="fa-solid fa-location-dot"></i> Bulacan State University - Hagonoy Campus</p>
-            <p><i class="fa-solid fa-phone"></i> +63 123 456 7890</p>
-            <p><i class="fa-solid fa-envelope"></i> info@hommedor.com</p>
+    <!-- Newsletter Section -->
+    <div class="newsletter-section">
+        <div class="newsletter-container">
+            <h2>Newsletter</h2>
+            <p>Sign up to receive our latest updates</p>
+            <form class="newsletter-form" id="newsletterForm">
+                <input type="email" placeholder="EMAIL" required>
+                <button type="submit">Subscribe</button>
+            </form>
         </div>
     </div>
-    
-    <div class="footer-bottom">
-        <p>&copy; 2024 Homme d'Or. All rights reserved.</p>
+
+    <!-- Footer Links Section -->
+    <div class="footer-links-section">
+        <div class="footer-links-container">
+            <!-- About Us Column -->
+            <div class="footer-column">
+                <h3>About Us</h3>
+                <p>Homme d'Or is a bla bla bla. We provide quality products and excellent service.</p>
+            </div>
+
+            <!-- Quick Links Column -->
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="index.php">Home</a></li>
+                    <li><a href="shop.php">Shop</a></li>
+                    <li><a href="AboutUs.php">About Us</a></li>
+                    <li><a href="ContactUs.php">Contact</a></li>
+                    <li><a href="blog.php">Blog</a></li>
+                </ul>
+            </div>
+
+            <!-- Follow Us Column -->
+            <div class="footer-column">
+                <h3>Follow Us</h3>
+                <div class="social-icons">
+                    <a href="#"><i class="fa-brands fa-facebook"></i></a>
+                    <a href="#"><i class="fa-brands fa-instagram"></i></a>
+                    <a href="#"><i class="fa-brands fa-twitter"></i></a>
+                    <a href="#"><i class="fa-brands fa-youtube"></i></a>
+                </div>
+            </div>
+
+            <!-- Contact Info Column -->
+            <div class="footer-column">
+                <h3>Contact Info</h3>
+                <ul class="contact-list">
+                    <li><i class="fa-solid fa-location-dot"></i> Bulacan State University - Hagonoy Campus</li>
+                    <li><i class="fa-solid fa-phone"></i> +63 123 456 7890</li>
+                    <li><i class="fa-solid fa-envelope"></i> info@hommedor.com</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer Bottom Section -->
+    <div class="footer-bottom-section">
+        <div class="footer-bottom-container">
+            <p class="copyright">&copy; 2024 Homme d'Or. All rights reserved.</p>
+            <div class="footer-logo">
+                <a href="index.php">
+                    <img src="../assets/images/brand_images/prodLogo.png" alt="Homme d'Or Logo">
+                </a>
+            </div>
+            <div class="language-selector">
+                <i class="fas fa-globe"></i>
+                <select id="languageSelect">
+                    <option value="en">ENG</option>
+                    <option value="fil">FIL</option>
+                    <option value="es">ESP</option>
+                </select>
+            </div>
+        </div>
     </div>
 </footer>

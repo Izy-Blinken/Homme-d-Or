@@ -1,169 +1,476 @@
-
 /*ABOUT US PAGE*/
+
+.mainBG{
+    position: relative;
+    background-image: url('../images/brand_images/bg-image.jpg');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    min-height: 100vh;
+}
 
 /*Our Story*/
 .aboutUs-container {
-    max-width: 1200px;
-    margin: 50px;
-    padding: 20px;
-    height: 600px;
-    background-color: #c2c2c2;
     display: flex;
-    gap: 20px;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.5);
-    overflow: hidden;
+    align-items: center;
+    justify-content: center;
+    gap: 80px;
+    padding: 120px 80px;
+    max-width: 1600px;
+    margin: 0 auto;
 }
 
 .aboutUs-text {
-    flex: 1; 
+    flex: 1;
+    max-width: 800px;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    padding: 60px;
 }
 
 .aboutUs-container h3 {
-    font-size: 36px;
-    margin-left: 200px;
-    margin-top: 80px;
-    margin-bottom: 40px;
-    font-family:'Spartan', sans-serif;
-    color: #0e101f;
+    margin-top: 0;
+    margin-bottom: 30px;
+    font-size: 3.5rem;
+    font-family: 'Spartan', sans-serif;
+    color: white;
+    font-weight: 300;
+    letter-spacing: 2px;
+    text-align: left;
 }
 
 .aboutUs-container p {
-    font-size: 18px;
-    line-height: 1.7;
-    margin-left: 30px;
-    color: #0e101f;
+    margin: 0;
+    font-size: 1.1rem;
+    color: #ffffff;
     text-align: justify;
-    font-family:'Spartan', sans-serif;
+    font-family: 'Spartan', sans-serif;
+    line-height: 2;
+    font-weight: 300;
 }
 
 .aboutUs-container img {
-    width: 50%;
-    height: auto;
+    flex-shrink: 0;
+    width: 500px;
+    height: 500px;
     object-fit: cover;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+    transition: transform 0.3s ease;
 }
 
-/*Shop Description style*/
-.shopDesc{
-    position: relative; 
-    height: 90vh;
-    width: 100%;
+.aboutUs-container img:hover {
+    transform: translateY(-5px);
+}
+
+/*Shop Description*/
+.shopDesc {
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-top: 100px; 
-    padding: 20px;
+    gap: 80px;
+    padding: 120px 80px;
+    max-width: 1600px;
+    margin: 0 auto;
 }
 
-.shopDesc img{
-    max-height: 600px;
-    max-width: 1130px;
-    width: auto;
-    height: auto;
-    object-fit: contain;
-    margin-right: 100px; 
-    margin-left: 100px;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.5);
-    
+.shopDesc img {
+    flex-shrink: 0;
+    width: 500px;
+    height: 500px;
+    object-fit: cover;
+    transition: transform 0.3s ease;
 }
 
-.shopDesc-text{
-    position: absolute;
-    top: 50%; 
-    right: 5%; 
-    transform: translateY(-50%);
-    padding: 40px 80px;
-    max-width: 45%; 
-    text-align: center;
+.shopDesc img:hover {
+    transform: translateY(-5px);
 }
 
-.shopDesc-text h3{
-    font-size: 36px;
-    margin-left: 0; 
+.shopDesc-text {
+    flex: 1;
+    max-width: 800px;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    padding: 60px;
+}
+
+.shopDesc-text h3 {
     margin-top: 0;
-    margin-bottom: 40px;
-    font-family:'Spartan', sans-serif;
-    color: #060606;
+    margin-bottom: 30px;
+    font-size: 3.5rem;
+    font-family: 'Spartan', sans-serif;
+    color: white;
+    font-weight: 300;
+    letter-spacing: 2px;
+    text-align: left;
 }
 
-.shopDesc-text p{
-    font-size: 18px;
-    line-height: 1.7;
-    color: #09090a;
+.shopDesc-text p {
+    margin: 0;
+    font-size: 1.1rem;
+    color: #ffffff;
     text-align: justify;
-    font-family:'Spartan', sans-serif;
+    font-family: 'Spartan', sans-serif;
+    line-height: 2;
+    font-weight: 300;
 }
 
-.authors{
-    position: relative;
-    display: flex;
-    justify-content: center;
-    margin-top: 100px;
-    flex-direction: column;
-    align-items: center;
-    padding: 0 20px 60px; 
+/*Authors Section*/
+.authors {
+    max-width: 1600px;
+    margin: 0 auto;
+    padding: 100px 80px;
 }
 
 .authTitle {
     text-align: center;
-    width: 100%;
-    font-family:'Spartan', sans-serif;
+    margin-bottom: 80px;
 }
 
-.authTitle h3{
-    font-size: 36px;
-    margin-bottom: 40px;
-    color: #030303;
-    font-weight: 600;
-    letter-spacing: 1px;
-    font-family:'Spartan', sans-serif;
+.authTitle h3 {
+    font-size: 3rem;
+    margin-bottom: 0;
+    font-family: 'Spartan', sans-serif;
+    color: white;
+    font-weight: 300;
+    letter-spacing: 2px;
 }
 
 .authContainer {
-    display: flex;
-    gap: 20px;
-    flex-wrap: wrap;
-    justify-content: center;
-    width: 100%;
-    max-width: 1100px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 40px;
+    margin-bottom: 60px;
 }
 
 .authBox {
-    background-color: rgb(216, 214, 214);
-    position: relative;
-    display: flex;
-    width: 250px;
-    height: 350px;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+    width: 100%;
+    aspect-ratio: 2 / 3;
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
     overflow: hidden;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    
+    transition: transform 0.3s ease;
+    cursor: pointer;
 }
 
 .authBox:hover {
-    transform: translateY(-8px);
-    box-shadow: 0 8px 20px rgba(0,0,0,0.7);
+    transform: translateY(-5px);
+    background: rgba(0, 0, 0, 0.6);
 }
 
-
 .authDescription {
-    background: #d3d3d3;
-    padding: 30px 50px;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    padding: 50px 80px;
     text-align: center;
-    margin-top: 50px;
-    max-width: 800px;
-
+    margin: 0 auto;
+    max-width: 1200px;
 }
 
 .authDescription h3 {
-    margin: 0 0 20px 0;
-    font-size: 1.2rem;
-    font-family:'Spartan', sans-serif;
+    margin: 0 0 30px 0;
+    font-size: 1.8rem;
+    font-family: 'Spartan', sans-serif;
+    color: white;
+    font-weight: 400;
+    letter-spacing: 1px;
 }
 
-.authDescription p {
-    margin-top: 0;
-    line-height: 1.6;
-    text-align: justify; 
-    font-family:'Spartan', sans-serif;
+.authDescription .description-text p {
+    margin: 0;
+    line-height: 2;
+    text-align: justify;
+    font-family: 'Spartan', sans-serif;
+    color: #ffffff;
+    font-size: 1.1rem;
+    font-weight: 300;
+}
+
+/*Highlights Section*/
+#highlights {
+    max-width: 1600px;
+    margin: 0 auto;
+    padding: 100px 80px;
+}
+
+.ads-container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 40px;
+    margin-bottom: 60px;
+}
+
+.ad-box {
+    background: #000;
+    overflow: hidden;
+    transition: transform 0.3s ease;
+    cursor: pointer;
+    height: 500px;
+}
+
+.ad-box img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.3s ease;
+}
+
+.ad-box:hover {
+    transform: translateY(-5px);
+}
+
+.ad-box:hover img {
+    transform: scale(1.05);
+}
+
+.content-container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 40px;
+}
+
+.content-item {
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    padding: 50px;
+    transition: all 0.3s ease;
+}
+
+.content-item:hover {
+    transform: translateY(-5px);
+    background: rgba(0, 0, 0, 0.6);
+}
+
+.content-item h3 {
+    color: white;
+    margin-bottom: 25px;
+    font-size: 1.8rem;
+    font-family: 'Spartan', sans-serif;
+    font-weight: 400;
+    letter-spacing: 1px;
+}
+
+.content-item p {
+    color: #ffffff;
+    line-height: 2;
+    margin-bottom: 35px;
+    text-align: justify;
+    font-family: 'Spartan', sans-serif;
+    font-size: 1.1rem;
+    font-weight: 300;
+}
+
+.content-item button {
+    background: transparent;
+    color: white;
+    padding: 15px 40px;
+    border: 2px solid white;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 400;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    transition: all 0.3s ease;
+}
+
+.content-item button:hover {
+    background: white;
+    color: #000;
+}
+
+/* Tablet */
+@media (max-width: 1024px) {
+    .aboutUs-container,
+    .shopDesc {
+        flex-direction: column;
+        padding: 80px 40px;
+        text-align: center;
+    }
+    
+    .aboutUs-container img,
+    .shopDesc img {
+        width: 400px;
+        height: 400px;
+    }
+    
+    .aboutUs-text,
+    .shopDesc-text {
+        padding: 50px;
+    }
+    
+    .aboutUs-container h3,
+    .shopDesc-text h3 {
+        font-size: 3rem;
+        text-align: center;
+    }
+    
+    .authors,
+    #highlights {
+        padding: 80px 40px;
+    }
+    
+    .authTitle h3 {
+        font-size: 2.5rem;
+        margin-bottom: 60px;
+    }
+    
+    .authContainer {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 30px;
+    }
+    
+    .authDescription {
+        padding: 40px 60px;
+    }
+    
+    .ads-container,
+    .content-container {
+        grid-template-columns: 1fr;
+        gap: 30px;
+    }
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+    .aboutUs-container,
+    .shopDesc {
+        padding: 60px 20px;
+    }
+    
+    .aboutUs-container img,
+    .shopDesc img {
+        width: 300px;
+        height: 300px;
+    }
+    
+    .aboutUs-text,
+    .shopDesc-text {
+        padding: 40px 30px;
+    }
+    
+    .aboutUs-container h3,
+    .shopDesc-text h3 {
+        font-size: 2.5rem;
+    }
+    
+    .aboutUs-container p,
+    .shopDesc-text p {
+        font-size: 1rem;
+    }
+    
+    .authors,
+    #highlights {
+        padding: 60px 20px;
+    }
+    
+    .authTitle h3 {
+        font-size: 2rem;
+        margin-bottom: 40px;
+    }
+    
+    .authContainer {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 25px;
+    }
+    
+    .authDescription {
+        padding: 40px 30px;
+    }
+    
+    .authDescription h3 {
+        font-size: 1.5rem;
+    }
+    
+    .authDescription .description-text p {
+        font-size: 1rem;
+    }
+    
+    .content-item {
+        padding: 40px 30px;
+    }
+    
+    .content-item h3 {
+        font-size: 1.5rem;
+    }
+    
+    .content-item p {
+        font-size: 1rem;
+    }
+    
+    .ad-box {
+        height: 400px;
+    }
+}
+
+/* Small Mobile */
+@media (max-width: 480px) {
+    .aboutUs-container,
+    .shopDesc {
+        padding: 40px 20px;
+    }
+    
+    .aboutUs-container img,
+    .shopDesc img {
+        width: 250px;
+        height: 250px;
+    }
+    
+    .aboutUs-text,
+    .shopDesc-text {
+        padding: 30px 20px;
+    }
+    
+    .aboutUs-container h3,
+    .shopDesc-text h3 {
+        font-size: 2rem;
+    }
+    
+    .aboutUs-container p,
+    .shopDesc-text p {
+        font-size: 0.95rem;
+    }
+    
+    .authors,
+    #highlights {
+        padding: 40px 20px;
+    }
+    
+    .authTitle h3 {
+        font-size: 1.8rem;
+    }
+    
+    .authContainer {
+        grid-template-columns: 1fr;
+        gap: 25px;
+    }
+    
+    .authDescription {
+        padding: 30px 20px;
+    }
+    
+    .authDescription h3 {
+        font-size: 1.3rem;
+    }
+    
+    .content-item {
+        padding: 30px 20px;
+    }
+    
+    .content-item h3 {
+        font-size: 1.3rem;
+    }
+    
+    .content-item button {
+        padding: 12px 30px;
+        font-size: 0.9rem;
+    }
+    
+    .ad-box {
+        height: 300px;
+    }
 }

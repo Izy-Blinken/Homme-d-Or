@@ -15,6 +15,7 @@
     padding: 0;
     box-sizing: border-box;
     font-family:'Spartan', sans-serif;
+    
 }
 
 h1{
@@ -43,7 +44,21 @@ p{
 
 body{
     width: 100%;
+    
 }
 
+body > footer,
+body > main {
+    position: relative;
+    z-index: 100;
+    background: #fff;
+    
+}
+    
+main {
+    margin: 0;
+    padding: 0;
+    
+}
 
 

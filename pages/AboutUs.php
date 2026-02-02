@@ -13,13 +13,14 @@
         <link rel="stylesheet" href="../assets/css/CartPageStyle.css">
         <link rel="stylesheet" href="../assets/css/RegLoginModalStyle.css">
         <link rel="stylesheet" href="../assets/css/ProfilePageStyle.css">
+        <link rel="stylesheet" href="../assets/css/HomepageStyle.css">
 
 
     </head>
 
     <body>
         <?php include '../components/header.php'; ?>
-        <main>
+        <main class="mainBG">
 
 
         <div class="aboutUs-container">
@@ -39,7 +40,7 @@
 
         <div class="shopDesc">
 
-            <img src="../assets/images/brand_images/headerBG.png" alt="Shop Description">
+            <img src="../assets/images/brand_images/elegperf.jpg" alt="Shop Description">
             
             <div class="shopDesc-text">
                 <h3>About Us</h3>
@@ -76,29 +77,35 @@
             </div>
 
         </div>
-        <section id="highlights">
-        <div class="ads-container">
-            <div class="ad-box">
-                <img src="../assets/images/products_images/ad1.png" alt="Advertisement 1">
-            </div>
-            <div class="ad-box">
-                <img src="../assets/images/products_images/ad2.png" alt="Advertisement 2">
-            </div>
-        </div>
                 
-        <div class="content-container">
-            <div class="content-item">
-                <h3>Holiday gifts selection</h3>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Item in bonitat vel, nostrum erat sed, sagittis et metus gravida, blandiquet a lorem.</p>
-                <button>DISCOVER</button>
+        <div class="promo-arrivals-wrapper-2">
+                <section class="promo-cards-section-2">
+                    <div class="promo-cards-container-2">
+                        <!-- Card 1 -->
+                        <div class="promo-card">
+                            <div class="promo-image">
+                                <img src="../assets/images/products_images/ad1.png" alt="Holiday Gifts">
+                            </div>
+                            <div class="promo-content">
+                                <h3>Engraving Compliment</h3>
+                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. In commodo porta mi, ut vestibulum urna eros. Nam in lacinia est, vestibulum urna eros, sagittis et mollis gravida, tincidunt a lorem.</p>
+                                <a href="#" class="promo-link">DISCOVER</a>
+                            </div>
+                        </div>
+                        
+                        <!-- Card 2 -->
+                        <div class="promo-card">
+                            <div class="promo-image">
+                                <img src="../assets/images/products_images/ad2.png" alt="Exclusive Offers">
+                            </div>
+                            <div class="promo-content">
+                                <h3>Art of Gifting</h3>
+                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. In commodo porta mi, ut vestibulum urna eros. Nam in lacinia est, vestibulum urna eros, sagittis et mollis gravida, tincidunt a lorem.</p>
+                                <a href="#" class="promo-link">DISCOVER</a>
+                            </div>
+                        </div>
+                    </div>
             </div>
-                    
-            <div class="content-item">
-                <h3>Holiday gifts selection</h3>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Item in bonitat vel, nostrum erat sed, sagittis et metus gravida, blandiquet a lorem.</p>
-                <button>DISCOVER</button>
-            </div>
-        </div>
         </section>
 
         </main>

@@ -18,7 +18,7 @@
     <body>
         <?php include '../components/header.php'; ?>
 
-        <main>
+        <main class="mainBG">
             <div class="profileContainer">
                 <div class="colFirst">
                     <div class="headerRow">
@@ -170,8 +170,9 @@
                             </div>
                         </div>
 
-                        <button class="signOutBtn">Sign Out</button>
+                        
                     </div>
+                    <button class="signOutBtn">Sign Out</button>
 
                 </div>
             </div>

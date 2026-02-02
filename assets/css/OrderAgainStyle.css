@@ -7,7 +7,13 @@
     align-items: center;
     justify-content: center;
     padding: 50px 20px;
-    background: #f5f5f5;
+    position: relative;
+    background-image: url('../images/brand_images/bg-image.jpg');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    min-height: 100vh;
 }
 
 .confirmationBox {

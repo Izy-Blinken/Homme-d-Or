@@ -16,9 +16,9 @@
     </head>
 
     <body>
-        <?php include '../components/checkoutHeader.php'; ?>
+        <?php include '../components/header.php'; ?>
 
-        <main>
+        <main class="mainBG">
 
             <div class="confirmationContainer">
                 <div class="confirmationBox">

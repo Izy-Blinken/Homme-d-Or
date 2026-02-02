@@ -1,0 +1,240 @@
+.chatWidget {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    z-index: 9999;
+}
+
+/* Chat Bubble Button */
+.chatBubble {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #3b82f6 0%, #1e40af 100%);
+    border: none;
+    color: white;
+    font-size: 24px;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(59, 130, 246, 0.4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+}
+
+.chatBubble:hover {
+    transform: scale(1.1);
+    box-shadow: 0 6px 20px rgba(59, 130, 246, 0.4);
+}
+
+.chatBubble a {
+    color: white;
+    text-decoration: none;
+}
+
+/* Chat Box */
+.chatBox {
+    position: absolute;
+    bottom: 80px;
+    right: 0;
+    width: 400px;
+    height: 500px;
+    background: white;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+    display: none;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.chatBox.show {
+    display: flex;
+    animation: slideUp 0.3s ease;
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Chat Header */
+.chatHeader {
+    background: linear-gradient(135deg, rgb(59,130,246) 0%, rgb(59,130,246) 100%);
+    color: white;
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.chatHeaderInfo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.chatAvatar {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+}
+
+.chatHeaderText h3 {
+    font-size: 16px;
+    margin: 0 0 3px 0;
+    font-weight: 600;
+}
+
+.chatStatus {
+    font-size: 12px;
+    margin: 0;
+    opacity: 0.9;
+}
+
+.chatCloseBtn {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 24px;
+    cursor: pointer;
+    width: 35px;
+    height: 35px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.3s ease;
+}
+
+.chatCloseBtn:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+/* Chat Messages */
+.chatMessages {
+    flex: 1;
+    padding: 20px;
+    overflow-y: auto;
+    background: #f9fafb;
+}
+
+.chatMessages::-webkit-scrollbar {
+    width: 6px;
+}
+
+.chatMessages::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+}
+
+.chatMessage {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 15px;
+    align-items: flex-start;
+}
+
+.chatMessageAvatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: #e0e7ff;
+    color: rgb(59,130,246);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    flex-shrink: 0;
+}
+
+.chatMessageBubble {
+    max-width: 70%;
+    padding: 12px 16px;
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+.chatMessageBubble p {
+    margin: 0;
+}
+
+/* Left Message (from support) */
+.chatMessageLeft .chatMessageBubble {
+    background: white;
+    color: #1f2937;
+}
+
+/* Right Message (from user) */
+.chatMessageRight {
+    flex-direction: row-reverse;
+}
+
+.chatMessageRight .chatMessageAvatar {
+    background: rgb(59,130,246);
+    color: white;
+}
+
+.chatMessageRight .chatMessageBubble {
+    background: rgb(59,130,246);
+    color: white;
+}
+
+/* Chat Input */
+.chatInput {
+    padding: 15px 20px;
+    background: white;
+    border-top: 1px solid #e5e7eb;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.chatInput input {
+    flex: 1;
+    padding: 12px 16px;
+    border: 1px solid #e5e7eb;
+    font-size: 14px;
+    outline: none;
+    transition: border-color 0.3s ease;
+}
+
+.chatInput input:focus {
+    border-color: rgb(59,130,246);
+}
+
+#chatSendBtn {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    background: rgb(59,130,246);
+    border: none;
+    color: white;
+    font-size: 18px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+}
+
+#chatSendBtn:hover {
+    background: rgb(59,130,246);
+    transform: scale(1.05);
+}
+
+/* Mobile Responsive */
+@media (max-width: 480px) {
+    .chatBox {
+        width: 90vw;
+        right: 5vw;
+        left: 5vw;
+    }
+}

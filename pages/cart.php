@@ -48,6 +48,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <link rel="stylesheet" href="../assets/css/CartPageStyle.css">
         <link rel="stylesheet" href="../assets/css/RegLoginModalStyle.css">
         <link rel="stylesheet" href="../assets/css/ProfilePageStyle.css">
+        <link rel="stylesheet" href="../assets/css/ProductDetailsStyle.css">
 
     </head>
 
@@ -55,7 +56,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         <?php include '../components/header.php'; ?>
 
-        <main class="cart-page">
+        <main >
+            <a href="javascript:history.back()" class="back-button">
+                <i class="fa-solid fa-chevron-left"></i> 
+            </a>
+
+            <section class="cart-page">
             <h1 class="cart-title">Shopping Cart</h1>
             <div class="cart-wrapper">
 
@@ -113,6 +119,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 </aside>
 
             </div>
+            </section>
         </main>
 
         <?php include '../components/footer.php'; ?>
