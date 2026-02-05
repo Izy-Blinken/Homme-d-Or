@@ -23,6 +23,7 @@
     3. Gawing responsive lahat ng page
     4. naglagay js from ai para aralin
     5. add verification code din for signing up tanginuh
+    * nag add and commit ako but di pa napupush since di pa tapos
     -->
 
     <body>
