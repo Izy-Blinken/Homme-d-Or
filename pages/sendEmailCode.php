@@ -20,7 +20,9 @@
 <!--
     1. Ayusin yung modal for change pw, verify code, success pw change
     2. Gaiwng modal nalang yung orderAgain.php
-    3. Gawing resonsive lahat ng page
+    3. Gawing responsive lahat ng page
+    4. naglagay js from ai para aralin
+    5. add verification code din for signing up tanginuh
     -->
 
     <body>
@@ -34,7 +36,7 @@
                 </div>
 
                 <div class="fpForm">
-                    <form id="emailForm" >
+                    <form id="emailForm">
                         <div class="formGroup">
                             <label for="email">Email Address</label>
                             <input 
@@ -46,7 +48,7 @@
                                 autocomplete="email">
                         </div>
 
-                        <button type="submit" class="fpSendCode" onclick="window.location.href='../pages/verificationCode.php'">Send Verification Code</button>
+                        <button type="submit" class="fpSendCode">Send Verification Code</button>
 
                         <div class="fpFooter">
                             <a href="index.php" class="backToLogin">
