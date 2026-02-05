@@ -10,7 +10,7 @@
     width: 60px;
     height: 60px;
     border-radius: 50%;
-    background: linear-gradient(135deg, #3b82f6 0%, #1e40af 100%);
+    background: linear-gradient(135deg, rgb(44, 61, 189) 0%, rgb(5, 17, 112) 100%);
     border: none;
     color: white;
     font-size: 24px;
@@ -64,7 +64,7 @@
 
 /* Chat Header */
 .chatHeader {
-    background: linear-gradient(135deg, rgb(59,130,246) 0%, rgb(59,130,246) 100%);
+    background: rgb(5, 17, 112);
     color: white;
     padding: 20px;
     display: flex;
@@ -99,6 +99,7 @@
     font-size: 12px;
     margin: 0;
     opacity: 0.9;
+    color: rgb(6, 255, 6);
 }
 
 .chatCloseBtn {
@@ -112,11 +113,13 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: background 0.3s ease;
+    transition: all 0.3s ease;
 }
 
 .chatCloseBtn:hover {
-    background: rgba(255, 255, 255, 0.2);
+    width: 39px ;
+    height: 39px;
+    color:rgb(195, 195, 195);
 }
 
 /* Chat Messages */
@@ -147,7 +150,7 @@
     height: 32px;
     border-radius: 50%;
     background: #e0e7ff;
-    color: rgb(59,130,246);
+    color: rgb(5, 17, 112);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -155,24 +158,22 @@
     flex-shrink: 0;
 }
 
-.chatMessageBubble {
+.chatMessageBubble, .chatMessageBubbleUser {
     max-width: 70%;
     padding: 12px 16px;
     font-size: 14px;
     line-height: 1.5;
 }
 
-.chatMessageBubble p {
+.chatMessageBubble p, .chatMessageBubbleUser p {
     margin: 0;
 }
 
-/* Left Message (from support) */
 .chatMessageLeft .chatMessageBubble {
-    background: white;
-    color: #1f2937;
+    background: rgb(240, 240, 240);
+    color: rgb(5, 17, 112);
 }
 
-/* Right Message (from user) */
 .chatMessageRight {
     flex-direction: row-reverse;
 }
@@ -182,8 +183,13 @@
     color: white;
 }
 
-.chatMessageRight .chatMessageBubble {
-    background: rgb(59,130,246);
+.chatMessageRight .chatMessageBubble, .chatMessageBubbleUser {
+    background: rgb(5, 17, 112);
+    color: rgb(255, 255, 255);
+}
+
+
+.chatMessageBubbleUser p{
     color: white;
 }
 
@@ -207,14 +213,14 @@
 }
 
 .chatInput input:focus {
-    border-color: rgb(59,130,246);
+    border-color: rgb(5, 17, 112);
 }
 
 #chatSendBtn {
     width: 45px;
     height: 45px;
     border-radius: 50%;
-    background: rgb(59,130,246);
+    background: rgb(5, 17, 112);
     border: none;
     color: white;
     font-size: 18px;
@@ -226,11 +232,10 @@
 }
 
 #chatSendBtn:hover {
-    background: rgb(59,130,246);
+    background: rgb(17, 21, 49);
     transform: scale(1.05);
 }
 
-/* Mobile Responsive */
 @media (max-width: 480px) {
     .chatBox {
         width: 90vw;

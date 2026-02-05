@@ -254,6 +254,10 @@
                                 <label>Confirm New Password</label>
                                 <input type="password" id="confirmPassword" placeholder="Confirm new password">
                             </div>
+
+                            <div class="forgotP" style="margin-left:80%;">
+                                <a href="sendEmailCode.php">Forgot Password?</a>
+                            </div>
                         </div>
 
                     </div>

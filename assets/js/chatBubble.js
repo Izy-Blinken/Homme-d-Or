@@ -43,10 +43,8 @@ function sendMessage() {
         messageDiv.className = 'chatMessage chatMessageRight';
         
         messageDiv.innerHTML = `
-            <div class="chatMessageAvatar">
-                <i class="fa-solid fa-user"></i>
-            </div>
-            <div class="chatMessageBubble">
+            
+            <div class="chatMessageBubbleUser">
                 <p>${messageText}</p>
             </div>
         `;
@@ -66,10 +64,11 @@ function sendMessage() {
 // sample reply(auto)
 function autoReply() {
     const replies = [
-        "Thank you for your message! A support agent will be with you shortly.",
-        "We've received your inquiry. How else can we help?",
-        "Thanks! Is there anything else you'd like to know?",
-        "Got it! Let me check that for you."
+        "no purchase, no customer support",
+        "Bakit?",
+        "Kaya ka nagkakaganyan e",
+        "Welcome to Jollibing!",
+        "hahah may problema, kasalanan mo yan"
     ];
     
     const randomReply = replies[Math.floor(Math.random() * replies.length)];

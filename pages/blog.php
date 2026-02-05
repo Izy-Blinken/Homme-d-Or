@@ -86,7 +86,7 @@
 
                 <div class="highlights-grid">
                     <div class="highlight-item">
-                        <img src="../assets/images/brand_images/blog1.jpg" alt="Highlight 1">
+                        <img src="../assets/images/brand_images/blog1.jpg" alt="Highlight 1" onclick="window.location.href='index.php'">
                     </div>
                     <div class="highlight-item">
                         <img src="../assets/images/brand_images/blog2.jpg" alt="Highlight 2">

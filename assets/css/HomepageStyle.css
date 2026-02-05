@@ -4,6 +4,7 @@
     width: 5000px;
     margin: 100px auto;
     padding-top: 20px;
+    
 }
 
 #details-section h2 {
@@ -1757,6 +1758,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
+
 }
 
 .shop-welcome-overlay {

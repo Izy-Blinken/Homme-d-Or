@@ -95,7 +95,7 @@
             </div>
 
             <div class="forgotP">
-                <a href="forgotP.php">Forgot Password?</a>
+                <a href="sendEmailCode.php">Forgot Password?</a>
             </div>
             
             <div class="regBtn">
@@ -206,7 +206,6 @@
                     <li><a href="index.php">Home</a></li>
                     <li><a href="shop.php">Shop</a></li>
                     <li><a href="AboutUs.php">About Us</a></li>
-                    <li><a href="ContactUs.php">Contact</a></li>
                     <li><a href="blog.php">Blog</a></li>
                 </ul>
             </div>
