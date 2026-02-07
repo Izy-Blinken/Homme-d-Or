@@ -6,14 +6,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Homme d'Or - My Orders</title>
 
-    <link rel="stylesheet" href="../assets/icons/fontawesome/css/all.min.css">
-    <link rel="stylesheet" href="../assets/css/style.css">
+        <link rel="stylesheet" href="../assets/css/style.css">
+        <link rel="stylesheet" href="../assets/icons/fontawesome/css/all.min.css">
+        <link rel="stylesheet" href="../assets/css/HeaderHeroFooterStyle.css">
+        <link rel="stylesheet" href="../assets/css/CheckoutPageStyle.css">
+        <link rel="stylesheet" href="../assets/css/OrderAgainStyle.css">
+        <link rel="stylesheet" href="../assets/css/BlogPageStyle.css">
+        <link rel="stylesheet" href="../assets/css/AboutUsPageStyle.css">
+        <link rel="stylesheet" href="../assets/css/ProductDetailsStyle.css">
+        <link rel="stylesheet" href="../assets/css/CartPageStyle.css">
+        <link rel="stylesheet" href="../assets/css/RegLoginModalStyle.css">
+        <link rel="stylesheet" href="../assets/css/ProfilePageStyle.css">
+        <link rel="stylesheet" href="../assets/css/viewTabs.css">
 </head>
 
 <body> 
     <?php include '../components/header.php'; ?>
 
-    <main>
+    <main class="mainBG">
         <div class="v-tabs">
             <h1 class="v-header">My Orders</h1>
 
@@ -181,194 +191,7 @@
                     </div>
                 </div>
 
-                <div class="v-orders">
-                    <div class="v-left">
-                        <img src="../assets/images/products_images/nocturne.png" alt="" width="60">
-                        <div class="v-ordersinfo">
-                            <p class="v-name">Perfume 5</p>
-                            <small class="v-desc">50ml • Variant ng perfume</small>
-                        </div>
-                    </div>
-                    <div class="v-right">
-                        <p class="v-price">₱2,800.00</p>
-                        <div class="v-actions">
-                            <button class="v-view">View</button>
-                            <button class="v-again">Order Again</button>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="v-orders">
-                    <div class="v-left">
-                        <img src="../assets/images/products_images/nocturne.png" alt="" width="60">
-                        <div class="v-ordersinfo">
-                            <p class="v-name">Perfume 6</p>
-                            <small class="v-desc">50ml • Variant ng perfume</small>
-                        </div>
-                    </div>
-                    <div class="v-right">
-                        <p class="v-price">₱3,200.00</p>
-                        <div class="v-actions">
-                            <button class="v-view">View</button>
-                            <button class="v-again">Order Again</button>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="v-orders">
-                    <div class="v-left">
-                        <img src="../assets/images/products_images/nocturne.png" alt="" width="60">
-                        <div class="v-ordersinfo">
-                            <p class="v-name">Perfume 7</p>
-                            <small class="v-desc">50ml • Variant ng perfume</small>
-                        </div>
-                    </div>
-                    <div class="v-right">
-                        <p class="v-price">₱5,500.00</p>
-                        <div class="v-actions">
-                            <button class="v-view">View</button>
-                            <button class="v-again">Order Again</button>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="v-orders">
-                    <div class="v-left">
-                        <img src="../assets/images/products_images/nocturne.png" alt="" width="60">
-                        <div class="v-ordersinfo">
-                            <p class="v-name">Perfume 8</p>
-                            <small class="v-desc">50ml • Variant ng perfume</small>
-                        </div>
-                    </div>
-                    <div class="v-right">
-                        <p class="v-price">₱4,200.00</p>
-                        <div class="v-actions">
-                            <button class="v-view">View</button>
-                            <button class="v-again">Order Again</button>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="v-orders">
-                    <div class="v-left">
-                        <img src="../assets/images/products_images/nocturne.png" alt="" width="60">
-                        <div class="v-ordersinfo">
-                            <p class="v-name">Perfume 9</p>
-                            <small class="v-desc">50ml • Variant ng perfume</small>
-                        </div>
-                    </div>
-                    <div class="v-right">
-                        <p class="v-price">₱1,800.00</p>
-                        <div class="v-actions">
-                            <button class="v-view">View</button>
-                            <button class="v-again">Order Again</button>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="v-orders">
-                    <div class="v-left">
-                        <img src="../assets/images/products_images/nocturne.png" alt="" width="60">
-                        <div class="v-ordersinfo">
-                            <p class="v-name">Perfume 10</p>
-                            <small class="v-desc">50ml • Variant ng perfume</small>
-                        </div>
-                    </div>
-                    <div class="v-right">
-                        <p class="v-price">₱3,000.00</p>
-                        <div class="v-actions">
-                            <button class="v-view">View</button>
-                            <button class="v-again">Order Again</button>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="v-orders">
-                    <div class="v-left">
-                        <img src="../assets/images/products_images/nocturne.png" alt="" width="60">
-                        <div class="v-ordersinfo">
-                            <p class="v-name">Perfume 11</p>
-                            <small class="v-desc">50ml • Variant ng perfume</small>
-                        </div>
-                    </div>
-                    <div class="v-right">
-                        <p class="v-price">₱2,500.00</p>
-                        <div class="v-actions">
-                            <button class="v-view">View</button>
-                            <button class="v-again">Order Again</button>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="v-orders">
-                    <div class="v-left">
-                        <img src="../assets/images/products_images/nocturne.png" alt="" width="60">
-                        <div class="v-ordersinfo">
-                            <p class="v-name">Perfume 12</p>
-                            <small class="v-desc">50ml • Variant ng perfume</small>
-                        </div>
-                    </div>
-                    <div class="v-right">
-                        <p class="v-price">₱4,200.00</p>
-                        <div class="v-actions">
-                            <button class="v-view">View</button>
-                            <button class="v-again">Order Again</button>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="v-orders">
-                    <div class="v-left">
-                        <img src="../assets/images/products_images/nocturne.png" alt="" width="60">
-                        <div class="v-ordersinfo">
-                            <p class="v-name">Perfume 13</p>
-                            <small class="v-desc">50ml • Variant ng perfume</small>
-                        </div>
-                    </div>
-                    <div class="v-right">
-                        <p class="v-price">₱5,500.00</p>
-                        <div class="v-actions">
-                            <button class="v-view">View</button>
-                            <button class="v-again">Order Again</button>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="v-orders">
-                    <div class="v-left">
-                        <img src="../assets/images/products_images/nocturne.png" alt="" width="60">
-                        <div class="v-ordersinfo">
-                            <p class="v-name">Perfume 14</p>
-                            <small class="v-desc">50ml • Variant ng perfume</small>
-                        </div>
-                    </div>
-                    <div class="v-right">
-                        <p class="v-price">₱1,200.00</p>
-                        <div class="v-actions">
-                            <button class="v-view">View</button>
-                            <button class="v-again">Order Again</button>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="v-orders">
-                    <div class="v-left">
-                        <img src="../assets/images/products_images/nocturne.png" alt="" width="60">
-                        <div class="v-ordersinfo">
-                            <p class="v-name">Perfume 15</p>
-                            <small class="v-desc">50ml • Variant ng perfume</small>
-                        </div>
-                    </div>
-                    <div class="v-right">
-                        <p class="v-price">₱2,800.00</p>
-                        <div class="v-actions">
-                            <button class="v-view">View</button>
-                            <button class="v-again">Order Again</button>
-                        </div>
-                    </div>
-                </div>
-
-
+               
             </div>
 
         </div>
@@ -376,20 +199,7 @@
 
     <?php include '../components/footer.php'; ?>
 
-    <script>
-        const tabs = document.querySelectorAll('.tab-btn');
-        const contents = document.querySelectorAll('.tab-content');
-
-        tabs.forEach(tab => {
-            tab.addEventListener('click', () => {
-                tabs.forEach(t => t.classList.remove('active'));
-                contents.forEach(c => c.classList.remove('active'));
-
-                tab.classList.add('active');
-                document.getElementById(tab.dataset.tab).classList.add('active');
-            });
-        });
-    </script>
+    <script src="../assets/js/viewAllTabs.js"></script>
 
 </body>
 </html>

@@ -6,14 +6,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Homme d'Or - Wishlist</title>
 
-    <link rel="stylesheet" href="../assets/icons/fontawesome/css/all.min.css">
-    <link rel="stylesheet" href="../assets/css/style.css">
+        <link rel="stylesheet" href="../assets/css/style.css">
+        <link rel="stylesheet" href="../assets/icons/fontawesome/css/all.min.css">
+        <link rel="stylesheet" href="../assets/css/HeaderHeroFooterStyle.css">
+        <link rel="stylesheet" href="../assets/css/CheckoutPageStyle.css">
+        <link rel="stylesheet" href="../assets/css/OrderAgainStyle.css">
+        <link rel="stylesheet" href="../assets/css/BlogPageStyle.css">
+        <link rel="stylesheet" href="../assets/css/AboutUsPageStyle.css">
+        <link rel="stylesheet" href="../assets/css/ProductDetailsStyle.css">
+        <link rel="stylesheet" href="../assets/css/CartPageStyle.css">
+        <link rel="stylesheet" href="../assets/css/RegLoginModalStyle.css">
+        <link rel="stylesheet" href="../assets/css/ProfilePageStyle.css">
+        <link rel="stylesheet" href="../assets/css/viewTabs.css">
 </head>
 
 <body> 
     <?php include '../components/header.php'; ?>
 
-    <main>
+    <main class="mainBG">
         <div class="v-tabs">
         <h1 class="v-header">My Wishlist</h1>
 
