@@ -62,3 +62,259 @@ main {
 }
 
 
+/* VIEW ALL TABS, VIEW HISTORY & VIEW WISHLIST */
+.v-header {
+    text-align: center;
+    margin-top: 30px;
+    margin-bottom: 10px;
+}
+
+.v-orders {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 100%;        
+    padding: 18px 20px;
+    margin-bottom: 15px;
+    border: 1px solid #e2e2e2;
+    background: whitesmoke;
+}
+
+.v-left {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+}
+
+.v-left img {
+    width: 70px;
+}
+
+.v-name {
+    font-weight: 600;
+    margin-bottom: 4px;
+}
+
+.v-desc {
+    font-size: 13px;
+    color: #777;
+}
+
+.v-right {
+    text-align: right;
+    min-width: 160px;
+}
+
+.v-price {
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+
+.v-actions {
+    display: flex;
+    gap: 10px;
+    justify-content: flex-end;
+}
+
+.v-cancel{
+    padding: 6px 14px;
+    font-size: 13px;
+    cursor: pointer;
+    border: 1px solid #000;
+    background: none;
+    transition: all 0.2s ease;
+}
+
+.v-cancel:hover{
+    background: #000;
+    color: #fff;
+    transform: translateY(-2px);
+}
+
+.v-rate, .v-again{
+    padding: 6px 14px;
+    font-size: 13px;
+    cursor: pointer;
+    border: 1px solid goldenrod;
+    background: lightyellow;
+    transition: all 0.2s ease;
+    color: #c9a961;
+}
+
+.v-rate:hover, .v-again:hover{
+    background: #c9a961;
+    color: white;
+    border: 1px solid #c9a961;
+    transform: translateY(-2px);
+}
+
+.v-view {
+    padding: 6px 14px;
+    font-size: 13px;
+    cursor: pointer;
+    border: 1px solid navy;
+    background: navy;
+    color: white;
+    transition: all 0.3s ease;
+}
+
+.v-view:hover {
+    background: white;
+    color: navy;
+    transform: translateY(-2px);
+    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+}
+
+.v-tabs {
+    display: flex;
+    flex-direction: column;    
+    align-items: center;      
+    gap: 24px;                 
+    max-width: 800px;         
+    margin: 0 auto 30px;      
+    padding: 0 20px;   
+}
+
+.order-tabs {
+    display: flex;
+    gap: 80px;
+    justify-content: center;
+}
+
+.tab-btn {
+    background: none;
+    border: none;
+    padding: 12px 6px;       
+    font-size: 18px;      
+    font-weight: 500;
+    color: #777;
+    cursor: pointer;
+    position: relative;
+}
+
+.tab-btn.active {
+    color: #000;
+    font-weight: 500;
+}
+
+.tab-btn::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -4px;
+    width: 0;
+    height: 2px;
+    background: #000;
+    transition: width 0.25s ease;
+}
+
+.tab-btn.active::after {
+    width: 100%;
+}
+
+.tab-content {
+    display: none;          
+    width: 100%;
+}
+
+.tab-content.active {
+    display: block;
+}
+
+.empty-text {
+    text-align: center;
+    color: #555;
+    padding: 20px 0;
+}
+
+/* VIEW HISTORY */
+.history-wrapper {
+    max-width: 1000px;
+    margin: 30px auto;
+    padding: 0 20px;
+}
+
+.history-controls {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.history-controls input {
+    flex: 1;
+    padding: 10px 14px;
+    border: 1px solid #ddd;
+}
+
+.search-btn {
+    padding: 10px 20px;
+    background: navy;
+    color: #fff;
+    cursor: pointer;
+}
+
+.history-table {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.history-row {
+    display: grid;
+    grid-template-columns: 
+        30px
+        170px
+        1.8fr
+        110px
+        60px   
+        120px
+        80px;
+    align-items: center;
+    padding: 14px 0;
+}
+
+.history-head {
+    font-weight: 600;
+    color: #555;
+    padding-bottom: 10px;
+}
+
+.product-col {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.product-col img {
+    width: 36px;
+    height: auto;
+}
+
+.view-link {
+    color: navy;
+    font-weight: 500;
+    text-decoration: none;
+    margin-left: 9px;
+}
+
+.view-link:hover {
+    text-decoration: underline;
+}
+
+.history-row:not(.history-head) {
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.history-row span:nth-child(2),
+.history-row span:nth-child(1),
+.history-row span:nth-child(4),
+.history-row span:nth-child(5),
+.history-row span:nth-child(6) {
+    text-align: center;
+    display: block;
+}
+
+
+
+
+

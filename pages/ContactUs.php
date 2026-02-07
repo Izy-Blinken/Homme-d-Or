@@ -66,7 +66,7 @@
                     <div class="colSecond">
                         <div class="headerRow">
                             <h3>Orders</h3>
-                            <button class="viewAllBtn" onclick="window.location.href='profileViewOrders.php'">View All</button>
+                            <button class="viewAllBtn" onclick="window.location.href='viewAllTabs.php'">View All</button>
                         </div>
                         <div class="divider"></div>
 
