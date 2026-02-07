@@ -1,6 +1,5 @@
 
 <!--Register Modal-->
-
 <div id="signupModal" class="modal">
     <div class="modal-content">
         <span class="close">&times;</span>
@@ -9,7 +8,7 @@
             <h2><b>SIGN UP</b></h2>
         </div>
 
-        <form action="index.php" method="POST">
+        <form id="registerForm" action="index.php" method="POST">
             <div class="inputGroup">
                 <input type="text" name="firstname" required>
                 <label>FIRST NAME*</label>
@@ -35,15 +34,43 @@
                 <label>EMAIL*</label>
             </div>
 
-            <div class="inputGroup">
-                <input type="password" name="password" required>
-                <label>PASSWORD*</label>
+            <!-- Password Requirements Box -->
+            <div class="passwordRequirementsReg">
+                <p class="requirementsTitleReg">PASSWORD REQUIREMENTS:</p>
+                <ul>
+                    <li id="reg-req-length"><i class="fas fa-circle"></i> At least 8 characters</li>
+                    <li id="reg-req-uppercase"><i class="fas fa-circle"></i> One uppercase letter</li>
+                    <li id="reg-req-lowercase"><i class="fas fa-circle"></i> One lowercase letter</li>
+                    <li id="reg-req-number"><i class="fas fa-circle"></i> One number</li>
+                </ul>
             </div>
 
-            <div class="inputGroupCP">
-                <input type="password" name="confirm_password" required>
-                <label>CONFIRM PASSWORD*</label>
+            <div class="inputGroupCP passwordInputGroup">
+                <input type="password" id="regPassword" name="password" required>
+                <label>PASSWORD*</label>
+                <button type="button" class="togglePasswordReg" id="toggleRegPassword">
+                    <i class="fas fa-eye"></i>
+                </button>
             </div>
+
+            <!-- Password Strength Indicator -->
+            <div class="passwordStrengthReg">
+                <div class="strengthBarReg">
+                    <div class="strengthBarFillReg" id="regStrengthBarFill"></div>
+                </div>
+                <span class="strengthTextReg" id="regStrengthText"></span>
+            </div>
+
+            <div class="inputGroupCP passwordInputGroup">
+                <input type="password" id="regConfirmPassword" name="confirm_password" required>
+                <label>CONFIRM PASSWORD*</label>
+                <button type="button" class="togglePasswordReg" id="toggleRegConfirmPassword">
+                    <i class="fas fa-eye"></i>
+                </button>
+            </div>
+
+            <!-- Password Match Indicator -->
+            <span class="passwordMatchReg" id="regPasswordMatch"></span>
 
             <div class="inputGroupCheckbox">
                 <input type="checkbox" id="terms" name="terms" required>
@@ -61,7 +88,7 @@
             <div class="regLog">
                 <label>
                     <a href="#" onclick="event.preventDefault(); openLoginModal();">LOGIN</a>
-                    or
+                        or
                     <a href="#" onclick="event.preventDefault(); closeSignupModal();">CONTINUE AS GUEST</a>
                 </label>
             </div>

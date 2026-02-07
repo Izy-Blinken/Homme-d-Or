@@ -37,7 +37,7 @@
             <div class="hero-content">
                 
                 <div class="hero-title">
-                    <h1>Floraiku<br>Paris</h1>
+                    <h1>Homme<br>d'Or</h1>
                 </div>
                 
                 <div class="hero-center-image">
@@ -46,6 +46,7 @@
                     </div>
                 </div>
                 
+                <!--
                 <div class="hero-video-ad">
                     <div class="video-wrapper" onclick="playHeroVideo()">
                         <span class="video-label">WATCH AD</span>
@@ -54,9 +55,11 @@
                             <i class="fa-solid fa-play"></i>
                         </div>
                     </div>
-                </div>
+                </div> 
+                 Info Card - Bottom Left 
+                -->
                 
-                <!-- Info Card - Bottom Left -->
+               
                 <div class="hero-info-card">
                     <div class="info-card-wrapper">
                         

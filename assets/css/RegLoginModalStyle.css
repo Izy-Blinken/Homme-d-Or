@@ -263,6 +263,170 @@
 }
 
 
+/* Password Requirements Box */
+.passwordRequirementsReg {
+    grid-column: 1 / -1;
+    background-color: #f8f8f8;
+    border-left: 3px solid rgb(255, 221, 30);
+    padding: 15px 20px;
+    margin: 10px 0 5px 0;
+}
+
+.requirementsTitleReg {
+    color: rgb(3, 3, 84);
+    font-size: 11px;
+    font-weight: 600;
+    margin: 0 0 10px 0;
+    letter-spacing: 1.5px;
+    font-family: 'Spartan', sans-serif;
+}
+
+.passwordRequirementsReg ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.passwordRequirementsReg li {
+    color: #666;
+    font-size: 12px;
+    margin-bottom: 6px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: color 0.3s;
+    font-family: 'Spartan', sans-serif;
+}
+
+.passwordRequirementsReg li:last-child {
+    margin-bottom: 0;
+}
+
+.passwordRequirementsReg li i {
+    font-size: 6px;
+    transition: all 0.3s;
+}
+
+/* Met requirement style */
+.passwordRequirementsReg li.met {
+    color: #28a745;
+}
+
+.passwordRequirementsReg li.met i {
+    color: #28a745;
+}
+
+.passwordRequirementsReg li.met i::before {
+    content: "\f058";
+    font-weight: 900;
+    font-size: 12px;
+}
+
+/* Password Input with Toggle Button */
+.passwordInputGroup {
+    position: relative;
+
+}
+
+
+.togglePasswordReg {
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    color: #999;
+    cursor: pointer;
+    padding: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: color 0.3s;
+    z-index: 10;
+}
+
+.togglePasswordReg:hover {
+    color: rgb(3, 3, 84);
+}
+
+.togglePasswordReg i {
+    font-size: 16px;
+}
+
+/* Password Strength Indicator */
+.passwordStrengthReg {
+    grid-column: 1 / -1;
+    margin: -15px 0 5px 0;
+}
+
+.strengthBarReg {
+    height: 4px;
+    background-color: #e0e0e0;
+    overflow: hidden;
+    margin-bottom: 5px;
+}
+
+.strengthBarFillReg {
+    height: 100%;
+    width: 0%;
+    transition: width 0.3s ease, background-color 0.3s ease;
+}
+
+.strengthBarFillReg.weak {
+    width: 33%;
+    background-color: #dc3545;
+}
+
+.strengthBarFillReg.medium {
+    width: 66%;
+    background-color: #ffc107;
+}
+
+.strengthBarFillReg.strong {
+    width: 100%;
+    background-color: #28a745;
+}
+
+.strengthTextReg {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    font-family: 'Spartan', sans-serif;
+}
+
+.strengthTextReg.weak {
+    color: #dc3545;
+}
+
+.strengthTextReg.medium {
+    color: #ffc107;
+}
+
+.strengthTextReg.strong {
+    color: #28a745;
+}
+
+/* Password Match Indicator */
+.passwordMatchReg {
+    grid-column: 1 / -1;
+    display: block;
+    font-size: 11px;
+    margin: -15px 0 5px 0;
+    font-weight: 600;
+    letter-spacing: 1px;
+    font-family: 'Spartan', sans-serif;
+}
+
+.passwordMatchReg.match {
+    color: #28a745;
+}
+
+.passwordMatchReg.no-match {
+    color: #dc3545;
+}
+
+
 /*Scrollbar*/
 .modal-content::-webkit-scrollbar {
     width: 8px;
@@ -279,6 +443,7 @@
 .modal-content::-webkit-scrollbar-thumb:hover {
     background: #0404a8;
 }
+
 
 /*LOGIN MODAL*/
 

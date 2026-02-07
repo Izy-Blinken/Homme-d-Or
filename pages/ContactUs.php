@@ -176,7 +176,7 @@
 
                 </div>
             </div>
-
+        </main>
         
 
         <!-- Edit Profile Modal -->
@@ -256,7 +256,7 @@
                             </div>
 
                             <div class="forgotP" style="margin-left:80%;">
-                                <a href="sendEmailCode.php">Forgot Password?</a>
+                                <a href="forgotPassword.php">Forgot Password?</a>
                             </div>
                         </div>
 
@@ -294,6 +294,6 @@
 
         <script src="../assets/js/editProfile.js"></script>
         
-        </main>
+    
     </body>
 </html>
