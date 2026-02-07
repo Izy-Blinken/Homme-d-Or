@@ -21,7 +21,7 @@
         <link rel="stylesheet" href="../assets/css/HomepageStyle.css">
 
     </head>
-    <body style="color: red;"> 
+    <body> 
         <?php include '../components/header.php'; ?>
         <script src="script.js"></script>
 
