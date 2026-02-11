@@ -1,0 +1,320 @@
+/* Modal Overlay */
+.romcomOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+    z-index: 1000;
+}
+
+.romcomOverlay.show {
+    display: flex;
+    animation: fadeIn 0.2s ease-out;
+}
+
+.romcomOverlay.closing {
+    animation: fadeOut 0.2s ease-out;
+}
+
+/* Modal Content */
+.romcomModalContent {
+    background: white;
+    width: 100%;
+    max-width: 28rem;
+    box-shadow: 0 20px 25px rgba(0, 0, 0, 0.3);
+    max-height: 90vh;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.romcomOverlay.show .romcomModalContent {
+    animation: slideIn 0.3s ease-out;
+}
+
+.romcomOverlay.closing .romcomModalContent {
+    animation: slideOut 0.2s ease-out;
+}
+
+/* Modal Header */
+.romcomHeader {
+    padding: 2rem 2.5rem 1.5rem 2.5rem;
+    text-align: center;
+    flex-shrink: 0;
+}
+
+.romcomHeader h2 {
+    font-size: 1.875rem;
+    font-weight: 700;
+    color: #0f172a;
+    letter-spacing: -0.025em;
+}
+
+.romcomDivider {
+    height: 1px;
+    background: #e2e8f0;
+    margin: 0 2.5rem;
+    flex-shrink: 0;
+}
+
+/* Modal Body */
+.romcomBody {
+    padding: 2.5rem;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.modal-description {
+    text-align: center;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: black;
+    margin-bottom: 1.5rem;
+}
+
+/* Form Group */
+.romcomFormGroup {
+    margin-bottom: 2rem;
+}
+
+.romcomFormGroup label {
+    display: block;
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: black;
+    letter-spacing: 0.05em;
+    margin-bottom: 1rem;
+}
+
+/* Star Rating */
+.star-rating {
+    display: flex;
+    gap: 0.75rem;
+    justify-content: center;
+    margin-bottom: 0.75rem;
+}
+
+.star {
+    font-size: 3rem;
+    color: #cbd5e1;
+    cursor: pointer;
+    transition: all 0.2s;
+    user-select: none;
+}
+
+.star:hover {
+    transform: scale(1.15);
+}
+
+.star:active {
+    transform: scale(1.05);
+}
+
+.star.active {
+    color: #fff01e;
+}
+
+.rating-Text {
+    text-align: center;
+    font-size: 0.75rem;
+    color: #64748b;
+    font-weight: 500;
+    min-height: 1.125rem;
+}
+
+/* Textarea */
+textarea {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border: 1px solid #cbd5e1;
+    font-family: inherit;
+    font-size: 0.875rem;
+    color: black;
+    resize: vertical;
+    min-height: 8rem;
+    transition: border-color 0.2s;
+}
+
+textarea:focus {
+    outline: none;
+    border-color: #0f172a;
+}
+
+textarea::placeholder {
+    color: #94a3b8;
+}
+
+/* Radio Group */
+.radio-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.radio-option {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 1rem;
+    border: 1px solid #cbd5e1;
+    cursor: pointer;
+    transition: all 0.2s;
+    position: relative;
+}
+
+.radio-option:hover {
+    border-color: #0f172a;
+}
+
+.radio-option input[type="radio"] {
+    position: static;
+    opacity: 1;
+    width: 16px;
+    height: 16px;
+    accent-color: #080051;
+}
+
+.radio-label {
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: black;
+    flex: 1;
+}
+
+/* Button Group */
+.romcomButtonGroup {
+    display: flex;
+    gap: 0.75rem;
+}
+
+.romcomButtonGroup button {
+    flex: 1;
+    padding: 0.875rem 1.5rem;
+    border: none;
+    font-weight: 600;
+    font-size: 0.875rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.romcomBtnClose {
+    border: 1px solid #080051 !important;
+    background: white;
+    color: #080051;
+}
+
+.romcomBtnClose:hover {
+    background: #080051;
+    color: white;
+}
+
+.romcomBtnSubmit {
+    background: #080051;
+    color: white;
+}
+
+.romcomBtnSubmit:hover {
+    background: #0e0185;
+}
+
+.romcomBtnSubmit:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
+.romcomBtnSubmit:disabled:hover {
+    background: #080051;
+}
+
+.btn-danger {
+    background:  #b91c1c;
+    color: white;
+}
+
+.btn-danger:hover {
+    background: #991b1b;
+}
+
+.romcomBody::-webkit-scrollbar {
+    width: 0.3rem;
+}
+
+.romcomBody::-webkit-scrollbar-thumb {
+    background: #080051;
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes fadeOut {
+    from {
+        opacity: 1;
+    }
+    to {
+        opacity: 0;
+    }
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(-2rem);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes slideOut {
+    from {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    to {
+        opacity: 0;
+        transform: translateY(-2rem);
+    }
+}
+
+/* Responsive */
+@media (max-width: 640px) {
+    .modal-header {
+        padding: 1.5rem 1.5rem 1rem 1.5rem;
+    }
+
+    .modal-header h2 {
+        font-size: 1.5rem;
+    }
+
+    .divider {
+        margin: 0 1.5rem;
+    }
+
+    .modal-body {
+        padding: 1.5rem;
+    }
+
+    .star {
+        font-size: 2.5rem;
+    }
+
+    .button-group {
+        flex-direction: column;
+    }
+}

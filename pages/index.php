@@ -27,9 +27,17 @@
         <!--Steps from starting to saving: 
         terminal -> git pull -> then work na -> (if save na:) git add . -> git commit -m "describe what you changed here pero mas better kung i-comment din like this" -> git pull -> then git push
         
-        Things to add and polish hahah: review product modal, cancel order modal (reason bakit magcacancel), history gawin scrollable, wishlist same atake sa history and scrollable din,
-        yung mga product link sa product details, mga toast message (messages after ng mga operations), yung mga home products gawing same design sa shop page or vice versa, add/polish na rin mga animations
         
+        done: review and cancel order modal
+
+        Things to polish pa:
+        1. History and wishlist scrollable
+        2. Verification code for sign up
+        3. Toast messages after successful/failed operations
+        4. Product links
+        5. Consistent design
+        6. Animations
+        7. Responsive pages
         -->
         
         <?php include '../components/header.php'; ?>

@@ -1,4 +1,6 @@
 
+
+
 <!--Register Modal-->
 <div id="signupModal" class="modal">
     <div class="modal-content">
@@ -8,7 +10,7 @@
             <h2><b>SIGN UP</b></h2>
         </div>
 
-        <form id="registerForm" action="index.php" method="POST">
+        <form id="registerForm" onsubmit="verifyCode()">
             <div class="inputGroup">
                 <input type="text" name="firstname" required>
                 <label>FIRST NAME*</label>
@@ -94,6 +96,7 @@
             </div>
         </form>
     </div>
+
 </div>
 
 <!--Login Modal-->
@@ -122,7 +125,7 @@
             </div>
 
             <div class="forgotP">
-                <a href="sendEmailCode.php">Forgot Password?</a>
+                <a href="forgotPassword.php">Forgot Password?</a>
             </div>
             
             <div class="regBtn">
@@ -153,55 +156,56 @@
     </div>
 </div>
 
+<!--Chat-->
+<div class="chatWidget">
+    <button class="chatBubble" id="chatBubbleID">
+        <i class="fa-solid fa-message"></i>
+    </button>
 
-
-        
-            <div class="chatWidget">
-                
-                <button class="chatBubble" id="chatBubbleID">
-                    <i class="fa-solid fa-message"></i>
-                </button>
-
-                <div class="chatBox" id="chatBoxID">
+     <div class="chatBox" id="chatBoxID">
                     
-                    <div class="chatHeader">
-                        <div class="chatHeaderInfo">
-                            <div class="chatAvatar">
-                                <i class="fa-solid fa-user"></i>
-                            </div>
-                            <div class="chatHeaderText">
-                                <h3>Customer Support</h3>
-                                <p class="chatStatus">Online</p>
-                            </div>
-                        </div>
-                        <button class="chatCloseBtn" id="chatCloseID">
-                            <i class="fa-solid fa-xmark"></i>
-                        </button>
-                    </div>
-                    
-                    <div class="chatMessages" id="chatMessagesID">
-                        <div class="chatMessage chatMessageLeft">
-                            <div class="chatMessageAvatar">
-                                <i class="fa-solid fa-user"></i>
-                            </div>
-                            
-                        </div>
-                    </div>
-                    
-                    <div class="chatInput">
-                        <input type="text" id="chatInputField" placeholder="Type your message...">
-                        <button id="chatSendBtn">
-                            <i class="fa-solid fa-paper-plane"></i>
-                        </button>
-                    </div>
-                    
+        <div class="chatHeader">
+            <div class="chatHeaderInfo">
+                <div class="chatAvatar">
+                    <i class="fa-solid fa-user"></i>
+                </div>
+                <div class="chatHeaderText">
+                    <h3>Customer Support</h3>
+                    <p class="chatStatus">Online</p>
                 </div>
             </div>
 
+            <button class="chatCloseBtn" id="chatCloseID">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+        </div>
+                    
+        <div class="chatMessages" id="chatMessagesID">
+            <div class="chatMessage chatMessageLeft">
+                <div class="chatMessageAvatar">
+                    <i class="fa-solid fa-user"></i>
+                </div>
+                            
+            </div>
+        </div>
+                
+        <div class="chatInput">
+            <input type="text" id="chatInputField" placeholder="Type your message...">
+            <button id="chatSendBtn">
+                <i class="fa-solid fa-paper-plane"></i>
+            </button>
+        </div>
+                
+    </div>
+</div>
+
+
 <link rel="stylesheet" href="../assets/css/msgStyle.css">
+
 <script src="../assets/js/regModal.js"></script>
 <script src="../assets/js/logModal.js"></script>
 <script src="../assets/js/ChatBubble.js"></script>
+<script src="../assets/js/forgotPassword.js"></script>
 
 
 <footer id="footer">
