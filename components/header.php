@@ -15,7 +15,7 @@ $currentPage = basename($_SERVER['PHP_SELF']);
             </li>
 
             <li>
-                <a class="<?php echo ($currentPage == 'shop.php') ? 'active' : ''; ?>" href="shop.php">Shop Now</a>
+                <a class="<?php echo ($currentPage == 'shop.php') ? 'active' : ''; ?>" href="shop.php">Shop</a>
             </li>
             
             <li>
@@ -38,7 +38,7 @@ $currentPage = basename($_SERVER['PHP_SELF']);
 
     <div class="nav-wrapper">
         <ul id="navbar-right">
-            <li><a class="<?php echo ($currentPage == 'wishlist.php') ? 'active' : ''; ?>" href="wishlist.php"><i class="fa-solid fa-star"></i></a></li>
+            <li><a class="<?php echo ($currentPage == 'wishlist.php') ? 'active' : ''; ?>" href="viewWishlist.php"><i class="fa-solid fa-star"></i></a></li>
             <li><a class="<?php echo ($currentPage == 'cart.php') ? 'active' : ''; ?>" href="cart.php"><i class="fa-solid fa-shopping-cart"></i></a></li>
             
             <li class="dropdown profile-dropdown">

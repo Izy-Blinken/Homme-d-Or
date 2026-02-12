@@ -38,6 +38,10 @@
         5. Consistent design
         6. Animations
         7. Responsive pages
+        8. Review page (for product na mismo)
+        9. Terms and conditions
+        10. Order placed successfully gawin modal nlang (yung orderAgain.php)
+        11. *Pinag-iisipan q pa* Yung mga discover buttons sa shop page lagyan ng individual page
         -->
         
         <?php include '../components/header.php'; ?>
@@ -56,7 +60,9 @@
                 
                 <div class="hero-center-image">
                     <div class="center-image-wrapper">
-                        <img src="../assets/images/brand_images/sampleperfume.png" alt="Featured Perfume">
+                        <video autoplay loop muted playsinline>
+                            <source src="../assets/videos/perfumeLoop.webm" type="video/webm">
+                        </video>
                     </div>
                 </div>
                 
