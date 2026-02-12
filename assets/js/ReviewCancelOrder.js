@@ -20,6 +20,8 @@ function closeReviewModal() {
         modal.classList.remove('show');
         modal.classList.remove('closing');
     }, 200);
+
+    
 }
 
 function setRating(rating) {
@@ -65,7 +67,7 @@ function submitReview(event) {
     console.log('Rating:', currentRating);
     console.log('Review:', reviewText);
     
-    alert(`Review submitted!\nRating: ${currentRating} stars\nReview: ${reviewText}`);
+    showGeneralToast('Review Submitted Successfully!', 'success');
     closeReviewModal();
 }
 
@@ -89,6 +91,8 @@ function closeCancelModal() {
         modal.classList.remove('show');
         modal.classList.remove('closing');
     }, 200);
+
+
 }
 
 function submitCancellation(event) {
@@ -107,7 +111,7 @@ function submitCancellation(event) {
         message += `\nDetails: ${otherReason}`;
     }
     
-    alert(message);
+    showGeneralToast('Order Cancelled Successfully!', 'success');
     closeCancelModal();
 }
 
@@ -138,3 +142,14 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 });
+
+function showGeneralToast(message, type='success') {
+    const toast = document.getElementById('generalToast');
+    toast.textContent = message;
+    toast.className = `generalToast ${type}`;
+    toast.classList.add('show');
+    
+    setTimeout(() => {
+        toast.classList.remove('show');
+    }, 3000); 
+}

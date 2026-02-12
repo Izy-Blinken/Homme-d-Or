@@ -39,7 +39,7 @@
                     </p>
                     
                     <div class="actionButtons">
-                        <a href="profileViewOrders.php" class="btn btnPrimary">
+                        <a href="viewAllTabs.php" class="btn btnPrimary">
                              View My Order
                         </a>
                         <a href="index.php" class="btn btnSecondary">

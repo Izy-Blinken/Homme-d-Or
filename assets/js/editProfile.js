@@ -33,7 +33,7 @@ function cancelDiscard() {
 function confirmDiscard() {
     document.getElementById('confirmationModal').classList.remove('show');
     forceCloseModal();
-    showToast('Changes discarded', 'info');
+    showGeneralToast('Changes discarded', 'info');
 
 }
 
@@ -60,16 +60,17 @@ function saveProfile(event) {
     event.preventDefault();
         
     forceCloseModal();
-    showToast('Profile updated successfully!', 'success');
+    showGeneralToast('Profile updated successfully!', 'success');
 }
 
-function showToast(message, type = 'success') {
-    const toast = document.getElementById('toastMessage');
+
+function showGeneralToast(message, type = 'success') {
+    const toast = document.getElementById('generalToast');
     toast.textContent = message;
-    toast.className = `toastMessage ${type}`;
+    toast.className = `generalToast ${type}`;
     toast.classList.add('show');
     
     setTimeout(() => {
         toast.classList.remove('show');
-    }, 3000);
+    }, 3000); 
 }

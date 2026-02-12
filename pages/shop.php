@@ -47,92 +47,93 @@
 
         <div class="shop-products-grid">
             <!-- Product Card 1 -->
-            <div class="shop-product-card">
+            <div class="product-card">
                 <div class="shop-product-image">
-                    <button class="shop-add-to-cart">
-                        <i class="fas fa-shopping-cart"></i>
-                        <span class="cart-text">Add to Cart</span>
-                    </button>
+
+                    <button class="quick-view-btn" onclick="window.location.href='productDetails.php'">Quick View</button>
                 </div>
+                <button class="add-to-cart-btn" onclick="window.location.href='cart.php'">
+                    ADD TO CART
+                </button>
                 <div class="shop-product-info">
-                    <h3 class="shop-product-title">Name</h3>
-                    <p class="shop-product-name">Eau de Parfum 70ml</p>
-                    <p class="shop-product-price">Price</p>
+                    <h3 class="shop-product-title">Golden Night</h3>
+                    <p class="shop-product-price" >₱1,800</p>
                 </div>
             </div>
 
             <!-- Product Card 2 -->
-            <div class="shop-product-card">
+            <div class="product-card">
                 <div class="shop-product-image">
-                    <button class="shop-add-to-cart">
-                        <i class="fas fa-shopping-cart"></i>
-                        <span class="cart-text">Add to Cart</span>
-                    </button>
+
+                    <button class="quick-view-btn" onclick="window.location.href='productDetails.php'">Quick View</button>
                 </div>
+                <button class="add-to-cart-btn" onclick="window.location.href='cart.php'">
+                    ADD TO CART
+                </button>
                 <div class="shop-product-info">
-                    <h3 class="shop-product-title">Name</h3>
-                    <p class="shop-product-name">Eau de Parfum 70ml</p>
-                    <p class="shop-product-price">Price</p>
+                    <h3 class="shop-product-title">Golden Night</h3>
+                    <p class="shop-product-price" >₱1,800</p>
                 </div>
             </div>
 
+
             <!-- Product Card 3 -->
-            <div class="shop-product-card">
+            <div class="product-card">
                 <div class="shop-product-image">
-                    <button class="shop-add-to-cart">
-                        <i class="fas fa-shopping-cart"></i>
-                        <span class="cart-text">Add to Cart</span>
-                    </button>
+
+                    <button class="quick-view-btn" onclick="window.location.href='productDetails.php'">Quick View</button>
                 </div>
+                <button class="add-to-cart-btn" onclick="window.location.href='cart.php'">
+                    ADD TO CART
+                </button>
                 <div class="shop-product-info">
-                    <h3 class="shop-product-title">Name</h3>
-                    <p class="shop-product-name">Eau de Parfum 70ml</p>
-                    <p class="shop-product-price">Price</p>
+                    <h3 class="shop-product-title">Golden Night</h3>
+                    <p class="shop-product-price" >₱1,800</p>
                 </div>
             </div>
 
             <!-- Product Card 4 -->
-            <div class="shop-product-card">
+            <div class="product-card">
                 <div class="shop-product-image">
-                    <button class="shop-add-to-cart">
-                        <i class="fas fa-shopping-cart"></i>
-                        <span class="cart-text">Add to Cart</span>
-                    </button>
+
+                    <button class="quick-view-btn" onclick="window.location.href='productDetails.php'">Quick View</button>
                 </div>
+                <button class="add-to-cart-btn" onclick="window.location.href='cart.php'">
+                    ADD TO CART
+                </button>
                 <div class="shop-product-info">
-                    <h3 class="shop-product-title">Name</h3>
-                    <p class="shop-product-name">Eau de Parfum 70ml</p>
-                    <p class="shop-product-price">Price</p>
+                    <h3 class="shop-product-title">Golden Night</h3>
+                    <p class="shop-product-price" >₱1,800</p>
                 </div>
             </div>
 
             <!-- Product Card 5 -->
-            <div class="shop-product-card">
+            <div class="product-card">
                 <div class="shop-product-image">
-                    <button class="shop-add-to-cart">
-                        <i class="fas fa-shopping-cart"></i>
-                        <span class="cart-text">Add to Cart</span>
-                    </button>
+
+                    <button class="quick-view-btn" onclick="window.location.href='productDetails.php'">Quick View</button>
                 </div>
+                <button class="add-to-cart-btn" onclick="window.location.href='cart.php'">
+                    ADD TO CART
+                </button>
                 <div class="shop-product-info">
-                    <h3 class="shop-product-title">Name</h3>
-                    <p class="shop-product-name">Eau de Parfum 70ml</p>
-                    <p class="shop-product-price">Price</p>
+                    <h3 class="shop-product-title">Golden Night</h3>
+                    <p class="shop-product-price" >₱1,800</p>
                 </div>
             </div>
 
             <!-- Product Card 6 -->
-            <div class="shop-product-card">
+            <div class="product-card">
                 <div class="shop-product-image">
-                    <button class="shop-add-to-cart">
-                        <i class="fas fa-shopping-cart"></i>
-                        <span class="cart-text">Add to Cart</span>
-                    </button>
+
+                    <button class="quick-view-btn" onclick="window.location.href='productDetails.php'">Quick View</button>
                 </div>
+                <button class="add-to-cart-btn" onclick="window.location.href='cart.php'">
+                    ADD TO CART
+                </button>
                 <div class="shop-product-info">
-                    <h3 class="shop-product-title">Name</h3>
-                    <p class="shop-product-name">Eau de Parfum 70ml</p>
-                    <p class="shop-product-price">Price</p>
+                    <h3 class="shop-product-title">Golden Night</h3>
+                    <p class="shop-product-price" >₱1,800</p>
                 </div>
             </div>
         </div>
@@ -142,92 +143,92 @@
     <section class="shop-products-section shop-layout-right" id="top-picks">
         <div class="shop-products-grid">
             <!-- Product Card 1 -->
-            <div class="shop-product-card">
+           <div class="product-card">
                 <div class="shop-product-image">
-                    <button class="shop-add-to-cart">
-                        <i class="fas fa-shopping-cart"></i>
-                        <span class="cart-text">Add to Cart</span>
-                    </button>
+
+                    <button class="quick-view-btn" onclick="window.location.href='productDetails.php'">Quick View</button>
                 </div>
+                <button class="add-to-cart-btn" onclick="window.location.href='cart.php'">
+                    ADD TO CART
+                </button>
                 <div class="shop-product-info">
-                    <h3 class="shop-product-title">Name</h3>
-                    <p class="shop-product-name">Eau de Parfum 70ml</p>
-                    <p class="shop-product-price">Price</p>
+                    <h3 class="shop-product-title">Golden Night</h3>
+                    <p class="shop-product-price" >₱1,800</p>
                 </div>
             </div>
 
             <!-- Product Card 2 -->
-            <div class="shop-product-card">
+            <div class="product-card">
                 <div class="shop-product-image">
-                    <button class="shop-add-to-cart">
-                        <i class="fas fa-shopping-cart"></i>
-                        <span class="cart-text">Add to Cart</span>
-                    </button>
+
+                    <button class="quick-view-btn" onclick="window.location.href='productDetails.php'">Quick View</button>
                 </div>
+                <button class="add-to-cart-btn" onclick="window.location.href='cart.php'">
+                    ADD TO CART
+                </button>
                 <div class="shop-product-info">
-                    <h3 class="shop-product-title">Name</h3>
-                    <p class="shop-product-name">Eau de Parfum 70ml</p>
-                    <p class="shop-product-price">Price</p>
+                    <h3 class="shop-product-title">Golden Night</h3>
+                    <p class="shop-product-price" >₱1,800</p>
                 </div>
             </div>
 
             <!-- Product Card 3 -->
-            <div class="shop-product-card">
+            <div class="product-card">
                 <div class="shop-product-image">
-                    <button class="shop-add-to-cart">
-                        <i class="fas fa-shopping-cart"></i>
-                        <span class="cart-text">Add to Cart</span>
-                    </button>
+
+                    <button class="quick-view-btn" onclick="window.location.href='productDetails.php'">Quick View</button>
                 </div>
+                <button class="add-to-cart-btn" onclick="window.location.href='cart.php'">
+                    ADD TO CART
+                </button>
                 <div class="shop-product-info">
-                    <h3 class="shop-product-title">Name</h3>
-                    <p class="shop-product-name">Eau de Parfum 70ml</p>
-                    <p class="shop-product-price">Price</p>
+                    <h3 class="shop-product-title">Golden Night</h3>
+                    <p class="shop-product-price" >₱1,800</p>
                 </div>
             </div>
 
             <!-- Product Card 4 -->
-            <div class="shop-product-card">
+            <div class="product-card">
                 <div class="shop-product-image">
-                    <button class="shop-add-to-cart">
-                        <i class="fas fa-shopping-cart"></i>
-                        <span class="cart-text">Add to Cart</span>
-                    </button>
+
+                    <button class="quick-view-btn" onclick="window.location.href='productDetails.php'">Quick View</button>
                 </div>
+                <button class="add-to-cart-btn" onclick="window.location.href='cart.php'">
+                    ADD TO CART
+                </button>
                 <div class="shop-product-info">
-                    <h3 class="shop-product-title">Name</h3>
-                    <p class="shop-product-name">Eau de Parfum 70ml</p>
-                    <p class="shop-product-price">Price</p>
+                    <h3 class="shop-product-title">Golden Night</h3>
+                    <p class="shop-product-price" >₱1,800</p>
                 </div>
             </div>
 
             <!-- Product Card 5 -->
-            <div class="shop-product-card">
+            <div class="product-card">
                 <div class="shop-product-image">
-                    <button class="shop-add-to-cart">
-                        <i class="fas fa-shopping-cart"></i>
-                        <span class="cart-text">Add to Cart</span>
-                    </button>
+
+                    <button class="quick-view-btn" onclick="window.location.href='productDetails.php'">Quick View</button>
                 </div>
+                <button class="add-to-cart-btn" onclick="window.location.href='cart.php'">
+                    ADD TO CART
+                </button>
                 <div class="shop-product-info">
-                    <h3 class="shop-product-title">Name</h3>
-                    <p class="shop-product-name">Eau de Parfum 70ml</p>
-                    <p class="shop-product-price">Price</p>
+                    <h3 class="shop-product-title">Golden Night</h3>
+                    <p class="shop-product-price" >₱1,800</p>
                 </div>
             </div>
 
             <!-- Product Card 6 -->
-            <div class="shop-product-card">
+            <div class="product-card">
                 <div class="shop-product-image">
-                    <button class="shop-add-to-cart">
-                        <i class="fas fa-shopping-cart"></i>
-                        <span class="cart-text">Add to Cart</span>
-                    </button>
+
+                    <button class="quick-view-btn" onclick="window.location.href='productDetails.php'">Quick View</button>
                 </div>
+                <button class="add-to-cart-btn" onclick="window.location.href='cart.php'">
+                    ADD TO CART
+                </button>
                 <div class="shop-product-info">
-                    <h3 class="shop-product-title">Name</h3>
-                    <p class="shop-product-name">Eau de Parfum 70ml</p>
-                    <p class="shop-product-price">Price</p>
+                    <h3 class="shop-product-title">Golden Night</h3>
+                    <p class="shop-product-price" >₱1,800</p>
                 </div>
             </div>
         </div>
@@ -251,87 +252,87 @@
 
         <div class="shop-products-grid">
             <!-- Product Cards 1-6 (same structure as above) -->
-            <div class="shop-product-card">
+            <div class="product-card">
                 <div class="shop-product-image">
-                    <button class="shop-add-to-cart">
-                        <i class="fas fa-shopping-cart"></i>
-                        <span class="cart-text">Add to Cart</span>
-                    </button>
+
+                    <button class="quick-view-btn" onclick="window.location.href='productDetails.php'">Quick View</button>
                 </div>
+                <button class="add-to-cart-btn" onclick="window.location.href='cart.php'">
+                    ADD TO CART
+                </button>
                 <div class="shop-product-info">
-                    <h3 class="shop-product-title">Name</h3>
-                    <p class="shop-product-name">Eau de Parfum 70ml</p>
-                    <p class="shop-product-price">Price</p>
+                    <h3 class="shop-product-title">Golden Night</h3>
+                    <p class="shop-product-price" >₱1,800</p>
                 </div>
             </div>
 
-            <div class="shop-product-card">
+            <div class="product-card">
                 <div class="shop-product-image">
-                    <button class="shop-add-to-cart">
-                        <i class="fas fa-shopping-cart"></i>
-                        <span class="cart-text">Add to Cart</span>
-                    </button>
+
+                    <button class="quick-view-btn" onclick="window.location.href='productDetails.php'">Quick View</button>
                 </div>
+                <button class="add-to-cart-btn" onclick="window.location.href='cart.php'">
+                    ADD TO CART
+                </button>
                 <div class="shop-product-info">
-                    <h3 class="shop-product-title">Name</h3>
-                    <p class="shop-product-name">Eau de Parfum 70ml</p>
-                    <p class="shop-product-price">Price</p>
+                    <h3 class="shop-product-title">Golden Night</h3>
+                    <p class="shop-product-price" >₱1,800</p>
                 </div>
             </div>
 
-            <div class="shop-product-card">
+            <div class="product-card">
                 <div class="shop-product-image">
-                    <button class="shop-add-to-cart">
-                        <i class="fas fa-shopping-cart"></i>
-                        <span class="cart-text">Add to Cart</span>
-                    </button>
+
+                    <button class="quick-view-btn" onclick="window.location.href='productDetails.php'">Quick View</button>
                 </div>
+                <button class="add-to-cart-btn" onclick="window.location.href='cart.php'">
+                    ADD TO CART
+                </button>
                 <div class="shop-product-info">
-                    <h3 class="shop-product-title">Name</h3>
-                    <p class="shop-product-name">Eau de Parfum 70ml</p>
-                    <p class="shop-product-price">Price</p>
+                    <h3 class="shop-product-title">Golden Night</h3>
+                    <p class="shop-product-price" >₱1,800</p>
                 </div>
             </div>
 
-            <div class="shop-product-card">
+            <div class="product-card">
                 <div class="shop-product-image">
-                    <button class="shop-add-to-cart">
-                        <i class="fas fa-shopping-cart"></i>
-                        <span class="cart-text">Add to Cart</span>
-                    </button>
+
+                    <button class="quick-view-btn" onclick="window.location.href='productDetails.php'">Quick View</button>
                 </div>
+                <button class="add-to-cart-btn" onclick="window.location.href='cart.php'">
+                    ADD TO CART
+                </button>
                 <div class="shop-product-info">
-                    <h3 class="shop-product-title">Name</h3>
-                    <p class="shop-product-name">Eau de Parfum 70ml</p>
-                    <p class="shop-product-price">Price</p>
+                    <h3 class="shop-product-title">Golden Night</h3>
+                    <p class="shop-product-price" >₱1,800</p>
                 </div>
             </div>
 
-            <div class="shop-product-card">
+            <div class="product-card">
                 <div class="shop-product-image">
-                    <button class="shop-add-to-cart">
-                        <i class="fas fa-shopping-cart"></i>
-                        <span class="cart-text">Add to Cart</span>
-                    </button>
+
+                    <button class="quick-view-btn" onclick="window.location.href='productDetails.php'">Quick View</button>
                 </div>
+                <button class="add-to-cart-btn" onclick="window.location.href='cart.php'">
+                    ADD TO CART
+                </button>
                 <div class="shop-product-info">
-                    <h3 class="shop-product-title">Name</h3>
-                    <p class="shop-product-name">Eau de Parfum 70ml</p>
-                    <p class="shop-product-price">Price</p>
+                    <h3 class="shop-product-title">Golden Night</h3>
+                    <p class="shop-product-price" >₱1,800</p>
                 </div>
             </div>
 
-            <div class="shop-product-card">
+            <div class="product-card">
                 <div class="shop-product-image">
-                    <button class="shop-add-to-cart">
-                        <i class="fas fa-shopping-cart"></i>
-                        <span class="cart-text">Add to Cart</span>
-                    </button>
+
+                    <button class="quick-view-btn" onclick="window.location.href='productDetails.php'">Quick View</button>
                 </div>
+                <button class="add-to-cart-btn" onclick="window.location.href='cart.php'">
+                    ADD TO CART
+                </button>
                 <div class="shop-product-info">
-                    <h3 class="shop-product-title">Name</h3>
-                    <p class="shop-product-name">Eau de Parfum 70ml</p>
-                    <p class="shop-product-price">Price</p>
+                    <h3 class="shop-product-title">Golden Night</h3>
+                    <p class="shop-product-price" >₱1,800</p>
                 </div>
             </div>
         </div>
@@ -341,87 +342,87 @@
     <section class="shop-products-section shop-layout-right" id="daily-wear">
         <div class="shop-products-grid">
             <!-- Product Cards 1-6 -->
-            <div class="shop-product-card">
+            <div class="product-card">
                 <div class="shop-product-image">
-                    <button class="shop-add-to-cart">
-                        <i class="fas fa-shopping-cart"></i>
-                        <span class="cart-text">Add to Cart</span>
-                    </button>
+
+                    <button class="quick-view-btn" onclick="window.location.href='productDetails.php'">Quick View</button>
                 </div>
+                <button class="add-to-cart-btn" onclick="window.location.href='cart.php'">
+                    ADD TO CART
+                </button>
                 <div class="shop-product-info">
-                    <h3 class="shop-product-title">Name</h3>
-                    <p class="shop-product-name">Eau de Parfum 70ml</p>
-                    <p class="shop-product-price">Price</p>
+                    <h3 class="shop-product-title">Golden Night</h3>
+                    <p class="shop-product-price" >₱1,800</p>
                 </div>
             </div>
 
-            <div class="shop-product-card">
+            <div class="product-card">
                 <div class="shop-product-image">
-                    <button class="shop-add-to-cart">
-                        <i class="fas fa-shopping-cart"></i>
-                        <span class="cart-text">Add to Cart</span>
-                    </button>
+
+                    <button class="quick-view-btn" onclick="window.location.href='productDetails.php'">Quick View</button>
                 </div>
+                <button class="add-to-cart-btn" onclick="window.location.href='cart.php'">
+                    ADD TO CART
+                </button>
                 <div class="shop-product-info">
-                    <h3 class="shop-product-title">Name</h3>
-                    <p class="shop-product-name">Eau de Parfum 70ml</p>
-                    <p class="shop-product-price">Price</p>
+                    <h3 class="shop-product-title">Golden Night</h3>
+                    <p class="shop-product-price" >₱1,800</p>
                 </div>
             </div>
 
-            <div class="shop-product-card">
+            <div class="product-card">
                 <div class="shop-product-image">
-                    <button class="shop-add-to-cart">
-                        <i class="fas fa-shopping-cart"></i>
-                        <span class="cart-text">Add to Cart</span>
-                    </button>
+
+                    <button class="quick-view-btn" onclick="window.location.href='productDetails.php'">Quick View</button>
                 </div>
+                <button class="add-to-cart-btn" onclick="window.location.href='cart.php'">
+                    ADD TO CART
+                </button>
                 <div class="shop-product-info">
-                    <h3 class="shop-product-title">Name</h3>
-                    <p class="shop-product-name">Eau de Parfum 70ml</p>
-                    <p class="shop-product-price">Price</p>
+                    <h3 class="shop-product-title">Golden Night</h3>
+                    <p class="shop-product-price" >₱1,800</p>
                 </div>
             </div>
 
-            <div class="shop-product-card">
+            <div class="product-card">
                 <div class="shop-product-image">
-                    <button class="shop-add-to-cart">
-                        <i class="fas fa-shopping-cart"></i>
-                        <span class="cart-text">Add to Cart</span>
-                    </button>
+
+                    <button class="quick-view-btn" onclick="window.location.href='productDetails.php'">Quick View</button>
                 </div>
+                <button class="add-to-cart-btn" onclick="window.location.href='cart.php'">
+                    ADD TO CART
+                </button>
                 <div class="shop-product-info">
-                    <h3 class="shop-product-title">Name</h3>
-                    <p class="shop-product-name">Eau de Parfum 70ml</p>
-                    <p class="shop-product-price">Price</p>
+                    <h3 class="shop-product-title">Golden Night</h3>
+                    <p class="shop-product-price" >₱1,800</p>
                 </div>
             </div>
 
-            <div class="shop-product-card">
+            <div class="product-card">
                 <div class="shop-product-image">
-                    <button class="shop-add-to-cart">
-                        <i class="fas fa-shopping-cart"></i>
-                        <span class="cart-text">Add to Cart</span>
-                    </button>
+
+                    <button class="quick-view-btn" onclick="window.location.href='productDetails.php'">Quick View</button>
                 </div>
+                <button class="add-to-cart-btn" onclick="window.location.href='cart.php'">
+                    ADD TO CART
+                </button>
                 <div class="shop-product-info">
-                    <h3 class="shop-product-title">Name</h3>
-                    <p class="shop-product-name">Eau de Parfum 70ml</p>
-                    <p class="shop-product-price">Price</p>
+                    <h3 class="shop-product-title">Golden Night</h3>
+                    <p class="shop-product-price" >₱1,800</p>
                 </div>
             </div>
 
-            <div class="shop-product-card">
+            <div class="product-card">
                 <div class="shop-product-image">
-                    <button class="shop-add-to-cart">
-                        <i class="fas fa-shopping-cart"></i>
-                        <span class="cart-text">Add to Cart</span>
-                    </button>
+
+                    <button class="quick-view-btn" onclick="window.location.href='productDetails.php'">Quick View</button>
                 </div>
+                <button class="add-to-cart-btn" onclick="window.location.href='cart.php'">
+                    ADD TO CART
+                </button>
                 <div class="shop-product-info">
-                    <h3 class="shop-product-title">Name</h3>
-                    <p class="shop-product-name">Eau de Parfum 70ml</p>
-                    <p class="shop-product-price">Price</p>
+                    <h3 class="shop-product-title">Golden Night</h3>
+                    <p class="shop-product-price" >₱1,800</p>
                 </div>
             </div>
         </div>
@@ -445,87 +446,87 @@
 
         <div class="shop-products-grid">
             <!-- Product Cards 1-6 -->
-            <div class="shop-product-card">
+            <div class="product-card">
                 <div class="shop-product-image">
-                    <button class="shop-add-to-cart">
-                        <i class="fas fa-shopping-cart"></i>
-                        <span class="cart-text">Add to Cart</span>
-                    </button>
+
+                    <button class="quick-view-btn" onclick="window.location.href='productDetails.php'">Quick View</button>
                 </div>
+                <button class="add-to-cart-btn" onclick="window.location.href='cart.php'">
+                    ADD TO CART
+                </button>
                 <div class="shop-product-info">
-                    <h3 class="shop-product-title">Name</h3>
-                    <p class="shop-product-name">Eau de Parfum 70ml</p>
-                    <p class="shop-product-price">Price</p>
+                    <h3 class="shop-product-title">Golden Night</h3>
+                    <p class="shop-product-price" >₱1,800</p>
                 </div>
             </div>
 
-            <div class="shop-product-card">
+            <div class="product-card">
                 <div class="shop-product-image">
-                    <button class="shop-add-to-cart">
-                        <i class="fas fa-shopping-cart"></i>
-                        <span class="cart-text">Add to Cart</span>
-                    </button>
+
+                    <button class="quick-view-btn" onclick="window.location.href='productDetails.php'">Quick View</button>
                 </div>
+                <button class="add-to-cart-btn" onclick="window.location.href='cart.php'">
+                    ADD TO CART
+                </button>
                 <div class="shop-product-info">
-                    <h3 class="shop-product-title">Name</h3>
-                    <p class="shop-product-name">Eau de Parfum 70ml</p>
-                    <p class="shop-product-price">Price</p>
+                    <h3 class="shop-product-title">Golden Night</h3>
+                    <p class="shop-product-price" >₱1,800</p>
                 </div>
             </div>
 
-            <div class="shop-product-card">
+            <div class="product-card">
                 <div class="shop-product-image">
-                    <button class="shop-add-to-cart">
-                        <i class="fas fa-shopping-cart"></i>
-                        <span class="cart-text">Add to Cart</span>
-                    </button>
+
+                    <button class="quick-view-btn" onclick="window.location.href='productDetails.php'">Quick View</button>
                 </div>
+                <button class="add-to-cart-btn" onclick="window.location.href='cart.php'">
+                    ADD TO CART
+                </button>
                 <div class="shop-product-info">
-                    <h3 class="shop-product-title">Name</h3>
-                    <p class="shop-product-name">Eau de Parfum 70ml</p>
-                    <p class="shop-product-price">Price</p>
+                    <h3 class="shop-product-title">Golden Night</h3>
+                    <p class="shop-product-price" >₱1,800</p>
                 </div>
             </div>
 
-            <div class="shop-product-card">
+            <div class="product-card">
                 <div class="shop-product-image">
-                    <button class="shop-add-to-cart">
-                        <i class="fas fa-shopping-cart"></i>
-                        <span class="cart-text">Add to Cart</span>
-                    </button>
+
+                    <button class="quick-view-btn" onclick="window.location.href='productDetails.php'">Quick View</button>
                 </div>
+                <button class="add-to-cart-btn" onclick="window.location.href='cart.php'">
+                    ADD TO CART
+                </button>
                 <div class="shop-product-info">
-                    <h3 class="shop-product-title">Name</h3>
-                    <p class="shop-product-name">Eau de Parfum 70ml</p>
-                    <p class="shop-product-price">Price</p>
+                    <h3 class="shop-product-title">Golden Night</h3>
+                    <p class="shop-product-price" >₱1,800</p>
                 </div>
             </div>
 
-            <div class="shop-product-card">
+            <div class="product-card">
                 <div class="shop-product-image">
-                    <button class="shop-add-to-cart">
-                        <i class="fas fa-shopping-cart"></i>
-                        <span class="cart-text">Add to Cart</span>
-                    </button>
+
+                    <button class="quick-view-btn" onclick="window.location.href='productDetails.php'">Quick View</button>
                 </div>
+                <button class="add-to-cart-btn" onclick="window.location.href='cart.php'">
+                    ADD TO CART
+                </button>
                 <div class="shop-product-info">
-                    <h3 class="shop-product-title">Name</h3>
-                    <p class="shop-product-name">Eau de Parfum 70ml</p>
-                    <p class="shop-product-price">Price</p>
+                    <h3 class="shop-product-title">Golden Night</h3>
+                    <p class="shop-product-price" >₱1,800</p>
                 </div>
             </div>
 
-            <div class="shop-product-card">
+            <div class="product-card">
                 <div class="shop-product-image">
-                    <button class="shop-add-to-cart">
-                        <i class="fas fa-shopping-cart"></i>
-                        <span class="cart-text">Add to Cart</span>
-                    </button>
+
+                    <button class="quick-view-btn" onclick="window.location.href='productDetails.php'">Quick View</button>
                 </div>
+                <button class="add-to-cart-btn" onclick="window.location.href='cart.php'">
+                    ADD TO CART
+                </button>
                 <div class="shop-product-info">
-                    <h3 class="shop-product-title">Name</h3>
-                    <p class="shop-product-name">Eau de Parfum 70ml</p>
-                    <p class="shop-product-price">Price</p>
+                    <h3 class="shop-product-title">Golden Night</h3>
+                    <p class="shop-product-price" >₱1,800</p>
                 </div>
             </div>
         </div>
@@ -534,5 +535,6 @@
     
         <?php include '../components/footer.php'; ?>
         <script src="../assets/js/shopAnimations.js"></script>
+        <script src="../assets/js/script.js"></script>
 </body>
 </html>

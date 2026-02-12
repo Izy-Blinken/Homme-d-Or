@@ -698,14 +698,14 @@
 }
 
 .quick-view-btn:hover {
-    background: rgba(210, 178, 49, 0.8);
+    background: #F5A742;
     border-color: rgba(255, 255, 255, 0.4);
 }
 
 .add-to-cart-btn {
     width: 100%;
     padding: 15px 20px;
-    background: rgba(14, 16, 31, 0.7);
+    background: #171b3a;
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
     color: white;
@@ -719,7 +719,7 @@
 }
 
 .add-to-cart-btn:hover {
-    background: rgba(210, 178, 49, 0.8);
+    background: #E69632;
     border-color: rgba(255, 255, 255, 0.3);
 }
 
@@ -990,7 +990,7 @@
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: 70px;
-    transition: opacity 0.3s ease, transform 0.3s ease;
+    transition: all 0.3s ease, transform 0.3s ease;
 }
     
 .new-arrival-card {
@@ -1009,7 +1009,7 @@
 .new-arrival-image {
     position: relative;
     width: 100%;
-    aspect-ratio: 3/4; /* Keeps your specific height */
+    aspect-ratio: 3/4; 
     background: rgba(255, 255, 255, 0.05);
     overflow: hidden;
 }
@@ -1018,7 +1018,7 @@
     width: 100%;
     height: 100%;
     object-fit: cover;
-    transition: transform 0.3s ease;
+    transition: all 0.3s ease;
 }
 
 .new-arrival-card:hover .new-arrival-image img {
@@ -1111,7 +1111,7 @@
     height: 3px;
     background: rgba(255, 255, 255, 0.2);
     cursor: pointer;
-    transition: 0.3s;
+    transition: all 0.3s;
 }
 
 .indicator.active {
@@ -1266,7 +1266,7 @@
     text-decoration: none;
     text-transform: uppercase;
     letter-spacing: 1px;
-    transition: color 0.3s ease;
+    transition: all 0.3s ease;
 }
 
 .promo-cards-container-2 .promo-link:hover {
@@ -1313,7 +1313,7 @@
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: 70px;
-    transition: opacity 0.3s ease, transform 0.3s ease;
+    transition: all 0.3s ease, transform 0.3s ease;
 }
     
 .new-arrivals-grid-2 .new-arrival-card {
@@ -1341,7 +1341,7 @@
     width: 100%;
     height: 100%;
     object-fit: cover;
-    transition: transform 0.3s ease;
+    transition: all 0.3s ease;
 }
 
 .new-arrivals-grid-2 .new-arrival-card:hover .new-arrival-image img {
@@ -1435,7 +1435,7 @@
     height: 3px;
     background: rgba(255, 255, 255, 0.2);
     cursor: pointer;
-    transition: 0.3s;
+    transition: all 0.3s;
 }
 
 .new-arrivals-wrapper-2 .indicator.active {
@@ -1444,7 +1444,7 @@
 }
 
 .new-arrivals-wrapper-2 .indicator:hover {
-    background: rgba(210, 178, 49, 0.5);
+    background: #F5A742;
 }
 
 /*responsive design */
@@ -1545,7 +1545,7 @@
     padding: 18px 60px;
     background: #171b3a;
     color: white;
-    border: 2px solid #d2b231;
+    border: 2px solid #F5A742;
     font-size: 18px;
     font-weight: 600;
     text-transform: uppercase;
@@ -2083,7 +2083,7 @@
     grid-template-columns: repeat(2, 1fr);
     gap: 2rem;
     align-content: start;
-    background: #fff;
+    background: #171b3a;
 }
 
 /* Product Card */
@@ -2177,29 +2177,23 @@
 /* Product Info */
 .shop-product-info {
     padding: 1.5rem;
-    background: #fff;
+    background: rgba(255, 255, 255, 0.1);
 }
 
 .shop-product-title {
     font-size: 1.2rem;
-    font-weight: 600;
+    font-weight: 550;
     margin: 0 0 0.5rem 0;
-    color: #000;
+    color: #ffffff;
 }
 
-.shop-product-name {
-    font-size: 1rem;
-    color: #333;
-    margin: 0 0 0.5rem 0;
-}
 
 .shop-product-price {
-    color: #666;
-    font-size: 0.95rem;
-    font-weight: 500;
+    color: #e3e3e3;
+    font-size: 0.90rem;
+    font-weight: 400;
     margin: 0;
 }
-
 
 
 /* Tablet */
@@ -2212,7 +2206,6 @@
         gap: 2rem;
     }
     
-    /* Stack sections vertically on tablets */
     .shop-products-section.shop-layout-left,
     .shop-products-section.shop-layout-right {
         flex-direction: column;
