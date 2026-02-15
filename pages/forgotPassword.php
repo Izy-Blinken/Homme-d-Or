@@ -30,7 +30,7 @@
                 </div>
 
                 <div class="fpForm">
-                    <form id="emailForm" >
+                    <form id="emailForm">
                         <div class="formGroup">
                             <label for="email">Email Address</label>
                             <input type="email" id="email" name="email" placeholder="Enter your email" required>

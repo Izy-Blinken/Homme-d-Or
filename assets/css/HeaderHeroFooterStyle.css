@@ -1,7 +1,6 @@
 
 /*HEADER*/
 
-
 .logo {
     position: relative;
     height: 230px;
@@ -228,9 +227,9 @@
     display: inline-block;
 }
 
-#navbar-right li a:hover,
-#navbar-right li a.active {
-    color: #f8e189;  
+#navbar-right li a:hover:not(.profile-login-btn):not(.profile-register-btn),
+#navbar-right li a.active:not(.profile-login-btn):not(.profile-register-btn) {
+    color: #f8e189;
     transform: scale(1.1);
 }
 
@@ -537,7 +536,7 @@
     position: absolute;
     top: 100%;
     left: -250px;
-    background-color: #d9d9d9;
+    background-color: white;
     width: 280px;
     box-shadow: 0 8px 16px rgba(51, 51, 51, 0.5);
     padding: 0;
@@ -582,22 +581,29 @@
 }
 
 .profile-login-btn {
-    background-color: #1a1a5e;
-    color: white;
+    background-color: #c9a961;
+    border: 1px solid black;
+    color: black;
 }
 
 .profile-login-btn:hover {
-    background-color: #0d0d3a;
+    background-color: rgb(3, 3, 84);
+    border: 1px solid #c9a961;
+    color: #c9a961;
+    transform: scale(1.1);
 }
 
-.profile-register-btn {
-    background-color: #5bc0de;
-    color: white;
-    margin-bottom: 20px;
+.profile-dropdown .profile-register-btn {
+    background-color: #2A2D34;
+    color: #c9a961;
+    border: 1px solid #c9a961;
 }
 
-.profile-register-btn:hover {
-    background-color: #46b8da;
+.profile-dropdown .profile-register-btn:hover {
+    background-color: lightslategray;
+    color: black;
+    border: 1px solid black;
+    transform: scale(1.1);
 }
 
 /*HERO SECTION*/

@@ -308,29 +308,27 @@
 }
 
 .btn-primary {
-    background: #d2b231;
-    color: white;
-    border: 2px solid #d2b231;
+   background-color: #c9a961;
+    border: 1px solid black;
+    color: black;
 }
 
 .btn-primary:hover {
-    background: transparent;
-    color: #d2b231;
-    transform: translateY(-3px);
-    box-shadow: 0 10px 30px rgba(210, 178, 49, 0.4);
+    background-color: rgb(3, 3, 84);
+    border: 1px solid #c9a961;
+    color: #c9a961;
 }
 
 .btn-secondary {
-    background: transparent;
-    color: white;
-    border: 2px solid white;
+    background-color: #3A3F47;
+    color: #c9a961;
+    border: 1px solid #c9a961;
 }
 
 .btn-secondary:hover {
-    background: white;
-    color: #0e101f;
-    transform: translateY(-3px);
-    box-shadow: 0 10px 30px rgba(255, 255, 255, 0.3);
+    background-color: lightslategray;
+    color: black;
+    border: 1px solid black;
 }
 
 /* RESPONSIVE DESIGN */
@@ -662,8 +660,8 @@
     background: rgba(14, 16, 31, 0.6);
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
-    color: white;
-    border: 1px solid rgba(255, 255, 255, 0.2);
+    color:  #c9a961;
+    border: 1px solid  #c9a961;
     padding: 10px 25px;
     font-size: 13px;
     font-weight: 600;
@@ -680,8 +678,10 @@
 }
 
 .quick-view-btn:hover {
-    background: rgba(210, 178, 49, 0.8);
-    border-color: rgba(255, 255, 255, 0.4);
+    background-color: rgb(3, 3, 84);
+    border: 1px solid #c9a961;
+    color: #c9a961;
+
 }
 
 .add-to-cart-btn {
@@ -690,8 +690,8 @@
     background: rgba(14, 16, 31, 0.7);
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
-    color: white;
-    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: #c9a961;
+    border: 1px solid #c9a961;
     font-size: 14px;
     font-weight: 600;
     letter-spacing: 1px;
@@ -701,8 +701,9 @@
 }
 
 .add-to-cart-btn:hover {
-    background: rgba(210, 178, 49, 0.8);
-    border-color: rgba(255, 255, 255, 0.3);
+    background-color: rgb(3, 3, 84);
+    border: 1px solid #c9a961;
+    color: #c9a961;
 }
 
 .add-to-cart-btn:disabled {
@@ -1010,9 +1011,9 @@
 .arrival-add-cart {
     width: 100%;
     padding: 15px 20px;
-    background: #0e101f;
-    color: white;
-    border: none;
+    background-color: #c9a961;
+    color: black;
+    border: 1px solid black;
     font-size: 14px;
     font-weight: 600;
     letter-spacing: 1px;
@@ -1022,7 +1023,9 @@
 }
 
 .arrival-add-cart:hover {
-    background: #d2b231;
+    background-color: rgb(3, 3, 84);
+    border: 1px solid #c9a961;
+    color: #c9a961;
 }
 
 .arrival-overlay {
@@ -1525,9 +1528,9 @@
 
 .special-promo-btn {
     padding: 18px 60px;
-    background: #171b3a;
-    color: white;
-    border: 2px solid #d2b231;
+    background-color: rgb(3, 3, 84);
+    color: #c9a961;
+    border: 1px solid #c9a961;
     font-size: 18px;
     font-weight: 600;
     text-transform: uppercase;
@@ -1538,8 +1541,9 @@
 }
 
 .special-promo-btn:hover {
-    background: #d2b231;
-    color: #0e101f;
+    background-color: #c9a961;
+    border: 1px solid black;
+    color: black;
     transform: translateY(-3px);
     box-shadow: 0 8px 25px rgba(210, 178, 49, 0.5);
 }
