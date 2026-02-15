@@ -61,3 +61,64 @@ main {
     
 }
 
+.generalToast {
+    visibility: hidden;
+    width: min(90%, 200px);
+    max-width: 600px;
+    background: whitesmoke;
+    color: #000000;
+    text-align: center;
+    padding: clamp(0.5rem, 1vw, 1rem);
+    position: fixed;
+    z-index: 9999;
+    left: 50% !important;
+    bottom: 5vh;
+    font-size: clamp(0.9rem, 2vw, 1.1rem);
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    border-bottom: 5px solid #0e7c00;
+    transform: translateX(-50%) !important;
+}
+
+.generalToast.show {
+    visibility: visible;
+    animation: slideUp 0.4s, 
+               slideDown 0.4s 2.6s;
+}
+
+@keyframes slideUp {
+    0% { 
+        opacity: 0;
+        bottom: 0;
+    }
+    100% { 
+        opacity: 1;
+        bottom: 5vh;
+    }
+}
+
+@keyframes slideDown {
+    0% { 
+        opacity: 1;
+        bottom: 5vh;
+    }
+    100% { 
+        opacity: 0;
+        bottom: 0;
+    }
+}
+
+@media (max-width: 768px) {
+    .generalToast {
+        width: 85%;
+        bottom: 3vh;
+        padding: clamp(0.875rem, 2.5vw, 1.25rem);
+    }
+}
+
+@media (max-width: 480px) {
+    .generalToast {
+        width: 90%;
+        font-size: clamp(0.85rem, 3.5vw, 1rem);
+    }
+}

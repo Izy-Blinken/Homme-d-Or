@@ -72,9 +72,9 @@
 
                         <div class="orderOverview">
                             <div class="orderItem">
-                                <div class="orderIcon">
+                                <button class="orderIcon"  onclick="window.location.href='viewAllTabs.php'">
                                     <i class="fas fa-box"></i>
-                                </div>
+                                </button>
                                 <div class="orderDetails">
                                     <h4>Processing</h4>
                                     <p>3 orders</p>
@@ -82,19 +82,19 @@
                             </div>
 
                             <div class="orderItem">
-                                <div class="orderIcon">
+                                <button class="orderIcon" onclick="window.location.href='viewAllTabs.php'">
                                     <i class="fas fa-star"></i>
-                                </div>
-                                <div class="orderDetails">
+                                </button>
+                                <div class="orderDetails" >
                                     <h4>To Review</h4>
                                     <p>2 orders</p>
                                 </div>
                             </div>
 
                             <div class="orderItem">
-                                <div class="orderIcon">
+                                <button class="orderIcon" onclick="window.location.href='viewAllTabs.php'">
                                     <i class="fas fa-check-circle"></i>
-                                </div>
+                                </button>
                                 <div class="orderDetails">
                                     <h4>Completed</h4>
                                     <p>15 orders</p>
@@ -111,29 +111,29 @@
                         <div class="divider"></div>
 
                         <div class="historyList">
-                            <div class="historyItem">
+                            <button class="historyItem" onclick="window.location.href='viewHistory.php'">
                                 <div class="historyDate">Jan 25, 2026</div>
                                 <div class="historyInfo">
                                     <p class="historyProduct">Product name</p>
                                     <p class="historyPrice">₱1,250.00</p>
                                 </div>
-                            </div>
+                            </button>
 
-                            <div class="historyItem">
+                            <button class="historyItem" onclick="window.location.href='viewHistory.php'">
                                 <div class="historyDate">Jan 20, 2026</div>
                                 <div class="historyInfo">
                                     <p class="historyProduct">Product Name</p>
                                     <p class="historyPrice">₱3,500.00</p>
                                 </div>
-                            </div>
+                            </button>
 
-                            <div class="historyItem">
+                            <button class="historyItem" onclick="window.location.href='viewHistory.php'">
                                 <div class="historyDate">Jan 15, 2026</div>
                                 <div class="historyInfo">
                                     <p class="historyProduct">Product name</p>
                                     <p class="historyPrice">₱2,800.00</p>
                                 </div>
-                            </div>
+                            </button>
                         </div>
                     </div>
 
@@ -145,29 +145,29 @@
                         <div class="divider"></div>
 
                         <div class="wishlistGrid">
-                            <div class="wishlistItem">
+                            <button class="wishlistItem" onclick="window.location.href='viewWishlist.php'">
                                 <div class="wishlistImage">
                                     <img src="../assets/images/products_images/nocturne.png" alt="Product">
                                 </div>
                                 <p class="wishlistName">Product Name</p>
                                 <p class="wishlistPrice">₱4,200.00</p>
-                            </div>
+                            </button>
 
-                            <div class="wishlistItem">
+                            <button class="wishlistItem" onclick="window.location.href='viewWishlist.php'">
                                 <div class="wishlistImage">
                                     <img src="../assets/images/products_images/nocturne.png" alt="Product">
                                 </div>
                                 <p class="wishlistName">Product Name</p>
                                 <p class="wishlistPrice">₱1,800.00</p>
-                            </div>
+                            </button>
 
-                            <div class="wishlistItem">
+                            <button class="wishlistItem" onclick="window.location.href='viewWishlist.php'">
                                 <div class="wishlistImage">
                                     <img src="../assets/images/products_images/nocturne.png" alt="Product">
                                 </div>
                                 <p class="wishlistName">Product Name</p>
                                 <p class="wishlistPrice">₱5,500.00</p>
-                            </div>
+                            </button>
                         </div>
 
                         
@@ -288,12 +288,12 @@
         </div>
 
         <!-- Toast msg -->
-        <div id="toastMessage" class="toastMessage"></div>
+        
+        <div id="generalToast" class="generalToast"></div>
 
         <?php include '../components/footer.php'; ?>
 
         <script src="../assets/js/editProfile.js"></script>
-        
     
     </body>
 </html>

@@ -149,14 +149,14 @@ document.addEventListener('DOMContentLoaded', function() {
         function createArrivalCard(product) {
             return `
                 <div class="new-arrival-card">
-                    <div class="new-arrival-image">
+                    <button class="new-arrival-image" onclick="window.location.href='productdetails.php'">
                         <img src="${product.img}" alt="${product.name}">
                         <div class="arrival-overlay">
                             <p class="arrival-description">${product.description}</p>
                             <h3 class="arrival-name">${product.name}</h3>
                         </div>
-                    </div>
-                    <button class="arrival-add-cart">ADD TO CART</button>
+                    </button>
+                    <button class="arrival-add-cart" onclick="showGeneralToast('Added to cart!', 'info')">ADD TO CART</button>
                 </div>
             `;
         }
@@ -290,15 +290,15 @@ document.addEventListener('DOMContentLoaded', function() {
         // Function to create New Arrival card HTML
         function createArrivalCard2(product) {
             return `
-                <div class="new-arrival-card">
-                    <div class="new-arrival-image">
+                <div class="new-arrival-card" >
+                    <button class="new-arrival-image" onclick="window.location.href='productdetails.php'">
                         <img src="${product.img}" alt="${product.name}">
                         <div class="arrival-overlay">
                             <p class="arrival-description">${product.description}</p>
                             <h3 class="arrival-name">${product.name}</h3>
                         </div>
-                    </div>
-                    <button class="arrival-add-cart">ADD TO CART</button>
+                    </button>
+                    <button class="arrival-add-cart" onclick="showGeneralToast('Added to cart!', 'info')">ADD TO CART</button>
                 </div>
             `;
         }
@@ -446,4 +446,6 @@ document.addEventListener('DOMContentLoaded', function() {
         console.error('Testimonials carousel elements not found');
     }
 });
+
+
 
