@@ -43,6 +43,8 @@
         6. Terms and conditions
         7. Order placed successfully gawin modal nlang (yung orderAgain.php)
         8. *Pinag-iisipan q pa* Yung mga discover buttons sa shop page lagyan ng individual page
+        9. back buttons
+        
         -->
         
         <?php include '../components/header.php'; ?>
@@ -149,7 +151,9 @@
                        <div class="product-card">
                            <div class="product-card-image">
                                <img src="../assets/images/brand_images/sampleperfume.png" alt="Perfume 1">
-                               
+                               <button class="wishlist-btn" onclick="showGeneralToast('Added to wishlist!', 'info')">
+                                   <i class="fa-solid fa-heart"></i>
+                               </button>
                                <div class="sold-out-label">SOLD OUT</div>
                            </div>
                            <button class="add-to-cart-btn" disabled>ADD TO CART</button>
