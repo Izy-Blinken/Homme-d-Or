@@ -33,17 +33,18 @@
         2. profile "view all" content scrollable
         3. Product links
         4. Toast messages after successful/failed operations
+        5. Verification code for sign up
+        6. Order placed successfully gawin modal nlang (yung orderAgain.php)
 
         Things to polish pa:
-        1. Verification code for sign up
-        2. Consistent design
-        3. Animations
-        4. Responsive pages
-        5. Review page (for product na mismo)
-        6. Terms and conditions
-        7. Order placed successfully gawin modal nlang (yung orderAgain.php)
-        8. *Pinag-iisipan q pa* Yung mga discover buttons sa shop page lagyan ng individual page
-        9. back buttons
+        
+        1. Consistent design
+        2. Animations
+        3. Responsive pages
+        4. Review page (for product na mismo)
+        5. Terms and conditions
+        6. *Pinag-iisipan q pa* Yung mga discover buttons sa shop page lagyan ng individual page
+        7. back buttons
         
         -->
         
@@ -608,36 +609,3 @@
         
 </html>
 
-<!--
-CHANGELOG:
-01/25/2026
-1. Added wrapper div (carousel-products-wrapper) around carousel and products sections
-2. Wrapper has background image/gradient with glassmorphism effect on cards
-
-01/24/2026
-1. Added perfume hero section with:
-   - Large center product image
-   - Video ad with play button (top right)
-   - Info card with product details (bottom left)
-   - Product features list (bottom right)
-   - CTA buttons (Buy Now & Learn More)
-2. Design features: glassmorphism effects, hover animations, responsive layout
-
-For all changes: Design not final. Placeholders pa lahat.
-
-Previous updates:
-01/20/2026
-1. About Us page done.
-
-12/31/25
-1. Blog Page done.
-
-12/29/25
-1. Frontend: Checkout and order again page done.
-2. Dropdown menu for shop and country/currency options done.
-
-Initial:
-1. Done reusable footer and header. Design not final.
-2. Changed pages files from .html to .php for reusability. 
-3. Kapag magrrun, direct sa browser: localhost/Homme_dor/pages/index.php
--->

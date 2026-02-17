@@ -1,0 +1,499 @@
+
+
+/* Sign Up Verification Modal */
+.signupVerificationModal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0);
+    z-index: 99999;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.3s ease;
+}
+
+.signupVerificationModal.active {
+    background-color: rgba(0, 0, 0, 0.6);
+    animation: signupFadeIn 0.3s ease;
+}
+
+.signupVerificationContent {
+    background-color: white;
+    border: 1px solid #e0e0e0;
+    max-width: 480px;
+    width: 90%;
+    padding: 2.5rem;
+    position: relative;
+    max-height: 90vh;
+    overflow-y: auto;
+    transform: translateY(30px);
+    opacity: 0;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.signupVerificationModal.active .signupVerificationContent {
+    transform: translateY(0);
+    opacity: 1;
+    animation: signupSlideUp 0.3s ease;
+}
+
+.signupVerificationModal.closing {
+    background-color: rgba(0, 0, 0, 0);
+    animation: signupFadeOut 0.3s ease;
+}
+
+.signupVerificationModal.closing .signupVerificationContent {
+    transform: translateY(30px);
+    opacity: 0;
+    animation: signupSlideDown 0.3s ease;
+}
+
+@keyframes signupFadeIn {
+    from {
+        background-color: rgba(0, 0, 0, 0);
+    }
+    to {
+        background-color: rgba(0, 0, 0, 0.6);
+    }
+}
+
+@keyframes signupFadeOut {
+    from {
+        background-color: rgba(0, 0, 0, 0.6);
+    }
+    to {
+        background-color: rgba(0, 0, 0, 0);
+    }
+}
+
+@keyframes signupSlideUp {
+    from {
+        transform: translateY(30px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+@keyframes signupSlideDown {
+    from {
+        transform: translateY(0);
+        opacity: 1;
+    }
+    to {
+        transform: translateY(30px);
+        opacity: 0;
+    }
+}
+
+.signupCloseBtn {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: none;
+    border: none;
+    font-size: 1.25rem;
+    color: #666666;
+    cursor: pointer;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.signupCloseBtn:hover {
+    background-color: #f0f0f0;
+    color: #000000;
+}
+
+/* Sign Up Modal Header */
+.signupModalHeader {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.signupModalHeader h2 {
+    color: #000000;
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin: 0 0 0.5rem 0;
+    letter-spacing: -0.02em;
+}
+
+.signupModalSubtitle {
+    color: #666666;
+    font-size: 0.9rem;
+    line-height: 1.5;
+    margin: 0;
+}
+
+#signupUserEmail {
+    color: #1a1a4d;
+    font-weight: 500;
+}
+
+/* Sign Up Code Input */
+.signupCodeContainer {
+    display: flex;
+    gap: 0.75rem;
+    justify-content: center;
+    margin-bottom: 1.5rem;
+}
+
+.signupCodeInput {
+    width: 50px;
+    height: 56px;
+    text-align: center;
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #000000;
+    border: 2px solid #d0d0d0;
+    outline: none;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    caret-color: #1a1a4d;
+    background-color: #ffffff;
+}
+
+.signupCodeInput:focus {
+    border-color: #1a1a4d;
+    box-shadow: 0 0 0 3px rgba(26, 26, 77, 0.1);
+}
+
+.signupCodeInput.filled {
+    border-color: #1a1a4d;
+    background-color: #f9f9ff;
+}
+
+.signupCodeInput.error {
+    border-color: #dc3545;
+    animation: signupShake 0.3s ease;
+}
+
+@keyframes signupShake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-5px); }
+    75% { transform: translateX(5px); }
+}
+
+/* Sign Up Verify Button */
+.signupVerifyBtn {
+    width: 100%;
+    padding: 0.875rem 1.5rem;
+    background-color: #1a1a4d;
+    color: #ffffff;
+    font-size: 1rem;
+    font-weight: 500;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.2s ease, transform 0.1s ease;
+    margin-top: 0.5rem;
+}
+
+.signupVerifyBtn:hover {
+    background-color: #131338;
+}
+
+.signupVerifyBtn:active {
+    transform: scale(0.98);
+}
+
+.signupVerifyBtn:disabled {
+    background-color: #cccccc;
+    cursor: not-allowed;
+}
+
+/* Sign Up Resend Section */
+.signupResendSection {
+    text-align: center;
+    margin-top: 1.5rem;
+}
+
+.signupResendSection p {
+    color: #666666;
+    font-size: 0.9rem;
+    margin: 0 0 0.5rem 0;
+}
+
+.signupResendBtn {
+    background: none;
+    border: none;
+    color: #1a1a4d;
+    font-size: 0.9rem;
+    font-weight: 500;
+    cursor: pointer;
+    text-decoration: underline;
+    transition: color 0.2s ease;
+    padding: 0;
+}
+
+.signupResendBtn:hover {
+    color: #131338;
+}
+
+.signupResendBtn:disabled {
+    color: #cccccc;
+    cursor: not-allowed;
+    text-decoration: none;
+}
+
+/* Sign Up Success Modal */
+.signupSuccessModal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0);
+    z-index: 100000;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.3s ease;
+}
+
+.signupSuccessModal.active {
+    background-color: rgba(0, 0, 0, 0.6);
+    animation: signupFadeIn 0.3s ease;
+}
+
+.signupSuccessContent {
+    background-color: white;
+    border: 1px solid #e0e0e0;
+    max-width: 400px;
+    width: 90%;
+    padding: 2.5rem;
+    text-align: center;
+    position: relative;
+    transform: scale(0.7);
+    opacity: 0;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.signupSuccessModal.active .signupSuccessContent {
+    transform: scale(1);
+    opacity: 1;
+    animation: signupScaleIn 0.3s ease;
+}
+
+.signupSuccessModal.closing {
+    background-color: rgba(0, 0, 0, 0);
+    animation: signupFadeOut 0.3s ease;
+}
+
+.signupSuccessModal.closing .signupSuccessContent {
+    transform: scale(0.7);
+    opacity: 0;
+    animation: signupScaleOut 0.3s ease;
+}
+
+@keyframes signupScaleIn {
+    from {
+        transform: scale(0.7);
+        opacity: 0;
+    }
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+@keyframes signupScaleOut {
+    from {
+        transform: scale(1);
+        opacity: 1;
+    }
+    to {
+        transform: scale(0.7);
+        opacity: 0;
+    }
+}
+
+
+.signupSuccessModal h2 {
+    color: #000000;
+    font-size: 1.75rem;
+    font-weight: 600;
+    margin: 0 0 0.75rem 0;
+}
+
+.signupSuccessModal p {
+    color: #666666;
+    font-size: 1rem;
+    line-height: 1.5;
+    margin: 0 0 2rem 0;
+}
+
+.signupSuccessBtn {
+    width: 100%;
+    padding: 0.875rem 1.5rem;
+    background-color: #1a1a4d;
+    color: #ffffff;
+    font-size: 1rem;
+    font-weight: 500;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.2s ease, transform 0.1s ease;
+}
+
+.signupSuccessBtn:hover {
+    background-color: #131338;
+}
+
+.signupSuccessBtn:active {
+    transform: scale(0.98);
+}
+
+/* Responsive */
+@media screen and (max-width: 768px) {
+    .signupVerificationContent {
+        padding: 2rem 1.5rem;
+        width: 92%;
+    }
+
+    .signupModalHeader h2 {
+        font-size: 1.35rem;
+    }
+
+    .signupModalSubtitle {
+        font-size: 0.85rem;
+    }
+
+    .signupCodeInput {
+        width: 45px;
+        height: 52px;
+        font-size: 1.35rem;
+    }
+
+    .signupCodeContainer {
+        gap: 0.6rem;
+    }
+
+    .signupSuccessContent {
+        padding: 2rem 1.5rem;
+        width: 92%;
+    }
+
+
+    .signupSuccessModal h2 {
+        font-size: 1.5rem;
+    }
+
+    .signupSuccessModal p {
+        font-size: 0.95rem;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .signupVerificationContent {
+        padding: 1.75rem 1.25rem;
+        width: 95%;
+    }
+
+    .signupCloseBtn {
+        top: 0.75rem;
+        right: 0.75rem;
+        font-size: 1.1rem;
+        width: 28px;
+        height: 28px;
+    }
+
+    .signupModalHeader {
+        margin-bottom: 1.5rem;
+    }
+
+    .signupModalHeader h2 {
+        font-size: 1.25rem;
+    }
+
+    .signupModalSubtitle {
+        font-size: 0.8rem;
+    }
+
+    .signupCodeInput {
+        width: 40px;
+        height: 48px;
+        font-size: 1.25rem;
+    }
+
+    .signupCodeContainer {
+        gap: 0.5rem;
+    }
+
+    .signupVerifyBtn {
+        padding: 0.8rem 1.25rem;
+        font-size: 0.95rem;
+    }
+
+    .signupResendSection p {
+        font-size: 0.85rem;
+    }
+
+    .signupResendBtn {
+        font-size: 0.85rem;
+    }
+
+    .signupSuccessContent {
+        padding: 1.75rem 1.25rem;
+        width: 95%;
+    }
+
+    .signupSuccessIcon {
+        width: 60px;
+        height: 60px;
+        margin-bottom: 1.25rem;
+    }
+
+    .signupSuccessIcon i {
+        font-size: 1.75rem;
+    }
+
+    .signupSuccessModal h2 {
+        font-size: 1.35rem;
+    }
+
+    .signupSuccessModal p {
+        font-size: 0.9rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .signupSuccessBtn {
+        padding: 0.8rem 1.25rem;
+        font-size: 0.95rem;
+    }
+}
+
+@media screen and (max-width: 360px) {
+    .signupVerificationContent {
+        padding: 1.5rem 1rem;
+    }
+
+    .signupCodeInput {
+        width: 36px;
+        height: 44px;
+        font-size: 1.15rem;
+    }
+
+    .signupCodeContainer {
+        gap: 0.4rem;
+    }
+
+    .signupSuccessContent {
+        padding: 1.5rem 1rem;
+    }
+
+    .signupSuccessIcon {
+        width: 55px;
+        height: 55px;
+    }
+
+    .signupSuccessIcon i {
+        font-size: 1.5rem;
+    }
+}

@@ -14,7 +14,7 @@
         <link rel="stylesheet" href="../assets/css/RegLoginModalStyle.css">
         <link rel="stylesheet" href="../assets/css/ProfilePageStyle.css">
         <link rel="stylesheet" href="../assets/css/HomepageStyle.css">
-
+        
 
     </head>
 

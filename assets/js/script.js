@@ -8,3 +8,5 @@ function showGeneralToast(message, type='success') {
         toast.classList.remove('show');
     }, 3000); 
 }
+
+

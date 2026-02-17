@@ -50,7 +50,7 @@
                             <h2>Billing Information</h2>
                         </div>
                         
-                        <form id="checkoutForm" action="orderAgain.php" method="POST">
+                        <form id="checkoutForm">
                             <div class="formSection">
                                 <h3>Contact Details</h3>
                                 
@@ -150,7 +150,7 @@
                                 <button type="button" class="backToCartBtn" onclick="window.location.href='cart.php'">
                                     <i class="fas fa-arrow-left"></i> Back to Cart
                                 </button>
-                                <button type="submit" class="placeOrderBtn" onclick="openSignupModal()">
+                                <button type="submit" onclick="showOrderSuccessModal('ORD' + Date.now())" class="placeOrderBtn">
                                     Place Order
                                 </button>
                             </div>
@@ -229,6 +229,7 @@
 
         </main>
 
+        <script src="../assets/js/orderAgainModal.js"></script>
         <?php include '../components/footer.php'; ?>
     </body>
 </html>
