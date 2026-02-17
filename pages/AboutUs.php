@@ -23,8 +23,8 @@
         <main class="mainBG">
 
 
-        <div class="aboutUs-container">
-            <div class="aboutUs-text">
+        <div class="aboutUs-container fade-in">
+            <div class="aboutUs-text fade-in">
                 <h3>Our Story</h3>
                 <p>Founded in 2020, Homme d'Or has been dedicated to providing high-quality
                 products and exceptional service to our customers. Founded in 2020, Homme d'Or has been dedicated to providing high-quality
@@ -34,15 +34,15 @@
                 products and exceptional service to our customers.</p>
             </div>
 
-            <img src="../assets/images/brand_images/ourStory.png" alt = "Our Story Image">
+            <img src="../assets/images/brand_images/ourStory.png" alt = "Our Story Image" class="fade-in">
 
         </div>
 
         <div class="shopDesc">
 
-            <img src="../assets/images/brand_images/elegperf.jpg" alt="Shop Description">
+            <img src="../assets/images/brand_images/elegperf.jpg" alt="Shop Description" class="fade-in">
             
-            <div class="shopDesc-text">
+            <div class="shopDesc-text fade-in">
                 <h3>About Us</h3>
                 <p>Founded in 2020, Homme d'Or has been dedicated to providing high-quality
                 products and exceptional service to our customers. Founded in 2020, Homme d'Or has been dedicated to providing high-quality
@@ -55,7 +55,7 @@
 
         </div>
 
-        <div class="authors">
+        <div class="authors fade-in">
             <div class="authTitle">
                 <h3>Authors</h3>
 
@@ -78,7 +78,7 @@
 
         </div>
                 
-        <div class="promo-arrivals-wrapper-2">
+        <div class="promo-arrivals-wrapper-2 fade-in">
                 <section class="promo-cards-section-2">
                     <div class="promo-cards-container-2">
                         <!-- Card 1 -->
@@ -109,7 +109,7 @@
         </section>
 
         </main>
-
+        <script src="../assets/js/HomepageAnimations.js"></script>
         <?php include '../components/footer.php'; ?>
     </body>
 </html>
