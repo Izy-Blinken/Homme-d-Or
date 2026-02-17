@@ -41,7 +41,7 @@
         <div class="shop-section-left">
             <div class="shop-section-image">
                 <h2>New Arrivals</h2>
-                <button class="shop-discover-btn">DISCOVER</button>
+                <button class="shop-discover-btn" onclick="window.location.href='newArrival.php'">DISCOVER</button>
             </div>
         </div>
 
@@ -246,7 +246,7 @@
         <div class="shop-section-left">
             <div class="shop-section-image">
                 <h2>Sale</h2>
-                <button class="shop-discover-btn">DISCOVER</button>
+                <button class="shop-discover-btn" onclick="window.location.href='Sale.php'">DISCOVER</button>
             </div>
         </div>
 
@@ -440,7 +440,7 @@
         <div class="shop-section-left">
             <div class="shop-section-image">
                 <h2>Premium</h2>
-                <button class="shop-discover-btn">DISCOVER</button>
+                <button class="shop-discover-btn" onclick="window.location.href='Discover.php'">DISCOVER</button>
             </div>
         </div>
 
