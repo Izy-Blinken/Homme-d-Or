@@ -37,7 +37,7 @@
     <div class="shop-scroll-spacer"></div>
 
     <!-- New Arrivals Section - LEFT LAYOUT -->
-    <section class="shop-products-section shop-layout-left" id="new-arrivals">
+    <section class="shop-products-section shop-layout-left fade-in" id="new-arrivals">
         <div class="shop-section-left">
             <div class="shop-section-image">
                 <h2>New Arrivals</h2>
@@ -47,7 +47,7 @@
 
         <div class="shop-products-grid">
             <!-- Product Card 1 -->
-            <div class="product-card">
+            <div class="product-card fade-in">
                 <div class="shop-product-image">
 
                     <button class="quick-view-btn" onclick="window.location.href='productDetails.php'">Quick View</button>
@@ -140,10 +140,10 @@
     </section>
 
     <!-- Top Picks Section - RIGHT LAYOUT -->
-    <section class="shop-products-section shop-layout-right" id="top-picks">
+    <section class="shop-products-section shop-layout-right fade-in" id="top-picks">
         <div class="shop-products-grid">
             <!-- Product Card 1 -->
-           <div class="product-card">
+           <div class="product-card fade-in">
                 <div class="shop-product-image">
 
                     <button class="quick-view-btn" onclick="window.location.href='productDetails.php'">Quick View</button>
@@ -242,7 +242,7 @@
     </section>
 
     <!-- Sale Section - LEFT LAYOUT -->
-    <section class="shop-products-section shop-layout-left" id="sale">
+    <section class="shop-products-section shop-layout-left fade-in" id="sale">
         <div class="shop-section-left">
             <div class="shop-section-image">
                 <h2>Sale</h2>
@@ -252,7 +252,7 @@
 
         <div class="shop-products-grid">
             <!-- Product Cards 1-6 (same structure as above) -->
-            <div class="product-card">
+            <div class="product-card fade-in">
                 <div class="shop-product-image">
 
                     <button class="quick-view-btn" onclick="window.location.href='productDetails.php'">Quick View</button>
@@ -339,10 +339,10 @@
     </section>
 
     <!-- Daily Wear Section - RIGHT LAYOUT -->
-    <section class="shop-products-section shop-layout-right" id="daily-wear">
+    <section class="shop-products-section shop-layout-right fade-in" id="daily-wear">
         <div class="shop-products-grid">
             <!-- Product Cards 1-6 -->
-            <div class="product-card">
+            <div class="product-card fade-in">
                 <div class="shop-product-image">
 
                     <button class="quick-view-btn" onclick="window.location.href='productDetails.php'">Quick View</button>
@@ -436,7 +436,7 @@
     </section>
 
     <!-- Premium Section - LEFT LAYOUT -->
-    <section class="shop-products-section shop-layout-left" id="premium">
+    <section class="shop-products-section shop-layout-left fade-in" id="premium">
         <div class="shop-section-left">
             <div class="shop-section-image">
                 <h2>Premium</h2>
@@ -446,7 +446,7 @@
 
         <div class="shop-products-grid">
             <!-- Product Cards 1-6 -->
-            <div class="product-card">
+            <div class="product-card fade-in">
                 <div class="shop-product-image">
 
                     <button class="quick-view-btn" onclick="window.location.href='productDetails.php'">Quick View</button>
@@ -536,5 +536,6 @@
         <?php include '../components/footer.php'; ?>
         <script src="../assets/js/shopAnimations.js"></script>
         <script src="../assets/js/script.js"></script>
+        <script src="../assets/js/HomepageAnimations.js"></script>
 </body>
 </html>

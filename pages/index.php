@@ -35,6 +35,7 @@
         4. Toast messages after successful/failed operations
         5. Verification code for sign up
         6. Order placed successfully gawin modal nlang (yung orderAgain.php)
+        7. Fade in and out animation (except sa profile page)
 
         Things to polish pa:
         
@@ -55,7 +56,7 @@
             <video id="hero-video-bg" autoplay muted loop playsinline>
             <source src="../assets/videos/sample1.mp4" type="video/mp4">
             Your browser does not support the video tag.
-        </video>
+            </video>
             <div class="hero-content">
                 
                 <div class="hero-title">
@@ -119,11 +120,11 @@
 
 
        <div class="carousel-products-wrapper">
-           <section class="carousel-section">
+           <section class="carousel-section fade-in">
                <div class="carousel-container">
                    <div class="carousel-wrapper">
                        <div class="carousel-track" id="carouselTrack">
-                           <div class="carousel-slide">
+                           <div class="carousel-slide fade-">
                                <img src="../assets/images/brand_images/perfsamp.jpg" alt="Featured Perfume 1">
                            </div>
                            <div class="carousel-slide">
@@ -146,7 +147,7 @@
            <!-- PRODUCTS SECTION -->
            <section class="products-section">
                <div class="products-container">
-                   <div class="products-grid">
+                   <div class="products-grid fade-in">
                        
                        <!-- Product Card 1 - SOLD OUT -->
                        <div class="product-card">
@@ -280,7 +281,7 @@
     <!-- BRAND LOGOS -->
     <section class="brands-section">
     <div class="brands-scroll-container">
-        <div class="brands-track">
+        <div class="brands-track fade-in">
             <div class="brand-logo-item">
                 <div class="brand-logo">
                     <img src="../assets/images/brand_images/invprodLogo.png" alt="Brand 1">
@@ -329,7 +330,7 @@
     </section>
 
     <div class="promo-arrivals-wrapper">
-        <section class="promo-cards-section">
+        <section class="promo-cards-section fade-in">
             <div class="promo-cards-container">
                 
                 <!-- Card 1 -->
@@ -359,7 +360,7 @@
         </section>
 
         <!-- NEW ARRIVALS SECTION -->
-        <section class="new-arrivals-section">
+        <section class="new-arrivals-section fade-in">
             <div class="new-arrivals-container">
                 <div class="section-header">
                     <div class="header-line"></div>
@@ -409,7 +410,7 @@
     </div>
     
     <div class="promo-arrivals-wrapper-2">
-        <section class="promo-cards-section-2">
+        <section class="promo-cards-section-2 fade-in">
             <div class="promo-cards-container-2">
                 <!-- Card 1 -->
                 <div class="promo-card">
@@ -438,7 +439,7 @@
         </section>
 
         <!-- NEW ARRIVALS SECTION -->
-        <section class="new-arrivals-section-2">
+        <section class="new-arrivals-section-2 fade-in">
             <div class="new-arrivals-container-2">
                 <div class="section-header">
                     <div class="header-line"></div>
@@ -464,14 +465,14 @@
         </section>
     </div>
 
-    <section class="special-promo-section">
+    <section class="special-promo-section fade-in">
         <div class="special-promo-container">
             <h2 class="special-promo-title">SPECIAL PROMO 20% OFF THIS HOLIDAY SEASON</h2>
             <button class="special-promo-btn">Buy Now</button>
         </div>
     </section>
 
-    <section class="testimonials-section">
+    <section class="testimonials-section fade-in">
         <div class="testimonials-container">
             <div class="testimonials-header">
                 <h2>Hear From Our Customers</h2>

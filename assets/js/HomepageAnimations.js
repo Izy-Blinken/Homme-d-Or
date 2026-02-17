@@ -21,6 +21,23 @@ document.addEventListener('DOMContentLoaded', function() {
     const track = document.getElementById('carouselTrack');
     const slides = document.querySelectorAll('.carousel-slide');
     const dotsContainer = document.getElementById('carouselDots');
+    const fade = document.querySelectorAll('.fade-in');
+
+    //carousel fade effect
+    const appearOptions= { threshold: 0.1, rootMargin: "0px -50px" };
+    const appearOnScroll = new IntersectionObserver(function(entries, appearOnScroll) {
+        entries.forEach(entry => {
+            if (!entry.isIntersecting) {
+                entry.target.classList.remove('appear');
+            } else {
+                entry.target.classList.add('appear');
+            }
+        });
+    }, appearOptions);
+
+    fade.forEach(fade => {
+        appearOnScroll.observe(fade);
+    });
 
     //create dots
     slides.forEach((_, index) => {

@@ -21,8 +21,8 @@
         <?php include '../components/header.php'; ?>
         <main class="mainBG">
             <section id = "blog-header"> 
-                <img src="../assets/images/brand_images/collab_image.png" alt="Blog Header Image" width = "500px" height = "500px">
-            <div>
+                <img src="../assets/images/brand_images/collab_image.png" alt="Blog Header Image" width = "500px" height = "500px" class="fade-in">
+            <div class="fade-in">
                 <h2>Collaboration</h2>
                 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
                 <br><br>Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Curabitur pretium tincidunt lacus. Nulla gravida orci a odio, at fermentum massa tempor nec. Integer nec odio praesent libero, sed cursus ante dapibus diam. Sed nisi nulla quis sem at nibh elementum imperdiet.</p>
@@ -31,12 +31,12 @@
             </section>
 
             <section id = "top-comments">
-                <div>
+                <div class="fade-in">
                     <h2>Customers' Top Comments</h2>
                     
                 </div>
                 <div class = "comments-container">
-                    <div class="comment-box">
+                    <div class="comment-box fade-in">
                         <img src="../assets/images/products_images/customerPic.png" alt="User Avatar">
                         <div class="comment-text">
                             <h4>Username</h4>
@@ -44,7 +44,7 @@
                         </div>
                     </div>
 
-                    <div class="comment-box">
+                    <div class="comment-box fade-in">
                         <img src="../assets/images/products_images/customerPic.png" alt="User Avatar">
                         <div class="comment-text">
                             <h4>Username</h4>
@@ -52,7 +52,7 @@
                         </div>
                     </div>
 
-                    <div class="comment-box center">
+                    <div class="comment-box center fade-in">
                         <img src="../assets/images/products_images/customerPic.png" alt="User">
                         <div class="comment-text">
                             <h4>Username</h4>
@@ -60,7 +60,7 @@
                         </div>
                     </div>
 
-                    <div class="comment-box">
+                    <div class="comment-box fade-in">
                         <img src="../assets/images/products_images/customerPic.png" alt="User Avatar">
                         <div class="comment-text">
                             <h4>Username</h4>
@@ -68,7 +68,7 @@
                         </div>
                     </div>
 
-                    <div class="comment-box">
+                    <div class="comment-box fade-in">
                         <img src="../assets/images/products_images/customerPic.png" alt="User Avatar">
                         <div class="comment-text">
                             <h4>Username</h4>
@@ -81,11 +81,11 @@
 
             <section id="highlights">
 
-                <div>
+                <div class="fade-in">
                 <h2>In Focus</h2>
                 </div>
 
-                <div class="highlights-grid">
+                <div class="highlights-grid fade-in">
                     <div class="highlight-item">
                         <img src="../assets/images/brand_images/blog1.jpg" alt="Highlight 1" onclick="window.location.href='index.php'">
                     </div>
@@ -106,7 +106,7 @@
                     </div>
                 </div>
                 
-                <div class="description">
+                <div class="description fade-in">
                     <h3>Read</h3>
                     <div class="description-text">
                         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
@@ -117,7 +117,7 @@
 
             
             <div class="promo-arrivals-wrapper-2">
-                <section class="promo-cards-section-2">
+                <section class="promo-cards-section-2 fade-in">
                     <div class="promo-cards-container-2">
                         <!-- Card 1 -->
                         <div class="promo-card">
@@ -146,7 +146,7 @@
                 </section>
             </div>
         </main>
-
+        <script src="../assets/js/HomepageAnimations.js"></script>
         <?php include '../components/footer.php'; ?>
     </body>
 </html>
