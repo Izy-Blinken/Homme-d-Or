@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <a href="adminSide.html"></a>
+    <link rel="stylesheet" href="../../assets/css/AdminPanelStyle.css">
+    
+</head>
+<body>
+
+    <div class="overlay" id="sidebar-overlay"></div>
+    <div class="sidebar" id="admin-sidebar">
+        <div class="sidebar-header">
+            <span>ADMIN PANEL</span>
+            <button type="button" class="close-icon" id="close-btn">&times;</button>
+        </div>
+
+        <nav class="sidebar-nav">
+            <a href="adminSide.html" class="menu-opt ">Dashboard</a>
+            <a href="#" class="menu-opt">Product Management</a>
+            <a href="orderManagement.html" class="menu-opt">Order Management</a>
+            <a href="#" class="menu-opt">Customer List</a>
+            <a href="salesReport.html" class="menu-opt active">Sales Report</a>
+            <a href="profile.html" class="menu-opt">Profile</a>
+        </nav>
+    </div>
+            
+    <div class="main-content">
+        <header class="navbar">
+            <button class="hamburger" id="menu-btn">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <h1 class="navbar-title">Admin Panel</h1>
+        </header>
+
+        <main class="container">
+            <h2 class="page-title">Sales Report</h2>
+            <div class="report-btns">
+                <button type="button" class="schedule-btn active" id="daily-orders">
+                    <ul>
+                        Daily
+                    </ul>
+                </button>   
+                <button type="button" class="schedule-btn" id="weekly-orders">
+                    <ul>
+                        Weekly
+                    </ul>
+                </button>
+                <button type="button" class="schedule-btn" id="monthly-orders">
+                    <ul>
+                        Monthly
+                    </ul>
+                </button>
+            </div>
+            
+            <section class="report-grid">
+                <div class="report-card">
+                    <small class="report-label">TOTAL SALES</small>
+                    <h3 class="report-value" id="total-sales">₱0</h3>
+                    <small class="report-change positive">+%</small>
+                </div>
+                <div class="report-card">
+                    <small class="report-label">ORDERS</small>
+                    <h3 class="report-value" id="daily-orders">0</h3>
+                    <small class="report-change positive">+</small>
+                </div>
+                <div class="report-card">
+                    <small class="report-label">AVERAGE ORDER VALUE</small>
+                    <h3 class="report-value" id="avg-order-value">₱0</h3>
+                    <small class="report-change positive">+%</small>
+                </div>
+            </section>
+
+            <section class="table-container">
+                <h3 class="table-title">Best Selling Products</h3>
+                <div class="responsive-table">
+                    <table>
+                        <tr>
+                            <td>
+                                <div class="product-container">
+                                    <div class="product-info">
+                                        <span class="product-name">1. Perfume 1</span>
+                                        <small class="product-units">245 units sold</small>
+                                    </div>
+                                    <span class="product-price">7,355</span>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="product-container">
+                                    <div class="product-info">
+                                        <span class="product-name">2. Perfume 2</span>
+                                        <small class="product-units">560 units sold</small>
+                                    </div>
+                                    <span class="product-price">16,800</span>
+                                </div>
+                            </td>
+                        </tr><tr>
+                            <td>
+                                <div class="product-container">
+                                    <div class="product-info">
+                                        <span class="product-name">3. Perfume 3</span>
+                                        <small class="product-units">200 units sold</small>
+                                    </div>
+                                    <span class="product-price">6,000</span>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </section>
+        </main>
+    </div>
+    <script src="../../assets/js/AdminPanel.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <a href="salesReport.html"></a>
+    <link rel="stylesheet" href="../../assets/css/AdminPanelStyle.css">
+    
+</head>
+<body>
+
+    <div class="overlay" id="sidebar-overlay"></div>
+    <div class="sidebar" id="admin-sidebar">
+        <div class="sidebar-header">
+            <span>ADMIN PANEL</span>
+            <button type="button" class="close-icon" id="close-btn">&times;</button>
+        </div>
+
+        <nav class="sidebar-nav">
+            <a href="adminSide.html" class="menu-opt active">Dashboard</a>
+            <a href="" class="menu-opt">Product Management</a>
+            <a href="orderManagement.html" class="menu-opt">Order Management</a>
+            <a href="" class="menu-opt">Customer List</a>
+            <a href="salesReport.html" class="menu-opt">Sales Report</a>
+            <a href="profile.html" class="menu-opt">Profile</a>
+        </nav>
+    </div>
+
+    <div class="main-content">
+        <header class="navbar">
+            <button class="hamburger" id="menu-btn">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <h1 class="navbar-title">Admin Panel</h1>
+        </header>
+
+        <main class="container">
+            <h2 class="page-title">Dashboard</h2>
+
+            <section class="stats-grid">
+                <div class="stat-card">
+                    <small class="stat-label">TOTAL REVENUE</small>
+                    <h3 class="stat-value" id="total-revenue">₱0</h3>
+                    <small class="stat-change positive">+%</small>
+                </div>
+                <div class="stat-card">
+                    <small class="stat-label">TOTAL ORDERS</small>
+                    <h3 class="stat-value" id="total-orders">0</h3>
+                    <small class="stat-change positive">+%</small>
+                </div>
+                <div class="stat-card">
+                    <small class="stat-label">TOTAL PRODUCTS</small>
+                    <h3 class="stat-value" id="total-products">0</h3>
+                    <small class="stat-change positive">+%</small>
+                </div>
+                <div class="stat-card">
+                    <small class="stat-label">TOTAL CUSTOMERS</small>
+                    <h3 class="stat-value" id="total-customers">0</h3>
+                    <small class="stat-change positive">+</small>
+                </div>
+            </section>
+
+            <section class="table-container">
+                <h3 class="table-title">Recent Activities</h3>
+                <div class="responsive-table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>ACTIVITY</th>
+                                <th>DETAILS</th>
+                                <th>TIME</th>
+                            </tr>
+                        </thead>
+                        <tbody id="recent-activities-list">
+                            <tr>
+                                <td>New Order</td>
+                                <td>Order #1234</td>
+                                <td>2 hours ago</td>
+                            </tr>
+                            <tr>
+                                <td>Low Stock Alert</td>
+                                <td>Perfume #1 is low on stock</td>
+                                <td>3 hours ago</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </main>
+    </div>
+    <script src="../../assets/js/AdminPanel.js" defer></script>
+
+
+</body>
+</html>
