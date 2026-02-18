@@ -19,7 +19,7 @@
     <body>
     <?php include '../components/header.php'; ?>
 
-    <!-- Welcome Section - Fixed Background with Image -->
+    <!-- Welcome Section -->
     <section class="shop-welcome-section">
         <div class="shop-welcome-overlay"></div>
         <div class="shop-welcome-content">
