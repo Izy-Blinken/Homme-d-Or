@@ -4,12 +4,41 @@ $currentPage = basename($_SERVER['PHP_SELF']);
 
 <section id="header">
     <div class="logo-wrapper">
-        <a href="index.php">
+        <a href="index.php" class="logo-link">
             <img src="../assets/images/brand_images/prodLogo.png" class="logo" alt="Brand Logo">
         </a>
-        
+
+        <!-- Hamburger: mobile only, sits on the LEFT replacing the logo -->
+        <button class="hamburger" id="hamburgerBtn" aria-label="Toggle navigation" aria-expanded="false">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+
+        <!-- Mobile dropdown — anchored LEFT under the hamburger -->
+        <ul class="mobile-menu" id="mobileMenu">
+            <li>
+                <a class="<?php echo ($currentPage == 'index.php') ? 'active' : ''; ?>" href="index.php">Home</a>
+            </li>
+            <li>
+                <a class="<?php echo ($currentPage == 'shop.php') ? 'active' : ''; ?>" href="shop.php">Shop</a>
+            </li>
+            <li>
+                <a class="<?php echo ($currentPage == 'blog.php') ? 'active' : ''; ?>" href="blog.php">Blog</a>
+            </li>
+            <li>
+                <a class="<?php echo ($currentPage == 'AboutUs.php') ? 'active' : ''; ?>" href="AboutUs.php">About Us</a>
+            </li>
+            <li>
+                <a class="<?php echo ($currentPage == 'Profile.php') ? 'active' : ''; ?>" href="ContactUs.php">Profile</a>
+            </li>
+            <li>
+                <a href="search.php"><i class="fa-solid fa-search"></i> Search</a>
+            </li>
+        </ul>
+
         <!-- Horizontal Slide Menu -->
-        <ul class="logo-slide-menu">
+        <ul class="logo-slide-menu" id="desktopMenu">
             <li>
                 <a class="<?php echo ($currentPage == 'index.php') ? 'active' : ''; ?>" href="index.php">Home</a>
             </li>
@@ -59,4 +88,7 @@ $currentPage = basename($_SERVER['PHP_SELF']);
               
         </ul>
     </div>
+    
+    <script src="../assets/js/MobileMenu.js"></script>
 </section>
+
