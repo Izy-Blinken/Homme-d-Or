@@ -89,6 +89,6 @@ $currentPage = basename($_SERVER['PHP_SELF']);
         </ul>
     </div>
     
-    <script src="../assets/js/MobileMenu.js"></script>
+    
 </section>
 
