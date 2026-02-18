@@ -23,7 +23,7 @@
     <section class="shop-welcome-section">
         <div class="shop-welcome-overlay"></div>
         <div class="shop-welcome-content">
-            <h1><span class="greeting-text">Welcome</span></h1>
+            <h1><span class="greeting-text">Welcome</span> 
             <nav class="shop-category-nav">
                 <a href="#new-arrivals" class="shop-category-link">New Arrivals</a>
                 <a href="#top-picks" class="shop-category-link">Top Picks</a>
