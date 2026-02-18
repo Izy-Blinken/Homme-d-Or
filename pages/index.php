@@ -143,6 +143,7 @@
                    </div>
                </div>
            </section>
+        
 
            <!-- PRODUCTS SECTION -->
            <section class="products-section">
