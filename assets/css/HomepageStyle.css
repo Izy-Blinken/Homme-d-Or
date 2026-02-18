@@ -262,6 +262,7 @@
     grid-column: 1 / 2;
     grid-row: 2 / 3;
     align-self: end;
+    margin-bottom: 50px;
 }
 
 .info-card-wrapper {
@@ -328,7 +329,7 @@
     grid-column: 3 / 4;
     grid-row: 2 / 3;
     align-self: start; 
-    margin-top: 90px; 
+    margin-top: 50px; 
 }
 
 .details-list {
@@ -369,7 +370,7 @@
     grid-column: 3 / 4;
     grid-row: 2 / 3;
     align-self: self-end; 
-    margin-bottom: 25px; 
+    margin-bottom: 100px; 
     text-align: center;
 }
 
