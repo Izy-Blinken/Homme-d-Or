@@ -52,7 +52,7 @@ h2 { font-size: 2rem; margin-bottom: 1.5rem; font-weight: bold; }
     display: flex;
     align-items: center;
     background: whitesmoke;
-    border-radius: 6px;
+    border-radius: 0;
     padding: 0.5rem 1rem;
     gap: 0.5rem;
     width: 300px;
@@ -72,7 +72,7 @@ h2 { font-size: 2rem; margin-bottom: 1.5rem; font-weight: bold; }
     height: 38px;
     background: #1a2433;
     color: white;
-    border-radius: 6px;
+    border-radius: 0;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -99,7 +99,7 @@ h2 { font-size: 2rem; margin-bottom: 1.5rem; font-weight: bold; }
     width: 24px;
     height: 3px;
     background: black;
-    border-radius: 5px;
+    border-radius: 0;
 }
 
 
@@ -202,7 +202,7 @@ h2 { font-size: 2rem; margin-bottom: 1.5rem; font-weight: bold; }
 .stat-card {
     background: white;
     padding: 1.5rem;
-    border-radius: 8px;
+    border-radius: 0;
     box-shadow: 0 1px 6px rgba(0,0,0,0.07);
     border: 1px solid #efefef;
 }
@@ -230,7 +230,7 @@ h2 { font-size: 2rem; margin-bottom: 1.5rem; font-weight: bold; }
 .table-container {
     background: white;
     padding: 1.5rem;
-    border-radius: 8px;
+    border-radius: 0;
     box-shadow: 0 1px 6px rgba(0,0,0,0.07);
     border: 1px solid #efefef;
 }
@@ -265,7 +265,7 @@ tr:hover td { background: #fafafa; }
 .badge {
     display: inline-block;
     padding: 4px 12px;
-    border-radius: 4px;
+    border-radius: 0;
     font-size: 0.8rem;
     font-weight: 600;
     white-space: nowrap;
@@ -285,7 +285,7 @@ tr:hover td { background: #fafafa; }
 ───────────────────────────────────── */
 .btn-view-details {
     padding: 8px 18px; background: #26a69a; color: white;
-    border: none; border-radius: 4px; font-weight: bold;
+    border: none; border-radius: 0; font-weight: bold;
     cursor: pointer; font-size: 0.85rem;
     font-family: 'Franklin Gothic Medium', sans-serif;
     white-space: nowrap;
@@ -294,21 +294,21 @@ tr:hover td { background: #fafafa; }
 
 .btn-edit {
     padding: 6px 14px; background: goldenrod; color: white;
-    border: none; border-radius: 4px; font-weight: bold;
+    border: none; border-radius: 0; font-weight: bold;
     cursor: pointer; font-size: 0.82rem; margin-right: 4px;
 }
 .btn-edit:hover { background: #b8860b; }
 
 .btn-delete {
     padding: 6px 14px; background: #dc3545; color: white;
-    border: none; border-radius: 4px; font-weight: bold;
+    border: none; border-radius: 0; font-weight: bold;
     cursor: pointer; font-size: 0.82rem;
 }
 .btn-delete:hover { background: #b02a37; }
 
 .reset-btn {
     padding: 9px 18px; border: 1px solid #ccc; background: white;
-    border-radius: 4px; font-weight: bold; cursor: pointer;
+    border-radius: 0; font-weight: bold; cursor: pointer;
     font-size: 0.9rem; font-family: 'Franklin Gothic Medium', sans-serif;
     white-space: nowrap; align-self: flex-end;
 }
@@ -320,7 +320,7 @@ tr:hover td { background: #fafafa; }
 ───────────────────────────────────── */
 .filter-bar {
     background: white;
-    border-radius: 8px;
+    border-radius: 0;
     box-shadow: 0 1px 6px rgba(0,0,0,0.07);
     border: 1px solid #efefef;
     padding: 1.25rem 1.5rem;
@@ -337,7 +337,7 @@ tr:hover td { background: #fafafa; }
 }
 .filter-group select,
 .filter-group input {
-    padding: 8px 12px; border: 1px solid #ccc; border-radius: 4px;
+    padding: 8px 12px; border: 1px solid #ccc; border-radius: 0;
     font-size: 0.9rem; background: white; min-width: 150px;
     font-family: 'Franklin Gothic Medium', sans-serif;
 }
@@ -358,7 +358,7 @@ tr:hover td { background: #fafafa; }
 .tabs-group { display: flex; gap: 0.5rem; flex-wrap: wrap; }
 .tab-btn {
     padding: 8px 16px; border: 1px solid #ccc; background: white;
-    border-radius: 4px; font-size: 0.88rem; cursor: pointer;
+    border-radius: 0; font-size: 0.88rem; cursor: pointer;
     font-family: 'Franklin Gothic Medium', sans-serif; transition: all 0.2s;
 }
 .tab-btn:hover { background: whitesmoke; }
@@ -366,7 +366,7 @@ tr:hover td { background: #fafafa; }
 
 .add-product-btn {
     padding: 10px 20px; background: black; color: white;
-    border: none; border-radius: 4px; font-size: 0.9rem;
+    border: none; border-radius: 0; font-size: 0.9rem;
     font-weight: bold; cursor: pointer;
     font-family: 'Franklin Gothic Medium', sans-serif;
     white-space: nowrap;
@@ -376,7 +376,7 @@ tr:hover td { background: #fafafa; }
 /* Product table image cell */
 .product-img-cell {
     width: 44px; height: 44px; background: #e0e0e0;
-    border-radius: 4px; border: 1px solid #d0d0d0; flex-shrink: 0;
+    border-radius: 0; border: 1px solid #d0d0d0; flex-shrink: 0;
 }
 
 
@@ -405,7 +405,7 @@ tr:hover td { background: #fafafa; }
     transform: translateX(-50%);
     width: 70%; height: 3px;
     background: #c8a840;
-    border-radius: 2px 2px 0 0;
+    border-radius: 0;
 }
 
 /* Report cards */
@@ -416,7 +416,7 @@ tr:hover td { background: #fafafa; }
     margin-bottom: 2rem;
 }
 .report-card {
-    background: white; padding: 1.5rem; border-radius: 8px;
+    background: white; padding: 1.5rem; border-radius: 0;
     box-shadow: 0 1px 6px rgba(0,0,0,0.07); border: 1px solid #efefef;
 }
 .report-label {
@@ -432,7 +432,7 @@ tr:hover td { background: #fafafa; }
 /* Best selling products */
 .rank-badge {
     width: 30px; height: 30px; background: #c8a840; color: white;
-    border-radius: 4px; display: flex; align-items: center;
+    border-radius: 0; display: flex; align-items: center;
     justify-content: center; font-weight: 800; font-size: 0.9rem; flex-shrink: 0;
 }
 .product-row {
@@ -450,7 +450,7 @@ tr:hover td { background: #fafafa; }
    PROFILE PAGE
 ───────────────────────────────────── */
 .profile-header-card {
-    background: white; border-radius: 8px;
+    background: white; border-radius: 0;
     box-shadow: 0 1px 6px rgba(0,0,0,0.07); border: 1px solid #efefef;
     padding: 1.25rem 1.5rem;
     display: flex; align-items: center;
@@ -461,14 +461,14 @@ tr:hover td { background: #fafafa; }
 .profile-header-left { display: flex; align-items: center; gap: 1rem; }
 .profile-avatar {
     width: 52px; height: 52px; background: #1a2433; color: white;
-    border-radius: 8px; display: flex; align-items: center;
+    border-radius: 0; display: flex; align-items: center;
     justify-content: center; font-weight: 800; font-size: 1.3rem; flex-shrink: 0;
 }
 .profile-name { font-size: 1.1rem; font-weight: 700; color: #1a2433; }
 .profile-role { font-size: 0.82rem; color: #888; margin-top: 2px; }
 .logout-btn {
     padding: 8px 18px; background: #dc3545; color: white;
-    border: none; border-radius: 4px; font-weight: bold;
+    border: none; border-radius: 0; font-weight: bold;
     cursor: pointer; font-size: 0.85rem;
     font-family: 'Franklin Gothic Medium', sans-serif;
     white-space: nowrap;
@@ -482,7 +482,7 @@ tr:hover td { background: #fafafa; }
     margin-bottom: 1.5rem;
 }
 .info-card {
-    background: white; border-radius: 8px;
+    background: white; border-radius: 0;
     box-shadow: 0 1px 6px rgba(0,0,0,0.07); border: 1px solid #efefef;
     padding: 1.5rem;
 }
@@ -503,7 +503,7 @@ tr:hover td { background: #fafafa; }
 .info-row-value.positive { color: #2ecc71; font-weight: 700; }
 
 .customer-stats-card {
-    background: white; border-radius: 8px;
+    background: white; border-radius: 0;
     box-shadow: 0 1px 6px rgba(0,0,0,0.07); border: 1px solid #efefef;
     padding: 1.5rem; margin-bottom: 1.5rem;
 }
@@ -525,7 +525,7 @@ tr:hover td { background: #fafafa; }
 
 .edit-profile-btn {
     padding: 10px 20px; background: #1a2433; color: white;
-    border: none; border-radius: 4px; font-weight: bold;
+    border: none; border-radius: 0; font-weight: bold;
     cursor: pointer; font-size: 0.9rem;
     font-family: 'Franklin Gothic Medium', sans-serif;
 }
@@ -543,7 +543,7 @@ tr:hover td { background: #fafafa; }
 }
 .modal-overlay.show { display: flex; }
 .modal {
-    background: white; border-radius: 10px; padding: 2rem;
+    background: white; border-radius: 0; padding: 2rem;
     width: 100%; max-width: 500px;
     box-shadow: 0 8px 40px rgba(0,0,0,0.2);
     max-height: 90vh; overflow-y: auto;
@@ -566,33 +566,33 @@ tr:hover td { background: #fafafa; }
 }
 .form-group input,
 .form-group select {
-    width:100%; padding:8px 10px; border:1px solid #ccc; border-radius:4px;
+    width:100%; padding:8px 10px; border:1px solid #ccc; border-radius:0;
     font-size:0.9rem; font-family:'Franklin Gothic Medium', sans-serif;
 }
 .modal-footer { display:flex; justify-content:flex-end; gap:0.75rem; margin-top:1.5rem; flex-wrap: wrap; }
 .btn-cancel {
     padding:8px 20px; background:transparent; border:1px solid #ccc;
-    border-radius:4px; cursor:pointer; font-weight:bold;
+    border-radius:0; cursor:pointer; font-weight:bold;
 }
 .btn-save {
     padding:8px 22px; background:#1a2433; color:white;
-    border:none; border-radius:4px; cursor:pointer; font-weight:bold;
+    border:none; border-radius:0; cursor:pointer; font-weight:bold;
 }
 .btn-save:hover { background:#2c3e55; }
 
 .detail-grid {
     display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;
-    background: whitesmoke; border-radius: 8px; padding: 1rem; margin-bottom: 1rem;
+    background: whitesmoke; border-radius: 0; padding: 1rem; margin-bottom: 1rem;
 }
 .detail-item label { display:block; font-size:0.72rem; font-weight:bold; color:gray; margin-bottom:0.25rem; }
 .detail-item span { font-size:0.9rem; font-weight:600; color:#1a2433; word-break: break-word; }
 .btn-close-modal {
     padding: 8px 22px; background: #1a2433; color: white; border: none;
-    border-radius: 4px; cursor: pointer; font-weight: bold;
+    border-radius: 0; cursor: pointer; font-weight: bold;
 }
 .btn-close-modal:hover { background: #333; }
 .status-select {
-    padding: 6px 10px; border: 1px solid #ccc; border-radius: 4px;
+    padding: 6px 10px; border: 1px solid #ccc; border-radius: 0;
     font-size: 0.9rem; font-family: 'Franklin Gothic Medium', sans-serif; width: 100%;
 }
 
