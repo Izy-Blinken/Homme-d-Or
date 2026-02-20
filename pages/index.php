@@ -46,6 +46,8 @@
         5. Terms and conditions
         6. *Pinag-iisipan q pa* Yung mga discover buttons sa shop page lagyan ng individual page
         7. back buttons
+        8. UI for order history for individual products
+        9. cart - selecting specific products
         
         -->
         
