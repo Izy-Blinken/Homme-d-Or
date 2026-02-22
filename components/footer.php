@@ -5,7 +5,7 @@
             <h2><b>SIGN UP</b></h2>
         </div>
 
-        <form id="registerForm">
+        <form id="registerForm" action="../backend/signup.php" method="POST">
             <div class="inputGroup">
                 <input type="text" name="firstname" id="signupFirstname" required>
                 <label>FIRST NAME*</label>
