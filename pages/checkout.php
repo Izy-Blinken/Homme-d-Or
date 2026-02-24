@@ -18,7 +18,7 @@
 
     <body>
         <?php include '../components/header.php'; ?>
-        <main>
+        <main class="mainBG">
 
             <div class="checkoutWrapper">
                 <div class="checkoutHeader">

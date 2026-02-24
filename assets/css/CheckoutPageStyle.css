@@ -104,7 +104,7 @@
     font-family: 'Spartan', sans-serif;
     font-size: 36px;
     font-weight: 700;
-    color: #000000;
+    color: white;
     text-transform: uppercase;
     letter-spacing: 2px;
     margin: 0 0 30px 0;
@@ -151,12 +151,12 @@
 }
 
 .step.active .stepNumber {
-    background-color: #000000;
+    background-color: #c9a961;
     color: white;
 }
 
 .step.active span {
-    color: #000000;
+    color: #c9a961;
     font-weight: 600;
 }
 
@@ -182,7 +182,7 @@
     gap: 12px;
     margin-bottom: 25px;
     padding-bottom: 15px;
-    border-bottom: 2px solid #000000;
+    border-bottom: 2px solid white;
 }
 
 .sectionHeader i {
@@ -194,7 +194,7 @@
     font-family: 'Spartan', sans-serif;
     font-size: 22px;
     font-weight: 700;
-    color: #000000;
+    color: white;
     text-transform: uppercase;
     letter-spacing: 1px;
     margin: 0;
@@ -203,9 +203,12 @@
 /* billin info */
 
 .billingInfo {
-    background: white;
     padding: 35px;
     box-shadow: 0 2px 15px rgba(0, 0, 0, 0.08);
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    border: 1px solid rgba(212,175,55,0.5);
 }
 
 .formSection {
@@ -216,7 +219,7 @@
     font-family: 'Spartan', sans-serif;
     font-size: 16px;
     font-weight: 600;
-    color: #000000;
+    color: white;
     text-transform: uppercase;
     letter-spacing: 1px;
     margin: 0 0 20px 0;
@@ -234,7 +237,7 @@
     font-family: 'Spartan', sans-serif;
     font-size: 13px;
     font-weight: 600;
-    color: #000000;
+    color: whitesmoke;
     text-transform: uppercase;
     letter-spacing: 0.5px;
 }
@@ -297,7 +300,7 @@
     gap: 15px;
     padding: 18px 20px;
     border: 2px solid #e0e0e0;
-    background-color: white;
+    background-color: beige;
     transition: all 0.3s;
 }
 
@@ -308,7 +311,7 @@
 
 .paymentOption input[type="radio"]:checked + .paymentCard {
     border-color: #000000;
-    background-color: #f5f7ff;
+    background-color:#c9a961;
     box-shadow: 0 2px 8px rgba(26, 35, 126, 0.15);
 }
 
@@ -336,7 +339,7 @@
 .paymentDesc {
     font-family: 'Spartan', sans-serif;
     font-size: 12px;
-    color: #999;
+    color: black;
 }
 
 /* Form Actions */
@@ -351,9 +354,9 @@
 .backToCartBtn {
     flex: 1;
     padding: 14px 25px;
-    background-color: white;
-    color: #000000;
-    border: 2px solid #000000;
+    background-color: #3A3F47;
+    color: #c9a961;
+    border: 1px solid #c9a961;
     font-family: 'Spartan', sans-serif;
     font-size: 14px;
     font-weight: 600;
@@ -366,17 +369,18 @@
 }
 
 .backToCartBtn:hover {
-    background-color: #000000;
-    color: white;
+    background-color: lightslategray;
+    color: black;
+    border: 1px solid black;
 }
 
 .placeOrderBtn {
     flex: 2;
     padding: 14px 25px;
-    background-color: #000000;
-    color: white;
-    border: none;
     font-family: 'Spartan', sans-serif;
+    background-color: #c9a961;
+    color: black;
+    border: 1px solid black;
     font-size: 16px;
     font-weight: 700;
     cursor: pointer;
@@ -390,19 +394,23 @@
 }
 
 .placeOrderBtn:hover {
-    background-color: #c9a961;
+    background-color: rgb(3, 3, 84);
+    border: 1px solid #c9a961;
+    color: #c9a961;
     transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(201, 169, 97, 0.3);
 }
 
 /*order summary*/
 
 .orderSummary {
-    background: white;
     padding: 35px;
     box-shadow: 0 2px 15px rgba(0, 0, 0, 0.08);
     position: sticky;
     top: 20px;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    border: 1px solid rgba(212,175,55,0.5);
 }
 
 .orderItems {
@@ -455,28 +463,28 @@
     font-family: 'Spartan', sans-serif;
     font-size: 14px;
     font-weight: 600;
-    color: #000000;
+    color: white;
     margin: 0 0 6px 0;
 }
 
 .itemVariant {
     font-family: 'Spartan', sans-serif;
     font-size: 12px;
-    color: #999;
+    color: whitesmoke;
     margin: 0 0 8px 0;
 }
 
 .itemQuantity {
     font-family: 'Spartan', sans-serif;
     font-size: 12px;
-    color: #666;
+    color: whitesmoke;
 }
 
 .itemPrice p {
     font-family: 'Spartan', sans-serif;
     font-size: 15px;
     font-weight: 700;
-    color: #000000;
+    color: #c9a961;
     margin: 0;
     white-space: nowrap;
 }
@@ -505,9 +513,9 @@
 
 .applyPromoBtn {
     padding: 10px 20px;
-    background-color: white;
-    color: #000000;
-    border: 1px solid #000000;
+    background-color: #c9a961;
+    border: 1px solid black;
+    color: black;
     font-family: 'Spartan', sans-serif;
     font-size: 13px;
     font-weight: 600;
@@ -516,8 +524,9 @@
 }
 
 .applyPromoBtn:hover {
-    background-color: #000000;
-    color: white;
+    background-color: rgb(3, 3, 84);
+    border: 1px solid #c9a961;
+    color: #c9a961;
 }
 
 /*Order Total*/
@@ -531,11 +540,11 @@
     margin-bottom: 12px;
     font-family: 'Spartan', sans-serif;
     font-size: 14px;
-    color: rgb(76, 76, 76);
+    color: whitesmoke;
 }
 
 .totalRow.discount {
-    color: #2e7d32;
+    color: yellowgreen;
 }
 
 .totalDivider {
@@ -547,12 +556,12 @@
 .totalFinal {
     font-size: 20px;
     font-weight: 700;
-    color: #000000;
+    color: #c9a961;
     padding-top: 15px;
 }
 
 .totalFinal span:last-child {
-    color: #000000;
+    color: #c9a961;
 }
 
 /*Security Badge*/
@@ -563,7 +572,7 @@
     gap: 8px;
     margin-top: 20px;
     padding: 12px;
-    background-color: #f5f7ff;
+    background-color: lightslategray;
 }
 
 .securityBadge i {
@@ -574,11 +583,10 @@
 .securityBadge span {
     font-family: 'Spartan', sans-serif;
     font-size: 11px;
-    color: #666;
+    color: black;
 }
 
 /* responsive */
-
 @media (max-width: 1024px) {
     #checkoutContainer {
         grid-template-columns: 1fr;

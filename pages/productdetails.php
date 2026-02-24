@@ -25,7 +25,7 @@
         <?php include '../components/header.php'; ?>
         <script src="script.js"></script>
 
-        <main>
+        <main class="mainBG">
 
             <a href="javascript:history.back()" class="back-button">
                 <i class="fa-solid fa-chevron-left"></i> 
@@ -62,17 +62,17 @@
                     <section id="details-section">
                         <h2>Perfume Details</h2>
                         <div class="details-grid">
-                            <div class="details-box">
+                            <div class="detailsSection-box">
                                 <h4>Top Notes</h4>
                                 <p>Blah blah blah</p>
                             </div>
 
-                            <div class="details-box">
+                            <div class="detailsSection-box">
                                 <h4>Middle Notes</h4>
                                 <p>bla bla bla</p>
                             </div>
 
-                            <div class="details-box">
+                            <div class="detailsSection-box">
                                 <h4>Base Notes</h4>
                                 <p>ahuhuhuhuh</p>
                             </div>
@@ -104,7 +104,7 @@
                     <div class="new-arrivals-container">
                         <div class="section-header" >
                             <div class="header-line" style="background-color: lightgrey"></div>
-                            <h2 style="color: #0e101f; font-weight: 300; letter-spacing: 2px;">You May Also Like</h2>
+                            <h2 style="color: white; font-weight: 300; letter-spacing: 2px;">You May Also Like</h2>
                             <div class="header-line" style="background-color: lightgrey"></div>
                         </div>
                         
@@ -146,7 +146,6 @@
                         </div>
                         </div>
                     </div>
-                </section>
             </section>
         </main>
 

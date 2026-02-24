@@ -56,7 +56,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         <?php include '../components/header.php'; ?>
 
-        <main >
+        <main class="mainBG">
             <a href="javascript:history.back()" class="back-button">
                 <i class="fa-solid fa-chevron-left"></i> 
             </a>

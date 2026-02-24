@@ -6,32 +6,32 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0);
     z-index: 100000;
     align-items: center;
     justify-content: center;
-    transition: background-color 0.3s ease;
     padding: 5vw;
+    background-color: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(4px);
 }
 
 .orderSuccessModal.active {
-    background-color: rgba(0, 0, 0, 0.7);
+    background-color: rgba(0, 0, 0, 0.5);
     animation: fadeIn 0.3s ease;
 }
 
 .orderSuccessModalContent {
-    background: white;
+    background-color: #2A2D34;
     padding: clamp(2rem, 5vw, 3.75rem) clamp(1.5rem, 4vw, 2.5rem);
-    box-shadow: 0 1vh 4vh rgba(0, 0, 0, 0.3);
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
     text-align: center;
     max-width: min(90vw, 37.5rem);
     width: 100%;
     position: relative;
-    transform: scale(0.7);
     opacity: 0;
-    transition: transform 0.3s ease, opacity 0.3s ease;
+    transform: translateX(100%);
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    overflow: hidden;
     max-height: 90vh;
-    overflow-y: auto;
 }
 
 .orderSuccessModal.active .orderSuccessModalContent {
@@ -102,8 +102,8 @@
 }
 
 .orderSuccessCloseBtn:hover {
-    background-color: #f0f0f0;
-    color: #000;
+    background-color: #2A2D34;
+    color: #c9a961;
     transform: rotate(90deg);
 }
 
@@ -135,7 +135,7 @@
 /* Modal Content Styling */
 .orderSuccessModalContent h1 {
     font-size: clamp(1.5rem, 4vw, 2rem);
-    color: #0e101f;
+    color: white;
     margin-bottom: clamp(0.75rem, 2vw, 0.9375rem);
     font-family: 'Spartan', sans-serif;
     font-weight: 700;
@@ -144,7 +144,7 @@
 
 .orderNumber {
     font-size: clamp(1rem, 2.5vw, 1.125rem);
-    color: #666;
+    color: yellowgreen;
     margin-bottom: clamp(1.5rem, 3vw, 1.875rem);
     font-family: 'Spartan', sans-serif;
 }
@@ -205,27 +205,30 @@
     white-space: nowrap;
 }
 
-.btnSecondary {
-    background: #0e101f;
-    color: white;
-    border: none;
+.btnPrimary {
+    background-color: #3A3F47;
+    color: #c9a961;
+    border: 1px solid #c9a961;
 }
 
-.btnSecondary:hover {
-    background: #C9A961;
+.btnPrimary:hover {
+    background-color: lightslategrey;
+    color: black;
+    border: 1px solid black;
     transform: translateY(-0.125rem);
     box-shadow: 0 0.3125rem 0.9375rem rgba(0, 0, 0, 0.2);
 }
 
-.btnPrimary {
-    background: white;
-    color: #0e101f;
-    border: 0.125rem solid #0e101f;
+.btnSecondary {
+    background-color: #c9a961;
+    border: 1px solid black;
+    color: black;
 }
 
-.btnPrimary:hover {
-    background: #0e101f;
-    color: white;
+.btnSecondary:hover {
+    background-color: rgb(3, 3, 84);
+    border: 1px solid #c9a961;
+    color: #c9a961;
     transform: translateY(-0.125rem);
     box-shadow: 0 0.3125rem 0.9375rem rgba(0, 0, 0, 0.2);
 }

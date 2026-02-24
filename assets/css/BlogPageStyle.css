@@ -27,10 +27,12 @@
     height: 500px;
     object-fit: cover;
     transition: transform 0.3s ease;
+    border: 2px solid rgba(212,175,55,0.5);
 }
 
 #blog-header img:hover {
     transform: translateY(-5px);
+    border: 2px solid rgba(212,175,55,0.5);
 }
 
 #blog-header div {
@@ -40,6 +42,7 @@
     backdrop-filter: blur(15px);
     -webkit-backdrop-filter: blur(15px);
     padding: 60px;
+    border: 1px solid rgba(212,175,55,0.5);
 }
 
 #blog-header div h2 {
@@ -105,6 +108,7 @@
     -webkit-backdrop-filter: blur(15px);
     padding: 35px;
     transition: all 0.3s ease;
+    border: 1px solid rgba(212,175,55,0.5);
 }
 
 .comment-box:hover {
@@ -119,6 +123,7 @@
     flex-shrink: 0;
     object-fit: cover;
     border-radius: 50%;
+    border: 2px solid rgba(212,175,55,0.5);
 }
 
 .comment-text {
@@ -177,9 +182,11 @@
     overflow: hidden;
     transition: transform 0.3s ease;
     cursor: pointer;
+    border: 2px solid rgba(212,175,55,0.5);
 }
 
 .highlight-item:hover {
+    border: 2px solid rgba(212,175,55,0.5);
     transform: translateY(-5px);
 }
 
@@ -188,6 +195,7 @@
     height: 100%;
     object-fit: cover;
     transition: transform 0.3s ease;
+    border: 2px solid rgba(212,175,55,0.5);
 }
 
 .highlight-item:hover img {
@@ -202,6 +210,7 @@
     text-align: center;
     margin: 0 auto;
     max-width: 1200px;
+    border: 1px solid rgba(212,175,55,0.5);
 }
 
 .description h3 {
