@@ -11,4 +11,3 @@ if(!$conn){
 }
 ?>
 
-//for db connection

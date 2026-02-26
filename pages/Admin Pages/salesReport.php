@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="../../assets/css/AdminPanelStyle.css">
+   
+</head>
+<body>
+
+    <div class="overlay" id="sidebar-overlay"></div>
+    <div class="sidebar" id="admin-sidebar">
+        <div class="sidebar-header">
+            <span>ADMIN PANEL</span>
+            <button type="button" class="close-icon" id="close-btn">&times;</button>
+        </div>
+        <nav class="sidebar-nav">
+            <a href="adminSide.php" class="menu-opt">Dashboard</a>
+            <a href="productManagement.php" class="menu-opt">Product Management</a>
+            <a href="orderManagement.php" class="menu-opt">Order Management</a>
+            <a href="customerList.php" class="menu-opt">Customer List</a>
+            <a href="salesReport.php" class="menu-opt active">Sales Report</a>
+            <a href="adminProfile.php" class="menu-opt">Profile</a>
+        </nav>
+    </div>
+
+    <div class="main-content">
+        <header class="navbar">
+            <div class="navbar-left">
+                <button class="hamburger" id="menu-btn">
+                    <span></span><span></span><span></span>
+                </button>
+                <h1 class="navbar-title">ADMIN PANEL</h1>
+            </div>
+            <div class="navbar-search">
+                <svg width="16" height="16" fill="none" stroke="#888" stroke-width="2" viewBox="0 0 24 24">
+                    <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+                </svg>
+                <input type="text" placeholder="Search...">
+            </div>
+            <div class="navbar-avatar">A</div>
+        </header>
+
+        <main class="container">
+            <h2 class="page-title">Sales Report</h2>
+
+            <!-- Period Tabs — data-period tells JS which dataset to load, NO onclick -->
+            <div class="report-btns">
+                <button type="button" class="schedule-btn active" data-period="daily">Daily</button>
+                <button type="button" class="schedule-btn" data-period="weekly">Weekly</button>
+                <button type="button" class="schedule-btn" data-period="monthly">Monthly</button>
+            </div>
+
+            <!-- Report Cards — IDs match exactly what AdminPanel.js targets -->
+            <section class="report-grid">
+                <div class="report-card">
+                    <small class="report-label">TOTAL SALES</small>
+                    <h3 class="report-value" id="val-total-sales">$8,425</h3>
+                    <small class="report-change positive" id="val-total-sales-change">+15.3% from previous period</small>
+                </div>
+                <div class="report-card">
+                    <small class="report-label">ORDERS</small>
+                    <h3 class="report-value" id="val-orders">127</h3>
+                    <small class="report-change positive" id="val-orders-change">+10 orders</small>
+                </div>
+                <div class="report-card">
+                    <small class="report-label">AVERAGE ORDER VALUE</small>
+                    <h3 class="report-value" id="val-avg">$66.34</h3>
+                    <small class="report-change positive" id="val-avg-change">+5.2% increase</small>
+                </div>
+            </section>
+
+            <!-- Best Selling Products -->
+            <section class="table-container">
+                <h3 class="table-title">Best Selling Products</h3>
+                <div id="best-selling-list">
+                    <div class="product-row">
+                        <div class="rank-badge">1</div>
+                        <div class="product-row-info">
+                            <div class="product-row-name">Classic T-Shirt</div>
+                            <div class="product-row-units">245 units sold</div>
+                        </div>
+                        <div class="product-row-price">$7,355</div>
+                    </div>
+                    <div class="product-row">
+                        <div class="rank-badge">2</div>
+                        <div class="product-row-info">
+                            <div class="product-row-name">Premium Jacket</div>
+                            <div class="product-row-units">89 units sold</div>
+                        </div>
+                        <div class="product-row-price">$13,351</div>
+                    </div>
+                    <div class="product-row">
+                        <div class="rank-badge">3</div>
+                        <div class="product-row-info">
+                            <div class="product-row-name">Summer Dress</div>
+                            <div class="product-row-units">200 units sold</div>
+                        </div>
+                        <div class="product-row-price">$11,998</div>
+                    </div>
+                    <div class="product-row">
+                        <div class="rank-badge">4</div>
+                        <div class="product-row-info">
+                            <div class="product-row-name">Slim Fit Jeans</div>
+                            <div class="product-row-units">134 units sold</div>
+                        </div>
+                        <div class="product-row-price">$12,059</div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="../../assets/js/AdminPanel.js" defer></script>
+</body>
+</html>

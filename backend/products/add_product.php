@@ -1,24 +1,56 @@
 <?php
+session_start();
+include '../db_connect.php';
 
-include("../db_connect.php");
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-//Example ng pag-add ng product (mano-mano muna to)
-//This is not needed sa actual na logic. Dedelete din to later. It's just here for testing.
-//ito lang rin yung addProduct sa functions.php
+    $product_name    = trim($_POST['product_name']);
+    $category_id     = !empty($_POST['category_id']) ? $_POST['category_id'] : null;
+    $price           = $_POST['price'];
+    $discounted_price = !empty($_POST['discounted_price']) ? $_POST['discounted_price'] : null;
+    $stock_qty       = $_POST['stock_qty'];
+    $sku             = trim($_POST['sku']);
+    $product_desc    = trim($_POST['product_desc']);
+    
+    if ($stock_qty == 0) {
+        $product_status = 'out-of-stock';
+    } elseif ($stock_qty <= 10) {
+        $product_status = 'low-stock';
+    } else {
+        $product_status = 'in-stock';
+    }
 
-$name = "Break Pads";
-$price = 350;
-$description = "This is a sample product.";
-$stock = 10;
-$image = "sample.jpg";
+    // Handle image upload
+    $image_url = null;
+    if (!empty($_FILES['product_image']['name'])) {
+        $upload_dir = '../../assets/images/products/';
+        $filename   = time() . '_' . basename($_FILES['product_image']['name']);
+        $target     = $upload_dir . $filename;
 
-$sql = "INSERT INTO products (name, price, description, stock, image) 
-        VALUES ('$name', $price, '$description', $stock, '$image')";
+        if (move_uploaded_file($_FILES['product_image']['tmp_name'], $target)) {
+            $image_url = $filename;
+        }
+    }
 
-if (mysqli_query($conn, $sql)) {
-    echo "Product added successfully!";
-} else {
-    echo "Error: " . mysqli_error($conn);
+    // Insert product
+    $sql = "INSERT INTO products 
+            (category_id, product_name, product_desc, price, discounted_price, sku, stock_qty, product_status) 
+            VALUES ('$category_id', '$product_name', '$product_desc', '$price', '$discounted_price', '$sku', '$stock_qty', '$product_status')";
+
+    if (mysqli_query($conn, $sql)) {
+        $product_id = mysqli_insert_id($conn);
+
+        // Insert image if uploaded
+        if ($image_url) {
+            mysqli_query($conn, "INSERT INTO product_images (product_id, image_url, is_primary) 
+                                 VALUES ('$product_id', '$image_url', 1)");
+        }
+
+        header('Location: ../../pages/Admin Pages/productManagement.php?success=Product added successfully.');
+        exit;
+    } else {
+        header('Location: ../../pages/Admin Pages/productManagement.php?error=Failed to add product.');
+        exit;
+    }
 }
-
 ?>
