@@ -1,208 +1,237 @@
+<?php 
+    session_start();
+    include '../../backend/db_connect.php';
+    include '../../backend/orders/auto_advance.php'; //trigger lng kapag naka-open file n to
+
+    $success = $_SESSION['success'] ?? null;
+    $error   = $_SESSION['error'] ?? null;
+    unset($_SESSION['success']);
+    unset($_SESSION['error']);
+
+    $filter_status    = $_GET['status']    ?? '';
+    $filter_date_from = $_GET['date_from'] ?? '';
+    $filter_date_to   = $_GET['date_to']   ?? '';
+    $filter_search    = $_GET['search']    ?? '';
+
+    $where = "1=1";
+    if ($filter_status){
+        $where .= " AND o.order_status = '$filter_status'";
+    }
+    if ($filter_search){
+        $safe_search = mysqli_real_escape_string($conn, $filter_search);
+        $where .= " AND (o.fname LIKE '%$safe_search%' 
+                    OR o.lname LIKE '%$safe_search%' 
+                    OR CONCAT(o.fname, ' ', o.lname) LIKE '%$safe_search%'
+                    OR o.order_id LIKE '%$safe_search%')";
+    }
+    if ($filter_date_from){
+        $where .= " AND DATE(o.created_at) >= '$filter_date_from'";
+    }
+    if ($filter_date_to){
+        $where .= " AND DATE(o.created_at) <= '$filter_date_to'";
+    }
+
+    $orders = mysqli_query($conn,
+        "SELECT o.*, p.method AS payment_method, p.payment_status
+         FROM orders o
+         LEFT JOIN payments p ON o.order_id = p.order_id
+         WHERE $where
+         ORDER BY o.created_at DESC");
+?>
+
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <link rel="stylesheet" href="../../assets/css/AdminPanelStyle.css">
-    
-</head>
-<body>
+    <head>
+        <link rel="stylesheet" href="../../assets/css/AdminPanelStyle.css">
+    </head>
+    <body>
 
-    <div class="overlay" id="sidebar-overlay"></div>
-    <div class="sidebar" id="admin-sidebar">
-        <div class="sidebar-header">
-            <span>ADMIN PANEL</span>
-            <button type="button" class="close-icon" id="close-btn">&times;</button>
+        <?php include '../../components/adminSideBar.php'; ?>
+
+        <div class="main-content">
+            <header class="navbar">
+                <div class="navbar-left">
+                    <button class="hamburger" id="menu-btn">
+                        <span></span><span></span><span></span>
+                    </button>
+                    <h1 class="navbar-title">ADMIN PANEL</h1>
+                </div>
+                <div class="navbar-search">
+                    <svg width="16" height="16" fill="none" stroke="#888" stroke-width="2" viewBox="0 0 24 24">
+                        <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+                    </svg>
+                    <input type="text" placeholder="Search...">
+                </div>
+                <div class="navbar-avatar">A</div>
+            </header>
+
+            <main class="container">
+                <h2 class="page-title">Order Management</h2>
+
+                <!-- Filter Bar -->
+                <form method="GET" action="">
+                    <div class="filter-bar">
+                        <div class="filter-group">
+                            <label>ORDER STATUS:</label>
+                            <select name="status" id="status-filter">
+                                <option value="">All Orders</option>
+                                <option value="pending"   <?= $filter_status === 'pending'   ? 'selected' : '' ?>>Pending</option>
+                                <option value="paid"      <?= $filter_status === 'paid'      ? 'selected' : '' ?>>Paid</option>
+                                <option value="shipped"   <?= $filter_status === 'shipped'   ? 'selected' : '' ?>>Shipped</option>
+                                <option value="delivered" <?= $filter_status === 'delivered' ? 'selected' : '' ?>>Delivered</option>
+                                <option value="received"  <?= $filter_status === 'received'  ? 'selected' : '' ?>>Received</option>
+                                <option value="completed" <?= $filter_status === 'completed' ? 'selected' : '' ?>>Completed</option>
+                                <option value="cancelled" <?= $filter_status === 'cancelled' ? 'selected' : '' ?>>Cancelled</option>
+                            </select>
+                        </div>
+                        <div class="filter-group">
+                            <label>FROM:</label>
+                            <input type="date" name="date_from" value="<?= $filter_date_from ?>">
+                        </div>
+                        <div class="filter-group">
+                            <label>TO:</label>
+                            <input type="date" name="date_to" value="<?= $filter_date_to ?>">
+                        </div>
+                        <div class="filter-group search-group" style="position:relative;">
+                            <label>SEARCH:</label>
+                            <input type="text" name="search" placeholder="Search orders..." 
+                                id="search-input" value="<?= htmlspecialchars($filter_search) ?>">
+                            <div id="search-suggestions" class="suggestions-box" style="display:none;"></div>
+                        </div>
+                        <button type="submit" class="tab-btn">Apply Filters</button>
+                        <a href="orderManagement.php" class="reset-btn" style="text-decoration: none; color: black;">Reset</a>
+                    </div>
+                </form>
+
+                <!-- Order Table -->
+                <section class="table-container">
+                    <div class="responsive-table">
+                        <table style="width:100%; border-collapse:collapse;">
+                            <thead>
+                                <tr>
+                                    <th>ORDER ID</th>
+                                    <th>CUSTOMER</th>
+                                    <th>DATE</th>
+                                    <th>TOTAL</th>
+                                    <th>PAYMENT</th>
+                                    <th>STATUS</th>
+                                    <th>ACTIONS</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php if (mysqli_num_rows($orders) > 0): ?>
+                                    <?php while ($order = mysqli_fetch_assoc($orders)): ?>
+                                    <tr>
+                                        <td>#<?= $order['order_id'] ?></td>
+                                        <td><?= htmlspecialchars($order['fname'] . ' ' . $order['lname']) ?></td>
+                                        <td><?= date('M d, Y', strtotime($order['created_at'])) ?></td>
+                                        <td>₱<?= number_format($order['total_amount'], 2) ?></td>
+                                        <td><?= ucfirst(str_replace('_', ' ', $order['payment_method'] ?? 'N/A')) ?></td>
+                                        <td>
+                                            <span class="badge badge-<?= $order['order_status'] ?>">
+                                                <?= ucfirst($order['order_status']) ?>
+                                            </span>
+                                        </td>
+                                        <td style="display:flex; gap:0.4rem; flex-wrap:wrap;">
+                                            <!-- View Details -->
+                                            <button class="btn-view-details view-btn"
+                                                data-id="<?= $order['order_id'] ?>"
+                                                data-customer="<?= htmlspecialchars($order['fname'] . ' ' . $order['lname']) ?>"
+                                                data-date="<?= date('M d, Y', strtotime($order['created_at'])) ?>"
+                                                data-total="₱<?= number_format($order['total_amount'], 2) ?>"
+                                                data-status="<?= $order['order_status'] ?>"
+                                                data-payment="<?= htmlspecialchars($order['payment_method'] ?? 'N/A') ?>"
+                                                data-address="<?= htmlspecialchars(($order['street'] ?? '') . ', ' . ($order['city'] ?? '') . ', ' . ($order['province'] ?? '')) ?>">
+                                                View
+                                            </button>
+
+                                            <!-- Mark as Paid (pending only) -->
+                                            <?php if ($order['order_status'] === 'pending'): ?>
+                                            <form method="POST" action="../../backend/orders/update_status.php" style="display:inline;">
+                                                <input type="hidden" name="order_id" value="<?= $order['order_id'] ?>">
+                                                <input type="hidden" name="status" value="paid">
+                                                <button type="submit" class="btn-edit">Mark Paid</button>
+                                            </form>
+                                            <?php endif; ?>
+
+                                            <!-- Cancel (pending only) -->
+                                            <?php if ($order['order_status'] === 'pending'): ?>
+                                            <form method="POST" action="../../backend/orders/update_status.php" style="display:inline;">
+                                                <input type="hidden" name="order_id" value="<?= $order['order_id'] ?>">
+                                                <input type="hidden" name="status" value="cancelled">
+                                                <button type="submit" class="btn-delete">Cancel</button>
+                                            </form>
+                                            <?php endif; ?>
+                                        </td>
+                                    </tr>
+                                    <?php endwhile; ?>
+                                <?php else: ?>
+                                    <tr>
+                                        <td colspan="7" style="text-align:center;">No orders found.</td>
+                                    </tr>
+                                <?php endif; ?>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+            </main>
         </div>
-        <nav class="sidebar-nav">
-            <a href="adminSide.php" class="menu-opt">Dashboard</a>
-            <a href="productManagement.php" class="menu-opt">Product Management</a>
-            <a href="orderManagement.php" class="menu-opt active">Order Management</a>
-            <a href="customerList.php" class="menu-opt">Customer List</a>
-            <a href="salesReport.php" class="menu-opt">Sales Report</a>
-            <a href="adminProfile.php" class="menu-opt">Profile</a>
-        </nav>
-    </div>
 
-    <div class="main-content">
-        <header class="navbar">
-            <div class="navbar-left">
-                <button class="hamburger" id="menu-btn">
-                    <span></span><span></span><span></span>
-                </button>
-                <h1 class="navbar-title">ADMIN PANEL</h1>
-            </div>
-            <div class="navbar-search">
-                <svg width="16" height="16" fill="none" stroke="#888" stroke-width="2" viewBox="0 0 24 24">
-                    <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
-                </svg>
-                <input type="text" placeholder="Search...">
-            </div>
-            <div class="navbar-avatar">A</div>
-        </header>
-
-        <main class="container">
-            <h2 class="page-title">Order Management</h2>
-
-            <!-- Filter Bar -->
-            <div class="filter-bar">
-                <div class="filter-group">
-                    <label>ORDER STATUS:</label>
-                    <select id="status-filter">
-                        <option value="">All Orders</option>
-                        <option value="pending">Pending</option>
-                        <option value="processing">Processing</option>
-                        <option value="shipped">Shipped</option>
-                        <option value="delivered">Delivered</option>
-                        <option value="cancelled">Cancelled</option>
-                    </select>
+        <!-- Order Detail Modal -->
+        <div class="modal-overlay" id="order-modal">
+            <div class="modal">
+                <div class="modal-header">
+                    <span class="modal-title">Order #<span id="modal-order-id"></span></span>
+                    <button class="modal-close" id="order-modal-close">&times;</button>
                 </div>
-                <div class="filter-group">
-                    <label>DATE RANGE:</label>
-                    <select id="date-filter">
-                        <option value="all">All Time</option>
-                        <option value="today">Today</option>
-                        <option value="week">This Week</option>
-                        <option value="month">This Month</option>
-                    </select>
+                <div class="detail-grid">
+                    <div class="detail-item">
+                        <label>CUSTOMER</label>
+                        <span id="modal-customer"></span>
+                    </div>
+                    <div class="detail-item">
+                        <label>DATE</label>
+                        <span id="modal-date"></span>
+                    </div>
+                    <div class="detail-item">
+                        <label>TOTAL</label>
+                        <span id="modal-total"></span>
+                    </div>
+                    <div class="detail-item">
+                        <label>PAYMENT METHOD</label>
+                        <span id="modal-payment"></span>
+                    </div>
+                    <div class="detail-item">
+                        <label>STATUS</label>
+                        <span id="modal-status"></span>
+                    </div>
+                    <div class="detail-item" style="grid-column: span 2;">
+                        <label>SHIPPING ADDRESS</label>
+                        <span id="modal-address"></span>
+                    </div>
                 </div>
-                <div class="filter-group search-group">
-                    <label>SEARCH:</label>
-                    <input type="text" placeholder="Search orders..." id="search-input">
+                <div class="modal-footer">
+                    <button class="btn-cancel" id="order-modal-done">Close</button>
                 </div>
-                <button class="reset-btn" onclick="resetFilters()">Reset Filters</button>
-            </div>
-
-            <!-- Order Table -->
-            <section class="table-container">
-                <div class="responsive-table">
-                    <table style="width:100%; border-collapse:collapse;">
-                        <thead>
-                            <tr>
-                                <th>ORDER ID</th>
-                                <th>CUSTOMER</th>
-                                <th>DATE</th>
-                                <th>TOTAL</th>
-                                <th>STATUS</th>
-                                <th>ACTIONS</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>ORD-001</td>
-                                <td>John Smith</td>
-                                <td>2026-01-28</td>
-                                <td>$129.99</td>
-                                <td><span class="badge badge-pending">Pending</span></td>
-                                <td><button class="btn-view-details view-btn"
-                                    data-id="ORD-001" data-customer="John Smith"
-                                    data-date="2026-01-28" data-total="$129.99"
-                                    data-status="Pending" data-items="Classic T-Shirt x2"
-                                    data-address="123 Main St, New York">View Details</button></td>
-                            </tr>
-                            <tr>
-                                <td>ORD-002</td>
-                                <td>Sarah Johnson</td>
-                                <td>2026-01-27</td>
-                                <td>$249.50</td>
-                                <td><span class="badge badge-processing">Processing</span></td>
-                                <td><button class="btn-view-details view-btn"
-                                    data-id="ORD-002" data-customer="Sarah Johnson"
-                                    data-date="2026-01-27" data-total="$249.50"
-                                    data-status="Processing" data-items="Premium Jacket x1"
-                                    data-address="456 Oak Ave, Los Angeles">View Details</button></td>
-                            </tr>
-                            <tr>
-                                <td>ORD-003</td>
-                                <td>Mike Brown</td>
-                                <td>2026-01-26</td>
-                                <td>$89.99</td>
-                                <td><span class="badge badge-shipped">Shipped</span></td>
-                                <td><button class="btn-view-details view-btn"
-                                    data-id="ORD-003" data-customer="Mike Brown"
-                                    data-date="2026-01-26" data-total="$89.99"
-                                    data-status="Shipped" data-items="Summer Dress x1"
-                                    data-address="789 Pine Rd, Chicago">View Details</button></td>
-                            </tr>
-                            <tr>
-                                <td>ORD-004</td>
-                                <td>Emily Davis</td>
-                                <td>2026-01-25</td>
-                                <td>$179.99</td>
-                                <td><span class="badge badge-delivered">Delivered</span></td>
-                                <td><button class="btn-view-details view-btn"
-                                    data-id="ORD-004" data-customer="Emily Davis"
-                                    data-date="2026-01-25" data-total="$179.99"
-                                    data-status="Delivered" data-items="Slim Fit Jeans x2"
-                                    data-address="321 Elm St, Houston">View Details</button></td>
-                            </tr>
-                            <tr>
-                                <td>ORD-005</td>
-                                <td>Robert Wilson</td>
-                                <td>2026-01-24</td>
-                                <td>$59.99</td>
-                                <td><span class="badge badge-cancelled">Cancelled</span></td>
-                                <td><button class="btn-view-details view-btn"
-                                    data-id="ORD-005" data-customer="Robert Wilson"
-                                    data-date="2026-01-24" data-total="$59.99"
-                                    data-status="Cancelled" data-items="Daily Wear Shirt x1"
-                                    data-address="654 Maple Dr, Phoenix">View Details</button></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </section>
-        </main>
-    </div>
-
-    <!-- Order Detail Modal -->
-    <div class="modal-overlay" id="order-modal">
-        <div class="modal">
-            <div class="modal-header">
-                <span class="modal-title" id="modal-order-id">Order Details</span>
-                <button class="modal-close" id="modal-close-btn">&times;</button>
-            </div>
-            <div class="detail-grid">
-                <div class="detail-item">
-                    <label>CUSTOMER</label>
-                    <span id="modal-customer"></span>
-                </div>
-                <div class="detail-item">
-                    <label>DATE</label>
-                    <span id="modal-date"></span>
-                </div>
-                <div class="detail-item">
-                    <label>TOTAL</label>
-                    <span id="modal-total"></span>
-                </div>
-                <div class="detail-item">
-                    <label>STATUS</label>
-                    <span id="modal-status"></span>
-                </div>
-                <div class="detail-item" style="grid-column: span 2;">
-                    <label>ITEMS</label>
-                    <span id="modal-items"></span>
-                </div>
-                <div class="detail-item" style="grid-column: span 2;">
-                    <label>SHIPPING ADDRESS</label>
-                    <span id="modal-address"></span>
-                </div>
-            </div>
-            <div style="margin-top:0.5rem;">
-                <label style="font-size:0.78rem;font-weight:bold;color:#555;display:block;margin-bottom:0.4rem;">UPDATE STATUS:</label>
-                <select class="status-select" id="modal-status-select">
-                    <option>Pending</option>
-                    <option>Processing</option>
-                    <option>Shipped</option>
-                    <option>Delivered</option>
-                    <option>Cancelled</option>
-                </select>
-            </div>
-            <div class="modal-footer">
-                <button class="btn-close-modal" id="modal-done-btn">Close</button>
             </div>
         </div>
-    </div>
 
-    <script src="../../assets/js/AdminPanel.js" defer></script>
-    
-</body>
+        <div id="generalToast" class="generalToast"></div>
+        
+        <script src="../../assets/js/AdminPanel.js"></script>
+        <script src="../../assets/js/script.js"></script>
+        <script>
+            initLiveSearch('search-input', 'search-suggestions', '../../backend/ordersLiveSearch.php');
+        </script>
+
+        <?php if ($success): ?>
+            <script>showGeneralToast("<?= htmlspecialchars($success) ?>", "success");</script>
+        <?php endif; ?>
+        <?php if ($error): ?>
+            <script>showGeneralToast("<?= htmlspecialchars($error) ?>", "error");</script>
+        <?php endif; ?>
+
+        
+
+    </body>
 </html>

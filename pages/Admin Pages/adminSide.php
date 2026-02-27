@@ -11,21 +11,7 @@
 </head>
 <body>
 
-    <div class="overlay" id="sidebar-overlay"></div>
-    <div class="sidebar" id="admin-sidebar">
-        <div class="sidebar-header">
-            <span>ADMIN PANEL</span>
-            <button type="button" class="close-icon" id="close-btn">&times;</button>
-        </div>
-        <nav class="sidebar-nav">
-            <a href="adminSide.php" class="menu-opt active">Dashboard</a>
-            <a href="productManagement.php" class="menu-opt">Product Management</a>
-            <a href="orderManagement.php" class="menu-opt">Order Management</a>
-            <a href="customerList.php" class="menu-opt">Customer List</a>
-            <a href="salesReport.php" class="menu-opt">Sales Report</a>
-            <a href="adminProfile.php" class="menu-opt">Profile</a>
-        </nav>
-    </div>
+    <?php include '../../components/adminSideBar.php'; ?>
 
     <div class="main-content">
         <header class="navbar">
@@ -115,55 +101,64 @@
             ?>
 
             <section class="stats-grid">
-                <div class="stat-card">
-                    <small class="stat-label">TOTAL REVENUE</small>
-                    <h3 class="stat-value">₱<?= number_format($TotalRevenue, 2) ?></h3>
-                    
-                    <?php if($RevPercent !== NULL): ?>
-                        <small class="stat-change <?= $RevPercent >= 0 ? 'positive' : 'negative' ?>">
-                            <?= $RevPercent >= 0 ? '+' : '' ?><?= $RevPercent ?>% from last month
-                        </small>
-                    <?php else: ?>
-                        <small class="stat-change">No data for comparison</small>
-                    <?php endif; ?>
+                <button onclick="window.location.href='salesReport.php?active_tab=revenue'">
+                    <div class="stat-card">
+                        <small class="stat-label">TOTAL REVENUE</small>
+                        <h3 class="stat-value">₱<?= number_format($TotalRevenue, 2) ?></h3>
+                        
+                        <?php if($RevPercent !== NULL): ?>
+                            <small class="stat-change <?= $RevPercent >= 0 ? 'positive' : 'negative' ?>">
+                                <?= $RevPercent >= 0 ? '+' : '' ?><?= $RevPercent ?>% from last month
+                            </small>
+                        <?php else: ?>
+                            <small class="stat-change">No data for comparison</small>
+                        <?php endif; ?>
 
-                </div>
+                    </div>
+                </button>                
                 
-                <div class="stat-card">
-                    <small class="stat-label">TOTAL ORDERS</small>
-                    <h3 class="stat-value"><?= number_format($TotalOrders) ?></h3>
-                    <?php if($OrdersPercent !== NULL): ?>
-                        <small class="stat-change <?= $OrdersPercent >= 0 ? 'positive' : 'negative' ?>">
-                            <?= $OrdersPercent >= 0 ? '+' : '' ?><?= $OrdersPercent ?>% from last month
-                        </small>
-                    <?php else: ?>
-                        <small class="stat-change">No data for comparison</small>
-                    <?php endif; ?>
-                </div>
-
-                <div class="stat-card">
-                    <small class="stat-label">TOTAL PRODUCTS</small>
-                    <h3 class="stat-value"><?= number_format($TotalProducts) ?></h3>
-                    <?php if($ProductsPercent !== NULL): ?>
-                        <small class="stat-change <?= $ProductsPercent >= 0 ? 'positive' : 'negative' ?>">
-                            <?= $ProductsPercent >= 0 ? '+' : '' ?><?= $ProductsPercent ?>% from last month
-                        </small>
-                    <?php else: ?>
-                        <small class="stat-change">No data for comparison</small>
-                    <?php endif; ?>
-                </div>
+                <button onclick="window.location.href='salesReport.php?active_tab=orders'">
+                    <div class="stat-card">
+                        <small class="stat-label">TOTAL ORDERS</small>
+                        <h3 class="stat-value"><?= number_format($TotalOrders) ?></h3>
+                        <?php if($OrdersPercent !== NULL): ?>
+                            <small class="stat-change <?= $OrdersPercent >= 0 ? 'positive' : 'negative' ?>">
+                                <?= $OrdersPercent >= 0 ? '+' : '' ?><?= $OrdersPercent ?>% from last month
+                            </small>
+                        <?php else: ?>
+                            <small class="stat-change">No data for comparison</small>
+                        <?php endif; ?>
+                    </div>
+                </button>
                 
-                <div class="stat-card">
-                    <small class="stat-label">TOTAL CUSTOMERS</small>
-                    <h3 class="stat-value"><?= number_format($TotalCustomers) ?></h3>
-                    <?php if($CustomersPercent !== NULL): ?>
-                        <small class="stat-change <?= $CustomersPercent >= 0 ? 'positive' : 'negative' ?>">
-                            <?= $CustomersPercent >= 0 ? '+' : '' ?><?= $CustomersPercent ?>% from last month
-                        </small>
-                    <?php else: ?>
-                        <small class="stat-change">No data for comparison</small>
-                    <?php endif; ?>
-                </div>
+                <button onclick="window.location.href='salesReport.php?active_tab=products'">
+                    <div class="stat-card">
+                        <small class="stat-label">TOTAL PRODUCTS</small>
+                        <h3 class="stat-value"><?= number_format($TotalProducts) ?></h3>
+                        <?php if($ProductsPercent !== NULL): ?>
+                            <small class="stat-change <?= $ProductsPercent >= 0 ? 'positive' : 'negative' ?>">
+                                <?= $ProductsPercent >= 0 ? '+' : '' ?><?= $ProductsPercent ?>% from last month
+                            </small>
+                        <?php else: ?>
+                            <small class="stat-change">No data for comparison</small>
+                        <?php endif; ?>
+                    </div>
+                </button>
+                
+                
+                <button onclick="window.location.href='salesReport.php?active_tab=customers'">
+                    <div class="stat-card">
+                        <small class="stat-label">TOTAL CUSTOMERS</small>
+                        <h3 class="stat-value"><?= number_format($TotalCustomers) ?></h3>
+                        <?php if($CustomersPercent !== NULL): ?>
+                            <small class="stat-change <?= $CustomersPercent >= 0 ? 'positive' : 'negative' ?>">
+                                <?= $CustomersPercent >= 0 ? '+' : '' ?><?= $CustomersPercent ?>% from last month
+                            </small>
+                        <?php else: ?>
+                            <small class="stat-change">No data for comparison</small>
+                        <?php endif; ?>
+                    </div>
+                </button>
             </section>
 
             <section class="table-container">

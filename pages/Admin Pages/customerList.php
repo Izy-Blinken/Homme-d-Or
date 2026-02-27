@@ -6,21 +6,7 @@
 </head>
 <body>
 
-    <div class="overlay" id="sidebar-overlay"></div>
-    <div class="sidebar" id="admin-sidebar">
-        <div class="sidebar-header">
-            <span>ADMIN PANEL</span>
-            <button type="button" class="close-icon" id="close-btn">&times;</button>
-        </div>
-        <nav class="sidebar-nav">
-            <a href="adminSide.php" class="menu-opt">Dashboard</a>
-            <a href="productManagement.php" class="menu-opt">Product Management</a>
-            <a href="orderManagement.php" class="menu-opt">Order Management</a>
-            <a href="customerList.php" class="menu-opt active">Customer List</a>
-            <a href="salesReport.php" class="menu-opt">Sales Report</a>
-            <a href="adminProfile.php" class="menu-opt">Profile</a>
-        </nav>
-    </div>
+    <?php include '../../components/adminSideBar.php'; ?>
 
     <div class="main-content">
         <header class="navbar">

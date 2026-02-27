@@ -6,9 +6,11 @@ $product_id = $_GET['id'] ?? null;
 
 if ($product_id) {
     mysqli_query($conn, "DELETE FROM products WHERE product_id = '$product_id'");
-    header('Location: ../../pages/Admin Pages/productManagement.php?success=Product deleted successfully.');
+    $_SESSION['success'] = 'Product deleted successfully.';
+    header('Location: ../../pages/Admin Pages/productManagement.php');
 } else {
-    header('Location: ../../pages/Admin Pages/productManagement.php?error=Product not found.');
+    $_SESSION['error'] = 'Failed to delete product.';
+    header('Location: ../../pages/Admin Pages/productManagement.php');
 }
 exit;
 ?>
