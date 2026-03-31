@@ -3,38 +3,42 @@
     include '../../backend/db_connect.php';
 
     $success = $_SESSION['success'] ?? null;
-    $error   = $_SESSION['error'] ?? null;
+    $error = $_SESSION['error'] ?? null;
     unset($_SESSION['success']);
     unset($_SESSION['error']);
 
     $filter_category = $_GET['category'] ?? '';
-    $filter_stock    = $_GET['stock'] ?? '';
+    $filter_stock = $_GET['stock'] ?? '';
     $filter_discount = $_GET['discount'] ?? '';
-    $filter_sort     = $_GET['sort'] ?? '';
-    $filter_search   = $_GET['search'] ?? '';
+    $filter_sort = $_GET['sort'] ?? '';
+    $filter_search = $_GET['search'] ?? '';
 
     $where = "1=1";
     if ($filter_category) {
         $where .= " AND p.category_id = '$filter_category'";
     }
+
     if ($filter_stock){
         $where .= " AND p.product_status = '$filter_stock'";
     }
+
     if ($filter_discount === 'discounted'){
         $where .= " AND p.discounted_price IS NOT NULL AND p.discounted_price > 0";
     }
+
     if ($filter_discount === 'nodiscount'){
         $where .= " AND (p.discounted_price IS NULL OR p.discounted_price = 0)";
     }
+
     if ($filter_search){
         $where .= " AND (p.product_name LIKE '%$filter_search%' OR p.sku LIKE '%$filter_search%')";
     }
 
     $sort_sql = "p.created_at DESC";
-    if ($filter_sort === 'price-asc')  $sort_sql = "p.price ASC";
+    if ($filter_sort === 'price-asc') $sort_sql = "p.price ASC";
     if ($filter_sort === 'price-desc') $sort_sql = "p.price DESC";
-    if ($filter_sort === 'name-asc')   $sort_sql = "p.product_name ASC";
-    if ($filter_sort === 'stock-asc')  $sort_sql = "p.stock_qty ASC";
+    if ($filter_sort === 'name-asc') $sort_sql = "p.product_name ASC";
+    if ($filter_sort === 'stock-asc') $sort_sql = "p.stock_qty ASC";
 
     $products = mysqli_query($conn,
     "SELECT p.*, c.category_name,
@@ -173,13 +177,16 @@
                                         <tr>
                                             <td>
                                                 <div class="product-img-cell">
+
                                                     <?php if ($product['primary_image']): ?>
                                                         <img src="../../assets/images/products/<?= htmlspecialchars($product['primary_image']) ?>" 
                                                              alt="<?= htmlspecialchars($product['product_name']) ?>"
                                                              style="width:44px;height:44px;object-fit:cover;">
                                                     <?php endif; ?>
+
                                                 </div>
                                             </td>
+
                                             <td><?= htmlspecialchars($product['product_name']) ?></td>
                                             <td><?= htmlspecialchars($product['category_name'] ?? 'Uncategorized') ?></td>
                                             <td>₱<?= number_format($product['price'], 2) ?></td>
@@ -203,6 +210,7 @@
                                                     data-status="<?= $product['product_status'] ?>"
                                                     data-image="<?= htmlspecialchars($product['primary_image'] ?? '') ?>">View
                                                 </button>
+
                                                 <button class="btn-edit"
                                                     data-id="<?= $product['product_id'] ?>"
                                                     data-name="<?= htmlspecialchars($product['product_name']) ?>"
@@ -214,18 +222,23 @@
                                                     data-desc="<?= htmlspecialchars($product['product_desc']) ?>"
                                                     data-status="<?= $product['product_status'] ?>">Edit
                                                 </button>
+
                                                 <button class="btn-delete" 
                                                     data-id="<?= $product['product_id'] ?>"
                                                     data-name="<?= htmlspecialchars($product['product_name']) ?>">Delete
                                                 </button>
+
                                             </td>
                                         </tr>
+
                                     <?php endwhile; ?>
+
                                 <?php else: ?>
                                     <tr>
                                         <td colspan="8" style="text-align:center;">No products yet.</td>
                                     </tr>
                                 <?php endif; ?>
+
                             </tbody>
                         </table>
                     </div>
@@ -262,6 +275,7 @@
                                                           LEFT JOIN products p ON p.category_id = c.category_id 
                                                           GROUP BY c.category_id 
                                                           ORDER BY c.category_name ASC");
+                                                          
                         if (mysqli_num_rows($cat_list) > 0):
                             while ($c = mysqli_fetch_assoc($cat_list)):
                     ?>
@@ -284,17 +298,20 @@
                                         data-name="<?= htmlspecialchars($c['category_name']) ?>">
                                     Edit
                                 </button>
+
                                 <?php if ($c['product_count'] == 0): ?>
                                 <button class="btn-delete-cat cat-delete-btn" style="padding:5px 12px; font-size:0.78rem;"
                                         data-id="<?= $c['category_id'] ?>"
                                         data-name="<?= htmlspecialchars($c['category_name']) ?>">
                                     Delete
                                 </button>
+
                                 <?php else: ?>
                                 <button class="btn-delete-cat" style="padding:5px 12px; font-size:0.78rem; opacity:0.4; cursor:not-allowed;" 
                                         disabled title="Cannot delete category has products assigned">
                                     Delete
                                 </button>
+
                                 <?php endif; ?>
                             </div>
                         </div>
@@ -316,9 +333,11 @@
 
                         </form>
                     </div>
+
                     <?php endwhile; else: ?>
                     <p style="text-align:center; color:#888; padding:1rem 0;">No categories yet. Add one above.</p>
                     <?php endif; ?>
+
                 </div>
 
             </div>
@@ -435,15 +454,19 @@
                         <div class="form-group">
                             <label>CATEGORY</label>
                             <select name="category_id">
+
                                 <option value="">-- Select Category --</option>
                                 <?php
                                     mysqli_data_seek($categories, 0);
                                     while ($cat = mysqli_fetch_assoc($categories)):
                                 ?>
+
                                 <option value="<?= $cat['category_id'] ?>">
                                     <?= htmlspecialchars($cat['category_name']) ?>
                                 </option>
+
                                 <?php endwhile; ?>
+
                             </select>
                         </div>
                     </div>
@@ -515,15 +538,18 @@
                         <div class="form-group">
                             <label>CATEGORY</label>
                             <select name="category_id" id="edit-category-id">
+
                                 <option value="">-- Select Category --</option>
                                 <?php
                                 mysqli_data_seek($categories, 0);
                                 while ($cat = mysqli_fetch_assoc($categories)):
                                 ?>
+
                                 <option value="<?= $cat['category_id'] ?>">
                                     <?= htmlspecialchars($cat['category_name']) ?>
                                 </option>
                                 <?php endwhile; ?>
+
                             </select>
                         </div>
                     </div>
@@ -615,6 +641,7 @@
         <?php if ($success): ?>
             <script>showGeneralToast("<?= htmlspecialchars($success) ?>", "success");</script>
         <?php endif; ?>
+        
         <?php if ($error): ?>
             <script>showGeneralToast("<?= htmlspecialchars($error) ?>", "error");</script>
         <?php endif; ?>
