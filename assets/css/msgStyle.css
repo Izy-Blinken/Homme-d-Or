@@ -5,42 +5,50 @@
     z-index: 9999;
 }
 
-/* Chat Bubble Button */
+/* Chat Bubble Button - Spartan Luxury Aesthetic */
 .chatBubble {
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
-    background: linear-gradient(135deg, rgb(44, 61, 189) 0%, rgb(5, 17, 112) 100%);
-    border: none;
-    color: white;
+    width: 65px;
+    height: 65px;
+    /* Sharp geometric cut instead of border-radius */
+    border-radius: 0;
+    clip-path: polygon(15% 0%, 100% 0%, 100% 85%, 85% 100%, 0% 100%, 0% 15%);
+    background: #0a0a0a; /* Deep stark black */
+    border: 2px solid #C9A961; /* Luxury gold accent */
+    color: #C9A961; /* Gold icon */
     font-size: 24px;
     cursor: pointer;
-    box-shadow: 0 4px 15px rgba(59, 130, 246, 0.4);
+    box-shadow: 0 4px 15px rgba(201, 169, 97, 0.2); /* Subtle gold glow */
     display: flex;
     align-items: center;
     justify-content: center;
     transition: all 0.3s ease;
+    /* Optional: Add a subtle textured background or gradient if you prefer */
+    background: linear-gradient(145deg, rgba(15, 15, 15, 0.9), rgba(5, 5, 5, 1));
 }
 
 .chatBubble:hover {
-    transform: scale(1.1);
-    box-shadow: 0 6px 20px rgba(59, 130, 246, 0.4);
+    transform: translateY(-3px) scale(1.05); /* Slight lift on hover */
+    box-shadow: 0 6px 20px rgba(201, 169, 97, 0.4); /* Stronger gold glow */
+    background: #C9A961; /* Invert colors on hover */
+    color: #0a0a0a;
 }
 
 .chatBubble a {
-    color: white;
+    color: inherit; /* Inherit color so hover state works */
     text-decoration: none;
 }
 
-/* Chat Box */
+/* Chat Box - Spartan Dark Theme */
 .chatBox {
     position: absolute;
     bottom: 80px;
     right: 0;
     width: 400px;
     height: 500px;
-    background: white;
-    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+    background: #050505; /* Deep black background */
+    border: 1px solid #C9A961; /* Luxury gold border */
+    border-radius: 0; /* No rounded corners */
+    box-shadow: 0 8px 30px rgba(201, 169, 97, 0.15); /* Gold tinted shadow */
     display: none;
     flex-direction: column;
     overflow: hidden;
@@ -52,19 +60,14 @@
 }
 
 @keyframes slideUp {
-    from {
-        opacity: 0;
-        transform: translateY(20px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
 }
 
 /* Chat Header */
 .chatHeader {
-    background: rgb(5, 17, 112);
+    background: #0a0a0a;
+    border-bottom: 1px solid rgba(201, 169, 97, 0.3);
     color: white;
     padding: 20px;
     display: flex;
@@ -78,34 +81,38 @@
     gap: 12px;
 }
 
+/* Clean Circle Avatars */
 .chatAvatar {
     width: 45px;
     height: 45px;
-    border-radius: 50%;
-    background: rgba(255, 255, 255, 0.2);
+    background: #151515;
+    border: 1px solid #C9A961;
+    color: #C9A961;
     display: flex;
     align-items: center;
     justify-content: center;
     font-size: 20px;
+    border-radius: 50%; /* Back to a clean circle */
 }
 
 .chatHeaderText h3 {
     font-size: 16px;
     margin: 0 0 3px 0;
     font-weight: 600;
+    font-family: 'Spartan', sans-serif;
+    letter-spacing: 1px;
 }
 
 .chatStatus {
     font-size: 12px;
     margin: 0;
-    opacity: 0.9;
-    color: rgb(6, 255, 6);
+    color: #C9A961; /* Gold online status */
 }
 
 .chatCloseBtn {
     background: none;
     border: none;
-    color: white;
+    color: rgba(255, 255, 255, 0.5);
     font-size: 24px;
     cursor: pointer;
     width: 35px;
@@ -117,17 +124,15 @@
 }
 
 .chatCloseBtn:hover {
-    width: 39px ;
-    height: 39px;
-    color:rgb(195, 195, 195);
+    color: #C9A961;
 }
 
-/* Chat Messages */
+/* Chat Messages Area */
 .chatMessages {
     flex: 1;
     padding: 20px;
     overflow-y: auto;
-    background: #f9fafb;
+    background: #0a0a0a; /* Dark message area */
 }
 
 .chatMessages::-webkit-scrollbar {
@@ -135,7 +140,8 @@
 }
 
 .chatMessages::-webkit-scrollbar-thumb {
-    background: #cbd5e1;
+    background: #C9A961;
+    border-radius: 0;
 }
 
 .chatMessage {
@@ -145,59 +151,71 @@
     align-items: flex-start;
 }
 
+/* Message Avatars */
 .chatMessageAvatar {
     width: 32px;
     height: 32px;
-    border-radius: 50%;
-    background: #e0e7ff;
-    color: rgb(5, 17, 112);
+    background: #151515;
+    border: 1px solid #C9A961;
+    color: #C9A961;
     display: flex;
     align-items: center;
     justify-content: center;
     font-size: 14px;
     flex-shrink: 0;
+    border-radius: 50%; /* Back to a clean circle */
 }
 
+/* Simple Rounded Message Bubbles */
 .chatMessageBubble, .chatMessageBubbleUser {
     max-width: 70%;
     padding: 12px 16px;
     font-size: 14px;
     line-height: 1.5;
+    font-family: 'Spartan', sans-serif;
+    border-radius: 8px; /* Clean, soft edges instead of sharp cuts */
 }
 
 .chatMessageBubble p, .chatMessageBubbleUser p {
     margin: 0;
 }
 
+/* Left side (Bot/Support) */
 .chatMessageLeft .chatMessageBubble {
-    background: rgb(240, 240, 240);
-    color: rgb(5, 17, 112);
+    background: #151515;
+    border: 1px solid rgba(201, 169, 97, 0.3);
+}
+/* Force the text inside to be pure white */
+.chatMessageLeft .chatMessageBubble p {
+    color: #ffffff !important; 
+    margin: 0;
 }
 
+/* Right side (User) */
 .chatMessageRight {
     flex-direction: row-reverse;
 }
 
 .chatMessageRight .chatMessageAvatar {
-    background: rgb(59,130,246);
-    color: white;
+    background: #C9A961;
+    color: #000;
 }
 
-.chatMessageRight .chatMessageBubble, .chatMessageBubbleUser {
-    background: rgb(5, 17, 112);
-    color: rgb(255, 255, 255);
+.chatMessageRight .chatMessageBubbleUser {
+    background: #C9A961; /* Solid Gold for user */
+    color: #000000;
+    font-weight: 500;
 }
 
-
-.chatMessageBubbleUser p{
-    color: white;
+.chatMessageBubbleUser p {
+    color: #000000;
 }
 
-/* Chat Input */
+/* Chat Input Area */
 .chatInput {
     padding: 15px 20px;
-    background: white;
-    border-top: 1px solid #e5e7eb;
+    background: #050505;
+    border-top: 1px solid rgba(201, 169, 97, 0.3);
     display: flex;
     gap: 10px;
     align-items: center;
@@ -206,33 +224,43 @@
 .chatInput input {
     flex: 1;
     padding: 12px 16px;
-    border: 1px solid #e5e7eb;
+    background: #111;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: white;
+    font-family: 'Spartan', sans-serif;
     font-size: 14px;
     outline: none;
-    transition: border-color 0.3s ease;
+    border-radius: 0;
+    transition: all 0.3s ease;
+}
+
+.chatInput input::placeholder {
+    color: rgba(255, 255, 255, 0.3);
 }
 
 .chatInput input:focus {
-    border-color: rgb(5, 17, 112);
+    border-color: #C9A961;
+    background: #151515;
 }
 
+/* Clean Circle Send Button */
 #chatSendBtn {
     width: 45px;
     height: 45px;
-    border-radius: 50%;
-    background: rgb(5, 17, 112);
+    background: #C9A961;
     border: none;
-    color: white;
+    color: #000;
     font-size: 18px;
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
     transition: all 0.3s ease;
+    border-radius: 50%; /* Back to a clean circle */
 }
 
 #chatSendBtn:hover {
-    background: rgb(17, 21, 49);
+    background: #ffffff;
     transform: scale(1.05);
 }
 

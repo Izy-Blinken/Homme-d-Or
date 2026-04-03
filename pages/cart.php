@@ -1,15 +1,25 @@
 <?php
-session_start();
+// Safely start session
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 
-// Sample cart items (session-based, no database)
+// --- TEST MODE: FORCING A CART RESET ---
+// (Delete this 'unset' line later when you hook up your real add-to-cart buttons!)
+unset($_SESSION['cart']); 
+// ---------------------------------------
+
+// Expanded sample cart items (Now includes 'selected' => true)
 if (!isset($_SESSION['cart'])) {
     $_SESSION['cart'] = [
-        1 => ['name' => 'Product Name 1', 'price' => 3499, 'qty' => 1, 'img' => '../assets/images/products_images/nocturne.png', 'desc' => '50ml • variant ng perfume ex. cologne'],
-        2 => ['name' => 'Wally B.', 'price' => 2999, 'qty' => 2, 'img' => '../assets/images/products_images/customerPic.png', 'desc' => '30ml • AlbubNation']
+        1 => ['name' => 'Midnight Oud', 'price' => 3499, 'qty' => 1, 'img' => '../assets/images/products_images/nocturne.png', 'desc' => '50ml • Premium Collection', 'selected' => true],
+        2 => ['name' => 'Wally B.', 'price' => 2999, 'qty' => 2, 'img' => '../assets/images/products_images/customerPic.png', 'desc' => '30ml • AlbubNation', 'selected' => true],
+        3 => ['name' => 'Ocean Breeze', 'price' => 1850, 'qty' => 1, 'img' => '../assets/images/products_images/nocturne.png', 'desc' => '100ml • Summer Collection', 'selected' => true],
+        4 => ['name' => 'Vanilla Dreams', 'price' => 2100, 'qty' => 3, 'img' => '../assets/images/products_images/customerPic.png', 'desc' => '50ml • Signature Scent', 'selected' => true]
     ];
 }
 
-// Handle quantity changes
+// Handle form submissions (quantities, removing, and toggling checkboxes)
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $id = $_POST['product_id'];
 
@@ -25,6 +35,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         unset($_SESSION['cart'][$id]);
     }
 
+    // NEW: Handle Checkbox Toggle
+    if (isset($_POST['toggle_select'])) {
+        // Flip the boolean value (true becomes false, false becomes true)
+        $_SESSION['cart'][$id]['selected'] = !$_SESSION['cart'][$id]['selected'];
+    }
+
     header("Location: cart.php");
     exit;
 }
@@ -36,7 +52,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Cart</title>
+        <title>Cart | Homme d'Or</title>
         <link rel="stylesheet" href="../assets/icons/fontawesome/css/all.min.css">
         <link rel="stylesheet" href="../assets/css/style.css">
         <link rel="stylesheet" href="../assets/css/HeaderHeroFooterStyle.css">
@@ -48,8 +64,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <link rel="stylesheet" href="../assets/css/CartPageStyle.css">
         <link rel="stylesheet" href="../assets/css/RegLoginModalStyle.css">
         <link rel="stylesheet" href="../assets/css/ProfilePageStyle.css">
-        <link rel="stylesheet" href="../assets/css/ProductDetailsStyle.css">
-
     </head>
 
     <body>
@@ -68,12 +82,34 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <section class="cart-items">
                     <?php 
                     $subtotal = 0;
+                    $selectedCount = 0;
+                    
+                    if (empty($_SESSION['cart'])) {
+                        echo "<div class='empty-cart-msg'>Your cart is completely empty. Time to find a new signature scent!</div>";
+                    }
+
                     foreach($_SESSION['cart'] as $id => $item): 
                         $totalPrice = $item['price'] * $item['qty'];
-                        $subtotal += $totalPrice;
+                        
+                        // Only add to the total if the item is selected!
+                        if ($item['selected']) {
+                            $subtotal += $totalPrice;
+                            $selectedCount++;
+                        }
                     ?>
-                    <div class="cart-item">
-                        <img src="<?php echo $item['img']; ?>" alt="Perfume">
+                    
+                    <div class="cart-item" style="<?php echo !$item['selected'] ? 'opacity: 0.4; border-color: rgba(255,255,255,0.02); background: rgba(10,10,10,0.5);' : ''; ?>">
+                        
+                        <form method="POST" style="margin-right: 35px; margin-top: 5px;">
+                            <input type="hidden" name="product_id" value="<?php echo $id; ?>">
+                            <input type="hidden" name="toggle_select" value="1">
+                            <label class="custom-checkbox">
+                                <input type="checkbox" onChange="this.form.submit()" <?php echo $item['selected'] ? 'checked' : ''; ?>>
+                                <span class="checkmark"></span>
+                            </label>
+                        </form>
+
+                        <img src="<?php echo $item['img']; ?>" alt="Perfume" style="<?php echo !$item['selected'] ? 'filter: grayscale(100%);' : ''; ?>">
 
                         <div class="cart-info">
                             <h4><?php echo $item['name']; ?></h4>
@@ -104,18 +140,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <aside class="cart-summary">
                     <h3>Order Summary</h3>
                     <div class="summary-row">
-                        <span>Subtotal</span>
+                        <span>Subtotal (<?php echo $selectedCount; ?> items)</span>
                         <span>₱<?php echo number_format($subtotal, 2); ?></span>
                     </div>
                     <div class="summary-row">
                         <span>Shipping</span>
-                        <span>₱150.00</span>
+                        <span>₱<?php echo $selectedCount > 0 ? '150.00' : '0.00'; ?></span>
                     </div>
                     <div class="summary-row total">
                         <span>Total</span>
-                        <span>₱<?php echo number_format($subtotal + 150, 2); ?></span>
+                        <span>₱<?php echo $selectedCount > 0 ? number_format($subtotal + 150, 2) : '0.00'; ?></span>
                     </div>
-                    <a href="checkout.php" class="checkout-btn">Proceed to Checkout</a>
+                    
+                    <?php if ($selectedCount > 0): ?>
+                        <a href="checkout.php" class="checkout-btn">Proceed to Checkout</a>
+                    <?php else: ?>
+                        <a href="#" class="checkout-btn" style="opacity: 0.5; cursor: not-allowed; border-color: rgba(255,255,255,0.2); background: transparent; color: rgba(255,255,255,0.5);" onclick="return false;">Select Items to Checkout</a>
+                    <?php endif; ?>
                 </aside>
 
             </div>
@@ -123,6 +164,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </main>
 
         <?php include '../components/footer.php'; ?>
-
+        <script src="../assets/js/cart.js"></script>
     </body>
 </html>

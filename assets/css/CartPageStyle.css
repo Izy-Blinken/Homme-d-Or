@@ -1,67 +1,97 @@
+/* ==========================================================================
+   CART PAGE LUXURY LAYOUT & STYLING (BALANCED & SCALABLE)
+   ========================================================================== */
+
 /* MAIN BACKGROUND */
 .mainBG {
     position: relative;
     background-image: url('../images/brand_images/bg-image.jpg');
+    background-size: cover;
+    background-position: center;
     background-attachment: fixed;
     background-repeat: no-repeat;
     min-height: 100vh;
 }
 
-/* CART CONTAINER */
+/* CART CONTAINER - Perfectly balanced width */
 .cart-page {
     position: relative;
     z-index: 1;
     width: 100%;
-    max-width: 1200px;
+    max-width: 1250px; 
     margin: 0 auto;          
-    padding: 100px 40px 80px; 
+    padding: 130px 40px 80px; 
 }
 
-/* TITLE */
+/* HEADER ROW */
+.cart-header-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 30px;
+    border-bottom: 1px solid rgba(201, 169, 97, 0.3);
+    padding-bottom: 15px;
+}
+
 .cart-title {
-    font-size: 2.5rem;
-    margin-bottom: 40px;
-    color: #fff;
-    font-weight: 700;
-    letter-spacing: 1px;
+    font-size: 2.8rem; 
+    color: white;
+    font-weight: 300;
+    font-family: 'Spartan', sans-serif;
+    letter-spacing: 2px;
+    margin: 0;
 }
 
 /* GRID */
 .cart-wrapper {
     display: grid;
-    grid-template-columns: 2fr 1fr;
-    gap: 40px;
+    grid-template-columns: 1.8fr 1fr;
+    gap: 40px; 
+    align-items: start; /* Prevents the summary from stretching if there are many items */
 }
 
-/* CART ITEMS */
-
+/* --------------------------------------------------------------------------
+   CART ITEMS
+   -------------------------------------------------------------------------- */
 .cart-items {
     display: flex;
     flex-direction: column;
-    gap: 25px;
+    gap: 15px; /* Tighter gap so multiple items stack cleanly */
+}
+
+.empty-cart-msg {
+    color: rgba(255, 255, 255, 0.6);
+    font-family: 'Spartan', sans-serif;
+    font-size: 1.2rem;
+    text-align: center;
+    padding: 40px;
+    background: rgba(10, 10, 10, 0.6);
+    border: 1px solid rgba(201, 169, 97, 0.2);
 }
 
 .cart-item {
     display: flex;
     align-items: center;
-    border: 1px solid rgba(212,175,55,0.5);
-    background: rgba(0, 0, 0, 0.6);
+    background: linear-gradient(145deg, rgba(15, 15, 15, 0.85), rgba(5, 5, 5, 0.95));
+    border: 1px solid rgba(201, 169, 97, 0.2);
     backdrop-filter: blur(15px);
     -webkit-backdrop-filter: blur(15px);
-    padding: 25px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-    transition: 0.3s ease;
+    padding: 20px 25px; 
+    transition: all 0.3s ease;
 }
 
 .cart-item:hover {
-    transform: translateY(-4px);
+    transform: translateY(-2px);
+    border-color: rgba(201, 169, 97, 0.5);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.5);
 }
 
 .cart-item img {
-    width: 80px;
-    height: 80px;
+    width: 110px; 
+    height: 110px; 
     object-fit: cover;
-    border: 2px solid rgba(212,175,55,0.5);
+    border: 1px solid rgba(201, 169, 97, 0.3);
+    background: rgba(0,0,0,0.5);
 }
 
 /* INFO */
@@ -71,252 +101,271 @@
 }
 
 .cart-info h4 {
-    font-size: 1.1rem;
-    font-weight: 700;
+    font-size: 1.2rem; 
+    font-weight: 500;
     color: white;
-    margin-bottom: 6px;
+    margin: 0 0 6px 0;
+    font-family: 'Spartan', sans-serif;
+    letter-spacing: 1px;
 }
 
 .cart-info p {
-    font-size: 0.85rem;
-    color: whitesmoke;
-    margin-bottom: 15px;
+    font-size: 0.9rem; 
+    color: rgba(255, 255, 255, 0.5);
+    margin: 0 0 15px 0;
+    font-family: 'Spartan', sans-serif;
 }
 
-/* ACTIONS */
+.cart-price {
+    font-size: 1.2rem; 
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.9);
+    font-family: 'Spartan', sans-serif;
+    margin-left: 20px;
+    white-space: nowrap;
+}
+
+/* ACTIONS COLUMN */
 .cart-actions {
     display: flex;
     align-items: center;
     gap: 20px;
 }
 
+/* Quantity Adjuster */
 .qty-form {
     display: flex;
     align-items: center;
-    gap: 10px;
-    color: white;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 4px;
 }
 
 .qty-form button {
-    width: 30px;
-    height: 30px;
+    width: 32px;
+    height: 32px;
+    font-size: 1.1rem;
     border: none;
-    background: #0e101f;
-    color: white;
-    font-weight: bold;
+    background: transparent;
+    color: #C9A961;
     cursor: pointer;
     transition: 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .qty-form button:hover {
-    background: #C9A961;
+    color: white;
+    background: rgba(201, 169, 97, 0.2);
 }
 
 .qty-form span {
-    font-weight: 600;
+    font-weight: 500;
+    color: white;
+    width: 35px;
+    font-size: 1rem;
+    text-align: center;
+    font-family: 'Spartan', sans-serif;
 }
 
-/* REMOVE BUTTON */
+/* Remove Button */
 .remove-item {
-    background: #2A2D34;
-    border: 1px solid #c9a961;
-    color: #c9a961;
-    padding: 8px 14px;
+    background: transparent;
+    border: none;
+    color: rgba(255, 255, 255, 0.4);
     cursor: pointer;
     font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
     transition: 0.2s ease;
+    padding: 5px;
 }
 
 .remove-item:hover {
-    background: lightslategray;
-    color: black;
-    border: 1px solid black;
+    color: #e74c3c;
+    transform: scale(1.05);
 }
 
-/* PRICE */
-.cart-price {
-    font-size: 1.1rem;
-    font-weight: 700;
-    color: #c9a961;
-}
-
-/* SUMMARY */
-
+/* --------------------------------------------------------------------------
+   ORDER SUMMARY
+   -------------------------------------------------------------------------- */
 .cart-summary {
-    background: rgba(0, 0, 0, 0.6);
-    backdrop-filter: blur(15px);
-    -webkit-backdrop-filter: blur(15px);
-    padding: 30px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    background: rgba(10, 10, 10, 0.75);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    padding: 35px; 
     height: fit-content;
-    border: 1px solid rgba(212,175,55,0.5);
+    border: 1px solid rgba(201, 169, 97, 0.2);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+    position: sticky;
+    top: 130px;
 }
 
 .cart-summary h3 {
-    margin-bottom: 25px;
-    font-size: 1.3rem;
-    font-weight: 700;
+    margin: 0 0 25px 0;
+    font-size: 1.3rem; 
+    font-weight: 400;
     color: white;
+    font-family: 'Spartan', sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    padding-bottom: 15px;
 }
 
 .summary-row {
     display: flex;
-    color: whitesmoke;
+    color: rgba(255, 255, 255, 0.8);
     justify-content: space-between;
     margin-bottom: 15px;
-    font-size: 0.95rem;
+    font-size: 1rem; 
+    font-family: 'Spartan', sans-serif;
 }
 
 .summary-row.total {
-    font-weight: 700;
-    font-size: 1.2rem;
-    margin-top: 20px;
-    border-top: 1px solid #ddd;
-    padding-top: 15px;
+    font-weight: 600;
+    font-size: 1.4rem; 
+    margin-top: 30px;
+    border-top: 1px solid rgba(201, 169, 97, 0.3);
+    padding-top: 25px;
+    color: #C9A961;
 }
 
-/* CHECKOUT BUTTON */
 .checkout-btn {
     display: block;
+    width: 100%;
     margin-top: 30px;
     text-align: center;
-    padding: 15px;
-    background-color: #c9a961;
-    border: 1px solid black;
+    padding: 18px; 
+    background-color: #C9A961;
+    border: 1px solid #C9A961;
     color: black;
+    font-size: 1rem;
     font-weight: 700;
-    text-decoration: none;
-    transition: 0.3s ease;
+    font-family: 'Spartan', sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    cursor: pointer;
+    transition: all 0.3s ease;
 }
 
 .checkout-btn:hover {
-    background-color: rgb(3, 3, 84);
-    border: 1px solid #c9a961;
-    color: #c9a961;
-    transform: translateY(-3px);
+    background-color: transparent;
+    color: #C9A961;
+    transform: translateY(-2px);
 }
 
-/* Tablet */
-@media (max-width: 900px) {
+/* --------------------------------------------------------------------------
+   RESPONSIVE
+   -------------------------------------------------------------------------- */
+@media (max-width: 1024px) {
     .cart-wrapper {
         grid-template-columns: 1fr;
-        gap: 25px;
+        gap: 40px;
     }
+    .cart-summary {
+        position: static;
+    }
+}
 
+@media (max-width: 768px) {
+    .cart-page {
+        padding: 120px 20px 60px;
+    }
+    .cart-title {
+        font-size: 2.2rem;
+    }
     .cart-item {
         flex-direction: column;
         align-items: flex-start;
-        gap: 20px;
         padding: 20px;
     }
-
+    .cart-item img {
+        margin-left: 0;
+        margin-bottom: 15px;
+        width: 100%;
+        max-width: 200px;
+        height: auto;
+        aspect-ratio: 1/1;
+    }
+    .cart-info {
+        margin-left: 0;
+        width: 100%;
+    }
     .cart-price {
+        margin-left: 0;
+        margin-top: 20px;
         align-self: flex-end;
-        font-size: 1rem;
-    }
-
-    .cart-summary {
-        padding: 25px;
-    }
-
-    .cart-title {
-        font-size: 2rem;
-        margin-bottom: 25px;
     }
 }
 
-/* Mobile */
-@media (max-width: 600px) {
-    .cart-page {
-        padding: 80px 20px 60px;
-    }
 
-    .cart-item {
-        padding: 15px;
-        gap: 15px;
-    }
-
-    .cart-item img {
-        width: 60px;
-        height: 60px;
-    }
-
-    .cart-info h4 {
-        font-size: 1rem;
-    }
-
-    .cart-info p {
-        font-size: 0.8rem;
-        margin-bottom: 12px;
-    }
-
-    .qty-form button {
-        width: 28px;
-        height: 28px;
-    }
-
-    .cart-summary {
-        padding: 20px;
-    }
-
-    .cart-summary h3 {
-        font-size: 1.2rem;
-        margin-bottom: 20px;
-    }
-
-    .summary-row {
-        font-size: 0.9rem;
-    }
-
-    .checkout-btn {
-        padding: 12px;
-        font-size: 0.95rem;
-    }
+/* ==========================================================================
+   CUSTOM CHECKBOX STYLING (SPARTAN LUXURY THEME)
+   ========================================================================== */
+.custom-checkbox {
+    display: inline-block;
+    position: relative;
+    cursor: pointer;
+    font-size: 22px;
+    user-select: none;
+    width: 28px;  /* Sized perfectly to sit next to your 110px product images */
+    height: 28px;
+    margin-top: 5px; /* Aligns with the top of the product card */
 }
 
-/* Small Mobile */
-@media (max-width: 400px) {
-    .cart-page {
-        padding: 60px 15px 50px;
-    }
+/* Hide the browser's default ugly checkbox */
+.custom-checkbox input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+}
 
-    .cart-item {
-        padding: 12px;
-        gap: 12px;
-    }
+/* The custom box */
+.custom-checkbox .checkmark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 28px;
+    width: 28px;
+    background-color: rgba(10, 10, 10, 0.8); /* Matches your dark cart items */
+    border: 2px solid #C9A961; /* Your specific theme gold */
+    transition: all 0.3s ease;
+}
 
-    .cart-item img {
-        width: 50px;
-        height: 50px;
-    }
+/* Subtle glow when hovering */
+.custom-checkbox:hover input ~ .checkmark {
+    background-color: rgba(201, 169, 97, 0.15);
+    box-shadow: 0 0 10px rgba(201, 169, 97, 0.2);
+}
 
-    .cart-info h4 {
-        font-size: 0.95rem;
-    }
+/* Solid gold background when checked */
+.custom-checkbox input:checked ~ .checkmark {
+    background-color: #C9A961;
+}
 
-    .cart-info p {
-        font-size: 0.75rem;
-    }
+/* Create the checkmark indicator (hidden by default) */
+.custom-checkbox .checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+}
 
-    .qty-form button {
-        width: 24px;
-        height: 24px;
-    }
+/* Show the checkmark when checked */
+.custom-checkbox input:checked ~ .checkmark:after {
+    display: block;
+}
 
-    .cart-summary {
-        padding: 15px;
-    }
-
-    .cart-summary h3 {
-        font-size: 1.1rem;
-    }
-
-    .summary-row {
-        font-size: 0.85rem;
-    }
-
-    .checkout-btn {
-        padding: 10px;
-        font-size: 0.9rem;
-    }
+/* Style the checkmark (Black check on Gold Background) */
+.custom-checkbox .checkmark:after {
+    left: 9px;
+    top: 4px;
+    width: 6px;
+    height: 14px;
+    border: solid #0a0a0a; /* Stark black for high contrast */
+    border-width: 0 3px 3px 0;
+    transform: rotate(45deg);
 }

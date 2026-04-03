@@ -23,22 +23,7 @@
             <div class="checkoutWrapper">
                 <div class="checkoutHeader">
                     <h1>Checkout</h1>
-                    <div class="checkoutSteps">
-                        <div class="step active">
-                            <div class="stepNumber">1</div>
-                            <span>Information</span>
-                        </div>
-                        <div class="stepLine"></div>
-                        <div class="step">
-                            <div class="stepNumber">2</div>
-                            <span>Payment</span>
-                        </div>
-                        <div class="stepLine"></div>
-                        <div class="step">
-                            <div class="stepNumber">3</div>
-                            <span>Confirmation</span>
-                        </div>
-                    </div>
+                
                 </div>
 
                 <div id="checkoutContainer">
@@ -50,7 +35,7 @@
                             <h2>Billing Information</h2>
                         </div>
                         
-                        <form id="checkoutForm">
+                        <form id="checkoutForm" action="orderConfirmation.php" method="POST">
                             <div class="formSection">
                                 <h3>Contact Details</h3>
                                 
@@ -100,11 +85,11 @@
                                     
                                     <div class="formGroup">
                                         <label for="country">Country <span class="required">*</span></label>
-                                        <select>
-                                            <option>Select Country</option>
-                                            <option>Philippines</option>
-                                            <option>Japan</option>
-                                            <option>Switzerland</option>
+                                        <select name="country" required>
+                                            <option value="" disabled selected>Select Country</option>
+                                            <option value="Philippines">Philippines</option>
+                                            <option value="Japan">Japan</option>
+                                            <option value="Switzerland">Switzerland</option>
                                         </select>
                                     </div>
                                 </div>
@@ -114,35 +99,65 @@
                                 <h3>Payment Method</h3>
                                 
                                 <div class="paymentOptions">
-                                    <label class="paymentOption">
-                                        <input type="radio" name="paymentMethod" value="cod" required>
-                                        <div class="paymentCard">
+                                    
+                                    <div class="paymentOption">
+                                        <input type="radio" name="paymentMethod" id="pay-cod" value="cod" required checked>
+                                        <label for="pay-cod" class="paymentCard">
                                             <div class="paymentInfo">
                                                 <span class="paymentName">Cash on Delivery</span>
                                                 <span class="paymentDesc">Pay when you receive</span>
                                             </div>
-                                        </div>
-                                    </label>
+                                        </label>
+                                    </div>
 
-                                    <label class="paymentOption">
-                                        <input type="radio" name="paymentMethod" value="gcash">
-                                        <div class="paymentCard">
+                                    <div class="paymentOption">
+                                        <input type="radio" name="paymentMethod" id="pay-gcash" value="gcash">
+                                        <label for="pay-gcash" class="paymentCard">
                                             <div class="paymentInfo">
                                                 <span class="paymentName">GCash</span>
                                                 <span class="paymentDesc">Digital wallet payment</span>
                                             </div>
+                                        </label>
+                                        
+                                        <div class="paymentDetails">
+                                            <div class="formGroup" style="margin-bottom: 0;">
+                                                <label>GCash Mobile Number <span class="required">*</span></label>
+                                                <input type="tel" name="gcashNumber" placeholder="ex. 0912 345 6789">
+                                            </div>
                                         </div>
-                                    </label>
+                                    </div>
 
-                                    <label class="paymentOption">
-                                        <input type="radio" name="paymentMethod" value="card">
-                                        <div class="paymentCard">
+                                    <div class="paymentOption">
+                                        <input type="radio" name="paymentMethod" id="pay-card" value="card">
+                                        <label for="pay-card" class="paymentCard">
                                             <div class="paymentInfo">
                                                 <span class="paymentName">Credit/Debit Card</span>
                                                 <span class="paymentDesc">Visa, Mastercard, etc.</span>
                                             </div>
+                                        </label>
+                                        
+                                        <div class="paymentDetails">
+                                            <div class="formGroup">
+                                                <label>Cardholder Name <span class="required">*</span></label>
+                                                <input type="text" name="cardName" placeholder="Name on card">
+                                            </div>
+                                            <div class="formGroup">
+                                                <label>Card Number <span class="required">*</span></label>
+                                                <input type="text" name="cardNumber" placeholder="0000 0000 0000 0000">
+                                            </div>
+                                            <div class="formRow">
+                                                <div class="formGroup" style="margin-bottom: 0;">
+                                                    <label>Expiry Date <span class="required">*</span></label>
+                                                    <input type="text" name="cardExpiry" placeholder="MM/YY">
+                                                </div>
+                                                <div class="formGroup" style="margin-bottom: 0;">
+                                                    <label>CVV <span class="required">*</span></label>
+                                                    <input type="password" name="cardCvv" placeholder="123" maxlength="4">
+                                                </div>
+                                            </div>
                                         </div>
-                                    </label>
+                                    </div>
+                                    
                                 </div>
                             </div>
 
@@ -150,7 +165,7 @@
                                 <button type="button" class="backToCartBtn" onclick="window.location.href='cart.php'">
                                     <i class="fas fa-arrow-left"></i> Back to Cart
                                 </button>
-                                <button type="submit" onclick="showOrderSuccessModal('ORD' + Date.now())" class="placeOrderBtn">
+                                <button type="submit" class="placeOrderBtn">
                                     Place Order
                                 </button>
                             </div>

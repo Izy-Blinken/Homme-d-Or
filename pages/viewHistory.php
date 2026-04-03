@@ -37,7 +37,9 @@
                     <div class="filter-menu">
                         <button class="filter-option">Purchase Date</button>
                         <button class="filter-option">Alphabetical</button>
+                        <button class="filter-option">By Price</button>
                     </div>
+                    
                 </div>
             </div>
 

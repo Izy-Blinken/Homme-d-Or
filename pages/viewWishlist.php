@@ -41,9 +41,17 @@
             </div>
 
             <div class="tab-content active">
+                
+                <div class="empty-wishlist-state">
+                    <i class="fa-regular fa-heart"></i>
+                    <h2>Your wishlist is empty</h2>
+                    <p>Save items you love here to buy them later.</p>
+                    <a href="shop.php" class="continue-shopping-btn">Continue Shopping</a>
+                </div>
+
                 <div class="v-orders">
                     <div class="v-left">
-                        <img src="../assets/images/products_images/nocturne.png" alt="">
+                        <img src="../assets/images/products_images/nocturne.png" alt="Nocturne Perfume">
                         <div class="v-ordersinfo">
                             <p class="v-name">Product Name</p>
                             <small class="v-desc">250ml • Variant ng perfume</small>
@@ -62,7 +70,7 @@
 
                 <div class="v-orders">
                     <div class="v-left">
-                        <img src="../assets/images/products_images/nocturne.png" alt="">
+                        <img src="../assets/images/products_images/nocturne.png" alt="Nocturne Perfume">
                         <div class="v-ordersinfo">
                             <p class="v-name">Product Name</p>
                             <small class="v-desc">50ml • Variant ng perfume</small>
@@ -81,7 +89,7 @@
 
                 <div class="v-orders">
                     <div class="v-left">
-                        <img src="../assets/images/products_images/nocturne.png" alt="">
+                        <img src="../assets/images/products_images/nocturne.png" alt="Nocturne Perfume">
                         <div class="v-ordersinfo">
                             <p class="v-name">Product Name</p>
                             <small class="v-desc">500ml • Variant ng perfume</small>
@@ -98,10 +106,9 @@
                     </div>
                 </div>
 
-                <!-- Add more items for testing scroll -->
                 <div class="v-orders">
                     <div class="v-left">
-                        <img src="../assets/images/products_images/nocturne.png" alt="">
+                        <img src="../assets/images/products_images/nocturne.png" alt="Another Product">
                         <div class="v-ordersinfo">
                             <p class="v-name">Another Product</p>
                             <small class="v-desc">100ml • Limited Edition</small>
@@ -120,7 +127,7 @@
 
                 <div class="v-orders">
                     <div class="v-left">
-                        <img src="../assets/images/products_images/nocturne.png" alt="">
+                        <img src="../assets/images/products_images/nocturne.png" alt="Premium Scent">
                         <div class="v-ordersinfo">
                             <p class="v-name">Premium Scent</p>
                             <small class="v-desc">150ml • Exclusive</small>

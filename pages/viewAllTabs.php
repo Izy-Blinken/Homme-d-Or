@@ -32,7 +32,7 @@
             <div class="order-tabs">
                 <button class="tab-btn active" data-tab="processing">Processing</button>
                 <button class="tab-btn" data-tab="review">To Review</button>
-                <button class="tab-btn" data-tab="completed">Completed</button>
+                <button class="tab-btn" data-tab="completed">Completed</button> 
                 <button class="tab-btn" data-tab="cancelled">Cancelled</button>
             </div>
 

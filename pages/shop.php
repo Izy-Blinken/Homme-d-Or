@@ -44,6 +44,7 @@
                 <button class="shop-discover-btn" onclick="window.location.href='newArrival.php'">DISCOVER</button>
             </div>
         </div>
+    
 
         <div class="shop-products-grid">
             <!-- Product Card 1 -->
@@ -236,7 +237,7 @@
         <div class="shop-section-right">
             <div class="shop-section-image">
                 <h2>Top Picks</h2>
-                <button class="shop-discover-btn">DISCOVER</button>
+                <button class="shop-discover-btn" onclick="window.location.href='newArrival.php?tab=page2'">DISCOVER</button>
             </div>
         </div>
     </section>
@@ -246,7 +247,7 @@
         <div class="shop-section-left">
             <div class="shop-section-image">
                 <h2>Sale</h2>
-                <button class="shop-discover-btn" onclick="window.location.href='Sale.php'">DISCOVER</button>
+                <button class="shop-discover-btn" onclick="window.location.href='newArrival.php?tab=page3'">DISCOVER</button>
             </div>
         </div>
 
@@ -430,7 +431,7 @@
         <div class="shop-section-right">
             <div class="shop-section-image">
                 <h2>Daily Wear</h2>
-                <button class="shop-discover-btn">DISCOVER</button>
+                <button class="shop-discover-btn" onclick="window.location.href='newArrival.php?tab=page4'">DISCOVER</button>
             </div>
         </div>
     </section>
@@ -440,7 +441,7 @@
         <div class="shop-section-left">
             <div class="shop-section-image">
                 <h2>Premium</h2>
-                <button class="shop-discover-btn" onclick="window.location.href='Discover.php'">DISCOVER</button>
+                <button class="shop-discover-btn" onclick="window.location.href='newArrival.php?tab=page5'">DISCOVER</button>
             </div>
         </div>
 

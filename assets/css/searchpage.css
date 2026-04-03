@@ -1,0 +1,20 @@
+.search-main { padding: 60px 10%; min-height: 60vh; background-color: #fafafa; font-family: inherit; }
+            .search-header-container { display: flex; justify-content: space-between; align-items: center; margin-bottom: 40px; border-bottom: 2px solid #eee; padding-bottom: 20px; }
+            .search-title { font-weight: 600; color: #0e101f; margin: 0; font-size: 28px; }
+            .search-title span { color: #c9a961; }
+            .search-count { color: #666; font-size: 16px; }
+            .empty-state { text-align: center; padding: 80px 20px; background: white; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.03); }
+            .btn-back { display: inline-block; padding: 12px 30px; background-color: #c9a961; color: #0e101f; text-decoration: none; font-weight: 600; border-radius: 4px; transition: all 0.3s ease; margin-top: 25px; }
+            .btn-back:hover { background-color: #d2b231; transform: scale(1.05); }
+            .product-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 30px; }
+            .product-card { background: white; border-radius: 10px; padding: 20px; text-align: center; box-shadow: 0 5px 15px rgba(0,0,0,0.05); transition: transform 0.3s ease; position: relative; }
+            .product-card:hover { transform: translateY(-5px); }
+            .product-tag { position: absolute; top: 15px; left: 15px; background: #c9a961; color: #0e101f; font-size: 11px; font-weight: bold; padding: 4px 10px; border-radius: 20px; text-transform: uppercase; }
+            .product-image-placeholder { height: 220px; background-color: #f8f9fa; border-radius: 6px; margin-bottom: 20px; display: flex; align-items: center; justify-content: center; }
+            .product-title { font-size: 18px; color: #0e101f; margin-bottom: 8px; font-weight: 600; }
+            .product-price { color: #c9a961; font-weight: 700; font-size: 18px; margin-bottom: 20px; }
+            .action-buttons { display: flex; gap: 10px; }
+            .btn-wishlist { flex: 1; padding: 12px; background-color: transparent; color: #0e101f; border: 1px solid #0e101f; border-radius: 4px; cursor: pointer; transition: all 0.3s ease; }
+            .btn-wishlist:hover { background-color: #f5f5f5; }
+            .btn-cart { flex: 4; padding: 12px; background-color: #0e101f; color: whitesmoke; border: 1px solid #0e101f; border-radius: 4px; cursor: pointer; font-weight: 600; transition: all 0.3s ease; }
+            .btn-cart:hover { background-color: #c9a961; border-color: #c9a961; color: #0e101f; }

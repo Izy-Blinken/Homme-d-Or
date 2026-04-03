@@ -34,7 +34,10 @@
     transition: all 0.5s ease;
 }
 
-.logo-wrapper:hover .logo-slide-menu {
+/* Keep the entire slide menu open on hover, focus, or if search has text */
+.logo-wrapper:hover .logo-slide-menu,
+.logo-wrapper:focus-within .logo-slide-menu,
+.logo-wrapper:has(input:not(:placeholder-shown)) .logo-slide-menu {
     opacity: 1;
     visibility: visible;
     transform: translateX(0);
@@ -181,6 +184,19 @@
     left: 0;
 }
 
+/*--- Fix for Search Button Colors ---*/
+.logo-slide-menu .search-link,
+.mobile-menu button[type="submit"] {
+    color: whitesmoke;
+    transition: all 0.3s ease;
+}
+
+.logo-slide-menu .search-link:hover,
+.mobile-menu button[type="submit"]:hover {
+    color: #f8e189;
+    transform: scale(1.1);
+}
+
 /*--- Navbar Right ---*/
 .nav-wrapper {
     display: flex;
@@ -304,7 +320,10 @@
     transition: all 0.4s ease;
 }
 
+/* Expanding Search - Stays open on hover, focus, AND when it contains text */
 .logo-slide-menu .search-container:hover .search-input-wrapper,
+.logo-slide-menu .search-container:focus-within .search-input-wrapper,
+.logo-slide-menu .search-container:has(input:not(:placeholder-shown)) .search-input-wrapper,
 .logo-slide-menu .search-container.search-active .search-input-wrapper {
     width: 300px;
     opacity: 1;
@@ -1334,46 +1353,191 @@
     pointer-events: none;
 }
 
-/* Notification Panel */
+/*=========================================*/
+/* PREMIUM NOTIFICATION PANEL              */
+/*=========================================*/
+
 .notif-panel {
     position: absolute;
     top: calc(100% + 16px);
-    right: -60px;
-    width: 300px;
-    background: white;
-    box-shadow: 0 8px 24px rgba(0,0,0,0.18);
+    right: -10px;
+    width: 360px; /* Made slightly wider for better text wrapping */
+    max-width: 90vw;
+    background: #ffffff;
+    box-shadow: 0 12px 35px rgba(14, 16, 31, 0.15); /* Softer, deeper shadow */
+    border-radius: 10px;
+    border: 1px solid rgba(0,0,0,0.05);
     z-index: 2000;
     display: none;
     flex-direction: column;
-    max-height: 400px;
+    max-height: 450px;
+    overflow: hidden; /* Keeps the rounded corners clean */
+}
+
+/*--- Force the badge to anchor directly to the bell icon ---*/
+#notif-bell {
+    position: relative !important;
+    display: inline-flex !important;
+    align-items: center;
+}
+
+/*--- Fine-tune the badge position ---*/
+.notif-count {
+    position: absolute !important;
+    top: -6px !important;
+    right: -12px !important; /* Pushes it just outside the top-right corner of the bell */
+    z-index: 10;
 }
 
 .notif-panel.open {
     display: flex;
+    animation: slideDownFade 0.3s ease forwards;
 }
 
+@keyframes slideDownFade {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Header */
 .notif-panel-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 0.85rem 1rem;
-    border-bottom: 1px solid #eee;
-    font-weight: 700;
-    font-size: 0.9rem;
-    color: #0e101f;
-    flex-shrink: 0;
+    padding: 18px 20px;
+    border-bottom: 1px solid #f0f0f0;
+    background-color: #fafafa;
 }
 
+.notif-panel-header span {
+    font-weight: 700;
+    font-size: 1rem;
+    color: #0e101f;
+    letter-spacing: 0.5px;
+}
+
+.notif-panel-header button {
+    background: none;
+    border: none;
+    color: #c9a961;
+    font-size: 0.85rem;
+    cursor: pointer;
+    font-weight: 600;
+    transition: color 0.3s ease;
+}
+
+.notif-panel-header button:hover {
+    color: #0e101f;
+}
+
+/* Scrollable List */
 .notif-list {
     overflow-y: auto;
     flex: 1;
+    background: #ffffff;
+}
+
+/* Custom Scrollbar for Luxury Feel */
+.notif-list::-webkit-scrollbar {
+    width: 6px;
+}
+.notif-list::-webkit-scrollbar-track {
+    background: #f8f9fa; 
+}
+.notif-list::-webkit-scrollbar-thumb {
+    background: #e0e0e0; 
+    border-radius: 10px;
+}
+.notif-list::-webkit-scrollbar-thumb:hover {
+    background: #c9a961; 
+}
+
+/* Individual Item Layout */
+.notif-item {
+    padding: 16px 20px;
+    border-bottom: 1px solid #f5f5f5;
+    cursor: pointer;
+    transition: background 0.2s ease;
+}
+
+.notif-item:last-child {
+    border-bottom: none;
+}
+
+.notif-item:hover {
+    background: #fafafa;
+}
+
+.notif-item.unread {
+    background: #fffdf5; /* Very subtle gold tint */
+}
+
+.notif-item.unread:hover {
+    background: #fffbf0;
+}
+
+/* Internal Layout Flexbox */
+.notif-item-layout {
+    display: flex;
+    gap: 15px;
+    align-items: flex-start;
+}
+
+/* The New Icon Wrapper (Circle Background) */
+.notif-icon-bg {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    background-color: #f8f9fa;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    font-size: 1.1rem;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.02);
+}
+
+/* Text Formatting */
+.notif-content-wrapper {
+    flex: 1;
+}
+
+.notif-title {
+    font-weight: 700;
+    color: #0e101f;
+    font-size: 0.95rem;
+    margin-bottom: 4px;
+}
+
+.notif-msg {
+    color: #666;
+    font-size: 0.85rem;
+    line-height: 1.5;
+}
+
+.notif-time {
+    font-size: 0.75rem;
+    color: #a0a0a0;
+    margin-top: 8px;
+    font-weight: 500;
+}
+
+/* Unread Dot Indicator */
+.notif-unread-dot {
+    width: 10px;
+    height: 10px;
+    background-color: #c9a961;
+    border-radius: 50%;
+    flex-shrink: 0;
+    margin-top: 15px; /* Aligns it nicely with the title */
+    box-shadow: 0 0 8px rgba(201, 169, 97, 0.4); /* Gives the dot a soft glow */
 }
 
 .notif-empty {
-    padding: 1.5rem 1rem;
+    padding: 40px 20px;
     text-align: center;
     color: #aaa;
-    font-size: 0.85rem;
+    font-size: 0.9rem;
 }
 
 .notif-item {
@@ -1463,4 +1627,34 @@
     letter-spacing: 2px;
     text-align: center;
     margin: 0.75rem 0;
+}
+
+/*--- Header Language Toggle ---*/
+.header-lang-toggle {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 0 15px !important;
+}
+
+.header-lang-toggle .lang-btn {
+    color: whitesmoke !important;
+    font-size: 16px !important;
+    font-weight: 600 !important;
+    padding: 0 !important;
+    transition: color 0.3s ease;
+}
+
+/* Add the gold color on hover AND when the language is currently active */
+.header-lang-toggle .lang-btn:hover,
+.header-lang-toggle .lang-btn.active {
+    color: #f8e189 !important;
+    transform: none !important; /* Prevents the text from growing and shifting the layout */
+}
+
+/* The slash between EN and FIL */
+.header-lang-toggle .lang-divider {
+    color: rgba(255, 255, 255, 0.4);
+    font-size: 15px;
+    user-select: none; /* Prevents the user from accidentally highlighting the slash */
 }

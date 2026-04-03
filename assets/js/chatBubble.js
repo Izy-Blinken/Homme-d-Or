@@ -58,28 +58,35 @@ function appendOptions() {
     bubble.className = 'chatMessageBubble';
     bubble.style.maxWidth = '90%';
 
-    bubble.innerHTML = `<p style="margin-bottom:0.5rem; font-weight:600;">You may want to ask:</p>`;
+    bubble.innerHTML = `<p style="margin-bottom:0.5rem; font-weight:600; color: #C9A961;">You may want to ask:</p>`;
 
     faqs.forEach((faq, i) => {
-
         const btn = document.createElement('button');
-
         btn.textContent = faq.question;
         btn.className = 'chat-option-btn';
-        btn.style.cssText = 'display:block; width:100%; text-align:left; background:#e0e7ff; border:none; padding:8px 12px; margin-bottom:6px; cursor:pointer; font-size:13px; color:rgb(5,17,112); transition:background 0.2s;';
-        btn.addEventListener('mouseenter', () => btn.style.background = '#c7d2fe');
-        btn.addEventListener('mouseleave', () => btn.style.background = '#e0e7ff');
+        // Updated styling to match dark/gold theme with geometric cuts
+        btn.style.cssText = 'display:block; width:100%; text-align:left; background:#111; border:1px solid rgba(201, 169, 97, 0.3); padding:10px 12px; margin-bottom:8px; cursor:pointer; font-size:13px; font-family:"Spartan", sans-serif; color:white; transition:all 0.2s; border-radius: 4px;';
+        
+        btn.addEventListener('mouseenter', () => {
+            btn.style.background = '#C9A961';
+            btn.style.color = '#000';
+        });
+        btn.addEventListener('mouseleave', () => {
+            btn.style.background = '#111';
+            btn.style.color = 'white';
+        });
         btn.addEventListener('click', () => handleFaqClick(i));
         bubble.appendChild(btn);
     });
 
     const talkBtn = document.createElement('button');
-
     talkBtn.textContent = 'Talk to customer service.';
     talkBtn.className = 'chat-option-btn';
-    talkBtn.style.cssText = 'display:block; width:100%; text-align:left; background:rgb(5,17,112); border:none; padding:8px 12px; cursor:pointer; font-size:13px; color:white; transition:background 0.2s;';
-    talkBtn.addEventListener('mouseenter', () => talkBtn.style.background = 'rgb(17,21,49)');
-    talkBtn.addEventListener('mouseleave', () => talkBtn.style.background = 'rgb(5,17,112)');
+    // Solid gold for the primary action button
+    talkBtn.style.cssText = 'display:block; width:100%; text-align:left; background:#C9A961; border:none; padding:10px 12px; cursor:pointer; font-size:13px; font-family:"Spartan", sans-serif; font-weight: 700; color:#000; transition:all 0.2s; margin-top:12px; border-radius: 4px;';
+    
+    talkBtn.addEventListener('mouseenter', () => talkBtn.style.background = '#ffffff');
+    talkBtn.addEventListener('mouseleave', () => talkBtn.style.background = '#C9A961');
     talkBtn.addEventListener('click', handleEscalate);
     bubble.appendChild(talkBtn);
 
