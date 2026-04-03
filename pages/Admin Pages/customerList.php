@@ -3,15 +3,41 @@ session_start();
 include '../../backend/db_connect.php';
 include '../../backend/customers/customer_data.php';
 
+include '../../backend/auth/auth_check.php';
+checkAnyPermission($conn, ['can_block_customers', 'can_assign_admins', 'can_message_customers']);
+
 $success = $_SESSION['success'] ?? null;
 $error = $_SESSION['error'] ?? null;
 unset($_SESSION['success'], $_SESSION['error']);
 
 $can_block = hasPermission($conn, 'can_block_customers');
 $can_assign = hasPermission($conn, 'can_assign_admins');
+$isSuperadmin = !empty($_SESSION['superadmin_id']);
 
-// to get the current admin's permission. Kung ano lng meron sya, yun lang pede niya igrant sa iba.
+// kung ano lang perms ng current admin, yun lang pwede niyang i-grant sa iba
 $my_perms = getAdminPermissions($conn);
+
+// view toggle: customers or admins
+$view = $_GET['view'] ?? 'customers';
+
+// admin list query
+$all_perms_list = [
+    'can_update_orders' => 'Update Orders',
+    'can_add_product' => 'Add Product',
+    'can_edit_product' => 'Edit Product',
+    'can_delete_product' => 'Delete Product',
+    'can_block_customers' => 'Block Customers',
+    'can_assign_admins' => 'Assign Admins',
+    'can_export_report' => 'Export Report',
+    'can_message_customers' => 'Message Customers',
+];
+
+$admins = mysqli_query($conn,
+    "SELECT u.user_id, u.fname, u.lname, u.email, a.admin_id, ap.*
+     FROM admins a
+     JOIN users u ON a.user_id = u.user_id
+     LEFT JOIN admin_permissions ap ON a.admin_id = ap.admin_id
+     ORDER BY u.fname ASC");
 
 ?>
 
@@ -52,16 +78,20 @@ $my_perms = getAdminPermissions($conn);
 
             <main class="container">
 
-                <h2 class="page-title">Customer List</h2>
+                <h2 class="page-title"><?= $view === 'admins' ? 'Admin List' : 'Customer List' ?></h2>
+
+                <?php if ($view === 'customers'): ?>
 
                 <!-- Filter -->
                 <form method="GET" action="">
 
                     <div class="filter-bar">
+
                         <div class="filter-group">
 
                             <label>STATUS:</label>
                             <select name="status" id="status-filter">
+                                <option value="all" <?= $filter_status === 'all' ? 'selected' : '' ?>>All</option>
                                 <option value="active" <?= $filter_status === 'active' ? 'selected' : '' ?>>Active</option>
                                 <option value="inactive" <?= $filter_status === 'inactive' ? 'selected' : '' ?>>Inactive</option>
                                 <option value="blocked" <?= $filter_status === 'blocked' ? 'selected' : '' ?>>Blocked</option>
@@ -90,7 +120,12 @@ $my_perms = getAdminPermissions($conn);
                         </div>
 
                         <button type="submit" class="reset-btn">Apply</button>
-                        <a href="customerList.php" class="reset-btn" style="text-decoration:none; color:black;">Reset</a>
+                        <a href="customerList.php" id="reset-link" class="reset-btn" style="text-decoration:none; color:black;">Reset</a>
+
+                        <?php if ($can_assign || $isSuperadmin): ?>
+                        <a href="customerList.php?view=admins" class="btn-edit" style="text-decoration:none; margin-left:auto;">View Admins</a>
+                        <?php endif; ?>
+
                     </div>
 
                 </form>
@@ -114,13 +149,12 @@ $my_perms = getAdminPermissions($conn);
                                     <th>ACTIONS</th>
                                 </tr>
                             </thead>
-                            
+
                             <tbody>
                                 <?php if (mysqli_num_rows($customers) > 0): ?>
 
                                     <?php while ($c = mysqli_fetch_assoc($customers)): ?>
                                     <?php
-                                        // determine kung active basedsa last order
                                         $is_active = $c['last_order'] && strtotime($c['last_order']) >= strtotime('-3 months');
                                         $status_label = $c['is_blocked'] ? 'Blocked' : ($is_active ? 'Active' : 'Inactive');
                                         $status_class = $c['is_blocked'] ? 'blocked' : ($is_active ? 'active' : 'inactive');
@@ -134,7 +168,10 @@ $my_perms = getAdminPermissions($conn);
                                         <td>₱<?= number_format($c['total_spent'], 2) ?></td>
                                         <td><?= date('M d, Y', strtotime($c['created_at'])) ?></td>
                                         <td><span class="badge badge-<?= $status_class ?>"><?= $status_label ?></span></td>
+                                        
                                         <td style="display:flex; gap:0.4rem; flex-wrap:wrap;">
+
+                                            <?php if (!$c['is_blocked']): ?>
 
                                             <!-- View Details -->
                                             <button class="btn-view-details view-customer-btn"
@@ -160,32 +197,58 @@ $my_perms = getAdminPermissions($conn);
                                                 Reviews
                                             </button>
 
-                                            <!-- msg redirection -->
+                                            <!-- Message -->
+                                            <?php if ((hasPermission($conn, 'can_message_customers') || $isSuperadmin) && $c['user_id'] !== ($_SESSION['user_id'] ?? null)): ?>
                                             <a href="messages.php?user_id=<?= $c['user_id'] ?>" class="btn-edit">Message</a>
+                                            <?php endif; ?>
+
+                                            <!-- Send Voucher -->
+                                            <?php if ($isSuperadmin): ?>
+                                            <button class="btn-edit send-voucher-btn"
+                                                data-id="<?= $c['user_id'] ?>"
+                                                data-name="<?= htmlspecialchars($c['fname'] . ' ' . $c['lname']) ?>">
+                                                Send Voucher
+                                            </button>
+                                            <?php endif; ?>
+
+                                            <!-- Make/Remove Admin -->
+                                            <?php if ($can_assign): ?>
+
+                                                <?php if (!$c['is_admin']): ?>
+
+                                                <button class="btn-edit assign-admin-btn"
+                                                    data-id="<?= $c['user_id'] ?>"
+                                                    data-name="<?= htmlspecialchars($c['fname'] . ' ' . $c['lname']) ?>">
+                                                    Make Admin
+                                                </button>
+
+                                                <?php else: ?>
+
+                                                <form method="POST" action="../../backend/customers/assign_admin.php" style="display:inline;"
+                                                    onsubmit="return confirm('Remove admin access from <?= htmlspecialchars($c['fname']) ?>?')">
+                                                    <input type="hidden" name="user_id" value="<?= $c['user_id'] ?>">
+                                                    <input type="hidden" name="action" value="remove">
+                                                    <button type="submit" class="btn-delete">Remove Admin</button>
+                                                </form>
+
+                                                <?php endif; ?>
+
+                                            <?php endif; ?>
+
+                                            <?php endif; ?>
 
                                             <!-- Block/Unblock -->
                                             <?php if ($can_block): ?>
-                                                
-                                            <form method="POST" action="../../backend/customers/block_customer.php" style="display:inline;">
+
+                                            <form method="POST" action="../../backend/customers/block_customer.php" style="display:inline;"
+                                                onsubmit="return confirm('<?= $c['is_blocked'] ? 'Unblock this customer?' : 'Block this customer?' ?>')">
                                                 <input type="hidden" name="user_id" value="<?= $c['user_id'] ?>">
                                                 <input type="hidden" name="action" value="<?= $c['is_blocked'] ? 'unblock' : 'block' ?>">
                                                 <input type="hidden" name="status" value="<?= $filter_status ?>">
-                                                
                                                 <button type="submit" class="<?= $c['is_blocked'] ? 'btn-edit' : 'btn-delete' ?>">
                                                     <?= $c['is_blocked'] ? 'Unblock' : 'Block' ?>
                                                 </button>
                                             </form>
-
-                                            <?php endif; ?>
-
-                                            <!-- Assign as Admin -->
-                                            <?php if ($can_assign && !$c['is_admin']): ?>
-
-                                            <button class="btn-edit assign-admin-btn"
-                                                data-id="<?= $c['user_id'] ?>"
-                                                data-name="<?= htmlspecialchars($c['fname'] . ' ' . $c['lname']) ?>">
-                                                Make Admin
-                                            </button>
 
                                             <?php endif; ?>
 
@@ -205,6 +268,90 @@ $my_perms = getAdminPermissions($conn);
 
                 </section>
 
+                <?php else: ?>
+
+                <!-- Admin List View -->
+                <div class="filter-bar" style="margin-bottom:1.5rem;">
+                    <a href="customerList.php" class="btn-edit" style="text-decoration:none; margin-left:auto;">← Back to Customers</a>
+                </div>
+
+                <section class="table-container">
+
+                    <div class="responsive-table">
+
+                        <table style="width:100%; border-collapse:collapse;">
+
+                            <thead>
+                                <tr>
+                                    <th>NAME</th>
+                                    <th>EMAIL</th>
+                                    <th>PERMISSIONS</th>
+                                    <th>ACTIONS</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                <?php if (mysqli_num_rows($admins) > 0): ?>
+
+                                    <?php while ($a = mysqli_fetch_assoc($admins)): ?>
+                                    <?php
+                                        $granted = [];
+                                        foreach ($all_perms_list as $key => $label) {
+                                            if (!empty($a[$key])) $granted[] = $label;
+                                        }
+                                    ?>
+
+                                    <tr>
+                                        <td><?= htmlspecialchars($a['fname'] . ' ' . $a['lname']) ?></td>
+                                        <td><?= htmlspecialchars($a['email']) ?></td>
+                                        <td style="font-size:0.82rem; color:#555;">
+                                            <?= $granted ? implode(', ', $granted) : '—' ?>
+                                        </td>
+                                        <td style="display:flex; gap:0.4rem; flex-wrap:wrap;">
+
+                                            <!-- Message -->
+                                            <?php if ($isSuperadmin): ?>
+                                            <a href="messages.php?admin_id=<?= $a['admin_id'] ?>" class="btn-edit">Message</a>
+                                            <?php endif; ?>
+
+                                            <!-- View/Edit Permissions -->
+                                            <?php if ($can_assign || $isSuperadmin): ?>
+                                            <button class="btn-view-details view-permissions-btn"
+                                                data-admin-id="<?= $a['admin_id'] ?>"
+                                                data-name="<?= htmlspecialchars($a['fname'] . ' ' . $a['lname']) ?>"
+                                                data-perms="<?= htmlspecialchars(json_encode($a)) ?>">
+                                                View Permissions
+                                            </button>
+                                            <?php endif; ?>
+
+                                            <!-- Remove Admin -->
+                                            <?php if ($can_assign || $isSuperadmin): ?>
+                                            <form method="POST" action="../../backend/customers/assign_admin.php" style="display:inline;"
+                                                onsubmit="return confirm('Remove admin access from <?= htmlspecialchars($a['fname']) ?>?')">
+                                                <input type="hidden" name="user_id" value="<?= $a['user_id'] ?>">
+                                                <input type="hidden" name="action" value="remove">
+                                                <button type="submit" class="btn-delete">Remove Admin</button>
+                                            </form>
+                                            <?php endif; ?>
+
+                                        </td>
+                                    </tr>
+
+                                    <?php endwhile; ?>
+
+                                <?php else: ?>
+                                    <tr><td colspan="4" style="text-align:center;">No admins assigned yet.</td></tr>
+                                <?php endif; ?>
+
+                            </tbody>
+                        </table>
+
+                    </div>
+
+                </section>
+
+                <?php endif; ?>
+
             </main>
 
         </div>
@@ -220,7 +367,6 @@ $my_perms = getAdminPermissions($conn);
                     <button class="modal-close" id="customer-modal-close">&times;</button>
                 </div>
 
-                <!-- Profile photo -->
                 <div style="text-align:center; margin-bottom:1rem;">
 
                     <div id="customer-photo-wrap">
@@ -233,16 +379,16 @@ $my_perms = getAdminPermissions($conn);
 
                         <img id="customer-photo-img" src="" alt="Profile"
                             style="display:none; width:80px; height:80px; border-radius:50%; object-fit:cover;">
+
                     </div>
 
                     <div style="margin-top:0.5rem;">
-
                         <strong id="modal-cust-name"></strong>
                         <span id="modal-admin-label" style="display:none; margin-left:0.5rem;
                             background:#1a2433; color:white; font-size:0.72rem;
                             padding:2px 8px; font-weight:bold;">ADMIN</span>
-
                     </div>
+
                 </div>
 
                 <div class="detail-grid">
@@ -299,6 +445,7 @@ $my_perms = getAdminPermissions($conn);
                 </div>
 
                 <div id="single-review-content"></div>
+
                 <div class="modal-footer">
                     <button class="btn-cancel" id="single-review-back">Back</button>
                 </div>
@@ -309,7 +456,7 @@ $my_perms = getAdminPermissions($conn);
 
 
         <!-- Assign Admin Modal -->
-        <?php if ($can_assign): ?>
+        <?php if ($can_assign || $isSuperadmin): ?>
 
         <div class="modal-overlay" id="assign-admin-modal">
 
@@ -323,28 +470,10 @@ $my_perms = getAdminPermissions($conn);
                 <form method="POST" action="../../backend/customers/assign_admin.php">
 
                     <input type="hidden" name="user_id" id="assign-user-id">
-                    <p style="margin-bottom:1rem; font-size:0.9rem; color:#555;">
-                        Select permissions to grant:
-                    </p>
+                    <p style="margin-bottom:1rem; font-size:0.9rem; color:#555;">Select permissions to grant:</p>
 
-                    <?php
-
-                    // available permissions. Lahat pede kapag superadmin 
-                    $all_perms = [
-                        'can_update_orders' => 'Update Order Status',
-                        'can_add_product' => 'Add Product',
-                        'can_edit_product' => 'Edit Product',
-                        'can_delete_product' => 'Delete Product',
-                        'can_block_customers' => 'Block/Unblock Customers',
-                        'can_assign_admins' => 'Assign Admins',
-                    ];
-
-                    foreach ($all_perms as $key => $label):
-
-                        // kapag regular admin lng, specific lng na perms meron sya
-                        if ($my_perms !== null && empty($my_perms[$key])) continue;
-
-                    ?>
+                    <?php foreach ($all_perms_list as $key => $label): ?>
+                        <?php if ($my_perms !== null && empty($my_perms[$key])) continue; ?>
 
                     <div class="form-group" style="margin-bottom:0.5rem;">
                         <label style="display:flex; align-items:center; gap:0.5rem; cursor:pointer;">
@@ -366,6 +495,105 @@ $my_perms = getAdminPermissions($conn);
 
         </div>
 
+
+        <!-- View/Edit Permissions Modal -->
+        <div class="modal-overlay" id="permissions-modal">
+
+            <div class="modal" style="max-width:450px;">
+
+                <div class="modal-header">
+                    <span class="modal-title">Permissions — <span id="permissions-modal-name"></span></span>
+                    <button class="modal-close" id="permissions-modal-close">&times;</button>
+                </div>
+
+                <form method="POST" action="../../backend/customers/update_permissions.php">
+
+                    <input type="hidden" name="admin_id" id="permissions-admin-id">
+                    <p style="margin-bottom:1rem; font-size:0.9rem; color:#555;">Update permissions:</p>
+
+                    <?php foreach ($all_perms_list as $key => $label): ?>
+                        <?php if ($my_perms !== null && empty($my_perms[$key])) continue; ?>
+
+                    <div class="form-group" style="margin-bottom:0.5rem;">
+                        <label style="display:flex; align-items:center; gap:0.5rem; cursor:pointer;">
+                            <input type="checkbox" class="perm-checkbox" name="permissions[]" value="<?= $key ?>" data-perm="<?= $key ?>">
+                            <?= $label ?>
+                        </label>
+                    </div>
+
+                    <?php endforeach; ?>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn-cancel" id="permissions-modal-cancel">Cancel</button>
+                        <button type="submit" class="btn-save">Save</button>
+                    </div>
+
+                </form>
+
+            </div>
+
+        </div>
+        <?php endif; ?>
+
+        <!-- Send Voucher Modal -->
+        <?php if ($isSuperadmin): ?>
+ 
+            <?php
+            $available_vouchers = mysqli_query($conn, "SELECT * FROM discounts
+                WHERE voucher_type = 'individual'
+                AND assigned_to_user_id IS NULL
+                AND used_count < usage_limit
+                AND expires_at > NOW()
+                ORDER BY created_at DESC");
+            ?>
+            
+            <div class="modal-overlay" id="send-voucher-modal">
+            
+                <div class="modal" style="max-width:420px;">
+            
+                    <div class="modal-header">
+                        <span class="modal-title">Send Voucher — <span id="voucher-recipient-name"></span></span>
+                        <button class="modal-close" id="send-voucher-modal-close">&times;</button>
+                    </div>
+            
+                    <input type="hidden" id="voucher-user-id">
+            
+                    <div class="form-group" style="padding:0 0 1rem;">
+
+                        <label>SELECT VOUCHER</label>
+                        <select id="voucher-select">
+
+                            <option value="">Select a voucher...</option>
+
+                            <?php while ($v = mysqli_fetch_assoc($available_vouchers)): ?>
+                            
+                            <option value="<?= $v['discount_id'] ?>">
+                                <?= htmlspecialchars($v['code']) ?> —
+                                <?= $v['discount_type'] === 'percent' ? $v['discount_value'] . '%' : '₱' . number_format($v['discount_value'], 2) ?> off
+                                (expires <?= date('M d, Y', strtotime($v['expires_at'])) ?>)
+                            </option>
+
+                            <?php endwhile; ?>
+                            
+                        </select>
+
+                    </div>
+            
+                    <?php if (mysqli_num_rows($available_vouchers) === 0): ?>
+                    <p style="font-size:0.85rem; color:#888; padding:0 0 1rem;">
+                        No available individual vouchers. Create one in Voucher Management first.
+                    </p>
+                    <?php endif; ?>
+            
+                    <div class="modal-footer">
+                        <button type="button" class="btn-cancel" id="send-voucher-cancel">Cancel</button>
+                        <button type="button" class="btn-save" id="send-voucher-submit">Send</button>
+                    </div>
+            
+                </div>
+            
+            </div>
+        
         <?php endif; ?>
 
 

@@ -18,6 +18,10 @@ if (!$user_id || !in_array($action, ['block', 'unblock'])) {
 $value = $action === 'block' ? 1 : 0;
 mysqli_query($conn, "UPDATE users SET is_blocked = $value WHERE user_id = '$user_id'");
 
+if ($action === 'block' && isset($_SESSION['user_id']) && $_SESSION['user_id'] == $user_id) {
+    session_destroy();
+}
+
 $_SESSION['success'] = $action === 'block' ? 'Customer blocked.' : 'Customer unblocked.';
 header("Location: ../../pages/Admin Pages/customerList.php?status=$status");
 

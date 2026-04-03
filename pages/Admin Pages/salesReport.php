@@ -2,6 +2,9 @@
 session_start();
 include(__DIR__ . '/../../backend/db_connect.php');
 include '../../backend/reports/report_data.php';
+
+include '../../backend/auth/auth_check.php';
+checkAdminAccess($conn, 'can_export_report');
 ?>
 
 <!DOCTYPE html>
@@ -19,18 +22,23 @@ include '../../backend/reports/report_data.php';
 <?php include '../../components/adminSideBar.php'; ?>
 
 <div class="main-content">
+
     <header class="navbar">
+
         <div class="navbar-left">
             <button class="hamburger" id="menu-btn"><span></span><span></span><span></span></button>
             <h1 class="navbar-title">ADMIN PANEL</h1>
         </div>
+
         <div class="navbar-search">
             <svg width="16" height="16" fill="none" stroke="#888" stroke-width="2" viewBox="0 0 24 24">
                 <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
             </svg>
             <input type="text" placeholder="Search...">
         </div>
+
         <div class="navbar-avatar">A</div>
+
     </header>
 
     <main class="container">
@@ -48,39 +56,50 @@ include '../../backend/reports/report_data.php';
 
         <!-- REVENUE TAB -->
         <div class="tab-panel" id="tab-revenue">
+
             <div class="report-panel-header">
                 <span class="report-panel-title">Revenue Report</span>
                 <button class="export-btn" onclick="exportPDF('revenue')">Export PDF</button>
             </div>
+
             <form method="GET" action="">
+
                 <input type="hidden" name="active_tab" value="revenue">
+
                 <div class="filter-bar">
                     <div class="filter-group"><label>FROM:</label><input type="date" name="rev_from" value="<?= $rev_from ?>"></div>
                     <div class="filter-group"><label>TO:</label><input type="date" name="rev_to" value="<?= $rev_to ?>"></div>
                     <button type="submit" class="reset-btn">Apply</button>
                     <a href="?active_tab=revenue" class="reset-btn" style="text-decoration:none; color:black;">Reset</a>
                 </div>
+
             </form>
+
             <div class="stats-grid" id="revenue-stats">
                 <div class="stat-card">
                     <small class="stat-label">TOTAL REVENUE</small>
                     <h3 class="stat-value">₱<?= number_format($rev_total, 2) ?></h3>
                 </div>
+
                 <div class="stat-card">
                     <small class="stat-label">AVG ORDER VALUE</small>
                     <h3 class="stat-value">₱<?= number_format($rev_avg, 2) ?></h3>
                 </div>
+
                 <div class="stat-card">
                     <small class="stat-label">REVENUE GROWTH</small>
                     <h3 class="stat-value <?= $rev_growth !== null && $rev_growth >= 0 ? 'positive' : 'negative' ?>">
                         <?= $rev_growth !== null ? ($rev_growth >= 0 ? '+' : '') . $rev_growth . '%' : 'N/A' ?>
                     </h3>
                 </div>
+
             </div>
+
             <div class="chart-container">
                 <div class="chart-title">Revenue Over Time</div>
                 <canvas id="chart-revenue" height="100"></canvas>
             </div>
+
             <div class="table-container" id="revenue-table">
                 <h3 class="table-title">Revenue Details</h3>
                 <div class="responsive-table">
@@ -88,8 +107,11 @@ include '../../backend/reports/report_data.php';
                         <thead>
                             <tr><th>DATE</th><th>ORDER ID</th><th>CUSTOMER</th><th>AMOUNT</th><th>PAYMENT METHOD</th><th>STATUS</th></tr>
                         </thead>
+
                         <tbody>
+
                             <?php if (mysqli_num_rows($rev_table) > 0): ?>
+
                                 <?php while ($r = mysqli_fetch_assoc($rev_table)): ?>
                                 <tr>
                                     <td><?= date('M d, Y', strtotime($r['created_at'])) ?></td>
@@ -99,12 +121,16 @@ include '../../backend/reports/report_data.php';
                                     <td><?= ucfirst(str_replace('_', ' ', $r['method'] ?? 'N/A')) ?></td>
                                     <td><span class="badge badge-<?= $r['order_status'] ?>"><?= ucfirst($r['order_status']) ?></span></td>
                                 </tr>
+
                                 <?php endwhile; ?>
                             <?php else: ?>
                                 <tr><td colspan="6" style="text-align:center;">No data for this period.</td></tr>
                             <?php endif; ?>
+
                         </tbody>
+
                     </table>
+
                 </div>
             </div>
         </div>
@@ -112,10 +138,12 @@ include '../../backend/reports/report_data.php';
 
         <!-- SALES TAB -->
         <div class="tab-panel" id="tab-sales">
+
             <div class="report-panel-header">
                 <span class="report-panel-title">Sales Report</span>
                 <button class="export-btn" onclick="exportPDF('sales')">Export PDF</button>
             </div>
+
             <form method="GET" action="">
                 <input type="hidden" name="active_tab" value="sales">
                 <div class="filter-bar">
@@ -125,23 +153,29 @@ include '../../backend/reports/report_data.php';
                     <a href="?active_tab=sales" class="reset-btn" style="text-decoration:none; color:black;">Reset</a>
                 </div>
             </form>
+
             <div class="stats-grid" id="sales-stats">
                 <div class="stat-card"><small class="stat-label">TOTAL SALES</small><h3 class="stat-value"><?= number_format($sal_total) ?></h3></div>
                 <div class="stat-card"><small class="stat-label">TOTAL UNITS SOLD</small><h3 class="stat-value"><?= number_format($sal_units) ?></h3></div>
                 <div class="stat-card"><small class="stat-label">AVG SALE VALUE</small><h3 class="stat-value">₱<?= number_format($sal_avg, 2) ?></h3></div>
                 <div class="stat-card"><small class="stat-label">TOP CATEGORY</small><h3 class="stat-value" style="font-size:1rem;"><?= htmlspecialchars($sal_top_cat['category_name'] ?? 'N/A') ?></h3></div>
             </div>
+
             <div class="chart-container">
                 <div class="chart-title">Sales Over Time</div>
                 <canvas id="chart-sales" height="100"></canvas>
             </div>
+
             <div class="table-container" id="sales-table">
+
                 <h3 class="table-title">Sales Details</h3>
                 <div class="responsive-table">
+
                     <table>
                         <thead>
                             <tr><th>DATE</th><th>ORDER ID</th><th>CUSTOMER</th><th>ITEMS</th><th>TOTAL</th><th>STATUS</th></tr>
                         </thead>
+                        
                         <tbody>
                             <?php if (mysqli_num_rows($sal_table) > 0): ?>
                                 <?php while ($r = mysqli_fetch_assoc($sal_table)): ?>
@@ -153,12 +187,15 @@ include '../../backend/reports/report_data.php';
                                     <td>₱<?= number_format($r['total_amount'], 2) ?></td>
                                     <td><span class="badge badge-<?= $r['order_status'] ?>"><?= ucfirst($r['order_status']) ?></span></td>
                                 </tr>
+                                
                                 <?php endwhile; ?>
                             <?php else: ?>
                                 <tr><td colspan="6" style="text-align:center;">No data for this period.</td></tr>
                             <?php endif; ?>
                         </tbody>
+
                     </table>
+
                 </div>
             </div>
         </div>

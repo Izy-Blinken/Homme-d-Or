@@ -5,23 +5,33 @@
             <h2><b>SIGN UP</b></h2>
         </div>
 
-        <form id="registerForm" action="../backend/signup.php" method="POST">
+        <form id="registerForm" action="../backend/loginSignUp/signup.php" method="POST">
+            
             <div class="inputGroup">
                 <input type="text" name="firstname" id="signupFirstname" required>
                 <label>FIRST NAME*</label>
             </div>
+
             <div class="inputGroup">
                 <input type="text" name="lastname" id="signupLastname" required>
                 <label>LAST NAME*</label>
             </div>
+
+            <div class="inputGroup">
+                <input type="text" name="username" id="signupUsername" required>
+                <label>USERNAME*</label>
+            </div>
+
             <div class="inputGroupBD">
                 <input type="date" name="birthday" id="signupBirthday" required>
                 <label>BIRTHDAY*</label>
             </div>
+
             <div class="inputGroup">
                 <input type="text" name="phone" id="signupPhone" maxlength="11" required>
                 <label>PHONE*</label>
             </div>
+
             <div class="inputGroup">
                 <input type="email" id="signupEmail" name="email" required>
                 <label for="signupEmail">EMAIL*</label>
@@ -66,6 +76,10 @@
                 <label for="terms">I have read and agreed on <a href="terms.php" target="_blank">Terms and Conditions</a></label>
             </div>
 
+            <div class="captcha-placeholder" style="border:1px dashed #ccc; padding:1rem; text-align:center; color:#aaa; font-size:0.85rem; margin-bottom:1rem;">
+                [ Google reCAPTCHA — to be implemented ]
+            </div>
+
             <div class="regBtn">
                 <button type="submit">CREATE ACCOUNT</button>
             </div>
@@ -76,9 +90,9 @@
                     <a href="#" onclick="event.preventDefault(); closeSignupModal();">CONTINUE AS GUEST</a>
                 </label>
             </div>
-        </form> 
-    </div> 
-</div> 
+        </form>
+    </div>
+</div>
 
 <div id="signupVerifyModal" class="signupVerificationModal" style="display: none;">
     <div class="signupVerificationContent">
@@ -113,31 +127,42 @@
     </div>
 </div>
 
+
 <div id="loginModal" class="modal">
+
     <div class="modal-content modal-content-login">
+
         <span class="close">&times;</span>
+
         <div class="signupTitle">
             <h2><b>SIGN IN</b></h2>
         </div>
-        <form action="index.php" method="POST">
+
+        <form action="../backend/loginSignUp/login.php" method="POST">
+
             <div class="inputGroupLog">
-                <input type="email" name="email" required>
-                <label>EMAIL*</label>
+                <input type="text" name="username" required>
+                <label>USERNAME*</label>
             </div>
+
             <div class="inputGroupLog">
                 <input type="password" name="password" required>
                 <label>PASSWORD*</label>
             </div>
+
             <div class="inputGroupCheckbox checkbox-remember">
                 <input type="checkbox" id="remember" name="remember">
                 <label for="remember">Remember Me</label>
             </div>
+
             <div class="forgotP">
                 <a href="forgotPassword.php">Forgot Password?</a>
             </div>
+
             <div class="regBtn">
                 <button type="submit">LOGIN</button>
             </div>
+
             <div class="orContainer">
                 <div class="or-divider"><span>or</span></div>
                 <div class="member-exclusive">
@@ -146,19 +171,24 @@
                     <button type="button" class="create-account-btn" onclick="closeLoginModal(); openSignupModal();">CREATE ACCOUNT</button>
                 </div>
             </div>
+
         </form>
     </div>
 </div>
 
 <div id="orderSuccessModal" class="orderSuccessModal" style="display: none;">
+
     <div class="orderSuccessModalContent">
+
         <button class="orderSuccessCloseBtn" id="closeOrderSuccess"><i class="fas fa-times"></i></button>
         <h1>Order Placed Successfully!</h1>
         <p class="orderNumber">Order #<span id="orderNumberDisplay">1</span></p>
+        
         <div class="statusMessage">
             <i class="fa-solid fa-clock"></i>
             <p>Waiting to ship your order</p>
         </div>
+
         <div class="actionButtons">
             <a href="viewAllTabs.php" class="btn btnPrimary">View My Order</a>
             <a href="index.php" class="btn btnSecondary">Order Again</a>
@@ -183,9 +213,7 @@
             <button class="chatCloseBtn" id="chatCloseID"><i class="fa-solid fa-xmark"></i></button>
         </div>
         <div class="chatMessages" id="chatMessagesID">
-            <div class="chatMessage chatMessageLeft">
-                <div class="chatMessageAvatar"><i class="fa-solid fa-user"></i></div>
-            </div>
+
         </div>
         <div class="chatInput">
             <input type="text" id="chatInputField" placeholder="Type your message...">
@@ -195,6 +223,7 @@
 </div>
 
 <footer id="footer">
+
     <div class="newsletter-section">
         <div class="newsletter-container">
             <h2>Newsletter</h2>
@@ -212,6 +241,7 @@
                 <h3>About Us</h3>
                 <p>Homme d'Or is your premier destination for luxury scents.</p>
             </div>
+
             <div class="footer-column">
                 <h3>Quick Links</h3>
                 <ul>
@@ -221,6 +251,7 @@
                     <li><a href="blog.php">Blog</a></li>
                 </ul>
             </div>
+
             <div class="footer-column">
                 <h3>Follow Us</h3>
                 <div class="social-icons">
@@ -230,6 +261,7 @@
                     <a href="#"><i class="fa-brands fa-youtube"></i></a>
                 </div>
             </div>
+
             <div class="footer-column">
                 <h3>Contact Info</h3>
                 <ul class="contact-list">
@@ -261,12 +293,17 @@
 </footer>
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
+
 <link rel="stylesheet" href="../assets/css/msgStyle.css">
 <link rel="stylesheet" href="../assets/css/VerifySignUp.css">
 
 <script src="../assets/js/regModal.js"></script>
 <script src="../assets/js/logModal.js"></script>
+
+<script>
+    const USER_ID = <?= json_encode($_SESSION['user_id'] ?? null) ?>;
+</script>
+
 <script src="../assets/js/ChatBubble.js"></script>
 <script src="../assets/js/forgotPassword.js"></script>
 <script src="../assets/js/VCSignUp.js"></script>

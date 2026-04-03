@@ -37,7 +37,7 @@
     // reg form submission
     if (registerForm) {
         registerForm.addEventListener('submit', function(e) {
-            e.preventDefault();
+            //e.preventDefault();
             
             const email = document.getElementById('signupEmail').value;
             
@@ -96,12 +96,12 @@
 
         input.addEventListener('keypress', function(e) {
             if (!/[0-9]/.test(e.key)) {
-                e.preventDefault();
+                /*e.preventDefault();*/
             }
         });
 
         input.addEventListener('paste', function(e) {
-            e.preventDefault();
+            /*e.preventDefault();*/
             const pastedData = e.clipboardData.getData('text').replace(/[^0-9]/g, '');
             
             if (pastedData) {
@@ -122,7 +122,7 @@
     // code submission
     if (signupVerifyForm) {
         signupVerifyForm.addEventListener('submit', function(e) {
-            e.preventDefault();
+            /*e.preventDefault();*/
             
             let code = '';
             signupCodeInputs.forEach(input => {
@@ -149,11 +149,13 @@
             closeSignupModal(signupVerifyModal);
             
             setTimeout(() => {
+
                 if (signupSuccessModal) {
                     showSignupModal(signupSuccessModal);
                 } else {
                     console.error('SIGNUP: Success modal not found!');
                 }
+
             }, 400);
         });
     } else {
@@ -190,6 +192,7 @@
                     this.textContent = originalText;
                     this.disabled = false;
                 }
+
             }, 1000);
         });
     }

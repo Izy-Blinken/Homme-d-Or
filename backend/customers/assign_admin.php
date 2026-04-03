@@ -2,47 +2,72 @@
 session_start();
 include __DIR__ . '/../db_connect.php';
 
-$user_id = $_POST['user_id'] ?? null;
-$permissions = $_POST['permissions'] ?? [];
-
-if (!$user_id) {
-
-    $_SESSION['error'] = 'Invalid request.';
+if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     header('Location: ../../pages/Admin Pages/customerList.php');
-
     exit;
 }
 
-// check kung admin na
+$user_id = intval($_POST['user_id'] ?? 0);
+$action = $_POST['action'] ?? 'assign';
+
+if (!$user_id) {
+    $_SESSION['error'] = 'Invalid user.';
+    header('Location: ../../pages/Admin Pages/customerList.php');
+    exit;
+}
+
+if ($action === 'remove') {
+
+    $row = mysqli_fetch_assoc(mysqli_query($conn, "SELECT admin_id FROM admins WHERE user_id = '$user_id'"));
+
+    if ($row) {
+
+        $admin_id = $row['admin_id'];
+        mysqli_query($conn, "DELETE FROM admin_permissions WHERE admin_id = '$admin_id'");
+        mysqli_query($conn, "DELETE FROM admins WHERE admin_id = '$admin_id'");
+
+        if (isset($_SESSION['admin_id']) && $_SESSION['admin_id'] == $admin_id) {
+            session_destroy();
+            header('Location: ../../pages/Admin Pages/adminLogin.php');
+            exit;
+        }
+    }
+
+    $_SESSION['success'] = 'Admin access removed.';
+    header('Location: ../../pages/Admin Pages/customerList.php');
+    exit;
+}
+
+// assign flow
+$permissions = $_POST['permissions'] ?? [];
+
+$allowed_perms = [
+    'can_update_orders',
+    'can_add_product',
+    'can_edit_product',
+    'can_delete_product',
+    'can_block_customers',
+    'can_assign_admins',
+    'can_export_report',
+    'can_message_customers',
+];
+
 $existing = mysqli_fetch_assoc(mysqli_query($conn, "SELECT admin_id FROM admins WHERE user_id = '$user_id'"));
 
 if ($existing) {
-
     $_SESSION['error'] = 'User is already an admin.';
     header('Location: ../../pages/Admin Pages/customerList.php');
-
     exit;
 }
 
-// else
 mysqli_query($conn, "INSERT INTO admins (user_id) VALUES ('$user_id')");
 $admin_id = mysqli_insert_id($conn);
 
-// assign permissions
-$all_perms = [
-    'can_update_orders', 'can_add_product', 'can_edit_product',
-    'can_delete_product', 'can_block_customers', 'can_assign_admins'
-];
+$cols = implode(', ', $allowed_perms);
+$vals = implode(', ', array_map(fn($p) => in_array($p, $permissions) ? '1' : '0', $allowed_perms));
 
-$perm_values = [];
-foreach ($all_perms as $perm) {
-    $perm_values[$perm] = in_array($perm, $permissions) ? 1 : 0;
-}
-
-mysqli_query($conn, "INSERT INTO admin_permissions (admin_id, can_update_orders, can_add_product, can_edit_product, can_delete_product, can_block_customers, can_assign_admins)
-    VALUES ('$admin_id', {$perm_values['can_update_orders']}, {$perm_values['can_add_product']}, {$perm_values['can_edit_product']}, {$perm_values['can_delete_product']}, {$perm_values['can_block_customers']}, {$perm_values['can_assign_admins']})");
+mysqli_query($conn, "INSERT INTO admin_permissions (admin_id, $cols) VALUES ('$admin_id', $vals)");
 
 $_SESSION['success'] = 'Admin assigned successfully.';
 header('Location: ../../pages/Admin Pages/customerList.php');
-
 exit;
