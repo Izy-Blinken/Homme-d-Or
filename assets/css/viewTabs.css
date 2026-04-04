@@ -71,7 +71,7 @@
 }
 
 .tab-content::-webkit-scrollbar-track {
-    background: rgba(255, 255, 255, 0.1);
+    background: #c9a961;
 }
 
 .tab-content::-webkit-scrollbar-thumb {
@@ -154,25 +154,15 @@
     transition: all 0.3s ease;
 }
 
-/* Primary Action (Add to Cart) - Solid Gold */
-.v-again {
-    background-color: #c9a961;
-    border: 1px solid #c9a961;
-    color: black;
-}
-.v-again:hover {
+.v-view, .v-again, .v-rate {
     background-color: transparent;
+    border: 1px solid #c9a961;
     color: #c9a961;
-    transform: translateY(-2px);
 }
 
-/* Secondary Action (View) - Ghost Gold */
-.v-view {
-    background-color: transparent;
-    border: 1px solid #c9a961;
-    color: #c9a961;
-}
-.v-view:hover {
+.v-view:hover,
+.v-again:hover,
+.v-rate:hover {
     background-color: #c9a961;
     color: black;
     transform: translateY(-2px);
@@ -401,7 +391,6 @@
 /* The Grid Layout for all rows */
 .history-row {
     display: grid;
-    /* Adjusted for 125% zoom: more flexible 'fr' units */
     grid-template-columns: 2.5rem 7.5rem 2fr 6rem 5rem 7rem 5rem;
     align-items: center;
     padding: 1rem 1.25rem;

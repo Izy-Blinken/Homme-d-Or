@@ -24,7 +24,7 @@
 
 /* Modal Content */
 .romcomModalContent {
-    background: white;
+    background: #2A2D34;
     width: 100%;
     max-width: 28rem;
     box-shadow: 0 20px 25px rgba(0, 0, 0, 0.3);
@@ -52,7 +52,7 @@
 .romcomHeader h2 {
     font-size: 1.875rem;
     font-weight: 700;
-    color: #0f172a;
+    color: #c9a961;
     letter-spacing: -0.025em;
 }
 
@@ -74,7 +74,7 @@
     text-align: center;
     font-size: 0.875rem;
     font-weight: 500;
-    color: black;
+    color: white;
     margin-bottom: 1.5rem;
 }
 
@@ -87,7 +87,7 @@
     display: block;
     font-size: 0.75rem;
     font-weight: 700;
-    color: black;
+    color: white;
     letter-spacing: 0.05em;
     margin-bottom: 1rem;
 }
@@ -117,7 +117,7 @@
 }
 
 .star.active {
-    color: #000000;
+    color: #c9a961;
 }
 
 .rating-Text {
@@ -135,6 +135,7 @@ textarea {
     border: 1px solid #cbd5e1;
     font-family: inherit;
     font-size: 0.875rem;
+    background-color: white;
     color: black;
     resize: vertical;
     min-height: 8rem;
@@ -162,29 +163,45 @@ textarea::placeholder {
     align-items: center;
     gap: 0.75rem;
     padding: 1rem;
-    border: 1px solid #cbd5e1;
+    border: 1px solid #c9a961;
     cursor: pointer;
-    transition: all 0.2s;
+    transition: all 0.25s ease;
     position: relative;
 }
 
+/* Hover */
 .radio-option:hover {
-    border-color: #0f172a;
+    background-color: #c9a961;
+    color: #080051;
 }
 
+/* RADIO BUTTON (NAVY BLUE) */
 .radio-option input[type="radio"] {
-    position: static;
-    opacity: 1;
     width: 16px;
     height: 16px;
-    accent-color: #080051;
+    accent-color: black; 
+    cursor: pointer;
 }
 
+/* Default label */
 .radio-label {
     font-size: 0.875rem;
     font-weight: 500;
-    color: black;
+    color: white;
     flex: 1;
+    transition: color 0.2s ease;
+}
+
+/* WHEN SELECTED */
+.radio-option:has(input[type="radio"]:checked) {
+    background-color: #c9a961;
+    border-color: #c9a961;
+    color: black;
+}
+
+/* Text turns black when selected */
+.radio-option:has(input[type="radio"]:checked) .radio-label {
+    color: black;
 }
 
 /* Button Group */
@@ -205,24 +222,28 @@ textarea::placeholder {
     transition: all 0.2s;
 }
 
-.romcomBtnClose {
-    border: 1px solid #080051 !important;
-    background: white;
-    color: #080051;
-}
-
-.romcomBtnClose:hover {
-    background: #080051;
-    color: white;
-}
-
 .romcomBtnSubmit {
+    border: 1px solid #c9a961 !important;
     background: #080051;
-    color: white;
+    color: #c9a961;
 }
 
 .romcomBtnSubmit:hover {
-    background: #0e0185;
+    background: #c9a961;
+    border: 1px solid #c9a961;
+    color: white;
+}
+
+.romcomBtnClose {
+    border: 1px solid white;
+    background: #64748b;
+    color: white;
+}
+
+.romcomBtnClose:hover {
+    background: #c9a961;
+    border:1px solid white;
+    color: white;
 }
 
 .romcomBtnSubmit:disabled {
@@ -235,7 +256,7 @@ textarea::placeholder {
 }
 
 .btn-danger {
-    background:  #b91c1c;
+    background: #b91c1c;
     color: white;
 }
 
@@ -243,31 +264,24 @@ textarea::placeholder {
     background: #991b1b;
 }
 
+/* Scrollbar */
 .romcomBody::-webkit-scrollbar {
     width: 0.3rem;
 }
 
 .romcomBody::-webkit-scrollbar-thumb {
-    background: #080051;
+    background: #c9a961;
 }
 
 /* Animations */
 @keyframes fadeIn {
-    from {
-        opacity: 0;
-    }
-    to {
-        opacity: 1;
-    }
+    from { opacity: 0; }
+    to { opacity: 1; }
 }
 
 @keyframes fadeOut {
-    from {
-        opacity: 1;
-    }
-    to {
-        opacity: 0;
-    }
+    from { opacity: 1; }
+    to { opacity: 0; }
 }
 
 @keyframes slideIn {
@@ -294,19 +308,19 @@ textarea::placeholder {
 
 /* Responsive */
 @media (max-width: 640px) {
-    .modal-header {
+    .romcomHeader {
         padding: 1.5rem 1.5rem 1rem 1.5rem;
     }
 
-    .modal-header h2 {
+    .romcomHeader h2 {
         font-size: 1.5rem;
     }
 
-    .divider {
+    .romcomDivider {
         margin: 0 1.5rem;
     }
 
-    .modal-body {
+    .romcomBody {
         padding: 1.5rem;
     }
 
@@ -314,7 +328,175 @@ textarea::placeholder {
         font-size: 2.5rem;
     }
 
-    .button-group {
+    .romcomButtonGroup {
         flex-direction: column;
+    }
+}
+
+/* View Order Modal - Text & Content Alignment */
+.view-close-btn {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 25px;
+    cursor: pointer;
+    color: #fff;
+    line-height: 1;
+    transition: color 0.2s ease;
+}
+
+.view-close-btn:hover {
+    color: #c9a961;
+}
+
+/* Overlay */
+#viewOrderModal.romcomOverlay {
+    background: rgba(0, 0, 0, 0.7);
+}
+
+/*  View Modal Content */
+#viewOrderModal .romcomModalContent {
+    background: #2A2D34;
+    width: 100%;
+    max-width: 32rem;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+/* Header */
+#viewOrderModal .romcomHeader {
+    padding: 2rem 2.5rem 1.5rem 2.5rem;
+    text-align: center;
+    position: relative;
+}
+
+#viewOrderModal .romcomHeader h2 {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #c9a961;
+}
+
+/* Divider */
+#viewOrderModal .romcomDivider {
+    height: 1px;
+    background: whitesmoke;
+    margin: 0 2rem;
+}
+
+/* Modal Body */
+#viewOrderModal .romcomBody {
+    padding: 2rem 2.5rem;
+    color: #e2e8f0;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+/* Product Section */
+#viewOrderModal .view-section {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+#viewOrderModal .view-section h4 {
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: #c9a961;
+    margin-bottom: 0.5rem;
+}
+
+/* Product Info */
+#viewOrderModal .view-product {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+#viewOrderModal .view-product img {
+    width: 70px;
+    height: auto;
+    object-fit: cover;
+    border: 1px solid #c9a961;
+}
+
+#viewOrderModal #viewName {
+    font-size: 1rem;
+    font-weight: 600;
+    margin: 0;
+}
+
+#viewOrderModal #viewVariant {
+    font-size: 0.875rem;
+    color: whitesmoke;
+    margin: 0;
+}
+
+/* Order Info */
+#viewOrderModal .view-section p {
+    font-size: 0.875rem;
+    margin: 0.25rem 0;
+    display: flex;
+    justify-content: space-between;
+    color: #e0c27f;
+}
+
+#viewOrderModal .view-section p strong {
+    color: white;
+}
+
+/* Button Group */
+#viewOrderModal .romcomButtonGroup {
+    margin-top: 1.5rem;
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+}
+
+#viewOrderModal {
+    background: #c9a961;
+    color: #080051;
+    font-weight: 700;
+    padding: 0.75rem 1.5rem;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+#viewOrderModal {
+    background: #e0c27f;
+}
+
+/* Scrollbar */
+#viewOrderModal .romcomBody::-webkit-scrollbar {
+    width: 6px;
+}
+
+#viewOrderModal .romcomBody::-webkit-scrollbar-thumb {
+    background: #c9a961;
+}
+
+#viewOrderModal .romcomBody::-webkit-scrollbar-track {
+    background: #2A2D34;
+}
+
+/* Responsive */
+@media (max-width: 640px) {
+    #viewOrderModal .romcomModalContent {
+        max-width: 90%;
+    }
+
+    #viewOrderModal .romcomBody {
+        padding: 1.5rem;
+    }
+
+    #viewOrderModal .view-product {
+        gap: 0.75rem;
+    }
+
+    #viewOrderModal .view-section p {
+        flex-direction: column;
+        align-items: flex-start;
     }
 }
