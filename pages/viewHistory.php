@@ -123,82 +123,172 @@
                     </div>
 
                     <!-- ROWS -->
-                    <div class="history-row" data-name="Perfume 1" data-date="2026-04-10" data-status="Delivered">
+                    <div class="history-row" data-name="Homme d’Or Éternel" data-date="2026-03-10" data-status="Delivered">
                         <span>1</span>
-                        <span>04-10-2026<br><small>14:31</small></span>
+                        <span>03-10-2026<br><small>14:31</small></span>
                         <span class="product-col">
                             <img src="../assets/images/products_images/nocturne.png">
-                            Perfume 1
+                            Homme d’Or Éternel
                         </span>
                         <span>₱1,250.00</span>
                         <span>1</span>
                         <span>₱1,250.00</span>
-                        <span><button class="view-link" onclick="openModal(this)">View</button></span>
+                        <span>
+                            <button class="view-link" 
+                                onclick="viewTransaction(this)"
+                                data-title="Transaction Details"
+                                data-img="../assets/images/products_images/nocturne.png"
+                                data-product="Homme d’Or Éternel"
+                                data-variant="50ml • Oud Majestueux"
+                                data-qty="1"
+                                data-price='₱1,250.00'
+                                data-subtotal='₱1,250.00'
+                                data-payment="Credit Card"
+                                data-date="2026-03-10"
+                                data-status="Delivered">
+                                View
+                            </button>
+                        </span>
                     </div>
 
-                    <div class="history-row" data-name="Perfume 2" data-date="2026-04-10" data-status="Pending">
+                    <div class="history-row" data-name="Homme d’Or Voyage" data-date="2026-02-11" data-status="Delivered">
                         <span>2</span>
-                        <span>04-10-2026<br><small>14:15</small></span>
+                        <span>02-11-2026<br><small>14:15</small></span>
                         <span class="product-col">
                             <img src="../assets/images/products_images/nocturne.png">
-                            Perfume 2
+                            Homme d’Or Voyage
                         </span>
                         <span>₱3,500.00</span>
                         <span>2</span>
                         <span>₱7,000.00</span>
-                        <span><button class="view-link" onclick="openModal(this)">View</button></span>
+                        <span>
+                            <button class="view-link" 
+                                onclick="viewTransaction(this)"
+                                data-title="Transaction Details"
+                                data-img="../assets/images/products_images/nocturne.png"
+                                data-product="Homme d’Or Voyage"
+                                data-variant="100ml • Ambre Nomade"
+                                data-qty="2"
+                                data-price='₱3,500.00'
+                                data-subtotal='₱7,000.00'
+                                data-payment="Cash on Delivery"
+                                data-date="2026-02-11"
+                                data-status="Delivered">
+                                View
+                            </button>
+                        </span>
                     </div>
 
-                    <div class="history-row" data-name="Perfume 3" data-date="2026-04-10" data-status="Cancelled">
+                    <div class="history-row" data-name="Homme d’Or Élixir" data-date="2026-04-10" data-status="Cancelled">
                         <span>3</span>
                         <span>04-10-2026<br><small>14:15</small></span>
                         <span class="product-col">
                             <img src="../assets/images/products_images/nocturne.png">
-                            Perfume 3
+                            Homme d’Or Élixir
                         </span>
                         <span>₱2,800.00</span>
                         <span>1</span>
                         <span>₱2,800.00</span>
-                        <span><button class="view-link" onclick="openModal(this)">View</button></span>
+                        <span>
+                            <button class="view-link" 
+                                onclick="viewTransaction(this)"
+                                data-title="Transaction Details"
+                                data-img="../assets/images/products_images/nocturne.png"
+                                data-product="Homme d’Or Élixir"
+                                data-variant="100ml • Cuir Sublime"
+                                data-qty="1"
+                                data-price='₱2,800.00'
+                                data-subtotal='₱2,800.00'
+                                data-payment="GCash"
+                                data-date="2026-04-10"
+                                data-status="Cancelled">
+                                View
+                            </button>
+                        </span>
                     </div>
 
-                    <div class="history-row" data-name="Perfume 4" data-date="2026-04-09" data-status="Delivered">
+                    <div class="history-row" data-name="Homme d’Or Zenith" data-date="2026-02-14" data-status="Delivered">
                         <span>4</span>
-                        <span>04-09-2026<br><small>10:20</small></span>
+                        <span>02-14-2026<br><small>10:20</small></span>
                         <span class="product-col">
                             <img src="../assets/images/products_images/nocturne.png">
-                            Perfume 4
+                            Homme d’Or Zenith
                         </span>
                         <span>₱1,500.00</span>
                         <span>3</span>
                         <span>₱4,500.00</span>
-                        <span><button class="view-link" onclick="openModal(this)">View</button></span>
+                        <span>
+                            <button class="view-link" 
+                                onclick="viewTransaction(this)"
+                                data-title="Transaction Details"
+                                data-img="../assets/images/products_images/nocturne.png"
+                                data-product="Homme d’Or Zenith"
+                                data-variant="100ml • Santal Imperial"
+                                data-qty="3"
+                                data-price='₱1,500.00'
+                                data-subtotal='₱4,500.00'
+                                data-payment="Credit Card"
+                                data-date="2026-02-14"
+                                data-status="Delivered">
+                                View
+                            </button>
+                        </span>
                     </div>
 
-                    <div class="history-row" data-name="Perfume 5" data-date="2026-04-08" data-status="Pending">
+                    <div class="history-row" data-name="Homme d’Or Mystique" data-date="2026-04-12" data-status="Pending">
                         <span>5</span>
-                        <span>04-08-2026<br><small>16:45</small></span>
+                        <span>04-12-2026<br><small>16:45</small></span>
                         <span class="product-col">
                             <img src="../assets/images/products_images/nocturne.png">
-                            Perfume 5
+                            Homme d’Or Mystique
                         </span>
                         <span>₱2,200.00</span>
                         <span>1</span>
                         <span>₱2,200.00</span>
-                        <span><button class="view-link" onclick="openModal(this)">View</button></span>
+                        <span>
+                            <button class="view-link" 
+                                onclick="viewTransaction(this)"
+                                data-title="Transaction Details"
+                                data-img="../assets/images/products_images/nocturne.png"
+                                data-product="Homme d’Or Mystique"
+                                data-variant="50ml • Vetiver Éclipse"
+                                data-qty="1"
+                                data-price='₱2,200.00'
+                                data-subtotal='₱2,200.00'
+                                data-payment="Cash on Delivery"
+                                data-date="2026-04-12"
+                                data-status="Pending">
+                                View
+                            </button>
+                        </span>
                     </div>
 
-                    <div class="history-row" data-name="Perfume 6" data-date="2026-04-07" data-status="Delivered">
+                    <div class="history-row" data-name="Homme d’Or Voyageur" data-date="2026-03-07" data-status="Delivered">
                         <span>6</span>
-                        <span>04-07-2026<br><small>11:30</small></span>
+                        <span>03-07-2026<br><small>11:30</small></span>
                         <span class="product-col">
                             <img src="../assets/images/products_images/nocturne.png">
-                            Perfume 6
+                            Homme d’Or Voyageur
                         </span>
                         <span>₱3,000.00</span>
                         <span>2</span>
                         <span>₱6,000.00</span>
-                        <span><button class="view-link" onclick="openModal(this)">View</button></span>
+                        <span>
+                            <button class="view-link" 
+                                onclick="viewTransaction(this)"
+                                data-title="Transaction Details"
+                                data-img="../assets/images/products_images/nocturne.png"
+                                data-product="Homme d’Or Voyageur"
+                                data-variant="100ml • Patchouli Mystère"
+                                data-qty="2"
+                                data-price='₱3,000.00'
+                                data-subtotal='₱6,000.00'
+                                data-payment="Cash on Delivery"
+                                data-date="2026-03-07"
+                                data-status="Delivered">
+                                View
+                            </button>
+                        </span>
                     </div>
 
                 </div>

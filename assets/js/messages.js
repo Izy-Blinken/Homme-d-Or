@@ -33,7 +33,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function loadConversations() {
 
-        fetch('../../backend/messages/get_conversations.php')
+        const activeFilter = document.querySelector('.convo-filter-btn.active')?.dataset.filter ?? 'all';
+        const url = activeFilter === 'archived'
+            ? '../../backend/messages/get_conversations.php?archived=1'
+            : '../../backend/messages/get_conversations.php';
+ 
+        fetch(url)
+
             .then(res => res.json())
             .then(data => {
 
@@ -42,12 +48,12 @@ document.addEventListener('DOMContentLoaded', () => {
                     return;
                 }
 
-                const activeFilter = document.querySelector('.convo-filter-btn.active')?.dataset.filter ?? 'all';
-                const filtered = activeFilter === 'all' ? data : data.filter(c => {
+                const filtered = activeFilter === 'archived' ? data : (activeFilter === 'all' ? data : data.filter(c => {
                     if (activeFilter === 'admin') return c.type === 'admin' || c.type === 'superadmin';
                     if (activeFilter === 'user') return c.type === 'user' || c.type === 'escalated';
                     return c.type === activeFilter;
-                });
+                }));
+
                 convoItems.innerHTML = filtered.map(c => {
 
                     const isActive = (c.type === 'user' && OPEN_USER_ID == c.id) ||
@@ -68,8 +74,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
                     const initial = c.name.charAt(0).toUpperCase();
                     const avatarClass = c.type === 'admin' || c.type === 'superadmin' ? 'convo-avatar admin-avatar' : 'convo-avatar';
-                    const label = c.type === 'escalated' ? `<span style="font-size:0.7rem; background:#e65100; color:white; padding:1px 6px; margin-left:4px;">ESCALATED</span>` : '';
-                    
+                    const escalatedLabel = c.type === 'escalated' ? `<span style="font-size:0.7rem; background:#e65100; color:white; padding:1px 6px; margin-left:4px;">ESCALATED</span>` : '';
+                    const archivedLabel = c.archived ? `<span style="font-size:0.7rem; background:#888; color:white; padding:1px 6px; margin-left:4px;">ARCHIVED</span>` : '';
+                    const label = escalatedLabel + archivedLabel;                    
                     const onClick = isActive ? 'onclick="return false;"' : '';
                     
                     return `
@@ -269,8 +276,133 @@ document.addEventListener('DOMContentLoaded', () => {
         polling = setInterval(() => {
             loadMessages();
             loadConversations();
+
         }, 4000);
 
+    }
+
+    const archiveBtn = document.getElementById('archive-btn');
+    const deleteBtn = document.getElementById('delete-btn');
+
+    if (archiveBtn && OPEN_ARCHIVED) {
+        archiveBtn.textContent = 'Unarchive';
+        archiveBtn.dataset.archived = '1';
+    }
+
+    function getOpenConvoType() {
+
+        if (OPEN_SESSION_ID) {
+            return 'escalated';
+        }
+
+        if (OPEN_USER_ID) {
+            return 'user';
+        }
+
+        if (OPEN_ADMIN_ID) {
+            return 'admin';
+        }
+
+        if (OPEN_SUPERADMIN_ID) {
+            return 'superadmin';
+        }
+
+        return null;
+    }
+
+    function getOpenConvoRefId() {
+
+        if (OPEN_SESSION_ID) {
+            return OPEN_SESSION_ID;
+        }
+
+        if (OPEN_USER_ID) {
+            return OPEN_USER_ID;
+        }
+
+        if (OPEN_ADMIN_ID) {
+            return OPEN_ADMIN_ID;
+        }
+
+        if (OPEN_SUPERADMIN_ID) {
+            return OPEN_SUPERADMIN_ID;
+        }
+
+        return null;
+    }
+
+    if (archiveBtn) {
+
+        archiveBtn.addEventListener('click', () => {
+
+            const convo_type = getOpenConvoType();
+            const convo_ref_id = getOpenConvoRefId();
+            
+            if (!convo_type || !convo_ref_id) return;
+
+            const isArchived = archiveBtn.dataset.archived === '1';
+            const action = isArchived ? 'unarchive' : 'archive';
+            const label = isArchived ? 'unarchive' : 'archive';
+
+            if (!confirm(`${label.charAt(0).toUpperCase() + label.slice(1)} this conversation?`)) {
+                return;
+            }
+
+            const body = new FormData();
+            body.append('convo_type', convo_type);
+            body.append('convo_ref_id', convo_ref_id);
+            body.append('action', action);
+
+            fetch('../../backend/messages/archive_conversation.php', { method: 'POST', body })
+                
+                .then(res => res.json())
+                .then(data => {
+
+                    if (data.success) {
+
+                        if (isArchived) {
+                            window.location.reload();
+                        } else {
+                            window.location.href = 'messages.php';
+                        }
+                    }
+                })
+
+        });
+    }
+
+    if (deleteBtn) {
+
+        deleteBtn.addEventListener('click', () => {
+
+            const convo_type = getOpenConvoType();
+            const convo_ref_id = getOpenConvoRefId();
+
+            if (!convo_type || !convo_ref_id) return;
+
+            if (!confirm('Permanently delete this conversation? This cannot be undone.')) {
+                return;
+            }
+
+            const body = new FormData();
+            body.append('convo_type', convo_type);
+            body.append('convo_ref_id', convo_ref_id);
+
+            fetch('../../backend/messages/delete_conversation.php', { method: 'POST', body })
+                
+                .then(res => res.json())
+                .then(data => {
+
+                    console.log(data);
+
+                    if (data.success) {
+                        window.location.href = 'messages.php';
+                    }
+                })
+                
+            .catch(err => console.log(err));
+
+        });
     }
 
 });

@@ -41,15 +41,25 @@
                     <div class="v-left">
                         <img src="../assets/images/products_images/nocturne.png" alt="" width="60">
                         <div class="v-ordersinfo">
-                            <p class="v-name">Perfume 1</p>
-                            <small class="v-desc">50ml • Variant ng perfume</small>
+                            <p class="v-name">Homme d’Or Mystique</p>
+                            <small class="v-desc">50ml • Vetiver Éclipse</small>
                         </div>
                     </div>
                     <div class="v-right">
                         <p class="v-price">₱3,500.00</p>
                         <div class="v-actions">
-                            <button class="v-view">View</button>
-                            <button class="v-cancel" class="btn-open" onclick="openCancelModal()">Cancel Order</button>
+                            <button class="v-view btn-open" 
+                                    onclick="openViewModal(
+                                        '../assets/images/products_images/nocturne.png',
+                                        'Homme d’Or Mystique',
+                                        '50ml • Vetiver Éclipse',
+                                        2,
+                                        '₱3,500.00',
+                                        'GCash',
+                                        'April 20, 2026',
+                                        'Pending'
+                                    )">View</button>
+                            <button class="v-cancel btn-open" onclick="openCancelModal()">Cancel Order</button>
                         </div>
                     </div>
                 </div>
@@ -59,15 +69,25 @@
                     <div class="v-left">
                         <img src="../assets/images/products_images/nocturne.png" alt="" width="60">
                         <div class="v-ordersinfo">
-                            <p class="v-name">Perfume 2</p>
-                            <small class="v-desc">50ml • Variant ng perfume</small>
+                            <p class="v-name">Homme d’Or Zenith</p>
+                            <small class="v-desc">50ml • Santal Imperial</small>
                         </div>
                     </div>
                     <div class="v-right">
                         <p class="v-price">₱2,500.00</p>
                         <div class="v-actions">
-                            <button class="v-view">View</button>
-                            <button class="v-cancel">Cancel Order</button>
+                            <button class="v-view btn-open" 
+                                onclick="openViewModal(
+                                    '../assets/images/products_images/nocturne.png',
+                                    'Homme d’Or Zenith',
+                                    '50ml • Santal Imperial',
+                                    2,
+                                    '₱2,500.00',
+                                    'GCash',
+                                    'April 28, 2026',
+                                    'Pending'
+                                )">View</button>
+                            <button class="v-cancel btn-open" onclick="openCancelModal()">Cancel Order</button>
                         </div>
                     </div>
                 </div>
@@ -76,15 +96,25 @@
                     <div class="v-left">
                         <img src="../assets/images/products_images/nocturne.png" alt="" width="60">
                         <div class="v-ordersinfo">
-                            <p class="v-name">Perfume 3</p>
-                            <small class="v-desc">50ml • Variant ng perfume</small>
+                            <p class="v-name">Homme d’Or Sublime</p>
+                            <small class="v-desc">50ml • Ambre Royal</small>
                         </div>
                     </div>
                     <div class="v-right">
                         <p class="v-price">₱1,800.00</p>
                         <div class="v-actions">
-                            <button class="v-view">View</button>
-                            <button class="v-cancel">Cancel Order</button>
+                            <button class="v-view btn-open" 
+                                onclick="openViewModal(
+                                    '../assets/images/products_images/nocturne.png',
+                                    'Homme d’Or Sublime',
+                                    '50ml • Ambre Royal',
+                                    1,
+                                    '₱1,800.00',
+                                    'Cash on delivery',
+                                    'June 4, 2026',
+                                    'Pending'
+                                )">View</button>
+                            <button class="v-cancel btn-open" onclick="openCancelModal()">Cancel Order</button>
                         </div>
                     </div>
                 </div>
@@ -95,14 +125,23 @@
                     <div class="v-left">
                         <img src="../assets/images/products_images/nocturne.png" alt="" width="60">
                         <div class="v-ordersinfo">
-                            <p class="v-name">Perfume 1</p>
-                            <small class="v-desc">50ml • Variant ng perfume</small>
+                            <p class="v-name">Homme d’Or Infini</p>
+                            <small class="v-desc">50ml • Cèdre Majesté</small>
                         </div>
                     </div>
                     <div class="v-right">
                         <p class="v-price">₱2,500.00</p>
                         <div class="v-actions">
-                            <button class="v-view">View</button>
+                            <button class="v-view" onclick="openViewModal(
+                                    '../assets/images/products_images/nocturne.png',
+                                    'Homme d’Or Infini',
+                                    '50ml • Cèdre Majesté',
+                                    2,
+                                    '₱2,500.00',
+                                    'Cash on Delivery',
+                                    'January 20, 2026',
+                                    'Paid'
+                                )">View</button>
                             <button class="v-rate" class="btn-open" onclick="openReviewModal()">Rate Order</button>
                         </div>
                     </div>
@@ -112,15 +151,24 @@
                     <div class="v-left">
                         <img src="../assets/images/products_images/nocturne.png" alt="" width="60">
                         <div class="v-ordersinfo">
-                            <p class="v-name">Perfume 2</p>
-                            <small class="v-desc">50ml • Variant ng perfume</small>
+                            <p class="v-name">Homme d’Or Noir</p>
+                            <small class="v-desc">50ml • Oud Élégant</small>
                         </div>
                     </div>
                     <div class="v-right">
                         <p class="v-price">₱3,200.00</p>
                         <div class="v-actions">
-                            <button class="v-view">View</button>
-                            <button class="v-rate">Rate Order</button>
+                            <button class="v-view" onclick="openViewModal(
+                                    '../assets/images/products_images/nocturne.png',
+                                    'Homme d’Or Noir',
+                                    '50ml • Oud Élégant',
+                                    3,
+                                    '₱3,200.00',
+                                    'GCash',
+                                    'January 14, 2026',
+                                    'Paid'
+                                )">View</button>
+                            <button class="v-rate" class="btn-open" onclick="openReviewModal()">Rate Order</button>
                         </div>
                     </div>
                 </div>
@@ -131,15 +179,25 @@
                     <div class="v-left">
                         <img src="../assets/images/products_images/nocturne.png" alt="" width="60">
                         <div class="v-ordersinfo">
-                            <p class="v-name">Perfume 1</p>
-                            <small class="v-desc">50ml • Variant ng perfume</small>
+                            <p class="v-name">Homme d’Or Luminance</p>
+                            <small class="v-desc">50ml • Bergamot Doré</small>
                         </div>
                     </div>
                     <div class="v-right">
                         <p class="v-price">₱2,800.00</p>
                         <div class="v-actions">
-                            <button class="v-view">View</button>
-                            <button class="v-again">Order Again</button>
+                           <button class="v-view btn-open" 
+                                onclick="openViewModal(
+                                    '../assets/images/products_images/nocturne.png',
+                                    'Homme d’Or Luminance',
+                                    '50ml • Bergamot Doré',
+                                    2,
+                                    '₱2,800.00',
+                                    'GCash',
+                                    'February 4, 2026',
+                                    'Completed'
+                                )">View</button>
+                            <button class="v-again" onclick="window.location.href='shop.php'">Order Again</button>
                         </div>
                     </div>
                 </div>
@@ -148,15 +206,25 @@
                     <div class="v-left">
                         <img src="../assets/images/products_images/nocturne.png" alt="" width="60">
                         <div class="v-ordersinfo">
-                            <p class="v-name">Perfume 2</p>
-                            <small class="v-desc">50ml • Variant ng perfume</small>
+                            <p class="v-name">Homme d’Or Prestige</p>
+                            <small class="v-desc">50ml • Fève Tonka</small>
                         </div>
                     </div>
                     <div class="v-right">
                         <p class="v-price">₱3,200.00</p>
                         <div class="v-actions">
-                            <button class="v-view">View</button>
-                            <button class="v-again">Order Again</button>
+                            <button class="v-view btn-open" 
+                                onclick="openViewModal(
+                                    '../assets/images/products_images/nocturne.png',
+                                    'Homme d’Or Prestige',
+                                    '50ml • Fève Tonka',
+                                    3,
+                                    '₱3,200.00',
+                                    'Cash on Delivery',
+                                    'January 11, 2026',
+                                    'Completed'
+                                )">View</button>
+                            <button class="v-again" onclick="window.location.href='shop.php'">Order Again</button>
                         </div>
                     </div>
                 </div>
@@ -165,15 +233,25 @@
                     <div class="v-left">
                         <img src="../assets/images/products_images/nocturne.png" alt="" width="60">
                         <div class="v-ordersinfo">
-                            <p class="v-name">Perfume 3</p>
-                            <small class="v-desc">50ml • Variant ng perfume</small>
+                            <p class="v-name">Homme d’Or Voyageur</p>
+                            <small class="v-desc">50ml • Patchouli Mystère</small>
                         </div>
                     </div>
                     <div class="v-right">
                         <p class="v-price">₱1,500.00</p>
                         <div class="v-actions">
-                            <button class="v-view">View</button>
-                            <button class="v-again">Order Again</button>
+                            <button class="v-view btn-open" 
+                                onclick="openViewModal(
+                                    '../assets/images/products_images/nocturne.png',
+                                    'Homme d’Or Voyageur',
+                                    '50ml • Patchouli Mystère',
+                                    1,
+                                    '₱1,500.00',
+                                    'GCash',
+                                    'February 9, 2026',
+                                    'Completed'
+                                )">View</button>
+                            <button class="v-again" onclick="window.location.href='shop.php'">Order Again</button>
                         </div>
                     </div>
                 </div>
@@ -182,15 +260,25 @@
                     <div class="v-left">
                         <img src="../assets/images/products_images/nocturne.png" alt="" width="60">
                         <div class="v-ordersinfo">
-                            <p class="v-name">Perfume 4</p>
-                            <small class="v-desc">50ml • Variant ng pefume</small>
+                            <p class="v-name">Homme d’Or Royale</p>
+                            <small class="v-desc">50ml • Iris Noble</small>
                         </div>
                     </div>
                     <div class="v-right">
                         <p class="v-price">₱3,500.00</p>
                         <div class="v-actions">
-                            <button class="v-view">View</button>
-                            <button class="v-again">Order Again</button>
+                            <button class="v-view btn-open" 
+                                onclick="openViewModal(
+                                    '../assets/images/products_images/nocturne.png',
+                                    'Homme d’Or Royale',
+                                    '50ml • Iris Noble',
+                                    2,
+                                    '₱3,500.00',
+                                    'GCash',
+                                    'January 5, 2026',
+                                    'Cash on Delivery'
+                                )">View</button>
+                            <button class="v-again" onclick="window.location.href='shop.php'">Order Again</button>
                         </div>
                     </div>
                 </div>
@@ -202,15 +290,25 @@
                     <div class="v-left">
                         <img src="../assets/images/products_images/nocturne.png" alt="" width="60">
                         <div class="v-ordersinfo">
-                            <p class="v-name">Perfume 1</p>
-                            <small class="v-desc">50ml • Variant ng perfume</small>
+                            <p class="v-name">Homme d’Or Argent</p>
+                            <small class="v-desc">50ml • Musc Sauvage</small>
                         </div>
                     </div>
                     <div class="v-right">
                         <p class="v-price">₱2,800.00</p>
                         <div class="v-actions">
-                            <button class="v-view">View</button>
-                            <button class="v-again">Order Again</button>
+                            <button class="v-view btn-open" 
+                                onclick="openViewModal(
+                                    '../assets/images/products_images/nocturne.png',
+                                    'Homme d’Or Argent',
+                                    '50ml • Musc Sauvage',
+                                    1,
+                                    '₱2,800.00',
+                                    'GCash',
+                                    'February 2, 2026',
+                                    'Cancelled'
+                                )">View</button>
+                            <button class="v-again" onclick="window.location.href='shop.php'">Order Again</button>
                         </div>
                     </div>
                 </div>
@@ -219,15 +317,25 @@
                     <div class="v-left">
                         <img src="../assets/images/products_images/nocturne.png" alt="" width="60">
                         <div class="v-ordersinfo">
-                            <p class="v-name">Perfume 2</p>
-                            <small class="v-desc">50ml • Variant ng perfume</small>
+                            <p class="v-name">Homme d’Or Élixir</p>
+                            <small class="v-desc">50ml • Cuir Sublime</small>
                         </div>
                     </div>
                     <div class="v-right">
                         <p class="v-price">₱3,200.00</p>
                         <div class="v-actions">
-                            <button class="v-view">View</button>
-                            <button class="v-again">Order Again</button>
+                            <button class="v-view btn-open" 
+                                onclick="openViewModal(
+                                    '../assets/images/products_images/nocturne.png',
+                                    'Homme d’Or Élixir',
+                                    '50ml • Cuir Sublime',
+                                    2,
+                                    '₱3,200.00',
+                                    'GCash',
+                                    'February 11, 2026',
+                                    'Cancelled'
+                                )">View</button>
+                            <button class="v-again" onclick="window.location.href='shop.php'">Order Again</button>
                         </div>
                     </div>
                 </div>
@@ -236,15 +344,25 @@
                     <div class="v-left">
                         <img src="../assets/images/products_images/nocturne.png" alt="" width="60">
                         <div class="v-ordersinfo">
-                            <p class="v-name">Perfume 3</p>
-                            <small class="v-desc">50ml • Variant ng perfume</small>
+                            <p class="v-name">Homme d’Or Voyage</p>
+                            <small class="v-desc">50ml • Ambre Nomade</small>
                         </div>
                     </div>
                     <div class="v-right">
                         <p class="v-price">₱1,500.00</p>
                         <div class="v-actions">
-                            <button class="v-view">View</button>
-                            <button class="v-again">Order Again</button>
+                            <button class="v-view btn-open" 
+                                onclick="openViewModal(
+                                    '../assets/images/products_images/nocturne.png',
+                                    'Homme d’Or Voyage',
+                                    '50ml • Ambre Nomade',
+                                    1,
+                                    '₱1,500.00',
+                                    'GCash',
+                                    'January 9, 2026',
+                                    'Cancelled'
+                                )">View</button>
+                            <button class="v-again" onclick="window.location.href='shop.php'">Order Again</button>
                         </div>
                     </div>
                 </div>
@@ -253,15 +371,25 @@
                     <div class="v-left">
                         <img src="../assets/images/products_images/nocturne.png" alt="" width="60">
                         <div class="v-ordersinfo">
-                            <p class="v-name">Perfume 4</p>
-                            <small class="v-desc">50ml • Variant ng pefume</small>
+                            <p class="v-name">Homme d’Or Prestige</p>
+                            <small class="v-desc">50ml • Bleu Royal</small>
                         </div>
                     </div>
                     <div class="v-right">
                         <p class="v-price">₱3,500.00</p>
                         <div class="v-actions">
-                            <button class="v-view">View</button>
-                            <button class="v-again">Order Again</button>
+                            <button class="v-view btn-open" 
+                                onclick="openViewModal(
+                                    '../assets/images/products_images/nocturne.png',
+                                    'Homme d’Or Prestige',
+                                    '50ml • Bleu Royal',
+                                    2,
+                                    '₱3,500.00',
+                                    'Cash on Delivery',
+                                    'January 7, 2026',
+                                    'Cancelled'
+                                )">View</button>
+                            <button class="v-again" onclick="window.location.href='shop.php'">Order Again</button>
                         </div>
                     </div>
                 </div>
@@ -277,7 +405,7 @@
             <div class="romcomHeader">
                 <h2>Cancel Order</h2>
             </div>
-            <div class="romcomdivider"></div>
+            <div class="romcomDivider"></div>
             <form class="romcomBody" onsubmit="submitCancellation(event)">
                 <p class="modal-description">Please select a reason for cancellation</p>
 
@@ -354,8 +482,40 @@
 
         </div>
     </div>
-        
-    
+
+    <div id="viewOrderModal" class="romcomOverlay">
+        <div class="romcomModalContent">
+            <div class="romcomHeader">
+            <span class="view-close-btn" onclick="closeViewModal()">&times;</span>
+                <h2>Order Details</h2>
+            </div>
+            <div class="romcomDivider"></div>
+
+            <div class="romcomBody">
+                <!-- Product Info -->
+                <div class="view-section">
+                    <h4>PRODUCT</h4>
+                    <div class="view-product">
+                        <img id="viewImage" src="" width="70" alt="Product Image">
+                        <div>
+                            <p id="viewName"></p>
+                            <small id="viewVariant"></small>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Order Info -->
+                <div class="view-section">
+                    <h4>ORDER INFORMATION</h4>
+                    <p><strong>Quantity:</strong> <span id="viewQty"></span></p>
+                    <p><strong>Total:</strong> <span id="viewTotal"></span></p>
+                    <p><strong>Payment Method:</strong> <span id="viewPayment"></span></p>
+                    <p><strong>Order Date:</strong> <span id="viewDate"></span></p>
+                    <p><strong>Status:</strong> <span id="viewStatus"></span></p>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <div id="generalToast" class="generalToast"></div>
     <script src="../assets/js/script.js"></script>
@@ -364,7 +524,6 @@
 
     <script src="../assets/js/viewAllTabs.js"></script>
     <script src="../assets/js/ReviewCancelOrder.js"></script>
-
 
 </body>
 </html>
