@@ -153,3 +153,37 @@ function showGeneralToast(message, type='success') {
         toast.classList.remove('show');
     }, 3000); 
 }
+
+function openViewModal(img, name, variant, qty,total, payment, date, status) {
+    document.getElementById("viewImage").src = img;
+    document.getElementById("viewName").textContent = name;
+    document.getElementById("viewVariant").textContent = variant;
+    document.getElementById("viewQty").textContent = qty;
+    document.getElementById("viewTotal").textContent = total
+    document.getElementById("viewPayment").textContent = payment;
+    document.getElementById("viewDate").textContent = date;
+    document.getElementById("viewStatus").textContent = status;
+
+    const modal = document.getElementById("viewOrderModal");
+    modal.classList.remove("closing");
+    modal.classList.add("show");
+}
+
+// Close modal function
+function closeViewModal() {
+    const modal = document.getElementById("viewOrderModal");
+    modal.classList.add("closing");
+    setTimeout(() => {
+        modal.classList.remove("show", "closing");
+    }, 200);
+}
+
+// Close modal on clicking outside
+    document.addEventListener('DOMContentLoaded', function() {
+    const modal = document.getElementById('viewOrderModal');
+    modal.addEventListener('click', function(e) {
+        if (e.target === modal) {
+            closeViewModal();
+        }
+    });
+});

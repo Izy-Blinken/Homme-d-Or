@@ -1166,7 +1166,8 @@ background-color: #0B1A3A;
 
 .scroll-next-btn {
     position: absolute;
-    right: -90px;
+    /* CHANGE THIS: right: -90px; */
+    right: 20px;
     top: 50%;
     transform: translateY(-50%);
     width: 60px;
@@ -1489,7 +1490,8 @@ background-color: #0B1A3A;
 
 .new-arrivals-wrapper-2 .scroll-next-btn {
     position: absolute;
-    right: -90px;
+    /* CHANGE THIS: right: -90px; */
+    right: 20px;
     top: 50%;
     transform: translateY(-50%);
     width: 60px;

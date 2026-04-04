@@ -1,3 +1,15 @@
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
+html, body {
+    width: 100%;
+    max-width: 100vw;
+    overflow-x: clip; /* Changed from hidden to clip! */
+    margin: 0;
+    padding: 0;
+}
+
 @font-face {
     font-family: 'Spartan';
     src: url('../fonts/Spartan/LeagueSpartan-Regular.woff2') format('woff2'),
