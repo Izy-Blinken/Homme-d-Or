@@ -13,6 +13,8 @@ $open_admin_id = isset($_GET['admin_id']) ? intval($_GET['admin_id']) : null;
 $open_superadmin_id = isset($_GET['superadmin_id']) ? intval($_GET['superadmin_id']) : null;
 $open_session_id = isset($_GET['session_id']) ? intval($_GET['session_id']) : null;
 
+$is_archived = false;
+
 $chat_name = null;
 $chat_initial = null;
 $chat_type = null;
@@ -62,7 +64,6 @@ if ($open_user_id) {
     $chat_type = 'escalated';
     $open_user_id = $r['user_id'] ?? null;
 
-    // check if already assigned
     $assigned = mysqli_fetch_assoc(mysqli_query($conn,
         "SELECT am.sender_name FROM admin_messages am
          WHERE am.session_id = '$open_session_id'
@@ -72,12 +73,26 @@ if ($open_user_id) {
     $receiver_id = $open_user_id;
     $receiver_type = 'user';
 
-    // get lahat ng admin for asignment sa cust - admin chat
     $admins_list = mysqli_query($conn,
         "SELECT a.admin_id, u.fname, u.lname FROM admins a
          JOIN users u ON a.user_id = u.user_id
          ORDER BY u.fname ASC");
 
+}
+
+if ($chat_type) {
+
+    $ab_id = $isSuperadmin ? $current_superadmin_id : $current_admin_id;
+    $ab_type = $isSuperadmin ? 'superadmin' : 'admin';
+    $ref_id = $open_session_id ?? $open_user_id ?? $open_admin_id ?? $open_superadmin_id;
+    $ct = $open_session_id ? 'escalated' : ($open_user_id ? 'user' : ($open_admin_id ? 'admin' : 'superadmin'));
+
+    $arch_check = mysqli_fetch_assoc(mysqli_query($conn,
+        "SELECT archive_id FROM conversation_archives
+         WHERE archived_by_id = '$ab_id' AND archived_by_type = '$ab_type'
+           AND convo_type = '$ct' AND convo_ref_id = '$ref_id'"));
+
+    $is_archived = (bool) $arch_check;
 }
 ?>
 
@@ -88,6 +103,12 @@ if ($open_user_id) {
         <meta charset="UTF-8">
         <title>Messages</title>
         <link rel="stylesheet" href="../../assets/css/AdminPanelStyle.css">
+        <style>
+        .main-content {
+            height: 100vh;
+            overflow: hidden;
+        }
+        </style>
     </head>
 
     <body>
@@ -121,11 +142,12 @@ if ($open_user_id) {
                 <div class="convo-list">
 
                     <div class="convo-list-header">Chats</div>
-                    
+
                     <div style="display:flex; border-bottom:1px solid #e8e8e8;">
                         <button class="convo-filter-btn active" data-filter="all" style="flex:1; padding:0.6rem; border:none; background:none; cursor:pointer; font-size:0.82rem; font-weight:700; border-bottom:2px solid transparent;">All</button>
                         <button class="convo-filter-btn" data-filter="user" style="flex:1; padding:0.6rem; border:none; background:none; cursor:pointer; font-size:0.82rem; font-weight:700; border-bottom:2px solid transparent;">Customers</button>
                         <button class="convo-filter-btn" data-filter="admin" style="flex:1; padding:0.6rem; border:none; background:none; cursor:pointer; font-size:0.82rem; font-weight:700; border-bottom:2px solid transparent;">Admins</button>
+                        <button class="convo-filter-btn" data-filter="archived" style="flex:1; padding:0.6rem; border:none; background:none; cursor:pointer; font-size:0.82rem; font-weight:700; border-bottom:2px solid transparent;">Archived</button>
                     </div>
 
                     <div class="convo-items" id="convo-items">
@@ -144,7 +166,8 @@ if ($open_user_id) {
                                 <?= $chat_initial ?>
                             </div>
 
-                            <div>
+                            <div style="flex:1;">
+
                                 <div><?= $chat_name ?></div>
 
                                 <?php if ($chat_type === 'escalated' && $assigned_admin): ?>
@@ -154,7 +177,7 @@ if ($open_user_id) {
 
                                 <?php elseif ($chat_type === 'escalated' && !$assigned_admin && $isSuperadmin): ?>
                                 <div style="display:flex; align-items:center; gap:0.5rem; margin-top:0.25rem;">
-                                    
+
                                     <select id="assign-admin-select" style="padding:4px 8px; border:1px solid #ccc; font-size:0.82rem;">
                                         <option value="">Assign to admin...</option>
                                         <?php while ($a = mysqli_fetch_assoc($admins_list)): ?>
@@ -168,14 +191,26 @@ if ($open_user_id) {
 
                             </div>
 
+                            <div style="display:flex; gap:0.5rem; margin-left:auto;">
+                                <button id="archive-btn" style="background:none; border:1px solid #ccc; padding:4px 10px; font-size:0.78rem; cursor:pointer;">Archive</button>
+                                <?php if ($isSuperadmin): ?>
+                                <button id="delete-btn" style="background:#c0392b; color:white; border:none; padding:4px 10px; font-size:0.78rem; cursor:pointer;">Delete</button>
+                                <?php endif; ?>
+                            </div>
+
                         </div>
 
                         <div class="chat-messages" id="chat-messages"></div>
 
                         <?php if ($chat_type !== 'escalated' || $assigned_admin): ?>
 
-                            <?php if ($receiver_exists): ?>
-                                
+                            <?php if ($is_archived): ?>
+                            <div style="padding:1rem 1.5rem; background:white; border-top:1px solid #e8e8e8; color:#aaa; font-size:0.88rem; text-align:center;">
+                                This conversation is archived. Unarchive to send messages.
+                            </div>
+
+                            <?php elseif ($receiver_exists): ?>
+
                             <div class="chat-input-area">
                                 <textarea class="chat-input" id="chat-input" rows="1" placeholder="Type a message..."></textarea>
                                 <button class="send-btn" id="send-btn">Send</button>
@@ -216,6 +251,7 @@ if ($open_user_id) {
             const CURRENT_TYPE = <?= json_encode($isSuperadmin ? 'superadmin' : 'admin') ?>;
             const RECEIVER_ID = <?= json_encode($receiver_id) ?>;
             const RECEIVER_TYPE = <?= json_encode($receiver_type) ?>;
+            const OPEN_ARCHIVED = <?= json_encode($is_archived) ?>;
         </script>
 
         <script src="../../assets/js/messages.js"></script>
