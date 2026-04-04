@@ -1,239 +1,261 @@
-(function() {
+(function () {
     'use strict';
-    
-    const signupVerifyModal = document.getElementById('signupVerifyModal');
-    const signupSuccessModal = document.getElementById('signupSuccessModal');
-    const registerForm = document.getElementById('registerForm');
-    const signupVerifyForm = document.getElementById('signupVerifyForm');
-    const closeSignupVerify = document.getElementById('closeSignupVerify');
-    const signupCodeInputs = document.querySelectorAll('.signupCodeInput');
-    const signupUserEmailSpan = document.getElementById('signupUserEmail');
-    const signupResendBtn = document.getElementById('signupResendBtn');
-    const signupSuccessBtn = document.getElementById('signupSuccessBtn');
 
-    function showSignupModal(modal) {
-        modal.style.display = 'flex';
-        modal.classList.remove('closing');
-        document.body.style.overflow = 'hidden';
-        
-        void modal.offsetWidth;
-        
-        setTimeout(() => {
-            modal.classList.add('active');
-        }, 10);
-    }
+    window.addEventListener('DOMContentLoaded', function () {
 
-    function closeSignupModal(modal) {
-        modal.classList.add('closing');
-        modal.classList.remove('active');
-        
-        setTimeout(() => {
-            modal.style.display = 'none';
-            modal.classList.remove('closing');
-            document.body.style.overflow = '';
-        }, 300);
-    }
+        const registerForm       = document.getElementById('registerForm');
+        const signupModal        = document.getElementById('signupModal');
+        const signupVerifyModal  = document.getElementById('signupVerifyModal');
+        const signupSuccessModal = document.getElementById('signupSuccessModal');
+        const signupVerifyForm   = document.getElementById('signupVerifyForm');
+        const signupCodeInputs   = document.querySelectorAll('.signupCodeInput');
+        const signupResendBtn    = document.getElementById('signupResendBtn');
+        const signupSuccessBtn   = document.getElementById('signupSuccessBtn');
+        const closeSignupVerify  = document.getElementById('closeSignupVerify');
+        const otpError           = document.getElementById('otpError');
 
-    // reg form submission
-    if (registerForm) {
-        registerForm.addEventListener('submit', function(e) {
-            //e.preventDefault();
-            
-            const email = document.getElementById('signupEmail').value;
-            
-            console.log('SIGNUP: Form submitted with email:', email);
-            
-            if (signupUserEmailSpan) {
-                signupUserEmailSpan.textContent = email;
-            }
-            
-            const signupModal = document.getElementById('signupModal');
-            if (signupModal) {
-                signupModal.style.display = 'none';
-                document.body.style.overflow = 'hidden'; 
-            }
-            
-            if (signupVerifyModal) {
-                showSignupModal(signupVerifyModal);
-            } else {
-                console.error('SIGNUP: Verification modal not found!');
-            }
-            
-            signupCodeInputs.forEach(input => {
-                input.value = '';
-                input.classList.remove('filled');
-            });
-            
-            if (signupCodeInputs[0]) {
-                signupCodeInputs[0].focus();
-            }
-            
-        });
-    } else {
-        console.error('SIGNUP: Register form not found!');
-    }
+        // ════════════════════════════════════════════════════════════
+        // SECTION A — index.php: register form validation
+        // ════════════════════════════════════════════════════════════
+        if (registerForm) {
+            registerForm.addEventListener('submit', function (e) {
+                const password = document.getElementById('regPassword')?.value ?? '';
+                const confirm  = document.getElementById('regConfirmPassword')?.value ?? '';
 
-    // code input handling
-    signupCodeInputs.forEach((input, index) => {
-        input.addEventListener('input', function() {
-            this.value = this.value.replace(/[^0-9]/g, '');
-            
-            if (this.value.length === 1) {
-                this.classList.add('filled');
-                if (index < signupCodeInputs.length - 1) {
-                    signupCodeInputs[index + 1].focus();
+                if (password !== confirm) {
+                    e.preventDefault();
+                    showFieldError('regConfirmPassword', 'Passwords do not match.');
+                    return;
                 }
-            } else {
-                this.classList.remove('filled');
-            }
-        });
 
-        input.addEventListener('keydown', function(e) {
-            if (e.key === 'Backspace' && this.value === '' && index > 0) {
-                signupCodeInputs[index - 1].focus();
-            }
-        });
+                if (
+                    password.length < 8 ||
+                    !/[A-Z]/.test(password) ||
+                    !/[a-z]/.test(password) ||
+                    !/[0-9]/.test(password)
+                ) {
+                    e.preventDefault();
+                    showFieldError('regPassword',
+                        'Password must be 8+ characters with uppercase, lowercase, and a number.');
+                    return;
+                }
+                // All valid — POST naturally to backend/loginSignUp/signup.php
+            });
 
-        input.addEventListener('keypress', function(e) {
-            if (!/[0-9]/.test(e.key)) {
-                /*e.preventDefault();*/
+            // Re-open signup modal if signup.php bounced back with a session error
+            const signupErrorEl = document.getElementById('signupError');
+            if (signupErrorEl && signupErrorEl.textContent.trim() !== '' && signupModal) {
+                signupModal.style.display = 'flex';
+                setTimeout(() => signupModal.classList.add('active'), 10);
+                document.body.style.overflow = 'hidden';
             }
-        });
+        }
 
-        input.addEventListener('paste', function(e) {
-            /*e.preventDefault();*/
-            const pastedData = e.clipboardData.getData('text').replace(/[^0-9]/g, '');
-            
-            if (pastedData) {
-                const digits = pastedData.split('').slice(0, 6);
-                digits.forEach((digit, i) => {
-                    if (signupCodeInputs[i]) {
-                        signupCodeInputs[i].value = digit;
-                        signupCodeInputs[i].classList.add('filled');
+        // ════════════════════════════════════════════════════════════
+        // SECTION B — verifyCodeSignUp.php: OTP modal logic
+        // ════════════════════════════════════════════════════════════
+        if (signupVerifyModal) {
+
+            // Auto-open modal on page load
+            signupVerifyModal.style.display = 'flex';
+            setTimeout(() => signupVerifyModal.classList.add('active'), 10);
+            document.body.style.overflow = 'hidden';
+
+            // ── Helpers ────────────────────────────────────────────
+            function showModal(modal) {
+                modal.style.display = 'flex';
+                modal.classList.remove('closing');
+                document.body.style.overflow = 'hidden';
+                void modal.offsetWidth;
+                setTimeout(() => modal.classList.add('active'), 10);
+            }
+
+            function closeModal(modal) {
+                modal.classList.add('closing');
+                modal.classList.remove('active');
+                setTimeout(() => {
+                    modal.style.display = 'none';
+                    modal.classList.remove('closing');
+                    document.body.style.overflow = '';
+                }, 300);
+            }
+
+            function showError(msg) {
+                if (otpError) {
+                    otpError.textContent = msg;
+                    otpError.style.display = 'block';
+                }
+            }
+
+            function clearError() {
+                if (otpError) {
+                    otpError.style.display = 'none';
+                    otpError.textContent = '';
+                }
+            }
+
+            // ── Code inputs ────────────────────────────────────────
+            signupCodeInputs.forEach((input, index) => {
+
+                input.addEventListener('input', function () {
+                    this.value = this.value.replace(/[^0-9]/g, '').slice(0, 1);
+                    if (this.value.length === 1) {
+                        this.classList.add('filled');
+                        if (index < signupCodeInputs.length - 1) {
+                            signupCodeInputs[index + 1].focus();
+                        }
+                    } else {
+                        this.classList.remove('filled');
                     }
                 });
-                
-                const nextIndex = Math.min(digits.length, signupCodeInputs.length - 1);
-                signupCodeInputs[nextIndex].focus();
-            }
-        });
-    });
 
-    // code submission
-    if (signupVerifyForm) {
-        signupVerifyForm.addEventListener('submit', function(e) {
-            /*e.preventDefault();*/
-            
-            let code = '';
-            signupCodeInputs.forEach(input => {
-                code += input.value;
-            });
-            
-            console.log('SIGNUP: Verification code entered:', code);
-            
-            if (code.length !== 6) {
-                signupCodeInputs.forEach(input => {
-                    input.classList.add('error');
+                input.addEventListener('keydown', function (e) {
+                    if (e.key === 'Backspace' && this.value === '' && index > 0) {
+                        signupCodeInputs[index - 1].focus();
+                    }
                 });
-                
-                setTimeout(() => {
-                    signupCodeInputs.forEach(input => {
-                        input.classList.remove('error');
+
+                input.addEventListener('paste', function (e) {
+                    e.preventDefault();
+                    const digits = e.clipboardData
+                        .getData('text')
+                        .replace(/[^0-9]/g, '')
+                        .split('')
+                        .slice(0, 6);
+
+                    digits.forEach((d, i) => {
+                        if (signupCodeInputs[i]) {
+                            signupCodeInputs[i].value = d;
+                            signupCodeInputs[i].classList.add('filled');
+                        }
                     });
-                }, 500);
-                
-                alert('Please enter all 6 digits');
-                return;
-            }
-                        
-            closeSignupModal(signupVerifyModal);
-            
-            setTimeout(() => {
 
-                if (signupSuccessModal) {
-                    showSignupModal(signupSuccessModal);
-                } else {
-                    console.error('SIGNUP: Success modal not found!');
-                }
-
-            }, 400);
-        });
-    } else {
-        console.error('SIGNUP: Verify form not found!');
-    }
-
-    // Resend code button
-    if (signupResendBtn) {
-        signupResendBtn.addEventListener('click', function() {
-            
-            signupCodeInputs.forEach(input => {
-                input.value = '';
-                input.classList.remove('filled');
-                input.classList.remove('error');
+                    const next = Math.min(digits.length, signupCodeInputs.length - 1);
+                    signupCodeInputs[next].focus();
+                });
             });
-            
-            if (signupCodeInputs[0]) {
-                signupCodeInputs[0].focus();
+
+            // ── OTP submit ─────────────────────────────────────────
+            if (signupVerifyForm) {
+                signupVerifyForm.addEventListener('submit', function (e) {
+                    e.preventDefault();
+                    clearError();
+
+                    let code = '';
+                    signupCodeInputs.forEach(input => (code += input.value));
+
+                    if (code.length !== 6) {
+                        signupCodeInputs.forEach(i => i.classList.add('error'));
+                        setTimeout(() => signupCodeInputs.forEach(i => i.classList.remove('error')), 500);
+                        showError('Please enter all 6 digits.');
+                        return;
+                    }
+
+                    fetch('../backend/auth/email_verification.php', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                        body: new URLSearchParams({ code })
+                    })
+                    .then(res => res.json())
+                    .then(data => {
+                        if (data.success) {
+                            closeModal(signupVerifyModal);
+                            setTimeout(() => showModal(signupSuccessModal), 300);
+                        } else {
+                            signupCodeInputs.forEach(i => i.classList.add('error'));
+                            setTimeout(() => signupCodeInputs.forEach(i => i.classList.remove('error')), 500);
+                            showError(data.message || 'Verification failed.');
+                        }
+                    })
+                    .catch(() => showError('Server error. Please try again.'));
+                });
             }
-            
-            const email = signupUserEmailSpan ? signupUserEmailSpan.textContent : 'your email';
-            alert('Verification code resent to ' + email);
-            
-            this.disabled = true;
-            let countdown = 30;
-            const originalText = this.textContent;
-            
-            const interval = setInterval(() => {
-                this.textContent = `Resend in ${countdown}s`;
-                countdown--;
-                
-                if (countdown < 0) {
-                    clearInterval(interval);
-                    this.textContent = originalText;
-                    this.disabled = false;
+
+            // ── Resend OTP ─────────────────────────────────────────
+            if (signupResendBtn) {
+                signupResendBtn.addEventListener('click', function () {
+                    this.disabled = true;
+                    clearError();
+
+                    fetch('../backend/auth/resend_otp.php', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                        body: new URLSearchParams({ action: 'resend' })
+                    })
+                    .then(res => res.json())
+                    .then(data => {
+                        if (data.success) {
+                            signupCodeInputs.forEach(i => {
+                                i.value = '';
+                                i.classList.remove('filled', 'error');
+                            });
+                            signupCodeInputs[0].focus();
+
+                            let countdown = 30;
+                            const btn = this;
+                            const interval = setInterval(() => {
+                                btn.textContent = `Resend in ${countdown}s`;
+                                countdown--;
+                                if (countdown < 0) {
+                                    clearInterval(interval);
+                                    btn.textContent = 'Resend Code';
+                                    btn.disabled = false;
+                                }
+                            }, 1000);
+                        } else {
+                            showError(data.message || 'Could not resend code.');
+                            this.disabled = false;
+                        }
+                    })
+                    .catch(() => {
+                        showError('Server error. Please try again.');
+                        this.disabled = false;
+                    });
+                });
+            }
+
+            // ── Success → homepage ─────────────────────────────────
+            if (signupSuccessBtn) {
+                signupSuccessBtn.addEventListener('click', function () {
+                    closeModal(signupSuccessModal);
+                    setTimeout(() => (window.location.href = 'index.php'), 300);
+                });
+            }
+
+            // ── Close button + backdrop ────────────────────────────
+            if (closeSignupVerify) {
+                closeSignupVerify.addEventListener('click', () => closeModal(signupVerifyModal));
+            }
+
+            [signupVerifyModal, signupSuccessModal].forEach(modal => {
+                if (modal) {
+                    modal.addEventListener('click', e => {
+                        if (e.target === modal) closeModal(modal);
+                    });
                 }
+            });
+        }
 
-            }, 1000);
-        });
-    }
+        // ── Shared field error helper ──────────────────────────────
+        function showFieldError(fieldId, message) {
+            const field = document.getElementById(fieldId);
+            if (!field) return;
+            field.classList.add('error');
 
-    if (signupSuccessBtn) {
-        signupSuccessBtn.addEventListener('click', function() {
-            closeSignupModal(signupSuccessModal);
-            
-            setTimeout(() => {
-                window.location.href = 'index.php';
-            }, 300);
-        });
-    }
-
-    if (closeSignupVerify) {
-        closeSignupVerify.addEventListener('click', function() {
-            closeSignupModal(signupVerifyModal);
-        });
-    }
-
-    if (signupVerifyModal) {
-        signupVerifyModal.addEventListener('click', function(e) {
-            if (e.target === signupVerifyModal) {
-                closeSignupModal(signupVerifyModal);
+            let errEl = field.parentElement.querySelector('.fieldError');
+            if (!errEl) {
+                errEl = document.createElement('p');
+                errEl.className = 'fieldError';
+                errEl.style.cssText = 'color:red; font-size:12px; margin:4px 0 0;';
+                field.parentElement.appendChild(errEl);
             }
-        });
-    }
+            errEl.textContent = message;
 
-    if (signupSuccessModal) {
-        signupSuccessModal.addEventListener('click', function(e) {
-            if (e.target === signupSuccessModal) {
-                closeSignupModal(signupSuccessModal);
-            }
-        });
-    }
+            field.addEventListener('input', function () {
+                field.classList.remove('error');
+                errEl.textContent = '';
+            }, { once: true });
+        }
 
-    
-    console.log('SIGNUP: Sign Up Verification script loaded successfully!');
-    console.log('SIGNUP: signupVerifyModal:', signupVerifyModal ? 'FOUND' : 'NOT FOUND');
-    console.log('SIGNUP: signupSuccessModal:', signupSuccessModal ? 'FOUND' : 'NOT FOUND');
-    console.log('SIGNUP: registerForm:', registerForm ? 'FOUND' : 'NOT FOUND');
-    console.log('SIGNUP: signupCodeInputs:', signupCodeInputs.length, 'inputs');
-
+    }); // end DOMContentLoaded
 })();

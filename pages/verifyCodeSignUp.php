@@ -1,62 +1,75 @@
+<?php
+session_start();
+
+if (empty($_SESSION['pending_user_id'])) {
+    header('Location: index.php');
+    exit;
+}
+
+$pending_email = htmlspecialchars($_SESSION['pending_user_email'] ?? '');
+?>
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>Sign Up Verification</title>
-        <link rel="stylesheet" href="../assets/css/style.css">
-        <link rel="stylesheet" href="../assets/icons/fontawesome/css/all.min.css">
-        <link rel="stylesheet" href="../assets/css/HeaderHeroFooterStyle.css">
-        <link rel="stylesheet" href="../assets/css/CheckoutPageStyle.css">
-        <link rel="stylesheet" href="../assets/css/OrderAgainStyle.css">
-        <link rel="stylesheet" href="../assets/css/BlogPageStyle.css">
-        <link rel="stylesheet" href="../assets/css/AboutUsPageStyle.css">
-        <link rel="stylesheet" href="../assets/css/ProductDetailsStyle.css">
-        <link rel="stylesheet" href="../assets/css/CartPageStyle.css">
-        <link rel="stylesheet" href="../assets/css/RegLoginModalStyle.css">
-        <link rel="stylesheet" href="../assets/css/ProfilePageStyle.css">
-        <link rel="stylesheet" href="../assets/css/VerifySignUp.css">
-    </head>
+<head>
+    <title>Sign Up Verification – Homme d'Or</title>
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="../assets/icons/fontawesome/css/all.min.css">
+    <link rel="stylesheet" href="../assets/css/HeaderHeroFooterStyle.css">
+    <link rel="stylesheet" href="../assets/css/RegLoginModalStyle.css">
+    <link rel="stylesheet" href="../assets/css/VerifySignUp.css">
+</head>
+<body>
+    <?php include '../components/header.php'; ?>
 
-    <body>
-        <?php include '../components/header.php'; ?>
+    <main class="mainBG"></main>
 
-        <main class="mainBG">
-            <!-- Main content can go here if needed -->
-        </main>
+    <!-- OTP Modal -->
+    <div id="signupVerifyModal" class="signupVerificationModal">
+        <div class="signupVerificationContent">
+            <button class="signupCloseBtn" id="closeSignupVerify">
+                <i class="fas fa-times"></i>
+            </button>
 
-        <!-- Sign Up Verification Modal -->
-        <div id="signupVerifyModal" class="verificationModal">
-            <div class="verificationModalContent">
-                <button class="closeModal" id="closeSignupVerify">
-                    <i class="fas fa-times"></i>
-                </button>
+            <div class="signupModalHeader">
+                <h2>Enter Verification Code</h2>
+                <p class="signupModalSubtitle">
+                    We've sent a 6-digit code to
+                    <span id="signupUserEmail"><?= $pending_email ?></span>
+                </p>
+            </div>
 
-                <div class="modalHeader">
-                    <h2>Enter Verification Code</h2>
-                    <p class="modalSubtitle">We've sent a 6-digit code to <span id="signupUserEmail"></span></p>
+            <form id="signupVerifyForm">
+                <div class="signupCodeContainer">
+                    <?php for ($i = 0; $i < 6; $i++): ?>
+                        <input type="text" maxlength="1" class="signupCodeInput codeInput"
+                               data-index="<?= $i ?>" inputmode="numeric" autocomplete="off" />
+                    <?php endfor; ?>
                 </div>
 
-                <form id="signupVerifyForm">
-                    <div class="codeInputContainer">
-                        <input type="text" maxlength="1" class="codeInput" data-index="0" inputmode="numeric" />
-                        <input type="text" maxlength="1" class="codeInput" data-index="1" inputmode="numeric" />
-                        <input type="text" maxlength="1" class="codeInput" data-index="2" inputmode="numeric" />
-                        <input type="text" maxlength="1" class="codeInput" data-index="3" inputmode="numeric" />
-                        <input type="text" maxlength="1" class="codeInput" data-index="4" inputmode="numeric" />
-                        <input type="text" maxlength="1" class="codeInput" data-index="5" inputmode="numeric" />
-                    </div>
+                <p id="otpError" style="color:red; text-align:center; display:none; margin-top:8px;"></p>
 
-                    <button type="submit" class="verifyButton">Verify Code</button>
+                <button type="submit" class="signupVerifyBtn">Verify Code</button>
 
-                    <div class="resendSection">
-                        <p>Didn't receive the code?</p>
-                        <button type="button" class="resendButton" id="signupResendBtn">Resend Code</button>
-                    </div>
-                </form>
-            </div>
+                <div class="signupResendSection">
+                    <p>Didn't receive the code?</p>
+                    <button type="button" class="signupResendBtn" id="signupResendBtn">Resend Code</button>
+                </div>
+            </form>
         </div>
+    </div>
 
-        <?php include '../components/footer.php'; ?>
+    <!-- Success Modal -->
+    <div id="signupSuccessModal" class="signupSuccessModal">
+        <div class="signupSuccessContent">
+            <div class="signupModalHeader">
+                <h2>Account Verified!</h2>
+                <p>Your account has been successfully verified. You can now log in.</p>
+            </div>
+            <button id="signupSuccessBtn" class="signupSuccessBtn">Go to Homepage</button>
+        </div>
+    </div>
 
-        <script src="../assets/js/SignUpVerification.js"></script>
-    </body>
-</html>
+    <?php include '../components/footer.php'; ?>
+
+    <link rel="stylesheet" href="../assets/css/VerifySignUp.css">
+    <script src="../assets/js/VCSignUp.js"></script>

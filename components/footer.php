@@ -101,32 +101,8 @@
                 <h2>Enter Verification Code</h2>
                 <p class="signupModalSubtitle">We've sent a 6-digit code to <span id="signupUserEmail"></span></p>
             </div>
-            <form id="signupVerifyForm">
-                <div class="signupCodeContainer">
-                    <input type="text" maxlength="1" class="signupCodeInput" data-index="0" inputmode="numeric" autocomplete="off" />
-                    <input type="text" maxlength="1" class="signupCodeInput" data-index="1" inputmode="numeric" autocomplete="off" />
-                    <input type="text" maxlength="1" class="signupCodeInput" data-index="2" inputmode="numeric" autocomplete="off" />
-                    <input type="text" maxlength="1" class="signupCodeInput" data-index="3" inputmode="numeric" autocomplete="off" />
-                    <input type="text" maxlength="1" class="signupCodeInput" data-index="4" inputmode="numeric" autocomplete="off" />
-                    <input type="text" maxlength="1" class="signupCodeInput" data-index="5" inputmode="numeric" autocomplete="off" />
-                </div>
-                <button type="submit" class="signupVerifyBtn">Verify Code</button>
-                <div class="signupResendSection">
-                    <p>Didn't receive the code?</p>
-                    <button type="button" class="signupResendBtn" id="signupResendBtn">Resend Code</button>
-                </div>
-            </form>
         </div>
     </div>
-
-    <div id="signupSuccessModal" class="signupSuccessModal" style="display: none;">
-        <div class="signupSuccessContent">
-            <h2>Account Created!</h2>
-            <p>Your account has been created successfully.</p>
-            <button class="signupSuccessBtn" id="signupSuccessBtn">Continue</button>
-        </div>
-    </div>
-
 
     <div id="loginModal" class="modal">
 
@@ -409,7 +385,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <link rel="stylesheet" href="../assets/css/msgStyle.css">
-    <link rel="stylesheet" href="../assets/css/VerifySignUp.css">
 
     <script src="../assets/js/regModal.js"></script>
     <script src="../assets/js/logModal.js"></script>
@@ -420,5 +395,4 @@
 
     <script src="../assets/js/ChatBubble.js"></script>
     <script src="../assets/js/forgotPassword.js"></script>
-    <script src="../assets/js/VCSignUp.js"></script>
     <script src="../assets/js/MobileMenu.js"></script>

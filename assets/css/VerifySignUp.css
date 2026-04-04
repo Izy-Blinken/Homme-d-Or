@@ -2,7 +2,6 @@
 
 /* Sign Up Verification Modal */
 .signupVerificationModal {
-    display: none;
     position: fixed;
     top: 0;
     left: 0;
