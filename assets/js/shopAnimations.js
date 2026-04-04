@@ -252,3 +252,52 @@
         console.log('Shop page enhanced animations loaded!');
     });
  
+    document.addEventListener('DOMContentLoaded', () => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const highlightName = urlParams.get('highlight_name');
+
+    if (highlightName) {
+        // 1. Find the product card using your existing data-name attribute!
+        // We use CSS.escape to handle names with spaces safely
+        const targetProduct = document.querySelector(`.product-card[data-name="${CSS.escape(highlightName)}"]`);
+
+        if (targetProduct) {
+            // 2. Find which tab/page this product is hiding inside
+            const parentPage = targetProduct.closest('.page');
+            
+            if (parentPage) {
+                // Get the page ID (e.g., 'page3')
+                const pageId = parentPage.id;
+                
+                // Trigger your existing tab function to reveal the hidden page!
+                if (typeof showPage === 'function') {
+                    showPage(pageId);
+                } else {
+                    // Fallback just in case
+                    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+                    parentPage.classList.add('active');
+                }
+            }
+
+            // 3. Wait a tiny moment for the tab to open, then smoothly scroll
+            setTimeout(() => {
+                targetProduct.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                
+                // 4. Add the glowing blink effect once it's in view
+                setTimeout(() => {
+                    targetProduct.classList.add('highlight-blink');
+                }, 500); 
+            }, 100);
+            
+            // Clean up the URL so it doesn't blink again if they refresh
+            window.history.replaceState({}, document.title, window.location.pathname);
+        }
+    }
+    
+    // Optional alert if nothing was found
+    if (urlParams.get('search') === 'notfound') {
+        // You could replace this with your custom showGeneralToast function!
+        alert("We couldn't find a fragrance matching that exactly, but please browse our collection.");
+        window.history.replaceState({}, document.title, window.location.pathname);
+    }
+});

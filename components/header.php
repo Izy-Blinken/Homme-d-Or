@@ -74,13 +74,15 @@ $currentPage = basename($_SERVER['PHP_SELF']);
                 <a class="<?php echo ($currentPage == 'Profile.php') ? 'active' : ''; ?>" href="ContactUs.php">Profile</a>
             </li>
             <li>
-                <form action="search.php" method="GET" style="display: flex; align-items: center; padding: 10px 20px;">
+                <form action="search.php" method="GET" style="display: flex; align-items: center; padding: 10px 20px; position: relative;">
                     <button type="submit" style="background: none; border: none; cursor: pointer; padding: 0;">
                         <i class="fa-solid fa-search"></i>
                     </button>
-                    <input type="text" name="q" placeholder="Search..." required style="background: transparent; border: none; border-bottom: 1px solid #ccc; color: whitesmoke; margin-left: 10px; outline: none; width: 100%; font-size: 15px;">
+                    <input type="text" name="q" id="mobile-search" placeholder="Search..." required autocomplete="off" style="background: transparent; border: none; border-bottom: 1px solid #ccc; color: whitesmoke; margin-left: 10px; outline: none; width: 100%; font-size: 15px;">
+                    
+                    <div class="search-suggestions-dropdown mobile-suggestions-box" id="mobile-suggestions"></div>
                 </form>
-            </li>
+            </li>   
         </ul>
 
         
@@ -108,7 +110,35 @@ $currentPage = basename($_SERVER['PHP_SELF']);
                         <i class="fa-solid fa-search"></i>
                     </button>
                     <div class="search-input-wrapper">
-                        <input type="text" name="q" class="search-input" placeholder="Search for fragrances..." required>
+                        <input type="text" name="q" id="desktop-search" class="search-input" placeholder="Search for fragrances..." required autocomplete="off">
+                        
+                        <div class="search-suggestions-dropdown" id="desktop-suggestions" style="display: flex;">
+    
+                            <a href="#" class="search-suggestion-item">
+                                <img src="../assets/images/brand_images/placeholder.jpg" alt="Perfume 1" onerror="this.src='https://via.placeholder.com/45'">
+                                <div class="suggestion-info">
+                                    <span class="suggestion-name">Golden Night Special Edition</span>
+                                    <span class="suggestion-price">₱1,800.00</span>
+                                </div>
+                            </a>
+
+                            <a href="#" class="search-suggestion-item">
+                                <img src="../assets/images/brand_images/placeholder.jpg" alt="Perfume 2" onerror="this.src='https://via.placeholder.com/45'">
+                                <div class="suggestion-info">
+                                    <span class="suggestion-name">Midnight Oud Extrait</span>
+                                    <span class="suggestion-price">₱2,450.00</span>
+                                </div>
+                            </a>
+
+                            <a href="#" class="search-suggestion-item">
+                                <img src="../assets/images/brand_images/placeholder.jpg" alt="Perfume 3" onerror="this.src='https://via.placeholder.com/45'">
+                                <div class="suggestion-info">
+                                    <span class="suggestion-name">Velvet Rose & Vanilla</span>
+                                    <span class="suggestion-price">₱1,200.00</span>
+                                </div>
+                            </a>
+
+                        </div>
                     </div>
                 </form>
             </li>
@@ -178,5 +208,80 @@ $currentPage = basename($_SERVER['PHP_SELF']);
     </div>
     
     <script src="../assets/js/notif.js"></script>
+
+    <script>
+document.addEventListener('DOMContentLoaded', function() {
+    
+    function setupLiveSearch(inputId, dropdownId) {
+        const input = document.getElementById(inputId);
+        const dropdown = document.getElementById(dropdownId);
+        let debounceTimer;
+
+        if(!input || !dropdown) return;
+
+        input.addEventListener('input', function() {
+            clearTimeout(debounceTimer);
+            const query = this.value.trim();
+
+            // If input is less than 2 characters, hide dropdown
+            if (query.length < 2) {
+                dropdown.style.display = 'none';
+                return;
+            }
+
+            // Fake data to test the UI when typing
+            const fakeData = [
+                { product_id: 1, name: "Golden Night Special Edition", price: 1800, image: "placeholder.jpg" },
+                { product_id: 2, name: "Midnight Oud Extrait", price: 2450, image: "placeholder.jpg" }
+            ];
+
+            // Simulate a slight loading delay, just like a real database
+            debounceTimer = setTimeout(() => {
+                dropdown.innerHTML = ''; // Clear previous results
+                
+                // Build the fake items
+                fakeData.forEach(item => {
+                    const a = document.createElement('a');
+                    a.href = `#`; // Dummy link
+                    a.className = 'search-suggestion-item';
+                    
+                    const formattedPrice = new Intl.NumberFormat('en-PH', { style: 'currency', currency: 'PHP' }).format(item.price);
+                    
+                    a.innerHTML = `
+                        <img src="../assets/images/brand_images/placeholder.jpg" alt="${item.name}" onerror="this.src='https://via.placeholder.com/45'">
+                        <div class="suggestion-info">
+                            <span class="suggestion-name">${item.name}</span>
+                            <span class="suggestion-price">${formattedPrice}</span>
+                        </div>
+                    `;
+                    dropdown.appendChild(a);
+                });
+                
+                // FORCE THE DROPDOWN TO SHOW!
+                dropdown.style.display = 'flex'; 
+                
+            }, 300); 
+        });
+
+        // Hide dropdown if user clicks outside of the search area
+        document.addEventListener('click', function(e) {
+            if (!input.contains(e.target) && !dropdown.contains(e.target)) {
+                dropdown.style.display = 'none';
+            }
+        });
+        
+        // Show dropdown again if user clicks back into the input and it has text
+        input.addEventListener('focus', function() {
+            if (this.value.trim().length >= 2 && dropdown.innerHTML !== '') {
+                dropdown.style.display = 'flex';
+            }
+        });
+    }
+
+    // Initialize for both desktop and mobile search bars
+    setupLiveSearch('desktop-search', 'desktop-suggestions');
+    setupLiveSearch('mobile-search', 'mobile-suggestions');
+});
+</script>
 </section>
 
