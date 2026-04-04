@@ -210,8 +210,13 @@
                             <h3>Personal Information</h3>
                             
                             <div class="editModalFormGroup">
-                                <label>Full Name</label>
-                                <input type="text" id="editName" placeholder="Enter full name">
+                                <label>First Name</label>
+                                <input type="text" id="editName" placeholder="Enter first name">
+                            </div>
+
+                            <div class="editModalFormGroup">
+                                <label>Last Name</label>
+                                <input type="text" id="editLname" placeholder="Enter last name">
                             </div>
 
                             <div class="editModalFormGroup">

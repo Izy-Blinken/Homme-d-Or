@@ -93,8 +93,6 @@
     backdrop-filter: blur(15px);
     -webkit-backdrop-filter: blur(15px);
     border: 1px solid rgba(212,175,55,0.3); /* Made default border slightly dimmer */
-    border-radius: 8px; /* Added slight rounding to match your buttons */
-    
     /* NEW: Smooth transitions for hover effects */
     transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
 }
@@ -152,7 +150,6 @@
     padding: clamp(0.375rem, 1.5vw, 0.375rem) clamp(0.75rem, 2vw, 0.875rem);
     font-size: clamp(0.75rem, 1.5vw, 0.8125rem);
     font-weight: 600; 
-    border-radius: 4px; 
     cursor: pointer;
     transition: all 0.3s ease;
 }
@@ -298,7 +295,6 @@
     color: black;
     text-decoration: none;
     font-weight: 600;
-    border-radius: 4px;
     transition: all 0.3s ease;
     border: 1px solid #c9a961;
 }
@@ -341,7 +337,6 @@
     backdrop-filter: blur(15px);
     border: 1px solid rgba(212,175,55,0.3);
     color: white;
-    border-radius: 4px;
     outline: none;
     transition: border-color 0.3s ease;
 }
@@ -356,7 +351,6 @@
     border: 1px solid #c9a961;
     color: black;
     font-weight: 600;
-    border-radius: 4px;
     cursor: pointer;
     transition: all 0.3s ease;
 }
@@ -386,11 +380,9 @@
 }
 .history-table-container::-webkit-scrollbar-track {
     background: rgba(255, 255, 255, 0.05);
-    border-radius: 4px;
 }
 .history-table-container::-webkit-scrollbar-thumb {
     background: rgba(212,175,55,0.4);
-    border-radius: 4px;
 }
 .history-table-container::-webkit-scrollbar-thumb:hover {
     background: rgba(212,175,55,0.7);
@@ -424,7 +416,6 @@
     font-weight: 700;
     color: #c9a961;
     z-index: 10;
-    border-radius: 6px;
     border: 1px solid rgba(212,175,55,0.5);
     box-shadow: 0 4px 6px rgba(0,0,0,0.3);
 }
@@ -435,7 +426,6 @@
     backdrop-filter: blur(15px);
     -webkit-backdrop-filter: blur(15px);
     border: 1px solid rgba(212,175,55,0.2);
-    border-radius: 8px;
     color: white;
     font-size: 0.9rem;
     transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
@@ -459,7 +449,6 @@
 
 .product-col img {
     width: 3rem; /* Slightly larger image */
-    border-radius: 4px;
     border: 1px solid rgba(255,255,255,0.1);
 }
 
@@ -472,7 +461,6 @@
     color: #c9a961;
     text-decoration: none;
     font-weight: 600;
-    border-radius: 4px;
     transition: all 0.3s ease;
     text-align: center;
     font-size: 0.8rem;
