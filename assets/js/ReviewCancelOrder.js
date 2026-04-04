@@ -153,6 +153,7 @@ function showGeneralToast(message, type='success') {
         toast.classList.remove('show');
     }, 3000); 
 }
+
 function openViewModal(img, name, variant, qty,total, payment, date, status) {
     document.getElementById("viewImage").src = img;
     document.getElementById("viewName").textContent = name;

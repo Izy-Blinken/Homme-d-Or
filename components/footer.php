@@ -198,114 +198,220 @@
 
         <!-- =============================================
             TRANSACTION MODAL
-            Placed here (outside <main>) so it is never
-            trapped inside a CSS stacking context.
-            Uses unique class names (trans-*) to avoid
-            any conflict with the login/signup modals above.
         ============================================== -->
-        <div id="transactionModal" style="
-            display: none;
-            position: fixed;
-            z-index: 99999;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.65);
-        ">
-            <div class="trans-modal-content">
-            <span class="trans-close-btn">&times;</span>
-            <h2>TRANSACTION DETAILS</h2>
-            <div class="trans-modal-body">
-                <img src="../assets/images/products_images/nocturne.png" width="200" height="200">
-                <div class="trans-modal-text">
-                    <p><strong>Date:</strong> <span id="modalDate"></span></p>
-                    <p><strong>Product:</strong> <span id="modalProduct"></span></p>
-                    <p><strong>Price:</strong> <span id="modalPrice"></span></p>
-                    <p><strong>Quantity:</strong> <span id="modalQty"></span></p>
-                    <p><strong>Subtotal:</strong> <span id="modalSubtotal"></span></p>
-                    <p><strong class="status">Status:</strong> <span id="modalStatus"></span></p>
+        <!-- Unified Modal Start -->
+            <div id="unifiedModal" class="romcomOverlay">
+                <div class="romcomModalContent">
+                    <div class="romcomHeader">
+                        <span class="view-close-btn" onclick="closeUnifiedModal()">&times;</span>
+                        <h2 id="unifiedModalTitle">Details</h2>
+                    </div>
+                    <div class="romcomDivider"></div>
+
+                    <div class="romcomBody">
+                        <!-- Product Info -->
+                        <div class="view-section">
+                            <h4>PRODUCT</h4>
+                            <div class="view-product">
+                                <img id="unifiedImage" src="" width="70" alt="Product Image">
+                                <div>
+                                    <p id="unifiedProduct"></p>
+                                    <small id="unifiedVariant"></small>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Order/Transaction Info -->
+                        <div class="view-section">
+                            <h4>INFORMATION</h4>
+                            <p><strong>Quantity:</strong> <span id="unifiedQty"></span></p>
+                            <p><strong>Price:</strong> <span id="unifiedPrice"></span></p>
+                            <p><strong>Subtotal:</strong> <span id="unifiedSubtotal"></span></p>
+                            <p><strong>Payment Method:</strong> <span id="unifiedPayment"></span></p>
+                            <p><strong>Date:</strong> <span id="unifiedDate"></span></p>
+                            <p><strong>Status:</strong> <span id="unifiedStatus"></span></p>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
-    </div>
-        <style>
-    .trans-modal-content {
-        background: #222;
-        margin: 8px auto;
-        padding: 30px;
-        width: 500px;
-        max-width: 90%;
-        color: #fff;
-        border: 1px solid #c9a961;
-        position: relative;
-        display: flex;
-        flex-direction: column;
-        margin-top: 215px;
-    }
 
-    .trans-modal-content h2 {
-        margin-bottom: 1rem;
-        color: #c9a961;
-        font-size: 1.3rem;
-        text-align: center;
-    }
+            <style>
+            /* Overlay */
+            .romcomOverlay {
+                display: none;
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0,0,0,0.7);
+                z-index: 99999;
+                align-items: center;
+                justify-content: center;
+            }
 
-    .trans-modal-body {
-        display: flex;
-        gap: 20px; /* space between image and text */
-        align-items: flex-start;
-        justify-content: flex-start;
-        flex-wrap: wrap; 
-    }
+            /* Modal Content */
+            .romcomModalContent {
+                background: #2A2D34;
+                width: 100%;
+                max-width: 32rem;
+                display: flex;
+                flex-direction: column;
+                overflow: hidden;
+                color: #e2e8f0;
+            }
 
-    .trans-modal-body img {
-        border: 1px solid #c9a961;
-        flex-shrink: 0;
-        margin-left: 20px;
-        margin-bottom: 20px;
-    }
+            /* Header */
+            .romcomHeader {
+                padding: 2rem 2.5rem 1.5rem 2.5rem;
+                text-align: center;
+                position: relative;
+            }
+            .romcomHeader h2 {
+                font-size: 2rem;
+                font-weight: 700;
+                color: #c9a961;
+            }
+            .view-close-btn {
+                position: absolute;
+                top: 10px;
+                right: 15px;
+                font-size: 25px;
+                cursor: pointer;
+                color: #fff;
+                line-height: 1;
+                transition: color 0.2s ease;
+            }
+            .view-close-btn:hover { color: #c9a961; }
 
-    .trans-modal-text p {
-        margin-bottom: 0.6rem;
-        font-size: 0.95rem;
-        color: #fff;
-    }
+            /* Divider */
+            .romcomDivider {
+                height: 1px;
+                background: whitesmoke;
+                margin: 0 2rem;
+            }
 
-    .trans-modal-text strong {
-        color: #c9a961;
-    }
+            /* Body */
+            .romcomBody {
+                padding: 2rem 2.5rem;
+                display: flex;
+                flex-direction: column;
+                gap: 1.5rem;
+            }
 
-    .trans-close-btn {
-        position: absolute;
-        right: 15px;
-        top: 10px;
-        font-size: 25px;
-        cursor: pointer;
-        color: #fff;
-        line-height: 1;
-        transition: color 0.2s ease;
-    }
+            /* Sections */
+            .view-section {
+                display: flex;
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+            .view-section h4 {
+                font-size: 1.125rem;
+                font-weight: 600;
+                color: #c9a961;
+                margin-bottom: 0.5rem;
+            }
 
-    .trans-close-btn:hover {
-        color: #c9a961;
-    }
+            /* Product */
+            .view-product {
+                display: flex;
+                align-items: center;
+                gap: 1rem;
+            }
+            .view-product img {
+                width: 70px;
+                height: auto;
+                object-fit: cover;
+                border: 1px solid #c9a961;
+            }
+            .view-product p {
+                font-size: 1rem;
+                font-weight: 600;
+                margin: 0;
+            }
+            .view-product small {
+                font-size: 0.875rem;
+                color: whitesmoke;
+                margin: 0;
+            }
 
-    @media (max-width: 480px) {
-        .trans-modal-content {
-            width: 90%;
-            margin: 20% auto;
+            /* Info Text */
+            .view-section p {
+                font-size: 0.875rem;
+                margin: 0.25rem 0;
+                display: flex;
+                justify-content: space-between;
+                color: #e0c27f;
+            }
+            .view-section p strong { color: #fff; }
+
+            /* Scrollbar */
+            .romcomBody::-webkit-scrollbar {
+                width: 6px;
+            }
+            .romcomBody::-webkit-scrollbar-thumb { background: #c9a961; }
+            .romcomBody::-webkit-scrollbar-track { background: #2A2D34; }
+
+            /* Responsive */
+            @media (max-width: 640px) {
+                .romcomModalContent { max-width: 90%; }
+                .romcomBody { padding: 1.5rem; }
+                .view-product { gap: 0.75rem; }
+                .view-section p { flex-direction: column; align-items: flex-start; }
+            }
+            </style>
+
+            <script>
+            function openUnifiedModal(options) {
+                document.getElementById("unifiedModalTitle").textContent = options.title || "Details";
+                document.getElementById("unifiedImage").src = options.img || "";
+                document.getElementById("unifiedProduct").textContent = options.product || "";
+                document.getElementById("unifiedVariant").textContent = options.variant || "";
+                document.getElementById("unifiedQty").textContent = options.qty || "";
+                document.getElementById("unifiedPrice").textContent = options.price || "";
+                document.getElementById("unifiedSubtotal").textContent = options.subtotal || "";
+                document.getElementById("unifiedPayment").textContent = options.payment || "";
+                document.getElementById("unifiedDate").textContent = options.date || "";
+                document.getElementById("unifiedStatus").textContent = options.status || "";
+
+                const modal = document.getElementById("unifiedModal");
+                modal.classList.remove("closing");
+                modal.style.display = "flex";
+                setTimeout(() => modal.classList.add("show"), 10);
+            }
+
+            function closeUnifiedModal() {
+                const modal = document.getElementById("unifiedModal");
+                modal.classList.add("closing");
+                setTimeout(() => {
+                    modal.classList.remove("show", "closing");
+                    modal.style.display = "none";
+                }, 200);
+            }
+
+            document.addEventListener('DOMContentLoaded', function() {
+                const modal = document.getElementById('unifiedModal');
+                modal.addEventListener('click', function(e) {
+                    if (e.target === modal) closeUnifiedModal();
+                });
+            });
+
+        function viewTransaction(btn) {
+            const options = {
+                title: btn.dataset.title,
+                img: btn.dataset.img,
+                product: btn.dataset.product,
+                variant: btn.dataset.variant,
+                qty: btn.dataset.qty,
+                price: btn.dataset.price,
+                subtotal: btn.dataset.subtotal,
+                payment: btn.dataset.payment,
+                date: btn.dataset.date,
+                status: btn.dataset.status
+            };
+            openUnifiedModal(options);
         }
-        .trans-modal-body {
-            flex-direction: column;
-            align-items: center;
-            text-align: center;
-        }
-        .trans-modal-text p {
-            margin-left: 0;
-        }
-    }
-        </style>
+            </script>
 
         <div class="chatWidget">
             <button class="chatBubble" id="chatBubbleID">
