@@ -1,1507 +1,676 @@
+/* =========================================================
+   HOMME D'OR - LUXURY ADMIN PANEL STYLE
+   ========================================================= */
 
 * {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
-    font-family:'Spartan', sans-serif;
+    font-family: 'Spartan', sans-serif;
+    
 }
+
 
 body {
-    background-color: whitesmoke;
-    font-family:'Spartan', sans-serif;
+    /* Rich dark gradient to match the shop */
+    background: linear-gradient(145deg, #030c18 0%, #071525 50%, #0a1e36 100%) !important;
+    background-attachment: fixed !important;
+    color: white !important;
+    min-height: 100vh;
 }
 
-h1 { 
-    font-size: 2rem; font-weight: bold; 
+h1, h2 { 
+    font-weight: 700; 
+    color: white !important; 
+    text-transform: uppercase;
+    letter-spacing: 1px;
 }
 
-h2 { 
-    font-size: 2rem; margin-bottom: 1.5rem; font-weight: bold; 
+h1 { font-size: 2rem; }
+h2 { font-size: 1.8rem; margin-bottom: 1.5rem; }
+
+/* ================= ADMIN LOGIN OVERRIDES ================= */
+/* Forcefully overrides the inline styles in adminLogin.php */
+body[style*="whitesmoke"] {
+    background: linear-gradient(145deg, #030c18 0%, #071525 50%, #0a1e36 100%) !important;
 }
 
+body > div[style*="max-width:400px"] {
+    background: rgba(0, 0, 0, 0.6) !important;
+    backdrop-filter: blur(15px) !important;
+    -webkit-backdrop-filter: blur(15px) !important;
+    border: 1px solid rgba(212, 175, 55, 0.3) !important;
+    border-radius: 8px !important;
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6) !important;
+    color: white !important;
+}
 
-/* Navbar */
+body > div[style*="max-width:400px"] h2 {
+    color: #c9a961 !important;
+    letter-spacing: 2px;
+}
+
+body > div[style*="max-width:400px"] p {
+    color: #aaa !important;
+}
+
+div[style*="#fff0f0"] {
+    background: rgba(255, 107, 107, 0.1) !important;
+    border: 1px solid #ff6b6b !important;
+    color: #ff6b6b !important;
+    border-radius: 4px;
+}
+
+/* ================= NAVBAR ================= */
 .navbar {
     display: flex;
     align-items: center;
     justify-content: space-between;
     padding: 1rem 2rem;
-    background: white;
-    border-bottom: 1px solid #e8e8e8;
+    background: rgba(14, 16, 31, 0.95) !important;
+    border-bottom: 1px solid rgba(212, 175, 55, 0.3) !important;
     position: sticky;
     top: 0;
     z-index: 100;
     gap: 1rem;
 }
 
-.navbar-left {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    flex-shrink: 0;
-}
-
-.navbar-title {
-    font-size: 1.25rem;
-    font-weight: bold;
-    white-space: nowrap;
-}
+.navbar-left { display: flex; align-items: center; gap: 1rem; flex-shrink: 0; }
+.navbar-title { font-size: 1.25rem; font-weight: 700; color: #c9a961 !important; white-space: nowrap; text-transform: uppercase; letter-spacing: 2px; }
 
 .navbar-search {
-    display: flex;
-    align-items: center;
-    background: whitesmoke;
-    border-radius: 0;
-    padding: 0.5rem 1rem;
-    gap: 0.5rem;
-    width: 300px;
-    flex-shrink: 1;
-    min-width: 0;
+    display: flex; align-items: center;
+    background: rgba(0, 0, 0, 0.4) !important;
+    border: 1px solid rgba(212, 175, 55, 0.3) !important;
+    border-radius: 4px !important;
+    padding: 0.5rem 1rem; gap: 0.5rem; width: 300px;
+    transition: all 0.3s;
 }
-
-.navbar-search input {
-    border: none;
-    background: transparent;
-    font-size: 0.95rem;
-    outline: none;
-    width: 100%;
-    font-family: 'Franklin Gothic Medium', sans-serif;
-}
+.navbar-search:focus-within { border-color: #c9a961 !important; box-shadow: 0 0 10px rgba(201, 169, 97, 0.2); }
+.navbar-search input { border: none; background: transparent; font-size: 0.95rem; color: white !important; outline: none; width: 100%; }
 
 .navbar-avatar {
-    width: 38px;
-    height: 38px;
-    background: #1a2433;
-    color: white;
-    border-radius: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: bold;
-    font-size: 1rem;
-    flex-shrink: 0;
+    width: 38px; height: 38px;
+    background: rgba(201, 169, 97, 0.15) !important;
+    border: 1px solid #c9a961 !important;
+    color: #c9a961 !important;
+    border-radius: 50% !important;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: bold; font-size: 1rem; flex-shrink: 0;
 }
 
+.hamburger { background: none; border: none; cursor: pointer; display: flex; flex-direction: column; gap: 5px; }
+.hamburger span { display: block; width: 24px; height: 2px; background: #c9a961 !important; }
 
-/* HAMBURGER */
-.hamburger {
-    background: none;
-    border: none;
-    cursor: pointer;
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-    flex-shrink: 0;
-}
-
-.hamburger span {
-    display: block;
-    width: 24px;
-    height: 3px;
-    background: black;
-    border-radius: 0;
-}
-
-
-/* SIDEBAR & OVERLAY */
+/* ================= SIDEBAR ================= */
 .sidebar {
-    position: fixed;
-    top: 0; left: 0;
-    width: 20rem;
-    height: 100vh;
-    background: white;
-    z-index: 2000;
-    transform: translateX(-100%);
-    transition: transform 0.3s ease-in-out;
-    box-shadow: 10px 0 20px rgba(0,0,0,0.08);
-    overflow-y: auto;
+    position: fixed; top: 0; left: 0; width: 20rem; height: 100vh;
+    background: rgb(14, 16, 31) !important;
+    border-right: 1px solid rgba(212, 175, 55, 0.2) !important;
+    z-index: 2000; transform: translateX(-100%); transition: transform 0.3s ease-in-out;
+    box-shadow: 10px 0 20px rgba(0,0,0,0.5); overflow-y: auto;
 }
-
+.sidebar.active { transform: translateX(0); }
 .sidebar-header {
-    padding: 1.5rem 2rem;
-    font-size: 1.1rem;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border-bottom: 1px solid #e8e8e8;
-}
-
-.sidebar.active {
-    transform: translateX(0);
-}
-
-.overlay {
-    position: fixed;
-    top: 0; left: 0;
-    width: 100vw;
-    height: 100vh;
-    background: gray;
-    z-index: 1500;
-    display: none;
-    opacity: 0;
-    transition: opacity 0.3s ease;
-}
-
-.overlay.show {
-    display: none;
-    opacity: 0.5;
-}
-
-.close-icon {
-    background: none;
-    color: #555;
-    border: none;
-    font-size: 1.75rem;
-    cursor: pointer;
-    line-height: 1;
-}
-
-.close-icon:hover {
-    color: black;
-    transform: scale(1.1);
-    transition: transform 0.2s ease;
-}
-
-.menu-opt {
-    display: block;
-    padding: 1rem 1.5rem;
-    color: gray;
-    text-decoration: none;
-    transition: all 0.2s;
-    border-left: 4px solid transparent;
-    font-size: 0.95rem;
-}
-
-.menu-opt:hover { 
-    background: #f8f9fa; color: black; 
-}
-
-.menu-opt.active {
-    background: #f8f9fa;
-    color: black;
-    font-weight: bold;
-    border-left-color: black;
-}
-
-
-/* CONTAINER */
-.container {
-    padding: 2rem;
-    max-width: 1400px;
-    margin: 0 auto;
-}
-.page-title {
-    margin-bottom: 1.5rem;
-    font-weight: 800;
-    font-size: 1.75rem;
-}
-
-
-/* STAT / REPORT CARDS GRID */
-.stats-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 1.5rem;
-    margin-bottom: 2rem;
-}
-
-.stat-card {
-    background: white;
-    padding: 1.5rem;
-    border-radius: 0;
-    box-shadow: 0 1px 6px rgba(0,0,0,0.07);
-    border: 1px solid #efefef;
-}
-
-.stat-label {
-    display: block;
-    color: #888;
-    font-weight: 700;
-    font-size: 0.75rem;
-    letter-spacing: 0.04em;
-    padding-bottom: 0.25rem;
-}
-
-.stat-value {
-    margin: 0.5rem 0;
-    font-size: 1.75rem;
-    font-weight: 800;
-    color: #1a2433;
-}
-
-.stat-change { 
-    font-size: 0.82rem; 
-}
-
-.positive { 
-    color: #2ecc71; font-weight: 600; 
-}
-
-.stat-change { 
-    font-size: 0.82rem; 
-}
-
-.negative { 
-    color: #e74c3c; font-weight: 600; 
-}
-
-/* TABLE */
-.table-container {
-    background: white;
-    padding: 1.5rem;
-    border-radius: 0;
-    box-shadow: 0 1px 6px rgba(0,0,0,0.07);
-    border: 1px solid #efefef;
-}
-
-.table-title {
-    margin-bottom: 1.25rem;
-    font-size: 1.1rem;
-    font-weight: 700;
-}
-
-.responsive-table { 
-    overflow-x: auto; 
-}
-
-table { 
-    width: 100%; border-collapse: collapse; text-align: left; 
-}
-
-th {
-    background: whitesmoke;
-    padding: 0.85rem 1rem;
-    color: #777;
-    font-size: 0.8rem;
-    letter-spacing: 0.04em;
-    white-space: nowrap;
-}
-
-td {
-
-    padding: 1rem;
-    border-bottom: 1px solid #f3f3f3;
-    color: #333;
-    font-size: 0.9rem;
-}
-
-tr:last-child td { 
-    border-bottom: none; 
-}
-
-tr:hover td { 
-    background: #fafafa; 
-}
-
-
-/* STATUS BADGES */
-.badge {
-    display: inline-block;
-    padding: 4px 12px;
-    border-radius: 0;
-    font-size: 0.8rem;
-    font-weight: 600;
-    white-space: nowrap;
-}
-.badge-pending { 
-    background: #fff3e0; color: #e65100;
- }
-
-.badge-processing { 
-    background: #e8eaf6; color: #3949ab; 
-}
-
-.badge-shipped { 
-    background: #f3e5f5; color: #7b1fa2; 
-}
-
-.badge-delivered { 
-    background: #e8f5e9; color: #2e7d32; 
-}
-
-.badge-cancelled { 
-    background: #fce4ec; color: #c62828; 
-}
-
-.badge-in-stock { 
-    background: #e6f9ee; color: #2a7a45; border: 1px solid #b7e5c8; 
-}
-
-.badge-low-stock { 
-    background: #fff8e1; color: #a07000; border: 1px solid #ffe082; 
-}
-
-.badge-out-of-stock { 
-    background: #fff0f0; color: #c00;    border: 1px solid #f5c2c2; 
-}
-
-
-/* BUTTONS — shared */
-.btn-view-details {
-    padding: 8px 18px; background: #26a69a; color: white;
-    border: none; border-radius: 0; font-weight: bold;
-    cursor: pointer; font-size: 0.85rem;
-    font-family: 'Franklin Gothic Medium', sans-serif;
-    white-space: nowrap;
-}
-
-.btn-view-details:hover { 
-    background: #00897b; 
-}
-
-.btn-edit {
-    padding: 6px 14px; background: goldenrod; color: white;
-    border: none; border-radius: 0; font-weight: bold;
-    cursor: pointer; font-size: 0.82rem; margin-right: 4px;
-}
-
-.btn-edit:hover { 
-    background: #b8860b; 
-}
-
-.btn-delete {
-    padding: 6px 14px; background: #dc3545; color: white;
-    border: none; border-radius: 0; font-weight: bold;
-    cursor: pointer; font-size: 0.82rem;
-}
-
-.btn-delete:hover { 
-    background: #b02a37; 
-}
-
-.reset-btn {
-    padding: 9px 18px; border: 1px solid #ccc; background: white;
-    border-radius: 0; font-weight: bold; cursor: pointer;
-    font-size: 0.9rem; font-family: 'Franklin Gothic Medium', sans-serif;
-    white-space: nowrap; align-self: flex-end;
-}
-
-.reset-btn:hover { 
-    background: whitesmoke; 
-}
-
-
-/* FILTER BAR */
-.filter-bar {
-    background: white;
-    border-radius: 0;
-    box-shadow: 0 1px 6px rgba(0,0,0,0.07);
-    border: 1px solid #efefef;
-    padding: 1.25rem 1.5rem;
-    display: flex;
-    align-items: flex-end;
-    gap: 1.25rem;
-    flex-wrap: wrap;
-    margin-bottom: 2rem;
-}
-
-.filter-group { 
-    display: flex; flex-direction: column; 
-}
-
-.filter-group label {
-    font-size: 0.78rem; font-weight: bold;
-    color: #555; margin-bottom: 0.4rem; letter-spacing: 0.03em;
-}
-
-.filter-group select,
-.filter-group input {
-    padding: 8px 12px; border: 1px solid #ccc; border-radius: 0;
-    font-size: 0.9rem; background: white; min-width: 150px;
-    font-family: 'Franklin Gothic Medium', sans-serif;
-}
-
-.filter-group.search-group input { 
-    min-width: 200px; 
-}
-
-
-/* CATEGORY TABS (Product Management) */
-.category-tabs {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 1.5rem;
-    flex-wrap: wrap;
-    gap: 0.75rem;
-}
-
-.tabs-group { 
-    display: flex; gap: 0.5rem; flex-wrap: wrap; 
-}
-
-.tab-btn {
-    padding: 8px 16px; border: 1px solid #ccc; background: white;
-    border-radius: 0; font-size: 0.88rem; cursor: pointer;
-    font-family: 'Franklin Gothic Medium', sans-serif; transition: all 0.2s;
-    text-decoration: none;
-    color: black;
-}
-
-.tab-btn:hover { 
-    background: whitesmoke; 
-}
-
-.tab-btn.active { 
-    background: black; color: white; border-color: black;
- }
-
-.add-product-btn {
-    padding: 10px 20px; background: black; color: white;
-    border: none; border-radius: 0; font-size: 0.9rem;
-    font-weight: bold; cursor: pointer;
-    font-family: 'Franklin Gothic Medium', sans-serif;
-    white-space: nowrap;
-}
-
-.add-product-btn:hover { 
-    background: #333; 
-}
-
-/* Product table image cell */
-.product-img-cell {
-    width: 44px; height: 44px; background: #e0e0e0;
-    border-radius: 0; border: 1px solid #d0d0d0; flex-shrink: 0;
-}
-
-
-/* SALES REPORT TABS */
-.report-btns {
-    display: flex;
-    gap: 0;
-    margin-bottom: 1.5rem;
-    border-bottom: 2px solid #e8e8e8;
-}
-
-.schedule-btn {
-    background: transparent; border: none; cursor: pointer;
-    font-size: 1rem; font-weight: 600; padding: 0.6rem 1.25rem 0.75rem;
-    color: #888; position: relative;
-    font-family: 'Franklin Gothic Medium', sans-serif;
-    transition: color 0.2s;
-}
-
-.schedule-btn:hover { 
-    color: #333; 
-}
-
-.schedule-btn.active { 
-    color: #1a2433; 
-}
-
-.schedule-btn.active::after {
-    content: '';
-    position: absolute;
-    bottom: -2px; left: 50%;
-    transform: translateX(-50%);
-    width: 70%; height: 3px;
-    background: #c8a840;
-    border-radius: 0;
-}
-
-/* Report cards */
-.report-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 1.5rem;
-    margin-bottom: 2rem;
-}
-
-.report-card {
-    background: white; padding: 1.5rem; border-radius: 0;
-    box-shadow: 0 1px 6px rgba(0,0,0,0.07); border: 1px solid #efefef;
-}
-
-.report-label {
-    display: block; color: #888; font-size: 0.78rem;
-    font-weight: 700; letter-spacing: 0.04em; margin-bottom: 0.4rem;
-}
-
-.report-value {
-    font-size: 2rem; font-weight: 800; color: #1a2433;
-    line-height: 1.1; margin-bottom: 0.4rem;
-}
-
-.report-change { 
-    font-size: 0.82rem; 
-}
-
-/* Best selling products */
-.rank-badge {
-    width: 30px; height: 30px; background: #c8a840; color: white;
-    border-radius: 0; display: flex; align-items: center;
-    justify-content: center; font-weight: 800; font-size: 0.9rem; flex-shrink: 0;
-}
-
-.product-row {
-    display: flex; align-items: center; gap: 1rem;
-    padding: 1rem 0; border-bottom: 1px solid #f3f3f3;
-}
-
-.product-row:last-child { 
-    border-bottom: none; 
-}
-
-.product-row-info { 
-    flex: 1; min-width: 0; 
-}
-
-.product-row-name { 
-    font-weight: 700; font-size: 0.95rem; color: #1a2433; 
-}
-
-.product-row-units { 
-    font-size: 0.82rem; color: #888; margin-top: 2px; 
-}
-
-.product-row-price { 
-    font-weight: 700; font-size: 0.95rem; color: #1a2433; white-space: nowrap; 
-}
-
-
-/* PROFILE PAGE */
-.profile-header-card {
-    background: white; border-radius: 0;
-    box-shadow: 0 1px 6px rgba(0,0,0,0.07); border: 1px solid #efefef;
-    padding: 1.25rem 1.5rem;
-    display: flex; align-items: center;
-    justify-content: space-between; gap: 1rem;
-    margin-bottom: 1.5rem;
-    flex-wrap: wrap;
-}
-
-.profile-header-left { 
-    display: flex; align-items: center; gap: 1rem; 
-}
-
-.profile-avatar {
-    width: 52px; height: 52px; background: #1a2433; color: white;
-    border-radius: 0; display: flex; align-items: center;
-    justify-content: center; font-weight: 800; font-size: 1.3rem; flex-shrink: 0;
-}
-
-.profile-name { 
-    font-size: 1.1rem; font-weight: 700; color: #1a2433; 
-}
-
-.profile-role { 
-    font-size: 0.82rem; color: #888; margin-top: 2px; 
-}
-
-.logout-btn {
-    padding: 8px 18px; background: #dc3545; color: white;
-    border: none; border-radius: 0; font-weight: bold;
-    cursor: pointer; font-size: 0.85rem;
-    font-family: 'Franklin Gothic Medium', sans-serif;
-    white-space: nowrap;
-}
-
-.logout-btn:hover { 
-    background: #b02a37; 
-}
-
-.two-col-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 1.5rem;
-    margin-bottom: 1.5rem;
-}
-.info-card {
-    background: white; border-radius: 0;
-    box-shadow: 0 1px 6px rgba(0,0,0,0.07); border: 1px solid #efefef;
-    padding: 1.5rem;
-}
-
-.info-card-title {
-    font-size: 0.95rem; font-weight: 700; color: #1a2433;
-    margin-bottom: 1.25rem; padding-bottom: 0.75rem;
-    border-bottom: 1px solid #f0f0f0;
-}
-
-.info-row {
-    display: flex; justify-content: space-between;
-    align-items: center; padding: 0.55rem 0;
-    border-bottom: 1px solid #f8f8f8; font-size: 0.9rem;
-    gap: 1rem;
-}
-
-.info-row:last-child { 
-    border-bottom: none; 
-}
-
-.info-row-label { 
-    color: #666; flex-shrink: 0; 
-}
-
-.info-row-value { 
-    color: #1a2433; font-weight: 500; text-align: right; word-break: break-word; 
-}
-
-.info-row-value.positive { 
-    color: #2ecc71; font-weight: 700; 
-}
-
-.customer-stats-card {
-    background: white; border-radius: 0;
-    box-shadow: 0 1px 6px rgba(0,0,0,0.07); border: 1px solid #efefef;
-    padding: 1.5rem; margin-bottom: 1.5rem;
-}
-
-.customer-stats-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 1.5rem;
-    margin-top: 1rem;
-}
-
-.cstat-label {
-    font-size: 0.72rem; font-weight: 700; color: #888;
-    letter-spacing: 0.04em; margin-bottom: 0.4rem;
-}
-
-.cstat-value {
-    font-size: 1.75rem; font-weight: 800; color: #1a2433;
-    line-height: 1.1; margin-bottom: 0.3rem;
-}
-
-.cstat-change { 
-    font-size: 0.78rem; color: #2ecc71; font-weight: 600; 
-}
-
-.edit-profile-btn {
-    padding: 10px 20px; background: #1a2433; color: white;
-    border: none; border-radius: 0; font-weight: bold;
-    cursor: pointer; font-size: 0.9rem;
-    font-family: 'Franklin Gothic Medium', sans-serif;
-}
-
-.edit-profile-btn:hover { 
-    background: #2c3e55; 
-}
-
-
-/* MODAL — shared */
-.modal-overlay {
-    position: fixed; top:0; left:0; width:100vw; height:100vh;
-    background: rgba(0,0,0,0.4); z-index: 3000;
-    display: none; align-items: center; justify-content: center;
-    padding: 1rem;
-}
-
-.modal-overlay.show { 
-    display: flex; 
-}
-
-.modal {
-    background: white; border-radius: 0; padding: 2rem;
-    width: 100%; max-width: 500px;
-    box-shadow: 0 8px 40px rgba(0,0,0,0.2);
-    max-height: 90vh; overflow-y: auto;
-}
-
-.modal-header {
+    padding: 1.5rem 2rem; font-size: 1.1rem; color: #c9a961 !important;
     display: flex; justify-content: space-between; align-items: center;
-    margin-bottom: 1.5rem; border-bottom: 1px solid #eee; padding-bottom: 1rem;
+    border-bottom: 1px solid rgba(212, 175, 55, 0.2) !important;
+}
+.menu-opt {
+    display: block; padding: 1rem 1.5rem; color: #aaa !important;
+    text-decoration: none; transition: all 0.2s; border-left: 4px solid transparent; font-size: 0.95rem;
+}
+.menu-opt:hover { background: rgba(201, 169, 97, 0.05) !important; color: #c9a961 !important; }
+.menu-opt.active { background: rgba(201, 169, 97, 0.1) !important; color: #c9a961 !important; font-weight: bold; border-left-color: #c9a961 !important; }
+
+.overlay { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0.8) !important; z-index: 1500; display: none; opacity: 0; transition: opacity 0.3s ease; }
+.overlay.show { display: block; opacity: 1; }
+.close-icon { background: none; color: #c9a961 !important; border: none; font-size: 1.75rem; cursor: pointer; }
+
+/* ================= CONTAINERS & GLASS CARDS ================= */
+.container { padding: 2.5rem 2rem; max-width: 1400px; margin: 0 auto; }
+.page-title { margin-bottom: 1.5rem; font-weight: 700; font-size: 1.75rem; color: white !important; }
+
+.stat-card, .table-container, .filter-bar, .report-card, .profile-header-card, .info-card, .customer-stats-card, .chart-container, .detail-grid {
+    background: rgba(0, 0, 0, 0.6) !important;
+    backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
+    border: 1px solid rgba(212,175,55,0.3) !important;
+    border-radius: 6px !important; padding: 1.5rem;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3) !important;
+    color: white !important;
 }
 
-.modal-title { 
-    font-size: 1.1rem; font-weight: bold; 
+.stats-grid, .report-grid, .customer-stats-grid { gap: 1.5rem; margin-bottom: 2rem; display: grid; }
+.stats-grid, .customer-stats-grid { grid-template-columns: repeat(4, 1fr); }
+.report-grid { grid-template-columns: repeat(3, 1fr); }
+.two-col-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 1.5rem; }
+
+.stat-label, .report-label, .cstat-label, .info-card-title {
+    display: block; color: #c9a961 !important; font-weight: 600; font-size: 0.75rem;
+    letter-spacing: 1px; padding-bottom: 0.25rem; text-transform: uppercase;
+    border-bottom-color: rgba(255, 255, 255, 0.1) !important;
+}
+/* =========================================================
+   TEXT SPACING & COLLISION FIXES
+   ========================================================= */
+
+/* 1. Fix the giant overlapping text in Profile / Info Cards */
+.stat-value, .report-value, .cstat-value { 
+    margin: 0.5rem 0 !important; 
+    font-size: 1.8rem !important; 
+    font-weight: 800 !important; 
+    color: white !important; 
+    line-height: 1.2 !important; /* Prevents tall numbers from clipping */
 }
 
-.modal-close {
-    background:none; border:none; font-size:1.75rem;
-    cursor:pointer; color:gray; line-height:1; flex-shrink: 0;
+/* This resets the normal list text back to a clean, readable size */
+.info-row-value { 
+    margin: 0 !important; 
+    font-size: 0.95rem !important; 
+    font-weight: 600 !important; 
+    color: white !important; 
+    line-height: 1.5 !important;
 }
 
-.modal-close:hover {
-     color:black; 
+/* 2. Space out the rows so text doesn't touch the lines */
+.info-row, .product-row, .category-list-item, .review-row { 
+    padding: 1rem 0 !important; 
+    gap: 1.5rem !important; 
 }
 
-.form-row {
-     display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; 
+/* 3. Stop Filter Labels from touching the input boxes */
+.filter-group label, .form-group label {
+    margin-bottom: 8px !important; 
+    display: block !important;
 }
 
-.form-group {
-     margin-bottom: 1rem; 
-}
-
-.form-group label {
-    display:block; font-size:0.78rem; font-weight:bold;
-    color:#555; margin-bottom:0.35rem;
-}
-
-.form-group input,
-.form-group select {
-    width:100%; padding:8px 10px; border:1px solid #ccc; border-radius:0;
-    font-size:0.9rem; font-family:'Franklin Gothic Medium', sans-serif;
-}
-
-.modal-footer { 
-    display:flex; justify-content:flex-end; gap:0.75rem; margin-top:1.5rem; flex-wrap: wrap; 
-}
-
-.btn-cancel {
-    padding:8px 20px; background:transparent; border:1px solid #ccc;
-    border-radius:0; cursor:pointer; font-weight:bold;
-}
-
-.btn-save {
-    padding:8px 22px; background:#1a2433; color:white;
-    border:none; border-radius:0; cursor:pointer; font-weight:bold;
-}
-
-.btn-save:hover { 
-    background:#2c3e55; 
-}
-
-.detail-grid {
-    display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;
-    background: whitesmoke; border-radius: 0; padding: 1rem; margin-bottom: 1rem;
-}
-
-.detail-item label { 
-    display:block; font-size:0.72rem; font-weight:bold; color:gray; margin-bottom:0.25rem; 
-}
-
-.detail-item span { 
-    font-size:0.9rem; font-weight:600; color:#1a2433; word-break: break-word; 
-}
-
-.btn-close-modal {
-    padding: 8px 22px; background: #1a2433; color: white; border: none;
-    border-radius: 0; cursor: pointer; font-weight: bold;
-}
-
-.btn-close-modal:hover { 
-    background: #333; 
-}
-
-.status-select {
-    padding: 6px 10px; border: 1px solid #ccc; border-radius: 0;
-    font-size: 0.9rem; font-family: 'Franklin Gothic Medium', sans-serif; width: 100%;
-}
-
-
-/* RESPONSIVE BREAKPOINTS */
-@media (max-width: 1024px) {
-
-    .stats-grid {
-        grid-template-columns: repeat(2, 1fr);
-    }
-
-    .report-grid {
-        grid-template-columns: repeat(2, 1fr);  /* 3rd card drops to next row */
-    }
-
-    .customer-stats-grid {
-        grid-template-columns: repeat(2, 1fr);
-    }
-
-    .navbar-search {
-        width: 220px;
-    }
-
-    .filter-group select,
-    .filter-group input {
-        min-width: 130px;
-    }
-}
-
-@media (max-width: 768px) {
-
-    .container {
-        padding: 1.25rem;
-    }
-
-    .navbar {
-        padding: 0.75rem 1rem;
-    }
-
-    .navbar-title {
-        font-size: 1rem;
-    }
-
-    .navbar-search {
-        width: 180px;
-    }
-
-    h2, .page-title {
-        font-size: 1.4rem;
-    }
-
-    /* Stats — 2 columns on tablet */
-    .stats-grid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 1rem;
-    }
-
-    .report-grid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 1rem;
-    }
-
-    .two-col-grid {
-        grid-template-columns: 1fr;
-    }
-
-    .customer-stats-grid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 1rem;
-    }
-
-    /* Category tabs wrap and stack with add button */
-    .category-tabs {
-        flex-direction: column;
-        align-items: flex-start;
-    }
-
-    .add-product-btn {
-        width: 100%;
-        text-align: center;
-    }
-
-    /* Filter bar stacks vertically */
-    .filter-bar {
-        flex-direction: column;
-        align-items: stretch;
-        gap: 0.75rem;
-    }
-
-    .filter-group select,
-    .filter-group input {
-        width: 100%;
-        min-width: unset;
-    }
-
-    .filter-group.search-group input { 
-        min-width: unset; 
-    }
-
-    .reset-btn { 
-        width: 100%; text-align: center; 
-    }
-
-    .form-row {
-        grid-template-columns: 1fr;
-    }
-
-    .sidebar { 
-        width: 16rem; 
-    }
-}
-
-@media (max-width: 480px) {
-
-    .container { 
-        padding: 1rem; 
-    }
-
-    .navbar {
-        padding: 0.6rem 0.75rem;
-        gap: 0.5rem;
-    }
-
-    .navbar-title { 
-        font-size: 0.9rem; 
-    }
-
-    .navbar-search {
-         display: none; 
-    }
-
-    h2, .page-title { 
-        font-size: 1.2rem; 
-    }
-
-    .stats-grid {
-        grid-template-columns: 1fr;
-        gap: 0.75rem;
-    }
-
-    .report-grid {
-        grid-template-columns: 1fr;
-        gap: 0.75rem;
-    }
-
-    .stat-value, .report-value { 
-        font-size: 1.5rem; 
-    }
-
-    /* Profile */
-    .two-col-grid { 
-        grid-template-columns: 1fr; gap: 0.75rem; 
-    }
-
-    .customer-stats-grid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 0.75rem;
-    }
-
-    .cstat-value { 
-        font-size: 1.35rem; 
-    }
-
-    .profile-header-card { 
-        flex-direction: column; align-items: flex-start;
-     }
-    .logout-btn { 
-        width: 100%; text-align: center; 
-    }
-
-    .responsive-table { 
-        -webkit-overflow-scrolling: touch; 
-    }
-
-    td, th { 
-        padding: 0.65rem 0.6rem; font-size: 0.82rem; 
-    }
-
-    .sidebar { 
-        width: 100%; 
-    }
-
-    .schedule-btn {
-        font-size: 0.88rem;
-        padding: 0.5rem 0.9rem 0.65rem;
-    }
-
-    .tabs-group { 
-        gap: 0.35rem; 
-    }
-    .tab-btn { 
-        padding: 6px 12px; font-size: 0.82rem;
-     }
-
-    .modal { 
-        padding: 1.25rem; 
-    }
-
-    .form-row { 
-        grid-template-columns: 1fr; 
-    }
-
-    .detail-grid {
-         grid-template-columns: 1fr; 
-    }
-
-    .filter-bar { 
-        padding: 1rem; gap: 0.65rem; 
-    }
-
-    .filter-group select, .filter-group input { 
-        font-size: 0.85rem; 
-    }
-}
-
-
-.suggestions-box {
-    position: absolute;
-    background: #fff;
-    border: 1px solid #e0e0e0;
-    border-radius: 6px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-    z-index: 1000;
-    width: 100%;
-    max-height: 250px;
-    overflow-y: auto;
-    margin-top: 56px;
-}
-
-.suggestion-item {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px 14px;
-    cursor: pointer;
-    font-size: 0.9rem;
-    border-bottom: 1px solid #f5f5f5;
-}
-
-.suggestion-item:hover {
-    background: #f9f9f9;
-}
-
-.suggestion-name {
-    color: #333;
-    font-weight: 500;
-}
-
-.suggestion-price {
-    color: #888;
-    font-size: 0.85rem;
-}
-
-/* Sales Report */
-
-.report-tabs {
-    display: flex;
-    gap: 0.5rem;
-    margin-bottom: 1.5rem;
-    flex-wrap: wrap;
-}
-
-.report-tab {
-    padding: 9px 22px;
-    border: 1px solid #ccc;
-    background: white;
-    cursor: pointer;
-    font-weight: bold;
-    font-size: 0.9rem;
-    font-family: 'Franklin Gothic Medium', sans-serif;
-    border-radius: 0;
-}
-
-.report-tab.active {
-    background: #1a2433;
-    color: white;
-    border-color: #1a2433;
-}
-
-.tab-panel {
-    display: none;
-}
-
-.tab-panel.active {
-    display: block;
+/* 4. Stop Tabs and Export buttons from touching each other */
+.report-tabs, .tabs-group {
+    display: flex !important;
+    gap: 12px !important; /* Forces physical space between the tabs */
+    flex-wrap: wrap !important;
 }
 
 .report-panel-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 1.25rem;
-    flex-wrap: wrap;
-    gap: 0.75rem;
+    display: flex !important;
+    align-items: center !important;
+    gap: 20px !important; /* Pushes "Export PDF" away from the title */
+    margin-bottom: 1.5rem !important;
 }
 
-.report-panel-title {
-    font-size: 1.25rem;
-    font-weight: 800;
+/* 5. Fix internal spacing inside Customer Stats */
+.cstat-label {
+    margin-bottom: 8px !important;
 }
 
-.export-btn {
-    padding: 9px 20px;
-    background: #1a2433;
-    color: white;
-    border: none;
-    cursor: pointer;
-    font-weight: bold;
-    font-size: 0.88rem;
-    font-family: 'Franklin Gothic Medium', sans-serif;
+.cstat-value {
+    margin-bottom: 6px !important;
 }
 
-.export-btn:hover {
-    background: #2c3e55;
+.info-row, .product-row, .category-list-item, .review-row { border-bottom: 1px solid rgba(255, 255, 255, 0.05) !important; }
+.info-row-label, .detail-item label { color: #aaa !important; font-size: 0.75rem; font-weight: bold; }
+.detail-item span { color: white !important; font-size: 0.9rem; font-weight: 600; }
+
+.positive { color: #c9a961 !important; font-weight: 600; }
+.negative { color: #ff6b6b !important; font-weight: 600; }
+
+/* ================= TABLES ================= */
+.table-title { margin-bottom: 1.25rem; font-size: 1.1rem; font-weight: 700; color: #c9a961 !important; text-transform: uppercase; }
+.responsive-table { overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; text-align: left; }
+
+th {
+    background: rgba(0, 0, 0, 0.4) !important;
+    padding: 1rem; color: #c9a961 !important; font-size: 0.8rem; font-weight: 700;
+    letter-spacing: 1px; text-transform: uppercase; white-space: nowrap;
+    border: 1px solid rgba(212,175,55,0.3) !important;
 }
+td {
+    padding: 1rem; color: #f0e8d5 !important; font-size: 0.9rem;
+    border-bottom: 1px solid rgba(255,255,255,0.05) !important;
+}
+tr:hover td { background: rgba(201, 169, 97, 0.05) !important; }
+
+/* ================= INPUTS & SELECTS ================= */
+input[type="text"], input[type="date"], input[type="number"], input[type="password"], input[type="email"], select, .chat-input {
+    background: rgba(0, 0, 0, 0.4) !important;
+    border: 1px solid rgba(212,175,55,0.3) !important;
+    color: white !important; padding: 10px 14px; border-radius: 4px !important;
+    font-size: 0.9rem; outline: none; transition: all 0.3s ease;
+}
+input:focus, select:focus, .chat-input:focus { border-color: #c9a961 !important; box-shadow: 0 0 10px rgba(201, 169, 97, 0.2) !important; }
+select option { background-color: #1a1a1a !important; color: white !important; }
+
+.filter-bar { display: flex; align-items: flex-end; gap: 1.25rem; flex-wrap: wrap; margin-bottom: 2rem; }
+.filter-group, .form-group { display: flex; flex-direction: column; margin-bottom: 1rem; }
+.filter-group label, .form-group label { color: #aaa !important; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 0.5rem; }
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+
+/* ================= BUTTONS ================= */
+.add-product-btn, .btn-save, .edit-profile-btn, .export-btn, .send-btn, .login-btn {
+    padding: 10px 20px; background: #c9a961 !important; color: black !important; border: 1px solid #c9a961 !important;
+    border-radius: 4px; font-weight: 700; cursor: pointer; text-transform: uppercase; letter-spacing: 1px; transition: all 0.3s;
+}
+.add-product-btn:hover, .btn-save:hover, .edit-profile-btn:hover, .export-btn:hover, .send-btn:hover, .login-btn:hover { background: transparent !important; color: #c9a961 !important; }
+
+.btn-view-details, .btn-edit, .btn-edit-cat {
+    padding: 6px 14px; background: transparent !important; color: #c9a961 !important; border: 1px solid #c9a961 !important;
+    border-radius: 4px; font-weight: 600; cursor: pointer; font-size: 0.82rem; transition: all 0.3s;
+}
+.btn-view-details:hover, .btn-edit:hover, .btn-edit-cat:hover { background: rgba(201,169,97,0.15) !important; }
+
+.btn-delete, .logout-btn, .btn-delete-cat {
+    padding: 6px 14px; background: transparent !important; color: #ff6b6b !important; border: 1px solid #ff6b6b !important;
+    border-radius: 4px; font-weight: 600; cursor: pointer; font-size: 0.82rem; transition: all 0.3s;
+}
+.btn-delete:hover, .logout-btn:hover, .btn-delete-cat:hover { background: #ff6b6b !important; color: black !important; }
+
+.reset-btn, .tab-btn, .btn-cancel, .btn-close-modal, .report-tab {
+    padding: 9px 18px; background: transparent !important; color: #aaa !important; border: 1px solid rgba(255,255,255,0.2) !important;
+    border-radius: 4px; font-weight: 600; cursor: pointer; text-transform: uppercase; transition: all 0.3s;
+}
+.reset-btn:hover, .btn-cancel:hover, .btn-close-modal:hover { color: white !important; border-color: white !important; }
+.tab-btn.active, .report-tab.active, .convo-filter-btn.active { background: #c9a961 !important; color: black !important; border-color: #c9a961 !important; }
+.category-tabs { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.5rem; flex-wrap: wrap; gap: 0.75rem; }
+.tabs-group { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+
+/* ================= STATUS BADGES ================= */
+.badge { padding: 4px 12px; border-radius: 4px !important; font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; border: 1px solid; }
+.badge-pending { background: rgba(230, 81, 0, 0.1) !important; color: #ff9800 !important; border-color: #ff9800 !important; }
+.badge-processing { background: rgba(57, 73, 171, 0.1) !important; color: #5c6bc0 !important; border-color: #5c6bc0 !important; }
+.badge-shipped { background: rgba(123, 31, 162, 0.1) !important; color: #ab47bc !important; border-color: #ab47bc !important; }
+.badge-delivered { background: rgba(46, 125, 50, 0.1) !important; color: #4caf50 !important; border-color: #4caf50 !important; }
+.badge-cancelled, .badge-out-of-stock, .badge-blocked { background: rgba(198, 40, 40, 0.1) !important; color: #ef5350 !important; border-color: #ef5350 !important; }
+.badge-in-stock, .badge-active { background: rgba(42, 122, 69, 0.1) !important; color: #66bb6a !important; border-color: #66bb6a !important; }
+.badge-low-stock { background: rgba(160, 112, 0, 0.1) !important; color: #ffd54f !important; border-color: #ffd54f !important; }
+.badge-inactive { background: rgba(255,255,255,0.05) !important; color: #aaa !important; border-color: #aaa !important; }
+
+/* ================= MODALS ================= */
+.modal-overlay { position: fixed; top:0; left:0; width:100vw; height:100vh; background: rgba(0,0,0,0.8) !important; z-index: 3000; display: none; align-items: center; justify-content: center; padding: 1rem; }
+.modal-overlay.show { display: flex; }
+.modal { background: rgb(14, 16, 31) !important; border: 1px solid #c9a961 !important; border-radius: 6px !important; padding: 2rem; width: 100%; max-width: 500px; box-shadow: 0 10px 40px rgba(0,0,0,0.8); color: white !important; }
+.modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; border-bottom: 1px solid rgba(255,255,255,0.1) !important; padding-bottom: 1rem; }
+.modal-title { font-size: 1.1rem; color: #c9a961 !important; text-transform: uppercase; letter-spacing: 1px; }
+.modal-close { background:none; border:none; font-size:1.75rem; cursor:pointer; color:#aaa; }
+.modal-close:hover { color:white; }
+.modal-footer { display:flex; justify-content:flex-end; gap:0.75rem; margin-top:1.5rem; }
+
+/* ================= CHAT / MESSAGES ================= */
+.messages-layout { display: flex; height: calc(100vh - 65px); border: 1px solid rgba(212,175,55,0.3) !important; border-radius: 6px; overflow: hidden; background: rgba(0,0,0,0.4) !important; backdrop-filter: blur(10px); margin-bottom: 2rem;}
+.convo-list { width: 300px; border-right: 1px solid rgba(255,255,255,0.1) !important; display: flex; flex-direction: column; background: transparent !important; }
+.convo-list-header { padding: 1.25rem; color: #c9a961 !important; border-bottom: 1px solid rgba(255,255,255,0.1) !important; text-transform: uppercase; font-size: 1rem; font-weight: 700; }
+.convo-items { overflow-y: auto; flex: 1; }
+.convo-item { display: flex; align-items: center; gap: 0.75rem; padding: 1rem; cursor: pointer; border-bottom: 1px solid rgba(255,255,255,0.05) !important; transition: background 0.2s; color: white !important; }
+.convo-item:hover { background: rgba(201,169,97,0.05) !important; }
+.convo-item.active { background: rgba(201,169,97,0.15) !important; border-left: 3px solid #c9a961 !important; }
+.convo-avatar { width: 40px; height: 40px; background: rgba(255,255,255,0.1) !important; color: #fff !important; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.9rem; }
+.convo-avatar.admin-avatar { background: #c9a961 !important; color: black !important; }
+.convo-name { font-weight: 700; color: white !important; font-size: 0.9rem; }
+.convo-preview { font-size: 0.8rem; color: #aaa !important; margin-top: 3px; }
+.unread-badge { background: #c9a961 !important; color: black !important; font-size: 0.7rem; font-weight: 800; padding: 2px 7px; border-radius: 10px; }
+
+.chat-area { flex: 1; display: flex; flex-direction: column; background: transparent !important; }
+.chat-header { padding: 1rem 1.5rem; background: transparent !important; border-bottom: 1px solid rgba(255,255,255,0.1) !important; color: white !important; display: flex; align-items: center; gap: 0.75rem; }
+.chat-messages { flex: 1; overflow-y: auto; padding: 1.5rem; display: flex; flex-direction: column; gap: 1rem; }
+.msg-row { display: flex; flex-direction: column; max-width: 65%; }
+.msg-row.sent { align-self: flex-end; align-items: flex-end; }
+.msg-row.received { align-self: flex-start; align-items: flex-start; }
+.msg-bubble { padding: 0.8rem 1rem; font-size: 0.9rem; border-radius: 6px; }
+.msg-row.sent .msg-bubble { background: #c9a961 !important; color: black !important; }
+.msg-row.received .msg-bubble { background: rgba(0,0,0,0.6) !important; border: 1px solid rgba(212,175,55,0.3) !important; color: white !important; }
+.chat-input-area { padding: 1rem; background: transparent !important; border-top: 1px solid rgba(255,255,255,0.1) !important; display: flex; gap: 0.75rem; }
+
+/* Message / Inline overrides */
+div[style*="border-bottom:1px solid #e8e8e8"] { border-bottom-color: rgba(255,255,255,0.1) !important; }
+div[style*="border-top:1px solid #e8e8e8"] { background: rgba(0,0,0,0.4) !important; border-top-color: rgba(255,255,255,0.1) !important; color: #c9a961 !important; }
+.convo-filter-btn { color: #aaa !important; }
+.convo-filter-btn.active { color: #c9a961 !important; border-bottom-color: #c9a961 !important; background: transparent !important; }
+button#archive-btn { background: transparent !important; border: 1px solid #c9a961 !important; color: #c9a961 !important; }
+button#archive-btn:hover { background: rgba(201,169,97,0.1) !important; }
+
+/* ================= MISC ================= */
+hr { border-top-color: rgba(255,255,255,0.1) !important; }
+#view-no-image { background: rgba(0,0,0,0.4) !important; border-color: rgba(212,175,55,0.3) !important; color: #aaa !important; }
+.variant-grid { background: rgba(0,0,0,0.3) !important; border-color: rgba(212,175,55,0.2) !important; }
+
+.rank-badge { width: 30px; height: 30px; background: #c9a961 !important; color: black !important; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 800; }
+.profile-avatar { width: 60px; height: 60px; border-radius: 50%; border: 2px solid #c9a961 !important; background: rgba(201,169,97,0.1) !important; color: #c9a961 !important; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; }
+.profile-name { color: white !important; } .profile-role { color: #c9a961 !important; }
+
+.suggestions-box { background: #0a1e36 !important; border: 1px solid rgba(212,175,55,0.3) !important; color: white !important; }
+.suggestion-item { border-bottom: 1px solid rgba(255,255,255,0.1) !important; color: white !important; }
+.suggestion-item:hover { background: rgba(201,169,97,0.1) !important; color: #c9a961 !important; }
+.suggestion-name { color: white !important; }
+
+/* ================= RESPONSIVE ================= */
+@media (max-width: 1024px) {
+    .stats-grid, .report-grid, .customer-stats-grid { grid-template-columns: repeat(2, 1fr); }
+    .navbar-search { width: 220px; }
+}
+@media (max-width: 768px) {
+    .container { padding: 1.25rem; }
+    .two-col-grid, .form-row { grid-template-columns: 1fr; }
+    .sidebar { width: 16rem; }
+    .filter-bar { flex-direction: column; align-items: stretch; }
+    .filter-group input, .filter-group select { width: 100%; }
+    .category-tabs { flex-direction: column; align-items: flex-start; }
+}
+@media (max-width: 480px) {
+    .navbar-search { display: none; }
+    .stats-grid, .report-grid, .customer-stats-grid { grid-template-columns: 1fr; }
+    .sidebar { width: 100%; }
+    .messages-layout { flex-direction: column; height: auto; }
+    .convo-list { width: 100%; height: 200px; border-right: none; border-bottom: 1px solid rgba(255,255,255,0.1) !important; }
+    .chat-area { height: calc(100vh - 265px); }
+}
+
+/* =========================================================
+   SPACING & BREATHING ROOM TWEAKS
+   ========================================================= */
+
+/* 1. Glass Cards (More inner padding for luxury feel) */
+.stat-card, .table-container, .filter-bar, .report-card, .profile-header-card, .info-card, .customer-stats-card, .chart-container, .detail-grid {
+    padding: 2rem !important; 
+    margin-bottom: 2rem !important;
+}
+
+/* 2. Grid Layouts (Wider gaps between the cards themselves) */
+.stats-grid, .report-grid, .customer-stats-grid, .two-col-grid {
+    gap: 2rem !important;
+}
+
+/* 3. Filter Bar (Space out inputs, labels, and buttons) */
+.filter-bar {
+    gap: 1.5rem 2rem !important; /* 1.5rem vertical gap, 2rem horizontal gap */
+}
+
+.filter-group label, .form-group label {
+    margin-bottom: 0.75rem !important; /* Pushes the input box further down from the text */
+    letter-spacing: 1.5px !important;
+}
+
+.filter-group input, .filter-group select {
+    padding: 12px 16px !important; /* Makes the input boxes slightly taller and wider */
+}
+
+/* 4. Report Tabs (Un-squish the Revenue, Sales, Orders buttons) */
+.report-tabs {
+    gap: 12px !important; /* Forces physical space between the tabs */
+    margin-bottom: 2.5rem !important;
+}
+
+.report-tab {
+    border-radius: 4px !important; /* Gives them standalone button shapes */
+    padding: 12px 28px !important; /* Taller and wider tabs */
+}
+
+.report-panel-header {
+    margin-bottom: 2.5rem !important; /* Pushes the chart further down from the title */
+}
+
+/* 5. Lists & Tables (More vertical breathing room for text) */
+.info-row {
+    padding: 1.1rem 0 !important; /* Spreads out the Admin Profile details */
+}
+
+th {
+    padding: 1.25rem 1rem !important; /* Taller table headers */
+}
+
+td {
+    padding: 1.25rem 1rem !important; /* Taller table rows */
+}
+
+/* 6. Action Buttons (More comfortable click area) */
+.reset-btn, .tab-btn, .export-btn {
+    padding: 12px 24px !important;
+}
+
+/* =========================================================
+   SPECIFIC SPACING & LAYOUT FIXES (From Screenshots)
+   ========================================================= */
+
+/* 1. Profile Header (Fix stacked text & button with no gap) */
+.profile-header-card {
+    display: flex !important;
+    gap: 1.5rem !important; /* Adds space between Avatar, Text, and Logout button */
+}
+.profile-name {
+    margin-bottom: 6px !important; /* Space between name and role */
+    font-size: 1.2rem !important;
+}
+.profile-role {
+    margin-bottom: 10px !important; /* Space before logout button if on mobile */
+    display: block !important;
+}
+
+/* 2. Stats & Numbers (Fix labels touching the big numbers) */
+.stat-label, .report-label, .cstat-label, .info-card-title {
+    margin-bottom: 20px !important; 
+    display: block !important;
+}
+.cstat-value, .stat-value, .report-value {
+    margin-bottom: 13px !important; /* Space between the number and the "+23 this week" text */
+}
+
+/* 3. Chats Page (Fix "Loading..." and "Select a conversation..." positions) */
+.no-convos {
+    padding: 2rem 1.5rem !important; /* Pushes "Loading..." down away from the tabs */
+    text-align: center !important;
+    color: #aaa !important;
+}
+.chat-placeholder {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    height: 100% !important; /* Centers the text perfectly in the middle of the chat box */
+    color: #aaa !important;
+    font-size: 1.1rem !important;
+}
+.convo-filter-btn {
+    padding: 14px 10px !important; /* Gives the chat tabs more breathing room */
+}
+
+/* 4. Toast Notifications (Fix the floating unstyled text at the bottom of the Voucher screen) */
+.generalToast, #generalToast {
+    position: fixed !important;
+    bottom: 30px !important;
+    right: 30px !important;
+    background: #c9a961 !important;
+    color: black !important;
+    padding: 14px 24px !important;
+    border-radius: 4px !important;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5) !important;
+    z-index: 9999 !important;
+    font-family: 'Spartan', sans-serif !important;
+    font-weight: 700 !important;
+    text-transform: uppercase !important;
+    letter-spacing: 1px !important;
+}
+/* Hide the toast notification box when there is no message */
+.generalToast:empty, #generalToast:empty {
+    display: none !important;
+}
+
+/* =========================================================
+   DASHBOARD STAT CARD BUTTON FIX
+   ========================================================= */
+
+/* Strip default browser styles from the buttons wrapping the stat cards */
+.stats-grid button {
+    background: transparent !important;
+    border: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    outline: none !important;
+    cursor: pointer !important;
+    display: block !important;
+    width: 100% !important;
+    text-align: left !important;
+}
+
+/* Ensure the glass card takes up the full button space */
+.stats-grid button .stat-card {
+    height: 100% !important;
+    transition: transform 0.3s ease, border-color 0.3s ease !important;
+}
+
+/* Add a luxury hover effect since they are clickable links! */
+.stats-grid button:hover .stat-card {
+    transform: translateY(-5px) !important;
+    border-color: #c9a961 !important; /* Glows gold on hover */
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6) !important;
+}
+/* =========================================================
+   PROFILE HEADER LAYOUT FIX
+   ========================================================= */
+
+/* 1. Push the button to the right and stop it from stretching vertically */
+.profile-header-card {
+    display: flex !important;
+    justify-content: space-between !important; /* Pushes left-content to the left, and button to the right */
+    align-items: center !important; /* Forces the button to stay its normal height */
+}
+
+/* 2. Create a clean gap between the gold Avatar circle and the Name */
+.profile-header-left {
+    display: flex !important;
+    align-items: center !important;
+    gap: 1.25rem !important; /* Adds the missing space between the 'A' and "Admin User" */
+}
+
+/* 3. Ensure the Logout button stays a normal pill/rectangle shape */
+.logout-btn {
+    height: auto !important; 
+    padding: 8px 20px !important; 
+}
+
+/* =========================================================
+   FILTER BAR BUTTON ALIGNMENT FIX
+   ========================================================= */
+
+/* Ensure the filter bar aligns items to the bottom, but account for label height */
+.filter-bar {
+    align-items: flex-end !important; /* Forces all items to align their bottom edges */
+}
+
+/* Adjust the buttons specifically to match the bottom edge of the inputs */
+.filter-bar .tab-btn, 
+.filter-bar .reset-btn,
+.filter-bar .export-btn {
+    margin-bottom: 16px !important; /* Remove any stray margins pushing them down */
+    height: 43px !important; /* Explicitly set height to match the inputs (12px padding + 19px text roughly = 43px) */
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+}
+
+/* Ensure inputs and selects have a consistent height to match the buttons */
+.filter-group input, 
+.filter-group select {
+    height: 43px !important;
+    box-sizing: border-box !important;
+}
+
+/* =========================================================
+   CHART INFINITE EXPANSION FIX
+   ========================================================= */
 
 .chart-container {
-    background: white;
-    border: 1px solid #efefef;
-    box-shadow: 0 1px 6px rgba(0, 0, 0, 0.07);
-    padding: 1.5rem;
-    margin-bottom: 2rem;
+    position: relative !important; /* Required by Chart.js to stop infinite loops */
+    height: 350px !important; /* Locks the height so it can't grow infinitely */
+    width: 100% !important; 
+    padding: 1.5rem !important;
+    margin-bottom: 2rem !important;
 }
 
-.chart-title {
-    font-size: 1rem;
-    font-weight: 700;
-    margin-bottom: 1rem;
+/* Ensure the canvas actually respects the container */
+.chart-container canvas {
+    max-height: 100% !important;
+    width: 100% !important;
 }
 
-/* category styles */
-.category-list-item {
-    display: flex;
-    align-items: center;
-    padding: 0.65rem 0;
-    border-bottom: 1px solid #f3f3f3;
-    gap: 0.75rem;
+/* =========================================================
+   REPORT TABS FUNCTIONALITY (CHART.JS SAFE)
+   ========================================================= */
+
+/* 1. Hide panels WITHOUT using display:none so Chart.js doesn't crash */
+.tab-panel {
+    height: 0 !important;
+    opacity: 0 !important;
+    overflow: hidden !important;
+    visibility: hidden !important;
+    position: absolute !important;
+    pointer-events: none !important;
 }
 
-.category-list-item:last-child { 
-    border-bottom: none; 
+/* 2. Show ONLY the active tab panel */
+.tab-panel.active {
+    height: auto !important;
+    opacity: 1 !important;
+    overflow: visible !important;
+    visibility: visible !important;
+    position: relative !important;
+    pointer-events: auto !important;
+    animation: fadeInTab 0.4s ease-in-out;
 }
 
-.cat-view {
-    display: flex;
-    align-items: center;
-    width: 100%;
-    gap: 0.75rem;
-}
-.cat-edit-form input[type="text"] {
-    flex: 1;
-    padding: 6px 10px;
-    border: 1px solid #ccc;
-    font-size: 0.9rem;
-    font-family: 'Spartan', sans-serif;
+/* 3. Ensure the clicked tab lights up Gold */
+.report-tab.active {
+    background: #c9a961 !important;
+    color: black !important;
+    border-color: #c9a961 !important;
 }
 
-/* category edit/delete button*/
-.btn-delete-cat {
-    padding: 6px 14px; background: #dc3545; color: white;
-    border: none; border-radius: 0; font-weight: bold;
-    cursor: pointer; font-size: 0.82rem;
+/* 4. Smooth fade animation */
+@keyframes fadeInTab {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+/* =========================================================
+   MODAL DETAILS GRID & TYPOGRAPHY FIX
+   ========================================================= */
+
+/* 1. Turn the detail container into a true 2-column grid */
+.detail-grid {
+    display: grid !important;
+    grid-template-columns: repeat(2, 1fr) !important; /* Creates two equal columns */
+    gap: 1.5rem 2rem !important; /* Vertical gap 1.5rem, Horizontal gap 2rem */
+    padding: 2rem !important; 
 }
 
-.btn-delete-cat:hover { 
-    background: #b02a37; 
+/* 2. Stack the Label on top of the Value */
+.detail-item {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: flex-start !important;
 }
 
-.btn-edit-cat {
-    padding: 6px 14px; background: goldenrod; color: white;
-    border: none; border-radius: 0; font-weight: bold;
-    cursor: pointer; font-size: 0.82rem; margin-right: 4px;
+/* 3. Style the Label (Small, crisp, and spaced) */
+.detail-item label {
+    color: #888 !important; /* Soft grey so it doesn't overpower the data */
+    font-size: 0.75rem !important;
+    letter-spacing: 1.5px !important;
+    text-transform: uppercase !important;
+    margin-bottom: 6px !important; /* Pushes the data down slightly */
+    display: block !important;
 }
 
-.btn-edit-cat:hover { 
-    background: #b8860b; 
+/* 4. Style the Value (Larger, white, readable) */
+.detail-item span {
+    color: white !important;
+    font-size: 1.05rem !important;
+    font-weight: 500 !important;
+    word-break: break-word !important; /* Stops super long emails from breaking out of the box */
+    display: block !important;
 }
 
-/* Product variant */
-.variant-row {
-    margin-bottom: 0.75rem;
-}
-
-.variant-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr auto;
-    gap: 0.5rem;
-    align-items: flex-end;
-    background: #f9f9f9;
-    border: 1px solid #eee;
-    padding: 0.75rem;
-}
-
+/* 5. Make it perfectly responsive for smaller screens */
 @media (max-width: 600px) {
-    .variant-grid { grid-template-columns: 1fr 1fr; }
-}
-
-/* Customer List Style */
-.customer-photo-placeholder {
-    width: 80px;
-    height: 80px;
-    border-radius: 50%;
-    background: #f0f0f0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 0 auto;
-    border: 2px solid #e0e0e0;
-}
-
-/* Review row sa modal */
-.review-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0.85rem 0;
-    border-bottom: 1px solid #f3f3f3;
-    gap: 1rem;
-}
-
-.review-row:last-child {
-    border-bottom: none;
-}
-
-.review-product-name {
-    font-weight: 600;
-    font-size: 0.9rem;
-    color: #1a2433;
-    margin-bottom: 0.2rem;
-}
-
-.review-rating {
-    color: #f4a100;
-    font-size: 0.9rem;
-    margin-bottom: 0.2rem;
-}
-
-.review-date {
-    font-size: 0.8rem;
-    color: #888;
-}
-
-/* Active/Inactive/Blocked des */
-.badge-active   { 
-    background: #e6f9ee; color: #2a7a45; border: 1px solid #b7e5c8; 
-}
-
-.badge-inactive { 
-    background: #f5f5f5; color: #888; border: 1px solid #ddd; 
-}
-
-.badge-blocked { 
-    background: #fff0f0; color: #c00; border: 1px solid #f5c2c2; 
-} 
-
-/* Messages*/
-
-.main-content {
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
-}
-
-.messages-layout {
-    display: flex;
-    height: calc(100vh - 65px);
-    overflow: hidden;
-}
-
-.convo-list {
-    width: 300px;
-    flex-shrink: 0;
-    background: white;
-    border-right: 1px solid #e8e8e8;
-    display: flex;
-    flex-direction: column;
-    overflow: hidden;
-}
-
-.convo-list-header {
-    padding: 1.25rem 1.5rem;
-    font-size: 1rem;
-    font-weight: 800;
-    border-bottom: 1px solid #e8e8e8;
-    flex-shrink: 0;
-}
-
-.convo-items {
-    overflow-y: auto;
-    flex: 1;
-}
-
-.convo-item {
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-    padding: 0.85rem 1.25rem;
-    cursor: pointer;
-    border-bottom: 1px solid #f5f5f5;
-    text-decoration: none;
-    color: inherit;
-    transition: background 0.15s;
-}
-
-.convo-item:hover {
-    background: #f9f9f9;
-}
-
-.convo-item.active {
-    background: #f0f4f8;
-    border-left: 3px solid #1a2433;
-}
-
-.convo-avatar {
-    width: 40px;
-    height: 40px;
-    background: #1a2433;
-    color: white;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: 800;
-    font-size: 0.9rem;
-    flex-shrink: 0;
-}
-
-.convo-avatar.admin-avatar {
-    background: #c8a840;
-}
-
-.convo-info {
-    flex: 1;
-    min-width: 0;
-}
-
-.convo-name {
-    font-weight: 700;
-    font-size: 0.88rem;
-    color: #1a2433;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-
-.convo-preview {
-    font-size: 0.78rem;
-    color: #888;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    margin-top: 2px;
-}
-
-.convo-meta {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-    gap: 4px;
-    flex-shrink: 0;
-}
-
-.convo-time {
-    font-size: 0.72rem;
-    color: #aaa;
-}
-
-.unread-badge {
-    background: #1a2433;
-    color: white;
-    font-size: 0.7rem;
-    font-weight: 800;
-    padding: 2px 7px;
-    border-radius: 10px;
-}
-
-.chat-area {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    overflow: hidden;
-    background: whitesmoke;
-}
-
-.chat-header {
-    padding: 1rem 1.5rem;
-    background: white;
-    border-bottom: 1px solid #e8e8e8;
-    font-weight: 800;
-    font-size: 1rem;
-    flex-shrink: 0;
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-}
-
-.chat-messages {
-    flex: 1;
-    overflow-y: auto;
-    padding: 1.5rem;
-    display: flex;
-    flex-direction: column;
-    gap: 0.75rem;
-}
-
-.chat-placeholder {
-    flex: 1;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: #aaa;
-    font-size: 0.95rem;
-}
-
-.msg-row {
-    display: flex;
-    flex-direction: column;
-    max-width: 65%;
-}
-
-.msg-row.sent {
-    align-self: flex-end;
-    align-items: flex-end;
-}
-
-.msg-row.received {
-    align-self: flex-start;
-    align-items: flex-start;
-}
-
-.msg-bubble {
-    padding: 0.6rem 1rem;
-    font-size: 0.88rem;
-    line-height: 1.5;
-    word-break: break-word;
-}
-
-.msg-row.sent .msg-bubble {
-    background: #1a2433;
-    color: white;
-}
-
-.msg-row.received .msg-bubble {
-    background: white;
-    color: #1a2433;
-    border: 1px solid #e8e8e8;
-}
-
-.msg-time {
-    font-size: 0.7rem;
-    color: #aaa;
-    margin-top: 3px;
-    padding: 0 2px;
-}
-
-.chat-input-area {
-    padding: 1rem 1.5rem;
-    background: white;
-    border-top: 1px solid #e8e8e8;
-    display: flex;
-    gap: 0.75rem;
-    align-items: flex-end;
-    flex-shrink: 0;
-}
-
-.chat-input {
-    flex: 1;
-    padding: 0.65rem 1rem;
-    border: 1px solid #ccc;
-    font-size: 0.9rem;
-    font-family: 'Franklin Gothic Medium', sans-serif;
-    resize: none;
-    max-height: 120px;
-    outline: none;
-}
-
-.chat-input:focus {
-    border-color: #1a2433;
-}
-
-.send-btn {
-    padding: 0.65rem 1.25rem;
-    background: #1a2433;
-    color: white;
-    border: none;
-    font-weight: 800;
-    font-size: 0.88rem;
-    cursor: pointer;
-    font-family: 'Franklin Gothic Medium', sans-serif;
-    white-space: nowrap;
-}
-
-.send-btn:hover {
-    background: #2c3e55;
-}
-
-.no-convos {
-    padding: 2rem 1.5rem;
-    text-align: center;
-    color: #aaa;
-    font-size: 0.88rem;
-}
-
-@media (max-width: 768px) {
-
-    .convo-list {
-        width: 220px;
+    .detail-grid {
+        grid-template-columns: 1fr !important; /* Collapses into 1 single column on mobile */
     }
-}
-
-@media (max-width: 480px) {
-
-    .messages-layout {
-        flex-direction: column;
-        height: auto;
-    }
-
-    .convo-list {
-        width: 100%;
-        height: 200px;
-        border-right: none;
-        border-bottom: 1px solid #e8e8e8;
-    }
-
-    .chat-area {
-        height: calc(100vh - 265px);
+    .detail-item[style*="grid-column: span 2"] {
+        grid-column: span 1 !important; /* Prevents full-width items from stretching off-screen */
     }
 }

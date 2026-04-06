@@ -103,6 +103,7 @@ if ($chat_type) {
         <meta charset="UTF-8">
         <title>Messages</title>
         <link rel="stylesheet" href="../../assets/css/AdminPanelStyle.css">
+         <link rel="stylesheet" href="../../assets/css/style.css">
         <style>
         .main-content {
             height: 100vh;

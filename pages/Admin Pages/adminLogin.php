@@ -19,6 +19,7 @@ unset($_SESSION['error']);
         <meta charset="UTF-8">
         <title>Admin Login — Homme D'or</title>
         <link rel="stylesheet" href="../../assets/css/AdminPanelStyle.css">
+        <link rel="stylesheet" href="../../assets/css/style.css">
     </head>
 
     <body style="display:flex; align-items:center; justify-content:center; min-height:100vh; background:whitesmoke;">

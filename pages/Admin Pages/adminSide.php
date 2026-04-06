@@ -9,7 +9,7 @@
 <html lang="en">
     <head>
         <link rel="stylesheet" href="../../assets/css/AdminPanelStyle.css">
-        
+         <link rel="stylesheet" href="../../assets/css/style.css">
     </head>
 
     <body>

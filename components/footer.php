@@ -425,6 +425,10 @@
                         <p>Homme d'Or is your premier destination for luxury scents.</p>
                     </div>
 
+<<<<<<< HEAD
+=======
+    <link rel="stylesheet" href="../assets/css/msgStyle.css">
+>>>>>>> admin-login-ui
                     <div class="footer-column">
                         <h3>Quick Links</h3>
                         <ul>
@@ -456,6 +460,12 @@
                 </div>
             </div>
 
+<<<<<<< HEAD
+=======
+    <script src="../assets/js/ChatBubble.js"></script>
+    <script src="../assets/js/forgotPassword.js"></script>
+    <script src="../assets/js/MobileMenu.js"></script>
+>>>>>>> admin-login-ui
             <div class="footer-bottom-section">
                 <div class="footer-bottom-container">
                     <p class="copyright">&copy; 2026 Homme d'Or. All rights reserved.</p>
