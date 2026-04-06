@@ -16,7 +16,7 @@ if (empty($_SESSION['superadmin_id'])) {
 <html lang="en">
 <head>
     <link rel="stylesheet" href="../../assets/css/AdminPanelStyle.css">
-   
+     <link rel="stylesheet" href="../../assets/css/style.css">
 </head>
 <body>
 
@@ -73,31 +73,31 @@ if (empty($_SESSION['superadmin_id'])) {
                     <div class="info-card-title">Brand Information</div>
 
                     <div class="info-row">
-                        <span class="info-row-label">Brand Name</span>
+                        <span class="info-row-label">Brand Name:</span>
                         <span class="info-row-value">Fashion Store</span>
                     </div>
 
                     <div class="info-row">
-                        <span class="info-row-label">Email</span>
+                        <span class="info-row-label">Email:</span>
                         <span class="info-row-value">admin@fashionstore.com</span>
                     </div>
 
                     <div class="info-row">
-                        <span class="info-row-label">Phone</span>
+                        <span class="info-row-label">Phone:</span>
                         <span class="info-row-value">+1 234 567 8900</span>
                     </div>
 
                     <div class="info-row">
-                        <span class="info-row-label">Address</span>
+                        <span class="info-row-label">Address:</span>
                         <span class="info-row-value">123 Fashion Ave, NY</span>
                     </div>
                     <div class="info-row">
-                        <span class="info-row-label">Website</span>
+                        <span class="info-row-label">Website:</span>
                         <span class="info-row-value">fashionstore.com</span>
                     </div>
 
                     <div class="info-row">
-                        <span class="info-row-label">Established</span>
+                        <span class="info-row-label">Established:</span>
                         <span class="info-row-value">2020</span>
                     </div>
 
@@ -107,27 +107,27 @@ if (empty($_SESSION['superadmin_id'])) {
                     <div class="info-card-title">Business Overview</div>
 
                     <div class="info-row">
-                        <span class="info-row-label">Total Products</span>
+                        <span class="info-row-label">Total Products:</span>
                         <span class="info-row-value">456</span>
                     </div>
 
                     <div class="info-row">
-                        <span class="info-row-label">Active Products</span>
+                        <span class="info-row-label">Active Products:</span>
                         <span class="info-row-value">432</span>
                     </div>
 
                     <div class="info-row">
-                        <span class="info-row-label">Out of Stock</span>
+                        <span class="info-row-label">Out of Stock:</span>
                         <span class="info-row-value">24</span>
                     </div>
 
                     <div class="info-row">
-                        <span class="info-row-label">Categories</span>
+                        <span class="info-row-label">Categories:</span>
                         <span class="info-row-value">5</span>
                     </div>
 
                     <div class="info-row">
-                        <span class="info-row-label">Average Rating</span>
+                        <span class="info-row-label">Average Rating:</span>
                         <span class="info-row-value">4.8 / 5.0</span>
                     </div>
 
@@ -142,27 +142,27 @@ if (empty($_SESSION['superadmin_id'])) {
                     <div class="info-card-title">Sales Performance</div>
 
                     <div class="info-row">
-                        <span class="info-row-label">Total Orders</span>
+                        <span class="info-row-label">Total Orders:</span>
                         <span class="info-row-value">1,234</span>
                     </div>
 
                     <div class="info-row">
-                        <span class="info-row-label">Completed Orders</span>
+                        <span class="info-row-label">Completed Orders:</span>
                         <span class="info-row-value">1,156</span>
                     </div>
 
                     <div class="info-row">
-                        <span class="info-row-label">Pending Orders</span>
+                        <span class="info-row-label">Pending Orders:</span>
                         <span class="info-row-value">45</span>
                     </div>
 
                     <div class="info-row">
-                        <span class="info-row-label">Cancelled Orders</span>
+                        <span class="info-row-label">Cancelled Orders:</span>
                         <span class="info-row-value">33</span>
                     </div>
 
                     <div class="info-row">
-                        <span class="info-row-label">Order Success Rate</span>
+                        <span class="info-row-label">Order Success Rate:</span>
                         <span class="info-row-value">93.7%</span>
                     </div>
 
@@ -172,27 +172,27 @@ if (empty($_SESSION['superadmin_id'])) {
                     <div class="info-card-title">Financial Summary</div>
 
                     <div class="info-row">
-                        <span class="info-row-label">Total Revenue</span>
+                        <span class="info-row-label">Total Revenue:</span>
                         <span class="info-row-value">$545,231</span>
                     </div>
 
                     <div class="info-row">
-                        <span class="info-row-label">This Month</span>
+                        <span class="info-row-label">This Month:</span>
                         <span class="info-row-value">$45,221</span>
                     </div>
 
                     <div class="info-row">
-                        <span class="info-row-label">Last Month</span>
+                        <span class="info-row-label">Last Month:</span>
                         <span class="info-row-value">$40,125</span>
                     </div>
 
                     <div class="info-row">
-                        <span class="info-row-label">Growth</span>
+                        <span class="info-row-label">Growth:</span>
                         <span class="info-row-value positive">+12.7%</span>
                     </div>
 
                     <div class="info-row">
-                        <span class="info-row-label">Average Order Value</span>
+                        <span class="info-row-label">Average Order Value:</span>
                         <span class="info-row-value">$66.34</span>
                     </div>
 
@@ -206,7 +206,7 @@ if (empty($_SESSION['superadmin_id'])) {
                 <div class="customer-stats-grid">
 
                     <div>
-                        <div class="cstat-label">TOTAL CUSTOMERS</div>
+                        <div class="cstat-label">TOTAL CUSTOMERS:</div>
                         <div class="cstat-value">892</div>
                         <div class="cstat-change">+23 this week</div>
                     </div>

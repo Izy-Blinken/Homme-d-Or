@@ -25,6 +25,7 @@ $vouchers = mysqli_query($conn, "SELECT d.*, u.fname, u.lname
         <meta charset="UTF-8">
         <title>Voucher Management</title>
         <link rel="stylesheet" href="../../assets/css/AdminPanelStyle.css">
+        <link rel="stylesheet" href="../../assets/css/style.css">
     </head>
 
     <body>
