@@ -94,40 +94,6 @@
             </div>
         </div>
 
-        <div id="signupVerifyModal" class="signupVerificationModal" style="display: none;">
-            <div class="signupVerificationContent">
-                <button class="signupCloseBtn" id="closeSignupVerify"><i class="fas fa-times"></i></button>
-                <div class="signupModalHeader">
-                    <h2>Enter Verification Code</h2>
-                    <p class="signupModalSubtitle">We've sent a 6-digit code to <span id="signupUserEmail"></span></p>
-                </div>
-                <form id="signupVerifyForm">
-                    <div class="signupCodeContainer">
-                        <input type="text" maxlength="1" class="signupCodeInput" data-index="0" inputmode="numeric" autocomplete="off" />
-                        <input type="text" maxlength="1" class="signupCodeInput" data-index="1" inputmode="numeric" autocomplete="off" />
-                        <input type="text" maxlength="1" class="signupCodeInput" data-index="2" inputmode="numeric" autocomplete="off" />
-                        <input type="text" maxlength="1" class="signupCodeInput" data-index="3" inputmode="numeric" autocomplete="off" />
-                        <input type="text" maxlength="1" class="signupCodeInput" data-index="4" inputmode="numeric" autocomplete="off" />
-                        <input type="text" maxlength="1" class="signupCodeInput" data-index="5" inputmode="numeric" autocomplete="off" />
-                    </div>
-                    <button type="submit" class="signupVerifyBtn">Verify Code</button>
-                    <div class="signupResendSection">
-                        <p>Didn't receive the code?</p>
-                        <button type="button" class="signupResendBtn" id="signupResendBtn">Resend Code</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-
-        <div id="signupSuccessModal" class="signupSuccessModal" style="display: none;">
-            <div class="signupSuccessContent">
-                <h2>Account Created!</h2>
-                <p>Your account has been created successfully.</p>
-                <button class="signupSuccessBtn" id="signupSuccessBtn">Continue</button>
-            </div>
-        </div>
-
-
         <div id="loginModal" class="modal">
 
             <div class="modal-content modal-content-login">
@@ -459,9 +425,6 @@
                         <p>Homme d'Or is your premier destination for luxury scents.</p>
                     </div>
 
-<<<<<<< HEAD
-    <link rel="stylesheet" href="../assets/css/msgStyle.css">
-=======
                     <div class="footer-column">
                         <h3>Quick Links</h3>
                         <ul>
@@ -471,7 +434,6 @@
                             <li><a href="blog.php">Blog</a></li>
                         </ul>
                     </div>
->>>>>>> 7d2625e352a112623e351f654714ebc0497ad562
 
                     <div class="footer-column">
                         <h3>Follow Us</h3>
@@ -494,14 +456,9 @@
                 </div>
             </div>
 
-<<<<<<< HEAD
-    <script src="../assets/js/ChatBubble.js"></script>
-    <script src="../assets/js/forgotPassword.js"></script>
-    <script src="../assets/js/MobileMenu.js"></script>
-=======
             <div class="footer-bottom-section">
                 <div class="footer-bottom-container">
-                    <p class="copyright">&copy; 2024 Homme d'Or. All rights reserved.</p>
+                    <p class="copyright">&copy; 2026 Homme d'Or. All rights reserved.</p>
                     <div class="footer-logo">
                         <a href="index.php">
                             <img src="../assets/images/brand_images/prodLogo.png" alt="Logo">
@@ -532,6 +489,4 @@
 
         <script src="../assets/js/ChatBubble.js"></script>
         <script src="../assets/js/forgotPassword.js"></script>
-        <script src="../assets/js/VCSignUp.js"></script>
         <script src="../assets/js/MobileMenu.js"></script>
->>>>>>> 7d2625e352a112623e351f654714ebc0497ad562

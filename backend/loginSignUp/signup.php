@@ -20,8 +20,8 @@ function sendOTPEmail($to_email, $to_name, $otp) {
         $mail->isSMTP();
         $mail->Host       = 'smtp.gmail.com';
         $mail->SMTPAuth   = true;
-        $mail->Username   = 'panglaro.3829@gmail.com';   // Supposed to be Email account ng "Homme d'Or"
-        $mail->Password   = 'noseumqbxbwufigh';    // Generated 16 code from google account
+        $mail->Username   = 'hommedor2026@gmail.com';   // Supposed to be Email account ng "Homme d'Or"
+        $mail->Password   = 'esoczvhrdrmilpbn';    // Generated 16 code from google account
         $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
         $mail->Port       = 587;
         $mail->SMTPOptions = array(
@@ -32,7 +32,7 @@ function sendOTPEmail($to_email, $to_name, $otp) {
             )
         );
  
-        $mail->setFrom('panglaro.3829@gmail.com', 'Homme d\'Or'); // ← replace
+        $mail->setFrom('hommedor2026@gmail.com', 'Homme d\'Or'); // ← replace
         $mail->addAddress($to_email, $to_name);
  
         $mail->isHTML(true);
