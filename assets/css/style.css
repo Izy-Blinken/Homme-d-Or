@@ -1,5 +1,6 @@
 *, *::before, *::after {
     box-sizing: border-box;
+    text-decoration: none;
 }
 
 html, body {
@@ -135,3 +136,77 @@ main {
     }
 }
 
+
+/* TERMS MODAL */
+.modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.6);
+    z-index: 99999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.terms-modal-box {
+    background: #1a1a1a;
+    color: #e0c97f;
+    border: 1px solid #e0c97f44;
+    border-radius: 10px;
+    width: 90%;
+    max-width: 600px;
+    max-height: 80vh;
+    padding: 2rem;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    z-index: 99999;
+}
+
+.terms-modal-box h2 {
+    font-size: 1.4rem;
+    margin-bottom: 1rem;
+    color: #e0c97f;
+    text-align: center;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+}
+
+.terms-content {
+    overflow-y: auto;
+    padding-right: 0.5rem;
+    flex: 1;
+    z-index: 99999;
+}
+
+.terms-content h3 {
+    font-size: 0.9rem;
+    color: #e0c97f;
+    margin: 1.2rem 0 0.4rem;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+.terms-content p {
+    font-size: 0.85rem;
+    color: #ccc;
+    line-height: 1.7;
+    margin: 0;
+}
+
+.terms-close-btn {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: none;
+    border: none;
+    color: #e0c97f;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: opacity 0.2s;
+}
+
+.terms-close-btn:hover {
+    opacity: 0.6;
+}

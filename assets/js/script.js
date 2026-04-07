@@ -198,3 +198,19 @@ function selectSuggestion(inputId, value, suggestionsId, autoSubmit = false) {
         }
     };
 })();
+
+
+function openTermsModal() {
+    document.getElementById('termsModal').style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+}
+
+function closeTermsModal() {
+    document.getElementById('termsModal').style.display = 'none';
+    document.body.style.overflow = '';
+}
+
+// Close when clicking outside the box
+document.getElementById('termsModal').addEventListener('click', function(e) {
+    if (e.target === this) closeTermsModal();
+});
