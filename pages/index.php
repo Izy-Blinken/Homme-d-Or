@@ -604,6 +604,7 @@
     </section>
 
     <div id="generalToast" class="generalToast"></div>
+
     <script src="../assets/js/script.js"></script>
 
     <script src="../assets/js/HomepageAnimations.js"></script>

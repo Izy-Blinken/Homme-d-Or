@@ -1,9 +1,8 @@
 <?php
-
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
-// Put this near your session_start() later!
+
 if (isset($_GET['lang'])) {
     $_SESSION['language'] = $_GET['lang'];
 }
@@ -12,7 +11,6 @@ $currentLang = isset($_SESSION['language']) ? $_SESSION['language'] : 'en';
 include '../backend/db_connect.php';
  
 if (empty($_SESSION['user_id']) && isset($_COOKIE['remember_token'])) {
-
     $token = mysqli_real_escape_string($conn, $_COOKIE['remember_token']);
     $user = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM users WHERE remember_token = '$token' AND is_blocked = 0"));
     
@@ -25,11 +23,8 @@ if (empty($_SESSION['user_id']) && isset($_COOKIE['remember_token'])) {
 }
 
 if (!empty($_SESSION['user_id'])) {
-
     $check = mysqli_fetch_assoc(mysqli_query($conn, "SELECT is_blocked FROM users WHERE user_id = '{$_SESSION['user_id']}'"));
-
     if ($check && $check['is_blocked']) {
-        
         session_destroy();
         setcookie('remember_token', '', time() - 3600, '/');
         header('Location: ../pages/index.php');
@@ -37,9 +32,9 @@ if (!empty($_SESSION['user_id'])) {
     }
 }
 
-?>
+// Release session lock to prevent AJAX calls from making the browser spin forever
+session_write_close();
 
-<?php
 $currentPage = basename($_SERVER['PHP_SELF']);
 ?>
 
@@ -85,7 +80,6 @@ $currentPage = basename($_SERVER['PHP_SELF']);
             </li>   
         </ul>
 
-        
         <!-- Horizontal Slide Menu -->
        <ul class="logo-slide-menu" id="desktopMenu">
             <li>
@@ -113,7 +107,6 @@ $currentPage = basename($_SERVER['PHP_SELF']);
                         <input type="text" name="q" id="desktop-search" class="search-input" placeholder="Search for fragrances..." required autocomplete="off">
                         
                         <div class="search-suggestions-dropdown" id="desktop-suggestions" style="display: flex;">
-    
                             <a href="#" class="search-suggestion-item">
                                 <img src="../assets/images/brand_images/placeholder.jpg" alt="Perfume 1" onerror="this.src='https://via.placeholder.com/45'">
                                 <div class="suggestion-info">
@@ -121,7 +114,6 @@ $currentPage = basename($_SERVER['PHP_SELF']);
                                     <span class="suggestion-price">₱1,800.00</span>
                                 </div>
                             </a>
-
                             <a href="#" class="search-suggestion-item">
                                 <img src="../assets/images/brand_images/placeholder.jpg" alt="Perfume 2" onerror="this.src='https://via.placeholder.com/45'">
                                 <div class="suggestion-info">
@@ -129,7 +121,6 @@ $currentPage = basename($_SERVER['PHP_SELF']);
                                     <span class="suggestion-price">₱2,450.00</span>
                                 </div>
                             </a>
-
                             <a href="#" class="search-suggestion-item">
                                 <img src="../assets/images/brand_images/placeholder.jpg" alt="Perfume 3" onerror="this.src='https://via.placeholder.com/45'">
                                 <div class="suggestion-info">
@@ -137,7 +128,6 @@ $currentPage = basename($_SERVER['PHP_SELF']);
                                     <span class="suggestion-price">₱1,200.00</span>
                                 </div>
                             </a>
-
                         </div>
                     </div>
                 </form>
@@ -147,7 +137,6 @@ $currentPage = basename($_SERVER['PHP_SELF']);
 
     <div class="nav-wrapper">
         <ul id="navbar-right">
-
             <li class="header-lang-toggle">
                 <a href="?lang=en" class="lang-btn active">EN</a>
                 <span class="lang-divider">/</span>
@@ -180,108 +169,89 @@ $currentPage = basename($_SERVER['PHP_SELF']);
                     <i class="fa-solid fa-user"></i>
                 </a>
                 <div class="dropdown-menu profile-menu">
-
                     <?php if (!empty($_SESSION['user_id'])): ?>
-
                         <div class="profile-header">
                             <?= htmlspecialchars($_SESSION['user_fname']) ?>
                         </div>
                         <p class="profile-subtext">Welcome back!</p>
                         <a href="../backend/loginSignUp/logout.php" class="profile-login-btn">Logout</a>
-
                     <?php else: ?>
-
                         <div class="profile-header">
                             Join Exclusive Deals
                         </div>
-
                         <p class="profile-subtext">Log in or create an account to discover our loyalty program and our membership privileges</p>
                         <a href="#" onclick="openLoginModal()" class="profile-login-btn">Login</a>
                         <a href="#" onclick="openSignupModal()" class="profile-register-btn">Create an Account</a>
-                    
                     <?php endif; ?>
-                    
                 </div>
             </li>
-              
         </ul>
     </div>
     
     <script src="../assets/js/notif.js"></script>
-
     <script>
-document.addEventListener('DOMContentLoaded', function() {
-    
-    function setupLiveSearch(inputId, dropdownId) {
-        const input = document.getElementById(inputId);
-        const dropdown = document.getElementById(dropdownId);
-        let debounceTimer;
+    document.addEventListener('DOMContentLoaded', function() {
+        function setupLiveSearch(inputId, dropdownId) {
+            const input = document.getElementById(inputId);
+            const dropdown = document.getElementById(dropdownId);
+            let debounceTimer;
 
-        if(!input || !dropdown) return;
+            if(!input || !dropdown) return;
 
-        input.addEventListener('input', function() {
-            clearTimeout(debounceTimer);
-            const query = this.value.trim();
+            input.addEventListener('input', function() {
+                clearTimeout(debounceTimer);
+                const query = this.value.trim();
 
-            // If input is less than 2 characters, hide dropdown
-            if (query.length < 2) {
-                dropdown.style.display = 'none';
-                return;
-            }
+                if (query.length < 2) {
+                    dropdown.style.display = 'none';
+                    return;
+                }
 
-            // Fake data to test the UI when typing
-            const fakeData = [
-                { product_id: 1, name: "Golden Night Special Edition", price: 1800, image: "placeholder.jpg" },
-                { product_id: 2, name: "Midnight Oud Extrait", price: 2450, image: "placeholder.jpg" }
-            ];
+                const fakeData = [
+                    { product_id: 1, name: "Golden Night Special Edition", price: 1800, image: "placeholder.jpg" },
+                    { product_id: 2, name: "Midnight Oud Extrait", price: 2450, image: "placeholder.jpg" }
+                ];
 
-            // Simulate a slight loading delay, just like a real database
-            debounceTimer = setTimeout(() => {
-                dropdown.innerHTML = ''; // Clear previous results
-                
-                // Build the fake items
-                fakeData.forEach(item => {
-                    const a = document.createElement('a');
-                    a.href = `#`; // Dummy link
-                    a.className = 'search-suggestion-item';
+                debounceTimer = setTimeout(() => {
+                    dropdown.innerHTML = ''; 
                     
-                    const formattedPrice = new Intl.NumberFormat('en-PH', { style: 'currency', currency: 'PHP' }).format(item.price);
+                    fakeData.forEach(item => {
+                        const a = document.createElement('a');
+                        a.href = `#`; 
+                        a.className = 'search-suggestion-item';
+                        
+                        const formattedPrice = new Intl.NumberFormat('en-PH', { style: 'currency', currency: 'PHP' }).format(item.price);
+                        
+                        a.innerHTML = `
+                            <img src="../assets/images/brand_images/placeholder.jpg" alt="${item.name}" onerror="this.src='https://via.placeholder.com/45'">
+                            <div class="suggestion-info">
+                                <span class="suggestion-name">${item.name}</span>
+                                <span class="suggestion-price">${formattedPrice}</span>
+                            </div>
+                        `;
+                        dropdown.appendChild(a);
+                    });
                     
-                    a.innerHTML = `
-                        <img src="../assets/images/brand_images/placeholder.jpg" alt="${item.name}" onerror="this.src='https://via.placeholder.com/45'">
-                        <div class="suggestion-info">
-                            <span class="suggestion-name">${item.name}</span>
-                            <span class="suggestion-price">${formattedPrice}</span>
-                        </div>
-                    `;
-                    dropdown.appendChild(a);
-                });
-                
-                // FORCE THE DROPDOWN TO SHOW!
-                dropdown.style.display = 'flex'; 
-                
-            }, 300); 
-        });
+                    dropdown.style.display = 'flex'; 
+                    
+                }, 300); 
+            });
 
-        // Hide dropdown if user clicks outside of the search area
-        document.addEventListener('click', function(e) {
-            if (!input.contains(e.target) && !dropdown.contains(e.target)) {
-                dropdown.style.display = 'none';
-            }
-        });
-        
-        // Show dropdown again if user clicks back into the input and it has text
-        input.addEventListener('focus', function() {
-            if (this.value.trim().length >= 2 && dropdown.innerHTML !== '') {
-                dropdown.style.display = 'flex';
-            }
-        });
-    }
+            document.addEventListener('click', function(e) {
+                if (!input.contains(e.target) && !dropdown.contains(e.target)) {
+                    dropdown.style.display = 'none';
+                }
+            });
+            
+            input.addEventListener('focus', function() {
+                if (this.value.trim().length >= 2 && dropdown.innerHTML !== '') {
+                    dropdown.style.display = 'flex';
+                }
+            });
+        }
 
-    // Initialize for both desktop and mobile search bars
-    setupLiveSearch('desktop-search', 'desktop-suggestions');
-    setupLiveSearch('mobile-search', 'mobile-suggestions');
-});
-</script>
+        setupLiveSearch('desktop-search', 'desktop-suggestions');
+        setupLiveSearch('mobile-search', 'mobile-suggestions');
+    });
+    </script>
 </section>
-
