@@ -73,7 +73,7 @@
 
                     <div class="inputGroupCheckbox">
                         <input type="checkbox" id="terms" name="terms" required>
-                        <label for="terms">I have read and agreed on <a href="#" onclick="openTermsModal(); return false;">Terms and Conditions</a></label>
+                        <label for="terms">I have read and agreed on <a href="terms.php" target="_blank">Terms and Conditions</a></label>
                     </div>
 
                     <div class="captcha-placeholder" style="border:1px dashed #ccc; padding:1rem; text-align:center; color:#aaa; font-size:0.85rem; margin-bottom:1rem;">

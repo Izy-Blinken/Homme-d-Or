@@ -80,130 +80,288 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
     
-    // arrivals
+    // Product sets for New Arrivals (4 products per set)
+    const newArrivalSets = [
+        // Set 1
+        [
+            { 
+                img: '../assets/images/brand_images/evrland.jpg', 
+                name: 'Desert Blaze',
+                description: 'WOODY · SPICY GOURMAND'
+            },
+            { 
+                img: '../assets/images/brand_images/evrland.jpg', 
+                name: 'Ocean Mist',
+                description: 'FRESH · AQUATIC MARINE'
+            },
+            { 
+                img: '../assets/images/brand_images/evrland.jpg', 
+                name: 'Golden Night',
+                description: 'AMBER · WARM ORIENTAL'
+            },
+            { 
+                img: '../assets/images/brand_images/evrland.jpg', 
+                name: 'Amber Woods',
+                description: 'WOODY · EARTHY DEEP'
+            }
+        ],
+        // Set 2
+        [
+            { 
+                img: '../assets/images/brand_images/nocturne.png', 
+                name: 'Mystic Azure',
+                description: 'FLORAL · ELEGANT BLOOM'
+            },
+            { 
+                img: '../assets/images/brand_images/nocturne.png', 
+                name: 'Crimson Passion',
+                description: 'SPICY · BOLD INTENSE'
+            },
+            { 
+                img: '../assets/images/brand_images/nocturne.png', 
+                name: 'Velvet Eclipse',
+                description: 'WOODY · DARK MYSTERIOUS'
+            },
+            { 
+                img: '../assets/images/brand_images/nocturne.png', 
+                name: 'Silver Moon',
+                description: 'POWDERY · SOFT ELEGANT'
+            }
+        ],
+        // Set 3
+        [
+            { 
+                img: '../assets/images/brand_images/sampleperfume.png', 
+                name: 'Summer Breeze',
+                description: 'CITRUS · LIGHT FRESH'
+            },
+            { 
+                img: '../assets/images/brand_images/sampleperfume.png', 
+                name: 'Midnight Rose',
+                description: 'FLORAL · ROMANTIC CLASSIC'
+            },
+            { 
+                img: '../assets/images/brand_images/sampleperfume.png', 
+                name: 'Royal Silk',
+                description: 'POWDERY · SOFT LUXURY'
+            },
+            { 
+                img: '../assets/images/brand_images/sampleperfume.png', 
+                name: 'Winter Frost',
+                description: 'FRESH · COOL CRISP'
+            }
+        ]
+    ];
+
+    // Initialize FIRST carousel only if elements exist
     const arrivalsGrid = document.getElementById('arrivalsGrid');
-    const next=Btn = document.getElementById('nextBtn');
+    const nextBtn = document.getElementById('nextBtn');
     const indicatorsContainer = document.getElementById('lineIndicators');
-
+    
     if (arrivalsGrid && nextBtn && indicatorsContainer) {
-        // Grab all cards PHP already rendered
-        const allCards = Array.from(arrivalsGrid.querySelectorAll('.new-arrival-card'));
-        const cardsPerSet = 4;
+        let currentArrivalsIndex = 0;
+        const indicators = indicatorsContainer.querySelectorAll('.indicator');
 
-        // Split into sets of 4
-        const sets = [];
-        for (let i = 0; i < allCards.length; i += cardsPerSet) {
-            sets.push(allCards.slice(i, i + cardsPerSet));
+        // Function to create New Arrival card HTML
+        function createArrivalCard(product) {
+            return `
+                <div class="new-arrival-card">
+                    <button class="new-arrival-image" onclick="window.location.href='productdetails.php'">
+                        <img src="${product.img}" alt="${product.name}">
+                        <div class="arrival-overlay">
+                            <p class="arrival-description">${product.description}</p>
+                            <h3 class="arrival-name">${product.name}</h3>
+                        </div>
+                    </button>
+                    <button class="arrival-add-cart" onclick="showGeneralToast('Added to cart!', 'info')">ADD TO CART</button>
+                </div>
+            `;
         }
 
-        // If no products, just hide the next button and indicators
-        if (sets.length === 0) {
-            nextBtn.style.display = 'none';
-            indicatorsContainer.style.display = 'none';
-        } else {
-            let currentIndex = 0;
-            const indicators = indicatorsContainer.querySelectorAll('.indicator');
-
-            function updateNewArrivals() {
-                // Hide all cards first
-                allCards.forEach(card => card.style.display = 'none');
-
-                // Fade out
-                arrivalsGrid.style.opacity = '0';
-                arrivalsGrid.style.transform = 'translateX(30px)';
-
+        // Function to update New Arrivals display
+        function updateNewArrivals() {
+            const currentSet = newArrivalSets[currentArrivalsIndex];
+            
+            arrivalsGrid.style.opacity = '0';
+            arrivalsGrid.style.transform = 'translateX(30px)';
+            
+            setTimeout(() => {
+                // Update content
+                arrivalsGrid.innerHTML = currentSet.map(product => createArrivalCard(product)).join('');
+                
+                // Update indicators
+                indicators.forEach((indicator, index) => {
+                    indicator.classList.toggle('active', index === currentArrivalsIndex);
+                });
+                
+                // Fade in
                 setTimeout(() => {
-                    // Show only current set's cards
-                    sets[currentIndex].forEach(card => card.style.display = '');
+                    arrivalsGrid.style.opacity = '1';
+                    arrivalsGrid.style.transform = 'translateX(0)';
+                }, 50);
+            }, 300);
+        }
 
-                    // Update indicators
-                    indicators.forEach((indicator, i) => {
-                        indicator.classList.toggle('active', i === currentIndex);
-                    });
-
-                    // Fade in
-                    setTimeout(() => {
-                        arrivalsGrid.style.opacity = '1';
-                        arrivalsGrid.style.transform = 'translateX(0)';
-                    }, 50);
-                }, 300);
+        nextBtn.addEventListener('click', function() {
+            currentArrivalsIndex++;
+            if (currentArrivalsIndex >= newArrivalSets.length) {
+                currentArrivalsIndex = 0;
             }
+            updateNewArrivals();
+        });
 
-            nextBtn.addEventListener('click', function () {
-                currentIndex++;
-                if (currentIndex >= sets.length) currentIndex = 0;
+        // Indicator click
+        indicators.forEach((indicator, index) => {
+            indicator.addEventListener('click', function() {
+                currentArrivalsIndex = index;
                 updateNewArrivals();
             });
+        });
 
-            indicators.forEach((indicator, i) => {
-                indicator.addEventListener('click', function () {
-                    currentIndex = i;
-                    updateNewArrivals();
-                });
-            });
-
-            // Initial display
-            updateNewArrivals();
-        }
+        // Initial load
+        updateNewArrivals();
     }
     
     // Product sets for Second New Arrivals (4 products per set)
+    const newArrivalSets2 = [
+        // Set 1
+        [
+            { 
+                img: '../assets/images/brand_images/evrland.jpg', 
+                name: 'Desert Blaze 2',
+                description: 'WOODY · SPICY GOURMAND'
+            },
+            { 
+                img: '../assets/images/brand_images/evrland.jpg', 
+                name: 'Ocean Mist 2',
+                description: 'FRESH · AQUATIC MARINE'
+            },
+            { 
+                img: '../assets/images/brand_images/evrland.jpg', 
+                name: 'Golden Night 2',
+                description: 'AMBER · WARM ORIENTAL'
+            },
+            { 
+                img: '../assets/images/brand_images/evrland.jpg', 
+                name: 'Amber Woods 2',
+                description: 'WOODY · EARTHY DEEP'
+            }
+        ],
+        // Set 2
+        [
+            { 
+                img: '../assets/images/brand_images/nocturne.png', 
+                name: 'Mystic Azure 2',
+                description: 'FLORAL · ELEGANT BLOOM'
+            },
+            { 
+                img: '../assets/images/brand_images/nocturne.png', 
+                name: 'Crimson Passion 2',
+                description: 'SPICY · BOLD INTENSE'
+            },
+            { 
+                img: '../assets/images/brand_images/nocturne.png', 
+                name: 'Velvet Eclipse 2',
+                description: 'WOODY · DARK MYSTERIOUS'
+            },
+            { 
+                img: '../assets/images/brand_images/nocturne.png', 
+                name: 'Silver Moon 2',
+                description: 'POWDERY · SOFT ELEGANT'
+            }
+        ],
+        // Set 3
+        [
+            { 
+                img: '../assets/images/brand_images/sampleperfume.png', 
+                name: 'Summer Breeze 2',
+                description: 'CITRUS · LIGHT FRESH'
+            },
+            { 
+                img: '../assets/images/brand_images/sampleperfume.png', 
+                name: 'Midnight Rose 2',
+                description: 'FLORAL · ROMANTIC CLASSIC'
+            },
+            { 
+                img: '../assets/images/brand_images/sampleperfume.png', 
+                name: 'Royal Silk 2',
+                description: 'POWDERY · SOFT LUXURY'
+            },
+            { 
+                img: '../assets/images/brand_images/sampleperfume.png', 
+                name: 'Winter Frost 2',
+                description: 'FRESH · COOL CRISP'
+            }
+        ]
+    ];
+
+    // Initialize SECOND carousel only if elements exist
     const arrivalsGrid2 = document.getElementById('arrivalsGrid2');
     const nextBtn2 = document.getElementById('nextBtn2');
     const indicatorsContainer2 = document.getElementById('lineIndicators2');
-
+    
     if (arrivalsGrid2 && nextBtn2 && indicatorsContainer2) {
-        const allCards2 = Array.from(arrivalsGrid2.querySelectorAll('.new-arrival-card'));
-        const cardsPerSet2 = 4;
+        let currentArrivalsIndex2 = 0;
+        const indicators2 = indicatorsContainer2.querySelectorAll('.indicator');
 
-        const sets2 = [];
-        for (let i = 0; i < allCards2.length; i += cardsPerSet2) {
-            sets2.push(allCards2.slice(i, i + cardsPerSet2));
+        // Function to create New Arrival card HTML
+        function createArrivalCard2(product) {
+            return `
+                <div class="new-arrival-card" >
+                    <button class="new-arrival-image" onclick="window.location.href='productdetails.php'">
+                        <img src="${product.img}" alt="${product.name}">
+                        <div class="arrival-overlay">
+                            <p class="arrival-description">${product.description}</p>
+                            <h3 class="arrival-name">${product.name}</h3>
+                        </div>
+                    </button>
+                    <button class="arrival-add-cart" onclick="showGeneralToast('Added to cart!', 'info')">ADD TO CART</button>
+                </div>
+            `;
         }
 
-        if (sets2.length === 0) {
-            nextBtn2.style.display = 'none';
-            indicatorsContainer2.style.display = 'none';
-        } else {
-            let currentIndex2 = 0;
-            const indicators2 = indicatorsContainer2.querySelectorAll('.indicator');
-
-            function updateNewArrivals2() {
-                allCards2.forEach(card => card.style.display = 'none');
-
-                arrivalsGrid2.style.opacity = '0';
-                arrivalsGrid2.style.transform = 'translateX(30px)';
-
+        // Function to update New Arrivals display (Second Instance)
+        function updateNewArrivals2() {
+            const currentSet2 = newArrivalSets2[currentArrivalsIndex2];
+            
+            // Fade out
+            arrivalsGrid2.style.opacity = '0';
+            arrivalsGrid2.style.transform = 'translateX(30px)';
+            
+            setTimeout(() => {
+                arrivalsGrid2.innerHTML = currentSet2.map(product => createArrivalCard2(product)).join('');
+                
+                // Update indicators
+                indicators2.forEach((indicator, index) => {
+                    indicator.classList.toggle('active', index === currentArrivalsIndex2);
+                });
+                
                 setTimeout(() => {
-                    sets2[currentIndex2].forEach(card => card.style.display = '');
+                    arrivalsGrid2.style.opacity = '1';
+                    arrivalsGrid2.style.transform = 'translateX(0)';
+                }, 50);
+            }, 300);
+        }
 
-                    indicators2.forEach((indicator, i) => {
-                        indicator.classList.toggle('active', i === currentIndex2);
-                    });
-
-                    setTimeout(() => {
-                        arrivalsGrid2.style.opacity = '1';
-                        arrivalsGrid2.style.transform = 'translateX(0)';
-                    }, 50);
-                }, 300);
+        nextBtn2.addEventListener('click', function() {
+            currentArrivalsIndex2++;
+            if (currentArrivalsIndex2 >= newArrivalSets2.length) {
+                currentArrivalsIndex2 = 0;
             }
+            updateNewArrivals2();
+        });
 
-            nextBtn2.addEventListener('click', function () {
-                currentIndex2++;
-                if (currentIndex2 >= sets2.length) currentIndex2 = 0;
+        indicators2.forEach((indicator, index) => {
+            indicator.addEventListener('click', function() {
+                currentArrivalsIndex2 = index;
                 updateNewArrivals2();
             });
+        });
 
-            indicators2.forEach((indicator, i) => {
-                indicator.addEventListener('click', function () {
-                    currentIndex2 = i;
-                    updateNewArrivals2();
-                });
-            });
-
-            updateNewArrivals2();
-        }
+        // Initial load 
+        updateNewArrivals2();
         
+        console.log('Second carousel initialized successfully!');
     } else {
         console.error('Second carousel elements not found:', {
             arrivalsGrid2: !!arrivalsGrid2,
