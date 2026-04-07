@@ -260,3 +260,38 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
 });
+
+//Confirm Modal 
+function openConfirmModal(userId, name, action, button) {
+    const modal = document.getElementById('confirm-action-modal');
+    const body = document.getElementById('confirm-body');
+    const yesBtn = document.getElementById('confirm-yes');
+    const cancelBtn = document.getElementById('confirm-cancel');
+
+    if (action === 'remove-admin') {
+        body.textContent = `Remove admin access from ${name}?`;
+    } else if (action === 'block-customer') {
+        body.textContent = `Block this customer: ${name}?`;
+    } else if (action === 'unblock-customer') {
+        body.textContent = `Unblock this customer: ${name}?`;
+    } else {
+        body.textContent = `Are you sure you want to ${action.replace('-', ' ')} for ${name}?`;
+    }
+
+    modal.style.display = 'flex';
+
+    yesBtn.onclick = () => {
+        const form = button.closest('form');
+        if (form) form.submit();
+        modal.style.display = 'none';
+    };
+
+    cancelBtn.onclick = () => { modal.style.display = 'none'; };
+    document.getElementById('confirm-close').onclick = () => { modal.style.display = 'none'; };
+}
+
+//close modal when clicking outside
+document.getElementById('confirm-action-modal').addEventListener('click', function(e) {
+    if (e.target === this) this.style.display = 'none';
+});
+

@@ -212,7 +212,10 @@ $admins = mysqli_query($conn,
                                                     onsubmit="return confirm('Remove admin access from <?= htmlspecialchars($c['fname']) ?>?')">
                                                     <input type="hidden" name="user_id" value="<?= $c['user_id'] ?>">
                                                     <input type="hidden" name="action" value="remove">
-                                                    <button type="submit" class="btn-delete">Remove Admin</button>
+                                                    <button type="button" class="btn-delete"
+                                                        onclick="openConfirmModal('<?= $c['user_id'] ?>', '<?= htmlspecialchars($c['fname']) ?>', 'remove-admin', this)">
+                                                        Remove Admin
+                                                    </button>
                                                 </form>
 
                                                 <?php endif; ?>
@@ -224,16 +227,15 @@ $admins = mysqli_query($conn,
                                             <!-- Block/Unblock -->
                                             <?php if ($can_block): ?>
 
-                                            <form method="POST" action="../../backend/customers/block_customer.php" style="display:inline;"
-                                                onsubmit="return confirm('<?= $c['is_blocked'] ? 'Unblock this customer?' : 'Block this customer?' ?>')">
+                                            <form method="POST" action="../../backend/customers/block_customer.php" style="display:inline;">
                                                 <input type="hidden" name="user_id" value="<?= $c['user_id'] ?>">
                                                 <input type="hidden" name="action" value="<?= $c['is_blocked'] ? 'unblock' : 'block' ?>">
                                                 <input type="hidden" name="status" value="<?= $filter_status ?>">
-                                                <button type="submit" class="<?= $c['is_blocked'] ? 'btn-edit' : 'btn-delete' ?>">
+                                                <button type="button" class="<?= $c['is_blocked'] ? 'btn-edit' : 'btn-delete' ?>"
+                                                    onclick="openConfirmModal('<?= $c['user_id'] ?>', '<?= htmlspecialchars($c['fname']) ?>', '<?= $c['is_blocked'] ? 'unblock-customer' : 'block-customer' ?>', this)">
                                                     <?= $c['is_blocked'] ? 'Unblock' : 'Block' ?>
                                                 </button>
                                             </form>
-
                                             <?php endif; ?>
 
                                         </td>
@@ -340,6 +342,21 @@ $admins = mysqli_query($conn,
 
         </div>
 
+        <div class="modal-overlay" id="confirm-action-modal">
+            <div class="modal">
+                <div class="modal-header">
+                    <span class="modal-title">Confirm Action</span>
+                    <button class="modal-close" id="confirm-close">&times;</button>
+                </div>
+                <div class="modal-body" id="confirm-body">
+                    Are you sure?
+                </div>
+                <div class="modal-footer">
+                    <button class="btn-cancel" id="confirm-cancel">Cancel</button>
+                    <button class="btn-save" id="confirm-yes">Yes</button>
+                </div>
+            </div>
+        </div>
 
         <!-- View Details Modal -->
         <div class="modal-overlay" id="customer-modal">
