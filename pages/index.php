@@ -1,3 +1,9 @@
+<?php
+include '../backend/db_connect.php';
+include '../backend/get_products_by_category.php';
+$productsByCategory = getProductsByCategory($conn);
+?>
+
 <!DOCTYPE html>
 <html lang = "en">
     <head>
@@ -55,10 +61,12 @@
         
         <!-- PERFUME HERO SECTION -->
         <section id="perfume-hero">
+
             <video id="hero-video-bg" autoplay muted loop playsinline>
             <source src="../assets/videos/sample1.mp4" type="video/mp4">
             Your browser does not support the video tag.
             </video>
+
             <div class="hero-content">
                 
                 <div class="hero-title">
@@ -73,20 +81,6 @@
                     </div>
                 </div>
                 
-                <!--
-                <div class="hero-video-ad">
-                    <div class="video-wrapper" onclick="playHeroVideo()">
-                        <span class="video-label">WATCH AD</span>
-                        <img src="../assets/images/brand_images/heroBG1.png" alt="Perfume Video Ad">
-                        <div class="video-play-button">
-                            <i class="fa-solid fa-play"></i>
-                        </div>
-                    </div>
-                </div> 
-                 Info Card - Bottom Left 
-                -->
-                
-               
                 <div class="hero-info-card">
                     <div class="info-card-wrapper">
                         
@@ -122,16 +116,22 @@
 
 
        <div class="carousel-products-wrapper">
+
            <section class="carousel-section fade-in">
+
                <div class="carousel-container">
+
                    <div class="carousel-wrapper">
+
                        <div class="carousel-track" id="carouselTrack">
                            <div class="carousel-slide fade-">
                                <img src="../assets/images/brand_images/perfsamp.jpg" alt="Featured Perfume 1">
                            </div>
+
                            <div class="carousel-slide">
                                <img src="../assets/images/brand_images/mensperf.jpg" alt="Featured Perfume 2">
                            </div>
+
                            <div class="carousel-slide">
                                <img src="../assets/images/brand_images/elegperf.jpg" alt="Featured Perfume 3">
                            </div>
@@ -143,142 +143,77 @@
                        
                        <div class="carousel-dots" id="carouselDots"></div>
                    </div>
+
                </div>
+
            </section>
         
 
            <!-- PRODUCTS SECTION -->
-           <section class="products-section">
-               <div class="products-container">
-                   <div class="products-grid fade-in">
-                       
-                       <!-- Product Card 1 - SOLD OUT -->
-                       <div class="product-card">
-                           <div class="product-card-image">
-                               <img src="../assets/images/brand_images/sampleperfume.png" alt="Perfume 1">
-                               <button class="wishlist-btn" onclick="showGeneralToast('Added to wishlist!', 'info')">
-                                   <i class="fa-solid fa-heart"></i>
-                               </button>
-                               <div class="sold-out-label">SOLD OUT</div>
-                           </div>
-                           <button class="add-to-cart-btn" disabled>ADD TO CART</button>
-                       </div>
+           
+            <section class="products-section">
 
-                       <!-- Product Card 2 -->
-                       <div class="product-card">
-                           <div class="product-card-image">
-                               <img src="../assets/images/brand_images/nocturne.png" alt="Perfume 2">
-                               
-                               <button class="quick-view-btn" onclick="window.location.href='productDetails.php'">Quick View</button>
-                           </div>
-                           <button class="add-to-cart-btn" onclick="showGeneralToast('Added to cart!', 'info')">
-                               ADD TO CART
-                           </button>
-                           <div class="shop-product-info">
-                                <h3 class="shop-product-title">Golden Night</h3>
-                                <p class="shop-product-price" >₱1,800</p>
+                <div class="products-container">
+
+                    <div class="products-grid fade-in">
+                        
+                        <?php
+                        $sql = "
+                            SELECT p.product_id, p.product_name, p.price, p.discounted_price,
+                                p.product_status, pi.image_url
+                            FROM products p
+                            LEFT JOIN product_images pi 
+                                ON pi.product_id = p.product_id AND pi.is_primary = 1
+                            ORDER BY p.created_at DESC
+                        ";
+                        
+                        $result = $conn->query($sql);
+                        while ($product = $result->fetch_assoc()):
+                            $id = $product['product_id'];
+                            $name = htmlspecialchars($product['product_name']);
+                            $price = number_format($product['price'], 2);
+                            $status = $product['product_status'];
+                            $imgSrc = $product['image_url'] 
+                                    ? '../assets/images/products/' . htmlspecialchars($product['image_url'])
+                                    : '../assets/images/brand_images/nocturne.png';
+                            $soldOut = ($status === 'out-of-stock');
+                        ?>
+                        
+                        <div class="product-card">
+                            <div class="product-card-image">
+                                <img src="<?= $imgSrc ?>" alt="<?= $name ?>">
+                                <?php if ($soldOut): ?>
+                                    <div class="sold-out-label">SOLD OUT</div>
+                                <?php else: ?>
+                                    <button class="wishlist-btn" 
+                                        onclick="showGeneralToast('Added to wishlist!', 'info')">
+                                        <i class="fa-solid fa-heart"></i>
+                                    </button>
+                                    <button class="quick-view-btn" 
+                                        onclick="window.location.href='productDetails.php?id=<?= $id ?>'">
+                                        Quick View
+                                    </button>
+                                <?php endif; ?>
                             </div>
-                       </div>
 
-                       <!-- Product Card 3 -->
-                       <div class="product-card">
-                           <div class="product-card-image">
-                               <img src="../assets/images/brand_images/nocturne.png" alt="Perfume 3">
-                               
-                               <button class="quick-view-btn" onclick="window.location.href='productDetails.php'">Quick View</button>
-                           </div>
-                           <button class="add-to-cart-btn" onclick="showGeneralToast('Added to cart!', 'info')">
-                               ADD TO CART
-                           </button>
-                           <div class="shop-product-info">
-                                <h3 class="shop-product-title">Golden Night</h3>
-                                <p class="shop-product-price" >₱1,800</p>
+                            <?php if ($soldOut): ?>
+                                <button class="add-to-cart-btn" disabled>ADD TO CART</button>
+                            <?php else: ?>
+                                <button class="add-to-cart-btn" 
+                                    onclick="showGeneralToast('Added to cart!', 'info')">
+                                    ADD TO CART
+                                </button>
+                            <?php endif; ?>
+
+                            <div class="shop-product-info">
+                                <h3 class="shop-product-title"><?= $name ?></h3>
+                                <p class="shop-product-price">₱<?= $price ?></p>
                             </div>
-                       </div>
-
-                       <!-- Product Card 4 -->
-                       <div class="product-card">
-                           <div class="product-card-image">
-                               <img src="../assets/images/brand_images/nocturne.png" alt="Perfume 4">
-                               
-                               <button class="quick-view-btn" onclick="window.location.href='productDetails.php'">Quick View</button>
-                           </div>
-                           <button class="add-to-cart-btn" onclick="showGeneralToast('Added to cart!', 'info')">
-                               ADD TO CART
-                           </button>
-                           <div class="shop-product-info">
-                                <h3 class="shop-product-title">Golden Night</h3>
-                                <p class="shop-product-price" >₱1,800</p>
-                            </div>
-                       </div>
-
-                       <!-- Product Card 5 -->
-                       <div class="product-card">
-                           <div class="product-card-image">
-                               <img src="../assets/images/brand_images/nocturne.png" alt="Perfume 5">
-                               
-                               <button class="quick-view-btn" onclick="window.location.href='productDetails.php'">Quick View</button>
-                           </div>
-                           <button class="add-to-cart-btn" onclick="showGeneralToast('Added to cart!', 'info')">
-                               ADD TO CART
-                           </button>
-                           <div class="shop-product-info">
-                                <h3 class="shop-product-title">Golden Night</h3>
-                                <p class="shop-product-price" >₱1,800</p>
-                            </div>
-                       </div>
-
-                       <!-- Product Card 6 -->
-                       <div class="product-card">
-                           <div class="product-card-image">
-                               <img src="../assets/images/brand_images/nocturne.png" alt="Perfume 6">
-                               
-                               <button class="quick-view-btn" onclick="window.location.href='productDetails.php'">Quick View</button>
-                           </div>
-                           <button class="add-to-cart-btn" onclick="showGeneralToast('Added to cart!', 'info')">
-                               ADD TO CART
-                           </button>
-                           <div class="shop-product-info">
-                                <h3 class="shop-product-title">Golden Night</h3>
-                                <p class="shop-product-price" >₱1,800</p>
-                            </div>
-                       </div>
-
-                       <!-- Product Card 7 -->
-                       <div class="product-card">
-                           <div class="product-card-image">
-                               <img src="../assets/images/brand_images/nocturne.png" alt="Perfume 6">
-                               
-                               <button class="quick-view-btn" onclick="window.location.href='productDetails.php'">Quick View</button>
-                           </div>
-                           <button class="add-to-cart-btn" onclick="showGeneralToast('Added to cart!', 'info')">
-                               ADD TO CART
-                           </button>
-                           <div class="shop-product-info">
-                                <h3 class="shop-product-title">Golden Night</h3>
-                                <p class="shop-product-price" >₱1,800</p>
-                            </div>
-                       </div>
-
-                       <!-- Product Card 8 -->
-                       <div class="product-card">
-                           <div class="product-card-image">
-                               <img src="../assets/images/brand_images/nocturne.png" alt="Perfume 6">
-                               
-                               <button class="quick-view-btn" onclick="window.location.href='productDetails.php'">Quick View</button>
-                           </div>
-                           <button class="add-to-cart-btn" onclick="showGeneralToast('Added to cart!', 'info')">
-                               ADD TO CART
-                           </button>
-                           <div class="shop-product-info">
-                                <h3 class="shop-product-title">Golden Night</h3>
-                                <p class="shop-product-price" >₱1,800</p>
-                            </div>
-                       </div>
-
-                   </div>
-               </div>
-           </section>
+                        </div>
+                        <?php endwhile; ?>
+                    </div>
+                </div>
+            </section>
        </div>
 
     <!-- BRAND LOGOS -->

@@ -56,26 +56,8 @@ $admins = mysqli_query($conn,
         <?php include '../../components/adminSideBar.php'; ?>
 
         <div class="main-content">
+            <?php include '../../components/adminNavbar.php'; ?>
 
-            <header class="navbar">
-
-                <div class="navbar-left">
-                    <button class="hamburger" id="menu-btn"><span></span><span></span><span></span></button>
-                    <h1 class="navbar-title">ADMIN PANEL</h1>
-                </div>
-
-                <div class="navbar-search">
-
-                    <svg width="16" height="16" fill="none" stroke="#888" stroke-width="2" viewBox="0 0 24 24">
-                        <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
-                    </svg>
-                    <input type="text" placeholder="Search...">
-
-                </div>
-
-                <div class="navbar-avatar">A</div>
-
-            </header>
 
             <main class="container">
 
@@ -116,8 +98,9 @@ $admins = mysqli_query($conn,
 
                         <div class="filter-group search-group" style="position:relative;">
                             <label>SEARCH:</label>
-                            <input type="text" name="search" placeholder="Search customers..."
+                            <input type="text" name="search" placeholder="Search orders..." 
                                 id="search-input" value="<?= htmlspecialchars($filter_search) ?>">
+                            <div id="search-suggestions" class="suggestions-box" style="display:none;"></div>
                         </div>
 
                         <button type="submit" class="reset-btn">Apply</button>
@@ -603,6 +586,9 @@ $admins = mysqli_query($conn,
         <script src="../../assets/js/AdminPanel.js"></script>
         <script src="../../assets/js/script.js"></script>
         <script src="../../assets/js/customerList.js"></script>
+        <script>
+            initLiveSearch('search-input', 'search-suggestions', '../../backend/ordersLiveSearch.php');
+        </script>
 
         <?php if ($success): ?>
             <script>showGeneralToast("<?= htmlspecialchars($success) ?>", "success");</script>

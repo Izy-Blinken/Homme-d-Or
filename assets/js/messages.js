@@ -405,4 +405,84 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    // Initiate Chat (+) button
+
+    const initiateBtn = document.getElementById('initiate-chat-btn');
+    const searchPanel = document.getElementById('chat-search-panel');
+    const searchInput = document.getElementById('chat-search-input');
+    const searchResults = document.getElementById('chat-search-results');
+
+    if (initiateBtn && searchPanel) {
+
+        // Toggle panel
+        initiateBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const isOpen = searchPanel.classList.toggle('open');
+            if (isOpen) {
+                searchInput.value = '';
+                searchResults.innerHTML = '';
+                searchInput.focus();
+            }
+        });
+
+        document.addEventListener('click', (e) => {
+            if (!searchPanel.contains(e.target) && e.target !== initiateBtn) {
+                searchPanel.classList.remove('open');
+            }
+        });
+
+        // Live search
+        let searchTimeout = null;
+        searchInput.addEventListener('input', () => {
+            clearTimeout(searchTimeout);
+            const q = searchInput.value.trim();
+
+            if (q.length === 0) {
+                searchResults.innerHTML = '';
+                return;
+            }
+
+            searchResults.innerHTML = '<div class="chat-search-loading">Searching...</div>';
+
+            searchTimeout = setTimeout(() => {
+
+                fetch(`../../backend/messages/search_users.php?q=${encodeURIComponent(q)}`)
+                    .then(res => res.json())
+                    .then(data => {
+
+                        if (data.length === 0) {
+                            searchResults.innerHTML = '<div class="chat-search-empty">No results found.</div>';
+                            return;
+                        }
+
+                        searchResults.innerHTML = data.map(r => `
+                            <div class="chat-search-item" data-type="${r.type}" data-id="${r.id}">
+                                <div class="chat-search-avatar ${r.type === 'admin' ? 'admin-avatar' : ''}">
+                                    ${r.name.charAt(0).toUpperCase()}
+                                </div>
+                                <div class="chat-search-info">
+                                    <span class="chat-search-name">${r.name}</span>
+                                    <span class="chat-search-type">${r.type === 'admin' ? 'Admin' : 'Customer'}</span>
+                                </div>
+                            </div>
+                        `).join('');
+
+                        // redirect sa convo na cinlick
+                        document.querySelectorAll('.chat-search-item').forEach(item => {
+                            item.addEventListener('click', () => {
+                                const type = item.dataset.type;
+                                const id = item.dataset.id;
+                                const param = type === 'admin' ? `admin_id=${id}` : `user_id=${id}`;
+                                window.location.href = `messages.php?${param}`;
+                            });
+                        });
+
+                    })
+                    .catch(() => {
+                        searchResults.innerHTML = '<div class="chat-search-empty">Something went wrong.</div>';
+                    });
+            }, 300);
+        });
+    }
+
 });

@@ -1,8 +1,8 @@
 <?php
-    session_start();
-    include '../../backend/db_connect.php';
-    include '../../backend/auth/auth_check.php';
-    checkAdminAccess($conn);
+session_start();
+include '../../backend/db_connect.php';
+include '../../backend/auth/auth_check.php';
+checkAdminAccess($conn);
 ?>
 
 <!DOCTYPE html>
@@ -10,6 +10,7 @@
     <head>
         <link rel="stylesheet" href="../../assets/css/AdminPanelStyle.css">
          <link rel="stylesheet" href="../../assets/css/style.css">
+         
     </head>
 
     <body>
@@ -18,24 +19,7 @@
 
         <div class="main-content">
 
-            <header class="navbar">
-                <div class="navbar-left">
-                    <button class="hamburger" id="menu-btn">
-                        <span></span><span></span><span></span>
-                    </button>
-                    <h1 class="navbar-title">ADMIN PANEL</h1>
-                </div>
-
-                <div class="navbar-search">
-                    <svg width="16" height="16" fill="none" stroke="#888" stroke-width="2" viewBox="0 0 24 24">
-                        <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
-                    </svg>
-                    <input type="text" placeholder="Search...">
-                </div>
-
-                <div class="navbar-avatar">A</div>
-
-            </header>
+            <?php include '../../components/adminNavbar.php'; ?>
 
             <main class="container">
                 <h2 class="page-title">Dashboard</h2>
@@ -213,6 +197,7 @@
         </div>
 
         <script src="../../assets/js/AdminPanel.js" defer></script>
+        <script src="../../assets/js/script.js" defer></script>
         
     </body>
 </html>
