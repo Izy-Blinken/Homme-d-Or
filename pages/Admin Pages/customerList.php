@@ -48,6 +48,7 @@ $admins = mysqli_query($conn,
         <meta charset="UTF-8">
         <title>Customer List</title>
         <link rel="stylesheet" href="../../assets/css/AdminPanelStyle.css">
+         <link rel="stylesheet" href="../../assets/css/style.css">
     </head>
 
     <body>

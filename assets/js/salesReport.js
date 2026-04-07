@@ -1,4 +1,6 @@
-// Tab switching
+// ==========================================
+// 1. TAB SWITCHING LOGIC
+// ==========================================
 function activateTab(tabName) {
     document.querySelectorAll('.report-tab').forEach(t => {
         t.classList.toggle('active', t.dataset.tab === tabName);
@@ -8,46 +10,104 @@ function activateTab(tabName) {
     });
 }
 
+// Add click listeners to all tab buttons
 document.querySelectorAll('.report-tab').forEach(t => {
     t.addEventListener('click', () => activateTab(t.dataset.tab));
 });
 
-// Restore active tab after masubmit ng form
+// Restore active tab after a form submit or page reload
 const activeTab = new URLSearchParams(window.location.search).get('active_tab') || 'revenue';
 activateTab(activeTab);
 
 
-// bar chart
-function makeChart(canvasId, labels, values, label, color) {
-    const ctx = document.getElementById(canvasId);
-    if (!ctx) return;
+// ==========================================
+// 2. LUXURY CHART.JS LOGIC
+// ==========================================
+function makeChart(canvasId, labels, data, label, color) {
+    const canvas = document.getElementById(canvasId);
+    if (!canvas) return; // Safety check
+    const ctx = canvas.getContext('2d');
+
+    let gradient = ctx.createLinearGradient(0, 0, 0, 400);
+    gradient.addColorStop(0, 'rgba(201, 169, 97, 0.7)'); 
+    gradient.addColorStop(1, 'rgba(201, 169, 97, 0.05)'); 
+
+    Chart.defaults.font.family = "'League Spartan', sans-serif";
+    Chart.defaults.color = "#aaa";
+
+    const isBarChart = (canvasId === 'chart-products');
 
     new Chart(ctx, {
-        type: 'bar',
+        type: isBarChart ? 'bar' : 'line',
         data: {
             labels: labels,
             datasets: [{
                 label: label,
-                data: values,
-                backgroundColor: color + 'cc',
-                borderColor: color,
-                borderWidth: 1,
-                borderRadius: 2
+                data: data,
+                borderColor: '#c9a961',
+                backgroundColor: gradient,
+                borderWidth: isBarChart ? 2 : 3, 
+                borderRadius: isBarChart ? 6 : 0, 
+                barPercentage: 0.5, 
+                tension: 0.4, 
+                fill: true,
+                pointBackgroundColor: '#c9a961',
+                pointBorderColor: '#0a1e36',
+                pointBorderWidth: 2,
+                pointRadius: labels.length === 1 ? 10 : 4,
+                pointHoverRadius: labels.length === 1 ? 12 : 7
             }]
         },
         options: {
             responsive: true,
-            plugins: { legend: { display: false } },
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { display: false }, 
+                tooltip: {
+                    backgroundColor: 'rgba(0, 0, 0, 0.8)',
+                    titleFont: { size: 14, family: "'League Spartan', sans-serif", weight: '700' },
+                    bodyFont: { size: 13, family: "'League Spartan', sans-serif" },
+                    padding: 12,
+                    borderColor: 'rgba(212, 175, 55, 0.3)',
+                    borderWidth: 1,
+                    displayColors: false,
+                    callbacks: {
+                        label: function(context) {
+                            let prefix = (label === 'Revenue' || label === 'Sales') ? '₱' : '';
+                            return label + ': ' + prefix + context.parsed.y.toLocaleString();
+                        }
+                    }
+                }
+            },
             scales: {
-                y: { beginAtZero: true, grid: { color: '#f0f0f0' } },
-                x: { grid: { display: false } }
+                x: {
+                    grid: { color: 'rgba(255, 255, 255, 0.05)' },
+                    border: { display: false }, 
+                    ticks: { color: '#888', padding: 10, font: { size: 11 } }
+                },
+                y: {
+                    beginAtZero: true,
+                    grid: { color: 'rgba(255, 255, 255, 0.05)' },
+                    border: { display: false },
+                    ticks: { 
+                        color: '#888', 
+                        padding: 10, 
+                        font: { size: 11 },
+                        callback: function(value) {
+                            if (value >= 1000) return (value / 1000) + 'k';
+                            return value;
+                        }
+                    }
+                }
             }
         }
     });
 }
 
 
-// Export kung ano lng visible na tab as PDF
+// ==========================================
+// 3. EXPORT PDF LOGIC
+// ==========================================
 function exportPDF(tab) {
     const { jsPDF } = window.jspdf;
     const doc = new jsPDF();
@@ -60,7 +120,6 @@ function exportPDF(tab) {
         customers: 'Customers Report'
     };
 
-    // Header
     doc.setFontSize(16);
     doc.setFont('helvetica', 'bold');
     doc.text("Homme D'or", 14, 18);
@@ -73,7 +132,6 @@ function exportPDF(tab) {
     }), 14, 33);
     doc.line(14, 36, 196, 36);
 
-    // Stats summary
     let y = 44;
     const statsEl = document.getElementById(tab + '-stats');
     if (statsEl) {
@@ -90,7 +148,6 @@ function exportPDF(tab) {
         y += 4;
     }
 
-    // Table
     const tableEl = document.getElementById(tab + '-table');
     if (tableEl) {
         const headers = [...tableEl.querySelectorAll('th')].map(th => th.textContent.trim());
