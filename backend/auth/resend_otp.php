@@ -61,7 +61,7 @@ try {
         'allow_self_signed' => true
     ]];
 
-    $mail->setFrom('panglaro.3829@gmail.com', "Homme d'Or");
+    $mail->setFrom('hommedor2026.3829@gmail.com', "Homme d'Or");
     $mail->addAddress($email, $fname);
     $mail->isHTML(true);
     $mail->Subject = "Your Homme d'Or OTP Verification Code";

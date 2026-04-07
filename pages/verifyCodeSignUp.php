@@ -41,7 +41,7 @@ $pending_email = htmlspecialchars($_SESSION['pending_user_email'] ?? '');
             <form id="signupVerifyForm">
                 <div class="signupCodeContainer">
                     <?php for ($i = 0; $i < 6; $i++): ?>
-                        <input type="text" maxlength="1" class="signupCodeInput codeInput"
+                        <input type="text" maxlength="1" class="signupCodeInput"
                                data-index="<?= $i ?>" inputmode="numeric" autocomplete="off" />
                     <?php endfor; ?>
                 </div>

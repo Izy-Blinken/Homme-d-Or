@@ -115,7 +115,7 @@ $currentPage = basename($_SERVER['PHP_SELF']);
                         <div class="search-suggestions-dropdown" id="desktop-suggestions" style="display: flex;">
     
                             <a href="#" class="search-suggestion-item">
-                                <img src="../assets/images/brand_images/placeholder.jpg" alt="Perfume 1" onerror="this.src='https://via.placeholder.com/45'">
+                                <img src="../assets/images/brand_images/placeholder.jpg" alt="Perfume 1">
                                 <div class="suggestion-info">
                                     <span class="suggestion-name">Golden Night Special Edition</span>
                                     <span class="suggestion-price">₱1,800.00</span>
@@ -123,7 +123,7 @@ $currentPage = basename($_SERVER['PHP_SELF']);
                             </a>
 
                             <a href="#" class="search-suggestion-item">
-                                <img src="../assets/images/brand_images/placeholder.jpg" alt="Perfume 2" onerror="this.src='https://via.placeholder.com/45'">
+                                <img src="../assets/images/brand_images/placeholder.jpg" alt="Perfume 2">
                                 <div class="suggestion-info">
                                     <span class="suggestion-name">Midnight Oud Extrait</span>
                                     <span class="suggestion-price">₱2,450.00</span>
@@ -131,7 +131,7 @@ $currentPage = basename($_SERVER['PHP_SELF']);
                             </a>
 
                             <a href="#" class="search-suggestion-item">
-                                <img src="../assets/images/brand_images/placeholder.jpg" alt="Perfume 3" onerror="this.src='https://via.placeholder.com/45'">
+                                <img src="../assets/images/brand_images/placeholder.jpg" alt="Perfume 3" >
                                 <div class="suggestion-info">
                                     <span class="suggestion-name">Velvet Rose & Vanilla</span>
                                     <span class="suggestion-price">₱1,200.00</span>
@@ -248,7 +248,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     const formattedPrice = new Intl.NumberFormat('en-PH', { style: 'currency', currency: 'PHP' }).format(item.price);
                     
                     a.innerHTML = `
-                        <img src="../assets/images/brand_images/placeholder.jpg" alt="${item.name}" onerror="this.src='https://via.placeholder.com/45'">
+                        <img src="../assets/images/brand_images/placeholder.jpg" alt="${item.name}>
                         <div class="suggestion-info">
                             <span class="suggestion-name">${item.name}</span>
                             <span class="suggestion-price">${formattedPrice}</span>

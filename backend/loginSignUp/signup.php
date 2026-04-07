@@ -26,8 +26,8 @@ function sendOTPEmail($to_email, $to_name, $otp) {
         $mail->Port       = 587;
         $mail->SMTPOptions = array(
             'ssl' => array(
-                'verify_peer' => false,
-                'verify_peer_name' => false,
+                'verify_peer' => true,
+                'verify_peer_name' => true,
                 'allow_self_signed' => true
             )
         );
@@ -53,13 +53,15 @@ function sendOTPEmail($to_email, $to_name, $otp) {
         ";
 
         $mail->send();
-        $mail->smtpClose();
         return true;
  
     } catch (Exception $e) {
+        error_log('PHPMailer Error: ' . $mail->ErrorInfo);
         return false;
     }
 }
+
+header('Content-Type: application/json');
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     header('Location: ../../pages/index.php');
@@ -76,20 +78,26 @@ $password = $_POST['password'] ?? '';
 $confirm = $_POST['confirm_password'] ?? '';
 
 if (!$fname || !$lname || !$email || !$username || !$password) {
-    $_SESSION['signup_error'] = 'Please fill in all required fields.';
-    header('Location: ../../pages/index.php');
+    echo json_encode([
+        "success" => false,
+        "message" => "Please fill in all required fields."
+    ]);
     exit;
 }
 
 if ($password !== $confirm) {
-    $_SESSION['signup_error'] = 'Passwords do not match.';
-    header('Location: ../../pages/index.php');
+    echo json_encode([
+        "success" => false,
+        "message" => "Passwords do not match."
+    ]);
     exit;
 }
 
 if (strlen($password) < 8 || !preg_match('/[A-Z]/', $password) || !preg_match('/[a-z]/', $password) || !preg_match('/[0-9]/', $password)) {
-    $_SESSION['signup_error'] = 'Password does not meet requirements.';
-    header('Location: ../../pages/index.php');
+     echo json_encode([
+        "success" => false,
+        "message" => "Password does not meet requirements."
+    ]);
     exit;
 }
 
@@ -98,8 +106,10 @@ $safe_email = mysqli_real_escape_string($conn, $email);
 $existing = mysqli_fetch_assoc(mysqli_query($conn, "SELECT user_id FROM users WHERE email = '$safe_email'"));
 
 if ($existing) {
-    $_SESSION['signup_error'] = 'Email is already registered.';
-    header('Location: ../../pages/index.php');
+    echo json_encode([
+        "success" => false,
+        "message" => "Email is already registered."
+    ]);
     exit;
 }
 
@@ -108,8 +118,10 @@ $safe_username = mysqli_real_escape_string($conn, $username);
 $existing_username = mysqli_fetch_assoc(mysqli_query($conn, "SELECT user_id FROM users WHERE username = '$safe_username'"));
 
 if ($existing_username) {
-    $_SESSION['signup_error'] = 'Username is already taken.';
-    header('Location: ../../pages/index.php');
+    echo json_encode([
+        "success" => false,
+        "message" => "Username is already taken."
+    ]);
     exit;
 }
 
@@ -123,8 +135,10 @@ mysqli_query($conn, "INSERT INTO users (fname, lname, bday, phone, email, userna
      VALUES ('$safe_fname', '$safe_lname', '$safe_bday', '$safe_phone', '$safe_email', '$safe_username', '$hashed', 0)");
 
 if (mysqli_affected_rows($conn) === 0) {
-    $_SESSION['signup_error'] = 'Registration failed. Please try again.';
-    header('Location: ../../pages/index.php');
+    echo json_encode([
+        "success" => false,
+        "message" => "Registration failed. Please try again."
+    ]);
     exit;
 }
 
@@ -139,7 +153,7 @@ mysqli_query($conn,
     "DELETE FROM email_verifications WHERE user_id = '$user_id'"
 );
  
-// Insert user to email verification
+// Insert user to email verification DB table
 mysqli_query($conn,
     "INSERT INTO email_verifications (user_id, token, expires_at)
      VALUES ('$user_id', '$safe_otp', '$expires_at')"
@@ -152,8 +166,10 @@ if (!$sent) {
     // Email failed — clean up and let user retry
     mysqli_query($conn, "DELETE FROM users WHERE user_id = '$user_id'");
     mysqli_query($conn, "DELETE FROM email_verifications WHERE user_id = '$user_id'");
-    $_SESSION['signup_error'] = 'Failed to send verification email. Please try again.';
-    header('Location: ../../pages/index.php');
+    echo json_encode([
+        "success" => false,
+        "message" => "Failed to send verification email."
+    ]);
     exit;
 }
 
@@ -163,5 +179,7 @@ $_SESSION['pending_user_fname'] = $fname;
 $_SESSION['pending_user_email'] = $email;
 $_SESSION['pending_signup_success'] = true;
 
-header('Location: ../../pages/verifyCodeSignUp.php');
+echo json_encode([
+    "success" => true
+]);
 exit;

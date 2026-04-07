@@ -5,8 +5,8 @@
                     <h2><b>SIGN UP</b></h2>
                 </div>
 
-                <form id="registerForm" action="../backend/loginSignUp/signup.php" method="POST">
-                    
+                <form id="registerForm" method="POST">
+
                     <div class="inputGroup">
                         <input type="text" name="firstname" id="signupFirstname" required>
                         <label>FIRST NAME*</label>
@@ -81,6 +81,7 @@
                     </div>
 
                     <div class="regBtn">
+                        <p id="signupServerError" style="color:red; text-align:center;"></p>
                         <button type="submit">CREATE ACCOUNT</button>
                     </div>
 
