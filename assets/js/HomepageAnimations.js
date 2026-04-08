@@ -40,37 +40,39 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     //create dots
-    slides.forEach((_, index) => {
-        const dot = document.createElement('div');
-        dot.classList.add('carousel-dot');
-        if (index === 0) dot.classList.add('active');
-        dot.addEventListener('click', () => goToSlide(index));
-        dotsContainer.appendChild(dot);
-    });
-
-    const dots = document.querySelectorAll('.carousel-dot');
-
-    window.moveCarousel = function(direction) {
-        currentIndex += direction;
-        if (currentIndex >= slides.length) currentIndex = 0;
-        if (currentIndex < 0) currentIndex = slides.length - 1;
-        updateCarousel();
-    }
-
-    function goToSlide(index) {
-        currentIndex = index;
-        updateCarousel();
-    }
-
-    function updateCarousel() {
-        const offset = -currentIndex * 100;
-        track.style.transform = `translateX(${offset}%)`;
-        dots.forEach((dot, index) => {
-            dot.classList.toggle('active', index === currentIndex);
+    if (slides.length > 0 && dotsContainer) {
+        slides.forEach((_, index) => {
+            const dot = document.createElement('div');
+            dot.classList.add('carousel-dot');
+            if (index === 0) dot.classList.add('active');
+            dot.addEventListener('click', () => goToSlide(index));
+            dotsContainer.appendChild(dot);
         });
-    }
 
-    setInterval(() => moveCarousel(1), 5000);
+        const dots = document.querySelectorAll('.carousel-dot');
+
+        window.moveCarousel = function(direction) {
+            currentIndex += direction;
+            if (currentIndex >= slides.length) currentIndex = 0;
+            if (currentIndex < 0) currentIndex = slides.length - 1;
+            updateCarousel();
+        }
+
+        function goToSlide(index) {
+            currentIndex = index;
+            updateCarousel();
+        }
+
+        function updateCarousel() {
+            const offset = -currentIndex * 100;
+            if (track) track.style.transform = `translateX(${offset}%)`;
+            dots.forEach((dot, index) => {
+                dot.classList.toggle('active', index === currentIndex);
+            });
+        }
+
+        setInterval(() => moveCarousel(1), 5000);
+    }
 
     // Wishlist
     document.querySelectorAll('.wishlist-btn').forEach(btn => {
@@ -80,136 +82,91 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
     
-    // FIRST carousel — reads PHP-rendered cards, groups them into sets of 4
-    const arrivalsGrid = document.getElementById('arrivalsGrid');
-    const nextBtn = document.getElementById('nextBtn');
-    const indicatorsContainer = document.getElementById('lineIndicators');
 
-    if (arrivalsGrid && nextBtn && indicatorsContainer) {
-        // Grab all cards PHP already rendered
-        const allCards = Array.from(arrivalsGrid.querySelectorAll('.new-arrival-card'));
-        const cardsPerSet = 4;
+    // --- SLEEK HORIZONTAL SCROLL CAROUSELS ---
+    // Helper function to initialize any horizontal carousel with dynamic indicators
+    function setupHorizontalCarousel(scrollAreaId, prevBtnId, nextBtnId, indicatorsId) {
+        const scrollArea = document.getElementById(scrollAreaId);
+        const prevBtn = document.getElementById(prevBtnId);
+        const nextBtn = document.getElementById(nextBtnId);
+        const indicatorsContainer = document.getElementById(indicatorsId);
 
-        // Split into sets of 4
-        const sets = [];
-        for (let i = 0; i < allCards.length; i += cardsPerSet) {
-            sets.push(allCards.slice(i, i + cardsPerSet));
-        }
+        if (scrollArea && prevBtn && nextBtn) {
+            
+            // 1. Calculate how far one arrow click should scroll
+            const getScrollAmount = () => {
+                if (scrollArea.children.length > 0) {
+                    const gap = parseFloat(window.getComputedStyle(scrollArea).gap) || 0;
+                    return scrollArea.children[0].offsetWidth + gap;
+                }
+                return 300; // Fallback
+            };
 
-        // If no products, just hide the next button and indicators
-        if (sets.length === 0) {
-            nextBtn.style.display = 'none';
-            indicatorsContainer.style.display = 'none';
-        } else {
-            let currentIndex = 0;
-            const indicators = indicatorsContainer.querySelectorAll('.indicator');
+            nextBtn.addEventListener('click', () => {
+                scrollArea.scrollBy({ left: getScrollAmount(), behavior: 'smooth' });
+            });
 
-            function updateNewArrivals() {
-                // Hide all cards first
-                allCards.forEach(card => card.style.display = 'none');
+            prevBtn.addEventListener('click', () => {
+                scrollArea.scrollBy({ left: -getScrollAmount(), behavior: 'smooth' });
+            });
 
-                // Fade out
-                arrivalsGrid.style.opacity = '0';
-                arrivalsGrid.style.transform = 'translateX(30px)';
+            // 2. Dynamic Line Indicators Logic
+            if (indicatorsContainer) {
+                const updateIndicators = () => {
+                    const { scrollWidth, clientWidth, scrollLeft } = scrollArea;
+                    const maxScroll = scrollWidth - clientWidth;
+                    
+                    // Hide indicators if no scrolling is needed (e.g. big screen, few items)
+                    if (maxScroll <= 0) {
+                        indicatorsContainer.style.display = 'none';
+                        return;
+                    }
+                    indicatorsContainer.style.display = 'flex';
 
-                setTimeout(() => {
-                    // Show only current set's cards
-                    sets[currentIndex].forEach(card => card.style.display = '');
+                    // Calculate how many "pages" we have
+                    const pages = Math.ceil(scrollWidth / clientWidth);
+                    
+                    // Generate the lines if they don't match the current screen size
+                    if (indicatorsContainer.children.length !== pages) {
+                        indicatorsContainer.innerHTML = '';
+                        for (let i = 0; i < pages; i++) {
+                            const dot = document.createElement('div');
+                            dot.className = 'line-indicator';
+                            // Make indicators clickable to jump to that section
+                            dot.addEventListener('click', () => {
+                                scrollArea.scrollTo({
+                                    left: (maxScroll / (pages - 1)) * i,
+                                    behavior: 'smooth'
+                                });
+                            });
+                            indicatorsContainer.appendChild(dot);
+                        }
+                    }
 
-                    // Update indicators
-                    indicators.forEach((indicator, i) => {
-                        indicator.classList.toggle('active', i === currentIndex);
+                    // Highlight the active line based on exact scroll progress
+                    let activeIndex = Math.round((scrollLeft / maxScroll) * (pages - 1));
+                    if (activeIndex < 0) activeIndex = 0;
+                    if (activeIndex >= pages) activeIndex = pages - 1;
+
+                    Array.from(indicatorsContainer.children).forEach((dot, index) => {
+                        dot.classList.toggle('active', index === activeIndex);
                     });
+                };
 
-                    // Fade in
-                    setTimeout(() => {
-                        arrivalsGrid.style.opacity = '1';
-                        arrivalsGrid.style.transform = 'translateX(0)';
-                    }, 50);
-                }, 300);
+                // Update indicators when user scrolls (swipes) or resizes the window
+                scrollArea.addEventListener('scroll', updateIndicators);
+                window.addEventListener('resize', updateIndicators);
+                
+                // Initial load calculation (small delay ensures CSS is loaded)
+                setTimeout(updateIndicators, 150);
             }
-
-            nextBtn.addEventListener('click', function () {
-                currentIndex++;
-                if (currentIndex >= sets.length) currentIndex = 0;
-                updateNewArrivals();
-            });
-
-            indicators.forEach((indicator, i) => {
-                indicator.addEventListener('click', function () {
-                    currentIndex = i;
-                    updateNewArrivals();
-                });
-            });
-
-            // Initial display
-            updateNewArrivals();
         }
     }
-    
-    // SECOND carousel — same approach, reads PHP-rendered cards
-    const arrivalsGrid2 = document.getElementById('arrivalsGrid2');
-    const nextBtn2 = document.getElementById('nextBtn2');
-    const indicatorsContainer2 = document.getElementById('lineIndicators2');
 
-    if (arrivalsGrid2 && nextBtn2 && indicatorsContainer2) {
-        const allCards2 = Array.from(arrivalsGrid2.querySelectorAll('.new-arrival-card'));
-        const cardsPerSet2 = 4;
-
-        const sets2 = [];
-        for (let i = 0; i < allCards2.length; i += cardsPerSet2) {
-            sets2.push(allCards2.slice(i, i + cardsPerSet2));
-        }
-
-        if (sets2.length === 0) {
-            nextBtn2.style.display = 'none';
-            indicatorsContainer2.style.display = 'none';
-        } else {
-            let currentIndex2 = 0;
-            const indicators2 = indicatorsContainer2.querySelectorAll('.indicator');
-
-            function updateNewArrivals2() {
-                allCards2.forEach(card => card.style.display = 'none');
-
-                arrivalsGrid2.style.opacity = '0';
-                arrivalsGrid2.style.transform = 'translateX(30px)';
-
-                setTimeout(() => {
-                    sets2[currentIndex2].forEach(card => card.style.display = '');
-
-                    indicators2.forEach((indicator, i) => {
-                        indicator.classList.toggle('active', i === currentIndex2);
-                    });
-
-                    setTimeout(() => {
-                        arrivalsGrid2.style.opacity = '1';
-                        arrivalsGrid2.style.transform = 'translateX(0)';
-                    }, 50);
-                }, 300);
-            }
-
-            nextBtn2.addEventListener('click', function () {
-                currentIndex2++;
-                if (currentIndex2 >= sets2.length) currentIndex2 = 0;
-                updateNewArrivals2();
-            });
-
-            indicators2.forEach((indicator, i) => {
-                indicator.addEventListener('click', function () {
-                    currentIndex2 = i;
-                    updateNewArrivals2();
-                });
-            });
-
-            updateNewArrivals2();
-        }
-    } else {
-        console.error('Second carousel elements not found:', {
-            arrivalsGrid2: !!arrivalsGrid2,
-            nextBtn2: !!nextBtn2,
-            indicatorsContainer2: !!indicatorsContainer2
-        });
-    }
+    // Initialize all 3 carousels on the homepage with their corresponding indicator IDs
+    setupHorizontalCarousel('featScrollArea', 'featPrev', 'featNext', 'featIndicators');
+    setupHorizontalCarousel('newArrScrollArea', 'newArrPrev', 'newArrNext', 'newArrIndicators');
+    setupHorizontalCarousel('selScrollArea', 'selPrev', 'selNext', 'selIndicators');
 });
 
 
@@ -306,4 +263,60 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 
+document.addEventListener('DOMContentLoaded', function() {
+        // Check the URL to see if the bouncer kicked them here
+        const urlParams = new URLSearchParams(window.location.search);
+        
+        if (urlParams.get('login_required') === 'true') {
+            // Clean the URL so the modal doesn't keep opening if they refresh the page
+            window.history.replaceState({}, document.title, window.location.pathname);
+            
+            // Open your existing login modal
+            if (typeof openLoginModal === 'function') {
+                openLoginModal();
+                
+                // Show a toast notification explaining why
+                if (typeof showGeneralToast === 'function') {
+                    showGeneralToast('Please log in or create an account to continue.', 'info');
+                }
+            }
+        }
+    });
 
+// --- AJAX ADD TO CART FUNCTION ---
+window.addToCart = function(productId) {
+    // Package the data to send to the server
+    const formData = new FormData();
+    formData.append('product_id', productId);
+    formData.append('quantity', 1);
+
+    fetch('../backend/add_to_cart.php', {
+        method: 'POST',
+        body: formData
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.status === 'success') {
+            // It worked! Show the success toast
+            showGeneralToast(data.message, 'success');
+            
+            // Note: If you have a little cart icon with a number counter, 
+            // you could trigger a function here to update that number!
+            
+        } else {
+            // It failed (e.g., they are a stranger)
+            showGeneralToast(data.message, 'error');
+            
+            // Automatically pop open the login/signup modal for strangers
+            if (data.message.includes('login') || data.message.includes('guest')) {
+                if (typeof openLoginModal === 'function') {
+                    openLoginModal();
+                }
+            }
+        }
+    })
+    .catch(error => {
+        console.error('Error adding to cart:', error);
+        showGeneralToast('Connection error. Please try again.', 'error');
+    });
+};

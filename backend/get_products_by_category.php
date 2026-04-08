@@ -85,4 +85,18 @@ function renderProductCard($product, $imgBasePath = '../assets/images/products/'
     <?php
     return ob_get_clean();
 }
+
+function getWishlistedIds($conn) {
+    if (session_status() === PHP_SESSION_NONE) session_start();
+    if (empty($_SESSION['user_id'])) return [];
+
+    $user_id = intval($_SESSION['user_id']);
+    $result = $conn->query("SELECT product_id FROM wishlist WHERE user_id = $user_id");
+
+    $ids = [];
+    while ($row = $result->fetch_assoc()) {
+        $ids[] = $row['product_id'];
+    }
+    return $ids;
+}
 ?>
