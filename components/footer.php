@@ -83,7 +83,7 @@
                         </div>
                         <div class="captcha-right">
                             <input type="text" id="captchaInput" placeholder="Enter characters" maxlength="6" autocomplete="off" />
-                            <button type="button" onclick="validateCaptcha()">Verify</button>
+                            <button onclick="validateCaptcha()">Verify</button>
                             <div id="captchaStatus" style="font-size:13px; min-height:18px;"></div>
                         </div>
                     </div> 
