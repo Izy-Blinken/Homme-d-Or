@@ -32,4 +32,22 @@ if (session_status() === PHP_SESSION_ACTIVE && empty($_SESSION['user_id']) && !e
         setcookie('remember_token', '', time() - 3600, '/');
     }
 }
+
+// Add this to the very bottom of db_connect.php
+if (!function_exists('getCurrentUserId')) {
+    function getCurrentUserId() {
+        // 1. Registered User
+        if (!empty($_SESSION['user_id'])) {
+            return ['type' => 'user_id', 'id' => $_SESSION['user_id']];
+        }
+        // 2. Explicit Guest (from clicking the button)
+        if (!empty($_SESSION['guest_id'])) {
+            return ['type' => 'guest_id', 'id' => $_SESSION['guest_id']];
+        }
+        // 3. Complete Stranger (Just looking around)
+        return ['type' => 'stranger', 'id' => null];
+    }
+}
+
 ?>
+

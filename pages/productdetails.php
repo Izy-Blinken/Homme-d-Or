@@ -1,10 +1,55 @@
+<?php
+session_start();
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+include_once '../backend/db_connect.php';
+$identity = getCurrentUserId();
+
+// Get product ID from URL
+$product_id = isset($_GET['id']) ? intval($_GET['id']) : 0;
+
+// Fetch product from DB
+$product = null;
+if ($product_id > 0) {
+    $stmt = $conn->prepare("
+        SELECT p.*, pi.image_url 
+        FROM products p
+        LEFT JOIN product_images pi ON pi.product_id = p.product_id AND pi.is_primary = 1
+        WHERE p.product_id = ?
+    ");
+    $stmt->bind_param("i", $product_id);
+    $stmt->execute();
+    $product = $stmt->get_result()->fetch_assoc();
+    $stmt->close();
+}
+
+if (!$product) {
+    header("Location: shop.php");
+    exit;
+}
+
+// Check if this product is already in the user's wishlist
+$isWishlisted = false;
+if ($identity['type'] === 'user_id') {
+    $wCheck = $conn->prepare("SELECT wishlist_id FROM wishlist WHERE user_id = ? AND product_id = ?");
+    $wCheck->bind_param("ii", $identity['id'], $product_id);
+    $wCheck->execute();
+    $isWishlisted = $wCheck->get_result()->num_rows > 0;
+    $wCheck->close();
+}
+
+$imgSrc = $product['image_url'] 
+    ? '../assets/images/products/' . htmlspecialchars($product['image_url'])
+    : '../assets/images/brand_images/nocturne.png';
+?>
 <!DOCTYPE html>
 <html lang="en">
     <head> 
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Product Details</title>
+        <title><?php echo htmlspecialchars($product['product_name']); ?> | Homme d'Or</title>
         
         <link rel="stylesheet" href="../assets/icons/fontawesome/css/all.min.css">
         <link rel="stylesheet" href="../assets/css/style.css">
@@ -18,7 +63,30 @@
         <link rel="stylesheet" href="../assets/css/RegLoginModalStyle.css">
         <link rel="stylesheet" href="../assets/css/ProfilePageStyle.css">
         <link rel="stylesheet" href="../assets/css/HomepageStyle.css">
-
+        <style>
+            /* Wishlist heart button */
+            .wishlist-btn {
+                background: transparent;
+                border: 1px solid #c9a961;
+                color: #c9a961;
+                padding: 12px 18px;
+                border-radius: 6px;
+                cursor: pointer;
+                font-size: 1.1rem;
+                transition: all 0.3s ease;
+            }
+            .wishlist-btn:hover {
+                background: #c9a961;
+                color: #fff;
+            }
+            .wishlist-btn.wishlisted {
+                background: #c9a961;
+                color: #fff;
+            }
+            .wishlist-btn.wishlisted i {
+                font-weight: 900; /* solid heart */
+            }
+        </style>
     </head>
     <body> 
         <?php include '../components/header.php'; ?>
@@ -32,47 +100,69 @@
                 <div class="product-details-container">
                     
                     <div class="product-image-section">
-                        <img src="../assets/images/products_images/nocturne.png" alt="Perfume Image" class="product-image" id="main-product-image">
+                        <img src="<?php echo $imgSrc; ?>" 
+                             alt="<?php echo htmlspecialchars($product['product_name']); ?>" 
+                             class="product-image" id="main-product-image">
                         
                         <div class="product-thumbnails">
-                            <img src="../assets/images/products_images/nocturne.png" alt="Front View" class="thumbnail active-thumb" onclick="changeImage(this)">
-                            <img src="../assets/images/products_images/nocturne-box.jpg" alt="Box View" class="thumbnail" onclick="changeImage(this)">
-                            <img src="../assets/images/products_images/nocturne-ad.jpg" alt="Lifestyle View" class="thumbnail" onclick="changeImage(this)">
+                            <img src="<?php echo $imgSrc; ?>" alt="Front View" class="thumbnail active-thumb" onclick="changeImage(this)">
                         </div>
                     </div>
 
                     <div class="product-dtls">
-                        <h1>Name ng perfume</h1>
+                        <h1><?php echo htmlspecialchars($product['product_name']); ?></h1>
                         
                         <div class="price-stock-wrapper">
-                            <h4>₱3,499</h4>
-                            <span class="stock-status in-stock"><i class="fa-solid fa-check-circle"></i> In Stock</span>
-                            </div>
-
-                        <div class="product-variants">
-                            <p class="variant-title">Size:</p>
-                            <div class="variant-options">
-                                <button class="variant-btn active" onclick="selectVariant(this)">50ml</button>
-                                <button class="variant-btn" onclick="selectVariant(this)">100ml</button>
-                            </div>
+                            <h4>₱<?php echo number_format($product['price'], 2); ?></h4>
+                            <?php
+                                $status = $product['product_status'] ?? 'in-stock';
+                                if ($status === 'in-stock'):
+                            ?>
+                                <span class="stock-status in-stock">
+                                    <i class="fa-solid fa-check-circle"></i> In Stock
+                                </span>
+                            <?php elseif ($status === 'low-stock'): ?>
+                                <span class="stock-status" style="color: orange;">
+                                    <i class="fa-solid fa-triangle-exclamation"></i> Low Stock
+                                </span>
+                            <?php else: ?>
+                                <span class="stock-status" style="color: red;">
+                                    <i class="fa-solid fa-circle-xmark"></i> Out of Stock
+                                </span>
+                            <?php endif; ?>
                         </div>
 
-                        <p>
-                            Description ng perfume: lorem ipsum blah blah blah, ingredients nya ganun, ano smell something etc...
-                        </p>
+                        <?php if (!empty($product['product_desc'])): ?>
+                        <p><?php echo nl2br(htmlspecialchars($product['product_desc'])); ?></p>
+                        <?php endif; ?>
 
                         <div class="product-actions">
-                            <a href="checkout.php">
+                            <!-- Buy Now -->
+                            <a href="checkout.php?product_id=<?php echo $product_id; ?>">
                                 <button class="buynow">
                                     <i class="fa-solid fa-bolt"></i> Buy Now
                                 </button>
                             </a>
                             
-                            <a href="cart.php">
-                                <button class="addtocart">
-                                    <i class="fa-solid fa-cart-shopping"></i> Add to Cart
+                            <!-- Add to Cart -->
+                            <button class="addtocart" onclick="addToCart(<?php echo $product_id; ?>)">
+                                <i class="fa-solid fa-cart-shopping"></i> Add to Cart
+                            </button>
+
+                            <!-- ❤️ Wishlist Heart Button (registered users only) -->
+                            <?php if ($identity['type'] === 'user_id'): ?>
+                                <button class="wishlist-btn <?php echo $isWishlisted ? 'wishlisted' : ''; ?>" 
+                                        id="wishlist-btn"
+                                        onclick="toggleWishlist(<?php echo $product_id; ?>)">
+                                    <i class="<?php echo $isWishlisted ? 'fa-solid' : 'fa-regular'; ?> fa-heart"></i>
                                 </button>
-                            </a>
+                            <?php elseif ($identity['type'] === 'guest_id'): ?>
+                                <!-- Guest sees heart but gets a prompt -->
+                                <button class="wishlist-btn" onclick="alert('Please create an account to save items to your wishlist!')">
+                                    <i class="fa-regular fa-heart"></i>
+                                </button>
+                            <?php endif; ?>
+                            <!-- Strangers see no heart button at all -->
                         </div>
                     </div>
                 </div>
@@ -99,7 +189,6 @@
                 </div>
             </section>
 
-            
             <section id="reviews-section">
                 <div class="reviews-header">
                     <h2>Customer Reviews</h2>
@@ -113,7 +202,7 @@
                             <i class="fa-solid fa-star-half-stroke"></i>
                         </div>
                         <p>Based on 24 reviews</p>
-                       <a href="viewReview.php" style="text-decoration: none;">
+                        <a href="viewReview.php" style="text-decoration: none;">
                             <button class="write-review-btn">Read All Reviews</button>
                         </a>
                     </div>
@@ -132,7 +221,6 @@
                             <p>Long lasting smell. Worth the price.</p>
                         </div>
                     </div>
-
                     <div class="review-box">
                         <img src="../assets/images/products_images/customerPic.png" alt="User">
                         <div class="review-text">
@@ -150,12 +238,11 @@
 
             <section class="new-arrivals-section">
                 <div class="new-arrivals-container">
-                    <div class="section-header" >
+                    <div class="section-header">
                         <div class="header-line" style="background-color: lightgrey"></div>
                         <h2 style="color: white; font-weight: 300; letter-spacing: 2px;">You May Also Like</h2>
                         <div class="header-line" style="background-color: lightgrey"></div>
                     </div>
-                    
                     <div class="new-arrivals-wrapper">
                         <div class="new-arrivals-overflow">
                             <div class="new-arrivals-grid" id="arrivalsGrid">
@@ -179,9 +266,7 @@
                                 </div> 
                             </div>
                         </div>
-
                         <button class="scroll-next-btn" id="nextBtn"><i class="fas fa-chevron-right"></i></button>
-
                         <div class="line-indicators" id="lineIndicators">
                             <span class="indicator active"></span>
                             <span class="indicator"></span>
@@ -192,9 +277,51 @@
             </section>
         </main>
 
-    <?php include '../components/footer.php'; ?>
-    <script src="../assets/js/HomepageAnimations.js"></script>
-    <script src="script.js"></script>
-    <script src="../assets/js/productDetails.js"></script>
-</body>
+        <?php include '../components/footer.php'; ?>
+        <script src="../assets/js/HomepageAnimations.js"></script>
+        <script src="../assets/js/productDetails.js"></script>
+
+        <script>
+            // ── Add to Cart ──────────────────────────────────────────
+            function addToCart(productId) {
+                fetch('../backend/add_to_cart.php', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                    body: 'product_id=' + productId + '&quantity=1'
+                })
+                .then(res => res.json())
+                .then(data => {
+                    alert(data.message);
+                })
+                .catch(err => console.error('Cart error:', err));
+            }
+
+            // ── Toggle Wishlist Heart ─────────────────────────────────
+            function toggleWishlist(productId) {
+                const btn = document.getElementById('wishlist-btn');
+                const icon = btn.querySelector('i');
+
+                fetch('../backend/add_to_wishlist.php', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                    body: 'product_id=' + productId
+                })
+                .then(res => res.json())
+                .then(data => {
+                    if (data.status === 'added') {
+                        btn.classList.add('wishlisted');
+                        icon.classList.remove('fa-regular');
+                        icon.classList.add('fa-solid');     // filled heart ❤️
+                    } else if (data.status === 'removed') {
+                        btn.classList.remove('wishlisted');
+                        icon.classList.remove('fa-solid');
+                        icon.classList.add('fa-regular');   // empty heart 🤍
+                    } else {
+                        alert(data.message);
+                    }
+                })
+                .catch(err => console.error('Wishlist error:', err));
+            }
+        </script>
+    </body>
 </html>

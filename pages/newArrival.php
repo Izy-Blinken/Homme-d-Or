@@ -1,3 +1,10 @@
+<?php
+if (session_status() === PHP_SESSION_NONE) { session_start(); }
+include_once '../backend/db_connect.php';
+$identity = getCurrentUserId();
+$isLoggedIn = ($identity['type'] === 'user_id');
+$isGuest    = ($identity['type'] === 'guest_id');
+?>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -42,17 +49,6 @@
             </div>
 
             <div class="shop-controls">
-                <div class="filter-bar">
-                    <span class="filter-label">Filter:</span>
-                    <button class="filter-chip active" data-filter="all">All</button>
-                    <button class="filter-chip" data-filter="woody">Woody</button>
-                    <button class="filter-chip" data-filter="oud">Oud</button>
-                    <button class="filter-chip" data-filter="citrus">Citrus</button>
-                    <button class="filter-chip" data-filter="floral">Floral</button>
-                    <button class="filter-chip" data-filter="spicy">Spicy</button>
-                    <button class="filter-chip" data-filter="fresh">Fresh</button>
-                </div>
-
                 <div class="search-container">
                     <i class="fas fa-search search-icon"></i>
                     <input type="text" class="search-input" placeholder="Search new arrivals..." autocomplete="off">
@@ -227,16 +223,6 @@
             </div>
 
             <div class="shop-controls">
-                <div class="filter-bar">
-                    <span class="filter-label">Filter:</span>
-                    <button class="filter-chip active" data-filter="all">All</button>
-                    <button class="filter-chip" data-filter="woody">Woody</button>
-                    <button class="filter-chip" data-filter="oud">Oud</button>
-                    <button class="filter-chip" data-filter="citrus">Citrus</button>
-                    <button class="filter-chip" data-filter="floral">Floral</button>
-                    <button class="filter-chip" data-filter="spicy">Spicy</button>
-                    <button class="filter-chip" data-filter="fresh">Fresh</button>
-                </div>
                 <div class="search-container">
                     <i class="fas fa-search search-icon"></i>
                     <input type="text" class="search-input" placeholder="Search top picks..." autocomplete="off">
@@ -372,16 +358,6 @@
             </div>
 
             <div class="shop-controls">
-                <div class="filter-bar">
-                    <span class="filter-label">Filter:</span>
-                    <button class="filter-chip active" data-filter="all">All</button>
-                    <button class="filter-chip" data-filter="woody">Woody</button>
-                    <button class="filter-chip" data-filter="oud">Oud</button>
-                    <button class="filter-chip" data-filter="citrus">Citrus</button>
-                    <button class="filter-chip" data-filter="floral">Floral</button>
-                    <button class="filter-chip" data-filter="spicy">Spicy</button>
-                    <button class="filter-chip" data-filter="fresh">Fresh</button>
-                </div>
                 <div class="search-container">
                     <i class="fas fa-search search-icon"></i>
                     <input type="text" class="search-input" placeholder="Search sales..." autocomplete="off">
@@ -537,35 +513,11 @@
             </div>
 
             <div class="shop-controls">
-                <div class="filter-bar">
-                    <span class="filter-label">Filter:</span>
-                    <button class="filter-chip active" data-filter="all">All</button>
-                    <button class="filter-chip" data-filter="woody">Woody</button>
-                    <button class="filter-chip" data-filter="oud">Oud</button>
-                    <button class="filter-chip" data-filter="citrus">Citrus</button>
-                    <button class="filter-chip" data-filter="floral">Floral</button>
-                    <button class="filter-chip" data-filter="spicy">Spicy</button>
-                    <button class="filter-chip" data-filter="fresh">Fresh</button>
-                </div>
                 <div class="search-container">
                     <i class="fas fa-search search-icon"></i>
                     <input type="text" class="search-input" placeholder="Search everyday wear..." autocomplete="off">
                     <div class="search-suggestions"></div>
                 </div>
-            </div>
-
-            <div class="section-header">
-                <div>
-                <div class="section-label">Occasions</div>
-                <h2 class="section-title">Choose Your <span>Moment</span></h2>
-                </div>
-            </div>
-
-            <div class="occasion-grid">
-                <div class="occasion-card"><div class="occasion-icon"><i class="fas fa-briefcase" style="color: var(--gold);"></i></div><div class="occasion-name">Office</div><div class="occasion-count">8 Fragrances</div></div>    
-                <div class="occasion-card"><div class="occasion-icon"><i class="fas fa-coffee" style="color: var(--gold);"></i></div><div class="occasion-name">Casual</div><div class="occasion-count">12 Fragrances</div></div>
-                <div class="occasion-card"><div class="occasion-icon"><i class="fas fa-running" style="color: var(--gold);"></i></div><div class="occasion-name">Sport</div><div class="occasion-count">6 Fragrances</div></div>
-                <div class="occasion-card"><div class="occasion-icon"><i class="fas fa-glass-cheers" style="color: var(--gold);"></i></div><div class="occasion-name">Date Night</div><div class="occasion-count">9 Fragrances</div></div>
             </div>
 
             <div class="section-header">
@@ -700,16 +652,6 @@
             </div>
 
             <div class="shop-controls">
-                <div class="filter-bar">
-                    <span class="filter-label">Filter:</span>
-                    <button class="filter-chip active" data-filter="all">All</button>
-                    <button class="filter-chip" data-filter="woody">Woody</button>
-                    <button class="filter-chip" data-filter="oud">Oud</button>
-                    <button class="filter-chip" data-filter="citrus">Citrus</button>
-                    <button class="filter-chip" data-filter="floral">Floral</button>
-                    <button class="filter-chip" data-filter="spicy">Spicy</button>
-                    <button class="filter-chip" data-filter="fresh">Fresh</button>
-                </div>
                 <div class="search-container">
                     <i class="fas fa-search search-icon"></i>
                     <input type="text" class="search-input" placeholder="Search premium..." autocomplete="off">
@@ -847,7 +789,109 @@
     <div id="generalToast" class="generalToast"></div>
     <script src="../assets/js/script.js"></script>
     <script src="../assets/js/HomepageAnimations.js"></script>
-    
+
+    <script>
+    // ── User identity passed from PHP ─────────────────────────────
+    const IS_LOGGED_IN = <?php echo $isLoggedIn ? 'true' : 'false'; ?>;
+    const IS_GUEST     = <?php echo $isGuest    ? 'true' : 'false'; ?>;
+
+    document.addEventListener('DOMContentLoaded', function () {
+
+        // ── Wire up ALL Add to Cart buttons ───────────────────────
+        document.querySelectorAll('.card-btn').forEach(function (btn) {
+            // Remove the old inline onclick so we fully control it
+            btn.removeAttribute('onclick');
+
+            btn.addEventListener('click', function () {
+                const card      = btn.closest('.product-card');
+                const productId = card ? card.dataset.productId : null;
+
+                if (!productId || productId === '0') {
+                    // Product ID not set on this card yet — show toast only
+                    showGeneralToast('Added to cart!', 'info');
+                    return;
+                }
+
+                const original  = btn.textContent;
+                btn.disabled    = true;
+                btn.textContent = 'Adding...';
+
+                fetch('../backend/add_to_cart.php', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                    body: 'product_id=' + productId + '&quantity=1'
+                })
+                .then(r => r.json())
+                .then(data => {
+                    showGeneralToast(data.message, data.status === 'success' ? 'info' : 'error');
+                    btn.textContent = data.status === 'success' ? 'Added!' : 'Error';
+                    setTimeout(() => { btn.textContent = original; btn.disabled = false; }, 1500);
+                })
+                .catch(() => { btn.textContent = original; btn.disabled = false; });
+            });
+        });
+
+        // ── Wire up ALL Wishlist heart buttons ────────────────────
+        document.querySelectorAll('.wishlist-btn').forEach(function (btn) {
+            btn.addEventListener('click', function () {
+                // Guest: prompt to register
+                if (IS_GUEST) {
+                    showGeneralToast('Create a free account to save your wishlist!', 'info');
+                    return;
+                }
+                // Stranger: redirect to login
+                if (!IS_LOGGED_IN) {
+                    window.location.href = 'index.php?login_required=true';
+                    return;
+                }
+
+                // Registered user: toggle wishlist
+                const card      = btn.closest('.product-card');
+                const productId = card ? card.dataset.productId : null;
+
+                if (!productId || productId === '0') {
+                    showGeneralToast('Wishlist saved! (Connect product ID to persist)', 'info');
+                    toggleHeartVisual(btn);
+                    return;
+                }
+
+                fetch('../backend/add_to_wishlist.php', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                    body: 'product_id=' + productId
+                })
+                .then(r => r.json())
+                .then(data => {
+                    if (data.status === 'added') {
+                        toggleHeartVisual(btn, true);
+                        showGeneralToast('Saved to wishlist!', 'info');
+                    } else if (data.status === 'removed') {
+                        toggleHeartVisual(btn, false);
+                        showGeneralToast('Removed from wishlist.', 'info');
+                    } else {
+                        showGeneralToast(data.message, 'error');
+                    }
+                })
+                .catch(err => console.error('Wishlist error:', err));
+            });
+        });
+    });
+
+    // Toggle heart icon filled/empty
+    function toggleHeartVisual(btn, forceState) {
+        const icon    = btn.querySelector('i');
+        const isFilled = icon.classList.contains('fa-solid');
+        const makeFill = (forceState !== undefined) ? forceState : !isFilled;
+
+        if (makeFill) {
+            icon.classList.replace('fa-regular', 'fa-solid');
+            btn.style.color = '#c9a961';
+        } else {
+            icon.classList.replace('fa-solid', 'fa-regular');
+            btn.style.color = '';
+        }
+    }
+    </script>
 
     <?php include '../components/footer.php'; ?>
 </body>

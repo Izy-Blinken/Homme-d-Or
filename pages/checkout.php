@@ -1,3 +1,19 @@
+<?php
+// 1. WAKE UP THE SESSION FIRST!
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+
+// 2. Now connect to the database and check identity
+include_once '../backend/db_connect.php'; 
+$identity = getCurrentUserId();
+
+// THE BOUNCER: Only kick out complete strangers!
+if ($identity['type'] === 'stranger') {
+    header("Location: index.php?login_required=true");
+    exit;
+}
+?>
 <!DOCTYPE html>
 <html>
     <head>
