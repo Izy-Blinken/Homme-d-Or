@@ -56,26 +56,8 @@ $admins = mysqli_query($conn,
         <?php include '../../components/adminSideBar.php'; ?>
 
         <div class="main-content">
+            <?php include '../../components/adminNavbar.php'; ?>
 
-            <header class="navbar">
-
-                <div class="navbar-left">
-                    <button class="hamburger" id="menu-btn"><span></span><span></span><span></span></button>
-                    <h1 class="navbar-title">ADMIN PANEL</h1>
-                </div>
-
-                <div class="navbar-search">
-
-                    <svg width="16" height="16" fill="none" stroke="#888" stroke-width="2" viewBox="0 0 24 24">
-                        <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
-                    </svg>
-                    <input type="text" placeholder="Search...">
-
-                </div>
-
-                <div class="navbar-avatar">A</div>
-
-            </header>
 
             <main class="container">
 
@@ -116,8 +98,9 @@ $admins = mysqli_query($conn,
 
                         <div class="filter-group search-group" style="position:relative;">
                             <label>SEARCH:</label>
-                            <input type="text" name="search" placeholder="Search customers..."
+                            <input type="text" name="search" placeholder="Search orders..." 
                                 id="search-input" value="<?= htmlspecialchars($filter_search) ?>">
+                            <div id="search-suggestions" class="suggestions-box" style="display:none;"></div>
                         </div>
 
                         <button type="submit" class="reset-btn">Apply</button>
@@ -229,7 +212,10 @@ $admins = mysqli_query($conn,
                                                     onsubmit="return confirm('Remove admin access from <?= htmlspecialchars($c['fname']) ?>?')">
                                                     <input type="hidden" name="user_id" value="<?= $c['user_id'] ?>">
                                                     <input type="hidden" name="action" value="remove">
-                                                    <button type="submit" class="btn-delete">Remove Admin</button>
+                                                    <button type="button" class="btn-delete"
+                                                        onclick="openConfirmModal('<?= $c['user_id'] ?>', '<?= htmlspecialchars($c['fname']) ?>', 'remove-admin', this)">
+                                                        Remove Admin
+                                                    </button>
                                                 </form>
 
                                                 <?php endif; ?>
@@ -241,16 +227,15 @@ $admins = mysqli_query($conn,
                                             <!-- Block/Unblock -->
                                             <?php if ($can_block): ?>
 
-                                            <form method="POST" action="../../backend/customers/block_customer.php" style="display:inline;"
-                                                onsubmit="return confirm('<?= $c['is_blocked'] ? 'Unblock this customer?' : 'Block this customer?' ?>')">
+                                            <form method="POST" action="../../backend/customers/block_customer.php" style="display:inline;">
                                                 <input type="hidden" name="user_id" value="<?= $c['user_id'] ?>">
                                                 <input type="hidden" name="action" value="<?= $c['is_blocked'] ? 'unblock' : 'block' ?>">
                                                 <input type="hidden" name="status" value="<?= $filter_status ?>">
-                                                <button type="submit" class="<?= $c['is_blocked'] ? 'btn-edit' : 'btn-delete' ?>">
+                                                <button type="button" class="<?= $c['is_blocked'] ? 'btn-edit' : 'btn-delete' ?>"
+                                                    onclick="openConfirmModal('<?= $c['user_id'] ?>', '<?= htmlspecialchars($c['fname']) ?>', '<?= $c['is_blocked'] ? 'unblock-customer' : 'block-customer' ?>', this)">
                                                     <?= $c['is_blocked'] ? 'Unblock' : 'Block' ?>
                                                 </button>
                                             </form>
-
                                             <?php endif; ?>
 
                                         </td>
@@ -357,6 +342,21 @@ $admins = mysqli_query($conn,
 
         </div>
 
+        <div class="modal-overlay" id="confirm-action-modal">
+            <div class="modal">
+                <div class="modal-header">
+                    <span class="modal-title">Confirm Action</span>
+                    <button class="modal-close" id="confirm-close">&times;</button>
+                </div>
+                <div class="modal-body" id="confirm-body">
+                    Are you sure?
+                </div>
+                <div class="modal-footer">
+                    <button class="btn-cancel" id="confirm-cancel">Cancel</button>
+                    <button class="btn-save" id="confirm-yes">Yes</button>
+                </div>
+            </div>
+        </div>
 
         <!-- View Details Modal -->
         <div class="modal-overlay" id="customer-modal">
@@ -603,6 +603,9 @@ $admins = mysqli_query($conn,
         <script src="../../assets/js/AdminPanel.js"></script>
         <script src="../../assets/js/script.js"></script>
         <script src="../../assets/js/customerList.js"></script>
+        <script>
+            initLiveSearch('search-input', 'search-suggestions', '../../backend/ordersLiveSearch.php');
+        </script>
 
         <?php if ($success): ?>
             <script>showGeneralToast("<?= htmlspecialchars($success) ?>", "success");</script>

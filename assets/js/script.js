@@ -78,3 +78,123 @@ function selectSuggestion(inputId, value, suggestionsId, autoSubmit = false) {
         input.closest('form').submit();
     }
 }
+
+// admin navbar live search
+(function () {
+    const input = document.getElementById('navbar-search-input');
+    const results = document.getElementById('navbar-search-results');
+    let debounceTimer;
+
+    const SEARCH_URL = '../../backend/navbarLiveSearch.php'; 
+
+    input.addEventListener('input', function () {
+        clearTimeout(debounceTimer);
+        const q = this.value.trim();
+
+        if (q.length < 1) {
+            results.style.display = 'none';
+            results.innerHTML = '';
+            return;
+        }
+
+        debounceTimer = setTimeout(() => fetchResults(q), 250);
+    });
+
+    function fetchResults(q) {
+        fetch(SEARCH_URL + '?q=' + encodeURIComponent(q))
+            .then(res => res.json())
+            .then(data => renderResults(data, q))
+            .catch(() => {
+                results.innerHTML = '<div class="search-no-results">Search error. Try again.</div>';
+                results.style.display = 'block';
+            });
+    }
+
+    function highlight(text, q) {
+        const escaped = q.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+        return text.replace(new RegExp('(' + escaped + ')', 'gi'),
+            '<mark style="background:#fff3cd;padding:0;border-radius:2px;">$1</mark>');
+    }
+
+    function renderResults(data, q) {
+        const customers = data.customers || [];
+        const products  = data.products  || [];
+
+        if (customers.length === 0 && products.length === 0) {
+            results.innerHTML = '<div class="search-no-results">No results found for "<strong>' +
+                escapeHtml(q) + '</strong>"</div>';
+            results.style.display = 'block';
+            return;
+        }
+
+        let html = '';
+
+        if (customers.length > 0) {
+            html += '<div class="search-section-label">Customers</div>';
+            customers.forEach(c => {
+                const fullName = escapeHtml(c.fname + ' ' + c.lname);
+                const email = escapeHtml(c.email);
+                html += `
+                <div class="search-result-item" onclick="goTo('customers', ${c.user_id})">
+                    <span class="result-name">${highlight(fullName, q)}</span>
+                    <span class="result-sub">${highlight(email, q)}</span>
+                </div>`;
+            });
+        }
+
+        if (customers.length > 0 && products.length > 0) {
+            html += '<hr class="search-divider">';
+        }
+
+        if (products.length > 0) {
+            html += '<div class="search-section-label">Products</div>';
+            products.forEach(p => {
+                const name   = escapeHtml(p.product_name);
+                const price  = p.discounted_price
+                    ? '₱' + parseFloat(p.discounted_price).toFixed(2)
+                    : '₱' + parseFloat(p.price).toFixed(2);
+                const status = escapeHtml(p.product_status);
+                html += `
+                <div class="search-result-item" onclick="goTo('products', ${p.product_id})">
+                    <span class="result-name">${highlight(name, q)}</span>
+                    <span class="result-sub">${price} &bull; ${status}</span>
+                </div>`;
+            });
+        }
+
+        results.innerHTML = html;
+        results.style.display = 'block';
+    }
+
+    // Close dropdown when clicking outside
+    document.addEventListener('click', function (e) {
+        if (!input.contains(e.target) && !results.contains(e.target)) {
+            results.style.display = 'none';
+        }
+    });
+
+    // Reopen if input is focused and has value
+    input.addEventListener('focus', function () {
+        if (this.value.trim().length > 0 && results.innerHTML !== '') {
+            results.style.display = 'block';
+        }
+    });
+
+    function escapeHtml(str) {
+        return String(str)
+            .replace(/&/g, '&amp;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;')
+            .replace(/"/g, '&quot;');
+    }
+
+    window.goTo = function (type, id) {
+        results.style.display = 'none';
+        input.value = '';
+        if (type === 'customers') {
+            window.location.href = '../../pages/Admin Pages/customerList.php?id=' + id;
+        } else if (type === 'products') {
+            window.location.href = '../../pages/Admin Pages/productManagement.php?id=' + id;
+        }
+    };
+})();

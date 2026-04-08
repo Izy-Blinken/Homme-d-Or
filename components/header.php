@@ -32,7 +32,6 @@ if (!empty($_SESSION['user_id'])) {
     }
 }
 
-// Release session lock to prevent AJAX calls from making the browser spin forever
 session_write_close();
 
 $currentPage = basename($_SERVER['PHP_SELF']);

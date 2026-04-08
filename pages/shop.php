@@ -1,3 +1,20 @@
+<?php
+include '../backend/db_connect.php';
+include '../backend/get_products_by_category.php';
+
+$productsByCategory = getProductsByCategory($conn);
+
+// Map your exact category names to their section IDs and layout sides
+// Key = category_name in DB, value = [anchor_id, layout_class, label_side]
+$categoryConfig = [
+    'New Arrivals' => ['id' => 'new-arrivals', 'layout' => 'shop-layout-left', 'side' => 'left', 'tab' => 'newArrival.php'],
+    'Top Picks' => ['id' => 'top-picks', 'layout' => 'shop-layout-right', 'side' => 'right', 'tab' => 'newArrival.php?tab=page2'],
+    'Sale' => ['id' => 'sale', 'layout' => 'shop-layout-left', 'side' => 'left', 'tab' => 'newArrival.php?tab=page3'],
+    'Daily Wear' => ['id' => 'daily-wear', 'layout' => 'shop-layout-right', 'side' => 'right', 'tab' => 'newArrival.php?tab=page4'],
+    'Premium' => ['id' => 'premium', 'layout' => 'shop-layout-left', 'side' => 'left', 'tab' => 'newArrival.php?tab=page5'],
+];
+?>
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -15,528 +32,92 @@
         <link rel="stylesheet" href="../assets/css/ProfilePageStyle.css">
         <link rel="stylesheet" href="../assets/css/HomepageStyle.css">
     </head>
-
     <body>
     <?php include '../components/header.php'; ?>
 
     <!-- Welcome Section -->
     <section class="shop-welcome-section">
+
         <div class="shop-welcome-overlay"></div>
+
         <div class="shop-welcome-content">
-            <h1><span class="greeting-text">Welcome</span> 
+
+            <h1><span class="greeting-text">Welcome</span></h1>
             <nav class="shop-category-nav">
-                <a href="#new-arrivals" class="shop-category-link">New Arrivals</a>
-                <a href="#top-picks" class="shop-category-link">Top Picks</a>
-                <a href="#sale" class="shop-category-link">Sale</a>
-                <a href="#daily-wear" class="shop-category-link">Daily Wear</a>
-                <a href="#premium" class="shop-category-link">Premium</a>
+
+                <?php foreach ($categoryConfig as $catName => $config): ?>
+
+                    <?php if (isset($productsByCategory[$catName])): ?>
+                    <a href="#<?= $config['id'] ?>" class="shop-category-link">
+                        <?= htmlspecialchars($catName) ?>
+                    </a>
+                    <?php endif; ?>
+
+                <?php endforeach; ?>
+
             </nav>
+
         </div>
     </section>
 
     <div class="shop-scroll-spacer"></div>
 
-    <!-- New Arrivals Section - LEFT LAYOUT -->
-    <section class="shop-products-section shop-layout-left fade-in" id="new-arrivals">
+    <?php
+    $layoutToggle = 'left'; 
+
+    foreach ($categoryConfig as $catName => $config):
+        if (empty($productsByCategory[$catName])) continue; 
+
+        $products  = $productsByCategory[$catName];
+        $layout = $config['layout'];
+        $side = $config['side'];
+        $anchorId = $config['id'];
+        $discoverUrl = $config['tab'];
+    ?>
+
+    <section class="shop-products-section <?= $layout ?> fade-in" id="<?= $anchorId ?>">
+
+        <?php if ($side === 'left'): ?>
+        <!-- Label panel on the LEFT -->
         <div class="shop-section-left">
             <div class="shop-section-image">
-                <h2>New Arrivals</h2>
-                <button class="shop-discover-btn" onclick="window.location.href='newArrival.php'">DISCOVER</button>
+                <h2><?= htmlspecialchars($catName) ?></h2>
+                <button class="shop-discover-btn" 
+                    onclick="window.location.href='<?= $discoverUrl ?>'">
+                    DISCOVER
+                </button>
             </div>
         </div>
-    
+        
+        <?php endif; ?>
 
+        <!-- Product Cards -->
         <div class="shop-products-grid">
-            <!-- Product Card 1 -->
-            <div class="product-card fade-in">
-                <div class="shop-product-image">
-
-                    <button class="quick-view-btn" onclick="window.location.href='productDetails.php'">Quick View</button>
-                </div>
-                <button class="add-to-cart-btn" onclick="window.location.href='cart.php'">
-                    ADD TO CART
-                </button>
-                <div class="shop-product-info">
-                    <h3 class="shop-product-title">Golden Night</h3>
-                    <p class="shop-product-price" >₱1,800</p>
-                </div>
-            </div>
-
-            <!-- Product Card 2 -->
-            <div class="product-card">
-                <div class="shop-product-image">
-
-                    <button class="quick-view-btn" onclick="window.location.href='productDetails.php'">Quick View</button>
-                </div>
-                <button class="add-to-cart-btn" onclick="window.location.href='cart.php'">
-                    ADD TO CART
-                </button>
-                <div class="shop-product-info">
-                    <h3 class="shop-product-title">Golden Night</h3>
-                    <p class="shop-product-price" >₱1,800</p>
-                </div>
-            </div>
-
-
-            <!-- Product Card 3 -->
-            <div class="product-card">
-                <div class="shop-product-image">
-
-                    <button class="quick-view-btn" onclick="window.location.href='productDetails.php'">Quick View</button>
-                </div>
-                <button class="add-to-cart-btn" onclick="window.location.href='cart.php'">
-                    ADD TO CART
-                </button>
-                <div class="shop-product-info">
-                    <h3 class="shop-product-title">Golden Night</h3>
-                    <p class="shop-product-price" >₱1,800</p>
-                </div>
-            </div>
-
-            <!-- Product Card 4 -->
-            <div class="product-card">
-                <div class="shop-product-image">
-
-                    <button class="quick-view-btn" onclick="window.location.href='productDetails.php'">Quick View</button>
-                </div>
-                <button class="add-to-cart-btn" onclick="window.location.href='cart.php'">
-                    ADD TO CART
-                </button>
-                <div class="shop-product-info">
-                    <h3 class="shop-product-title">Golden Night</h3>
-                    <p class="shop-product-price" >₱1,800</p>
-                </div>
-            </div>
-
-            <!-- Product Card 5 -->
-            <div class="product-card">
-                <div class="shop-product-image">
-
-                    <button class="quick-view-btn" onclick="window.location.href='productDetails.php'">Quick View</button>
-                </div>
-                <button class="add-to-cart-btn" onclick="window.location.href='cart.php'">
-                    ADD TO CART
-                </button>
-                <div class="shop-product-info">
-                    <h3 class="shop-product-title">Golden Night</h3>
-                    <p class="shop-product-price" >₱1,800</p>
-                </div>
-            </div>
-
-            <!-- Product Card 6 -->
-            <div class="product-card">
-                <div class="shop-product-image">
-
-                    <button class="quick-view-btn" onclick="window.location.href='productDetails.php'">Quick View</button>
-                </div>
-                <button class="add-to-cart-btn" onclick="window.location.href='cart.php'">
-                    ADD TO CART
-                </button>
-                <div class="shop-product-info">
-                    <h3 class="shop-product-title">Golden Night</h3>
-                    <p class="shop-product-price" >₱1,800</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Top Picks Section - RIGHT LAYOUT -->
-    <section class="shop-products-section shop-layout-right fade-in" id="top-picks">
-        <div class="shop-products-grid">
-            <!-- Product Card 1 -->
-           <div class="product-card fade-in">
-                <div class="shop-product-image">
-
-                    <button class="quick-view-btn" onclick="window.location.href='productDetails.php'">Quick View</button>
-                </div>
-                <button class="add-to-cart-btn" onclick="window.location.href='cart.php'">
-                    ADD TO CART
-                </button>
-                <div class="shop-product-info">
-                    <h3 class="shop-product-title">Golden Night</h3>
-                    <p class="shop-product-price" >₱1,800</p>
-                </div>
-            </div>
-
-            <!-- Product Card 2 -->
-            <div class="product-card">
-                <div class="shop-product-image">
-
-                    <button class="quick-view-btn" onclick="window.location.href='productDetails.php'">Quick View</button>
-                </div>
-                <button class="add-to-cart-btn" onclick="window.location.href='cart.php'">
-                    ADD TO CART
-                </button>
-                <div class="shop-product-info">
-                    <h3 class="shop-product-title">Golden Night</h3>
-                    <p class="shop-product-price" >₱1,800</p>
-                </div>
-            </div>
-
-            <!-- Product Card 3 -->
-            <div class="product-card">
-                <div class="shop-product-image">
-
-                    <button class="quick-view-btn" onclick="window.location.href='productDetails.php'">Quick View</button>
-                </div>
-                <button class="add-to-cart-btn" onclick="window.location.href='cart.php'">
-                    ADD TO CART
-                </button>
-                <div class="shop-product-info">
-                    <h3 class="shop-product-title">Golden Night</h3>
-                    <p class="shop-product-price" >₱1,800</p>
-                </div>
-            </div>
-
-            <!-- Product Card 4 -->
-            <div class="product-card">
-                <div class="shop-product-image">
-
-                    <button class="quick-view-btn" onclick="window.location.href='productDetails.php'">Quick View</button>
-                </div>
-                <button class="add-to-cart-btn" onclick="window.location.href='cart.php'">
-                    ADD TO CART
-                </button>
-                <div class="shop-product-info">
-                    <h3 class="shop-product-title">Golden Night</h3>
-                    <p class="shop-product-price" >₱1,800</p>
-                </div>
-            </div>
-
-            <!-- Product Card 5 -->
-            <div class="product-card">
-                <div class="shop-product-image">
-
-                    <button class="quick-view-btn" onclick="window.location.href='productDetails.php'">Quick View</button>
-                </div>
-                <button class="add-to-cart-btn" onclick="window.location.href='cart.php'">
-                    ADD TO CART
-                </button>
-                <div class="shop-product-info">
-                    <h3 class="shop-product-title">Golden Night</h3>
-                    <p class="shop-product-price" >₱1,800</p>
-                </div>
-            </div>
-
-            <!-- Product Card 6 -->
-            <div class="product-card">
-                <div class="shop-product-image">
-
-                    <button class="quick-view-btn" onclick="window.location.href='productDetails.php'">Quick View</button>
-                </div>
-                <button class="add-to-cart-btn" onclick="window.location.href='cart.php'">
-                    ADD TO CART
-                </button>
-                <div class="shop-product-info">
-                    <h3 class="shop-product-title">Golden Night</h3>
-                    <p class="shop-product-price" >₱1,800</p>
-                </div>
-            </div>
+            <?php foreach ($products as $product): ?>
+                <?= renderProductCard($product) ?>
+            <?php endforeach; ?>
         </div>
 
+        <?php if ($side === 'right'): ?>
+        <!-- Label panel on the RIGHT -->
         <div class="shop-section-right">
             <div class="shop-section-image">
-                <h2>Top Picks</h2>
-                <button class="shop-discover-btn" onclick="window.location.href='newArrival.php?tab=page2'">DISCOVER</button>
+                <h2><?= htmlspecialchars($catName) ?></h2>
+                <button class="shop-discover-btn" 
+                    onclick="window.location.href='<?= $discoverUrl ?>'">
+                    DISCOVER
+                </button>
             </div>
         </div>
+        <?php endif; ?>
+
     </section>
 
-    <!-- Sale Section - LEFT LAYOUT -->
-    <section class="shop-products-section shop-layout-left fade-in" id="sale">
-        <div class="shop-section-left">
-            <div class="shop-section-image">
-                <h2>Sale</h2>
-                <button class="shop-discover-btn" onclick="window.location.href='newArrival.php?tab=page3'">DISCOVER</button>
-            </div>
-        </div>
+    <?php endforeach; ?>
 
-        <div class="shop-products-grid">
-            <!-- Product Cards 1-6 (same structure as above) -->
-            <div class="product-card fade-in">
-                <div class="shop-product-image">
-
-                    <button class="quick-view-btn" onclick="window.location.href='productDetails.php'">Quick View</button>
-                </div>
-                <button class="add-to-cart-btn" onclick="window.location.href='cart.php'">
-                    ADD TO CART
-                </button>
-                <div class="shop-product-info">
-                    <h3 class="shop-product-title">Golden Night</h3>
-                    <p class="shop-product-price" >₱1,800</p>
-                </div>
-            </div>
-
-            <div class="product-card">
-                <div class="shop-product-image">
-
-                    <button class="quick-view-btn" onclick="window.location.href='productDetails.php'">Quick View</button>
-                </div>
-                <button class="add-to-cart-btn" onclick="window.location.href='cart.php'">
-                    ADD TO CART
-                </button>
-                <div class="shop-product-info">
-                    <h3 class="shop-product-title">Golden Night</h3>
-                    <p class="shop-product-price" >₱1,800</p>
-                </div>
-            </div>
-
-            <div class="product-card">
-                <div class="shop-product-image">
-
-                    <button class="quick-view-btn" onclick="window.location.href='productDetails.php'">Quick View</button>
-                </div>
-                <button class="add-to-cart-btn" onclick="window.location.href='cart.php'">
-                    ADD TO CART
-                </button>
-                <div class="shop-product-info">
-                    <h3 class="shop-product-title">Golden Night</h3>
-                    <p class="shop-product-price" >₱1,800</p>
-                </div>
-            </div>
-
-            <div class="product-card">
-                <div class="shop-product-image">
-
-                    <button class="quick-view-btn" onclick="window.location.href='productDetails.php'">Quick View</button>
-                </div>
-                <button class="add-to-cart-btn" onclick="window.location.href='cart.php'">
-                    ADD TO CART
-                </button>
-                <div class="shop-product-info">
-                    <h3 class="shop-product-title">Golden Night</h3>
-                    <p class="shop-product-price" >₱1,800</p>
-                </div>
-            </div>
-
-            <div class="product-card">
-                <div class="shop-product-image">
-
-                    <button class="quick-view-btn" onclick="window.location.href='productDetails.php'">Quick View</button>
-                </div>
-                <button class="add-to-cart-btn" onclick="window.location.href='cart.php'">
-                    ADD TO CART
-                </button>
-                <div class="shop-product-info">
-                    <h3 class="shop-product-title">Golden Night</h3>
-                    <p class="shop-product-price" >₱1,800</p>
-                </div>
-            </div>
-
-            <div class="product-card">
-                <div class="shop-product-image">
-
-                    <button class="quick-view-btn" onclick="window.location.href='productDetails.php'">Quick View</button>
-                </div>
-                <button class="add-to-cart-btn" onclick="window.location.href='cart.php'">
-                    ADD TO CART
-                </button>
-                <div class="shop-product-info">
-                    <h3 class="shop-product-title">Golden Night</h3>
-                    <p class="shop-product-price" >₱1,800</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Daily Wear Section - RIGHT LAYOUT -->
-    <section class="shop-products-section shop-layout-right fade-in" id="daily-wear">
-        <div class="shop-products-grid">
-            <!-- Product Cards 1-6 -->
-            <div class="product-card fade-in">
-                <div class="shop-product-image">
-
-                    <button class="quick-view-btn" onclick="window.location.href='productDetails.php'">Quick View</button>
-                </div>
-                <button class="add-to-cart-btn" onclick="window.location.href='cart.php'">
-                    ADD TO CART
-                </button>
-                <div class="shop-product-info">
-                    <h3 class="shop-product-title">Golden Night</h3>
-                    <p class="shop-product-price" >₱1,800</p>
-                </div>
-            </div>
-
-            <div class="product-card">
-                <div class="shop-product-image">
-
-                    <button class="quick-view-btn" onclick="window.location.href='productDetails.php'">Quick View</button>
-                </div>
-                <button class="add-to-cart-btn" onclick="window.location.href='cart.php'">
-                    ADD TO CART
-                </button>
-                <div class="shop-product-info">
-                    <h3 class="shop-product-title">Golden Night</h3>
-                    <p class="shop-product-price" >₱1,800</p>
-                </div>
-            </div>
-
-            <div class="product-card">
-                <div class="shop-product-image">
-
-                    <button class="quick-view-btn" onclick="window.location.href='productDetails.php'">Quick View</button>
-                </div>
-                <button class="add-to-cart-btn" onclick="window.location.href='cart.php'">
-                    ADD TO CART
-                </button>
-                <div class="shop-product-info">
-                    <h3 class="shop-product-title">Golden Night</h3>
-                    <p class="shop-product-price" >₱1,800</p>
-                </div>
-            </div>
-
-            <div class="product-card">
-                <div class="shop-product-image">
-
-                    <button class="quick-view-btn" onclick="window.location.href='productDetails.php'">Quick View</button>
-                </div>
-                <button class="add-to-cart-btn" onclick="window.location.href='cart.php'">
-                    ADD TO CART
-                </button>
-                <div class="shop-product-info">
-                    <h3 class="shop-product-title">Golden Night</h3>
-                    <p class="shop-product-price" >₱1,800</p>
-                </div>
-            </div>
-
-            <div class="product-card">
-                <div class="shop-product-image">
-
-                    <button class="quick-view-btn" onclick="window.location.href='productDetails.php'">Quick View</button>
-                </div>
-                <button class="add-to-cart-btn" onclick="window.location.href='cart.php'">
-                    ADD TO CART
-                </button>
-                <div class="shop-product-info">
-                    <h3 class="shop-product-title">Golden Night</h3>
-                    <p class="shop-product-price" >₱1,800</p>
-                </div>
-            </div>
-
-            <div class="product-card">
-                <div class="shop-product-image">
-
-                    <button class="quick-view-btn" onclick="window.location.href='productDetails.php'">Quick View</button>
-                </div>
-                <button class="add-to-cart-btn" onclick="window.location.href='cart.php'">
-                    ADD TO CART
-                </button>
-                <div class="shop-product-info">
-                    <h3 class="shop-product-title">Golden Night</h3>
-                    <p class="shop-product-price" >₱1,800</p>
-                </div>
-            </div>
-        </div>
-
-        <div class="shop-section-right">
-            <div class="shop-section-image">
-                <h2>Daily Wear</h2>
-                <button class="shop-discover-btn" onclick="window.location.href='newArrival.php?tab=page4'">DISCOVER</button>
-            </div>
-        </div>
-    </section>
-
-    <!-- Premium Section - LEFT LAYOUT -->
-    <section class="shop-products-section shop-layout-left fade-in" id="premium">
-        <div class="shop-section-left">
-            <div class="shop-section-image">
-                <h2>Premium</h2>
-                <button class="shop-discover-btn" onclick="window.location.href='newArrival.php?tab=page5'">DISCOVER</button>
-            </div>
-        </div>
-
-        <div class="shop-products-grid">
-            <!-- Product Cards 1-6 -->
-            <div class="product-card fade-in">
-                <div class="shop-product-image">
-
-                    <button class="quick-view-btn" onclick="window.location.href='productDetails.php'">Quick View</button>
-                </div>
-                <button class="add-to-cart-btn" onclick="window.location.href='cart.php'">
-                    ADD TO CART
-                </button>
-                <div class="shop-product-info">
-                    <h3 class="shop-product-title">Golden Night</h3>
-                    <p class="shop-product-price" >₱1,800</p>
-                </div>
-            </div>
-
-            <div class="product-card">
-                <div class="shop-product-image">
-
-                    <button class="quick-view-btn" onclick="window.location.href='productDetails.php'">Quick View</button>
-                </div>
-                <button class="add-to-cart-btn" onclick="window.location.href='cart.php'">
-                    ADD TO CART
-                </button>
-                <div class="shop-product-info">
-                    <h3 class="shop-product-title">Golden Night</h3>
-                    <p class="shop-product-price" >₱1,800</p>
-                </div>
-            </div>
-
-            <div class="product-card">
-                <div class="shop-product-image">
-
-                    <button class="quick-view-btn" onclick="window.location.href='productDetails.php'">Quick View</button>
-                </div>
-                <button class="add-to-cart-btn" onclick="window.location.href='cart.php'">
-                    ADD TO CART
-                </button>
-                <div class="shop-product-info">
-                    <h3 class="shop-product-title">Golden Night</h3>
-                    <p class="shop-product-price" >₱1,800</p>
-                </div>
-            </div>
-
-            <div class="product-card">
-                <div class="shop-product-image">
-
-                    <button class="quick-view-btn" onclick="window.location.href='productDetails.php'">Quick View</button>
-                </div>
-                <button class="add-to-cart-btn" onclick="window.location.href='cart.php'">
-                    ADD TO CART
-                </button>
-                <div class="shop-product-info">
-                    <h3 class="shop-product-title">Golden Night</h3>
-                    <p class="shop-product-price" >₱1,800</p>
-                </div>
-            </div>
-
-            <div class="product-card">
-                <div class="shop-product-image">
-
-                    <button class="quick-view-btn" onclick="window.location.href='productDetails.php'">Quick View</button>
-                </div>
-                <button class="add-to-cart-btn" onclick="window.location.href='cart.php'">
-                    ADD TO CART
-                </button>
-                <div class="shop-product-info">
-                    <h3 class="shop-product-title">Golden Night</h3>
-                    <p class="shop-product-price" >₱1,800</p>
-                </div>
-            </div>
-
-            <div class="product-card">
-                <div class="shop-product-image">
-
-                    <button class="quick-view-btn" onclick="window.location.href='productDetails.php'">Quick View</button>
-                </div>
-                <button class="add-to-cart-btn" onclick="window.location.href='cart.php'">
-                    ADD TO CART
-                </button>
-                <div class="shop-product-info">
-                    <h3 class="shop-product-title">Golden Night</h3>
-                    <p class="shop-product-price" >₱1,800</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    
-        <?php include '../components/footer.php'; ?>
-        <script src="../assets/js/shopAnimations.js"></script>
-        <script src="../assets/js/script.js"></script>
-        <script src="../assets/js/HomepageAnimations.js"></script>
-</body>
+    <?php include '../components/footer.php'; ?>
+    <script src="../assets/js/shopAnimations.js"></script>
+    <script src="../assets/js/script.js"></script>
+    <script src="../assets/js/HomepageAnimations.js"></script>
+    </body>
 </html>
