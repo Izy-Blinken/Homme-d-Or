@@ -133,9 +133,8 @@
                             <small class="v-desc">150ml • Exclusive</small>
                         </div>
                     </div>
-
                     <div class="v-right">
-                        <p class="v-price">₱6,800.00</p>
+                        <p class="v-price">₱3,200.00</p>
                         <div class="v-actions">
                             <button class="v-view">View</button>
                             <button class="v-again">Add to Cart</button>
@@ -146,6 +145,27 @@
             </div>
         </div>
     </main>
+
+     <div id="viewOrderModal" class="romcomOverlay">
+        <div class="romcomModalContent">
+            <div class="romcomHeader">
+            <span class="view-close-btn" onclick="closeViewModal()">&times;</span>
+                <h2>Product Details</h2>
+            </div>
+            <div class="romcomDivider"></div>
+
+            <div class="romcomBody">
+                <!-- Product Info -->
+                <div class="view-section">
+                    <h4>PRODUCT</h4>
+                    <div class="view-product">
+                        <img id="viewImage" src="" width="70" alt="Product Image">
+                        <div>
+                            <p id="viewName"></p>
+                            <small id="viewVariant"></small>
+                        </div>
+                    </div>
+                </div>
 
     <?php include '../components/footer.php'; ?>
 
