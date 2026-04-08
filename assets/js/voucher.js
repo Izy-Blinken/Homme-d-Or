@@ -24,8 +24,27 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         
     });
-
     // trigger on load
     voucherTypeSelect.dispatchEvent(new Event('change'));
 
 });
+
+function openDeleteVoucherModal(voucherId, code, button) {
+    const modal = document.getElementById('confirm-action-modal');
+    const body = document.getElementById('confirm-body');
+    const yesBtn = document.getElementById('confirm-yes');
+    const cancelBtn = document.getElementById('confirm-cancel');
+
+    body.textContent = `Delete voucher ${code}?`;
+
+    modal.style.display = 'flex';
+
+    yesBtn.onclick = () => {
+        const form = button.closest('form');
+        if (form) form.submit();
+        modal.style.display = 'none';
+    };
+
+    cancelBtn.onclick = () => modal.style.display = 'none';
+    document.getElementById('confirm-close').onclick = () => modal.style.display = 'none';
+}

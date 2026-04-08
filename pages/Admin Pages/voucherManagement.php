@@ -93,10 +93,13 @@ $vouchers = mysqli_query($conn, "SELECT d.*, u.fname, u.lname
                                         <td><?= date('M d, Y', strtotime($v['expires_at'])) ?></td>
                                         <td><span class="badge <?= $status_class ?>"><?= $status ?></span></td>
                                         <td>
-                                            <form method="POST" action="../../backend/customers/delete_voucher.php" style="display:inline;"
-                                                onsubmit="return confirm('Delete voucher <?= htmlspecialchars($v['code']) ?>?')">
+                                            <form method="POST" action="../../backend/customers/delete_voucher.php" style="display:inline;">
                                                 <input type="hidden" name="discount_id" value="<?= $v['discount_id'] ?>">
-                                                <button type="submit" class="btn-delete">Delete</button>
+
+                                                <button type="button" class="btn-delete"
+                                                    onclick="openDeleteVoucherModal('<?= $v['discount_id'] ?>', '<?= htmlspecialchars($v['code']) ?>', this)">
+                                                    Delete
+                                                </button>
                                             </form>
                                         </td>
                                     </tr>
@@ -117,6 +120,24 @@ $vouchers = mysqli_query($conn, "SELECT d.*, u.fname, u.lname
 
             </main>
 
+        </div>
+
+        <div class="modal-overlay" id="confirm-action-modal">
+            <div class="modal">
+                <div class="modal-header">
+                    <span class="modal-title">Confirm Action</span>
+                    <button class="modal-close" id="confirm-close">&times;</button>
+                </div>
+
+                <div class="modal-body" id="confirm-body">
+                    Are you sure?
+                </div>
+
+                <div class="modal-footer">
+                    <button class="btn-cancel" id="confirm-cancel">Cancel</button>
+                    <button class="btn-save" id="confirm-yes">Yes</button>
+                </div>
+            </div>
         </div>
 
 

@@ -835,3 +835,80 @@ function deleteVariant(variantId) {
 
         });
 }
+
+// Function to open the logout modal (called by onclick)
+function openLogoutModal() {
+    const modal = document.getElementById('logout-confirm-modal');
+    if (!modal) return;
+
+    modal.style.display = 'flex';
+
+    // Close buttons
+    const closeBtn = document.getElementById('logout-confirm-close');
+    const cancelBtn = document.getElementById('logout-confirm-cancel');
+    const yesBtn = document.getElementById('logout-confirm-yes');
+
+    const closeModal = () => { modal.style.display = 'none'; };
+
+    if (closeBtn) closeBtn.onclick = closeModal;
+    if (cancelBtn) cancelBtn.onclick = closeModal;
+    if (yesBtn) yesBtn.onclick = () => {
+        window.location.href = '../../backend/auth/admin_logout.php';
+    };
+
+    // Close by clicking overlay
+    modal.onclick = (e) => {
+        if (e.target === modal) closeModal();
+    };
+}
+
+function openRemoveAdminModal(userId, name) {
+    const modal = document.getElementById('confirm-action-modal');
+    const body = document.getElementById('confirm-body');
+    const yesBtn = document.getElementById('confirm-yes');
+    const cancelBtn = document.getElementById('confirm-cancel');
+    const closeBtn = document.getElementById('confirm-close');
+
+    // Update modal text
+    document.querySelector('#confirm-action-modal .modal-title').textContent = 'Remove Admin';
+    body.textContent = `Are you sure you want to remove admin access from ${name}?`;
+
+    // Remove previous event listeners (important!)
+    yesBtn.replaceWith(yesBtn.cloneNode(true));
+    cancelBtn.replaceWith(cancelBtn.cloneNode(true));
+    closeBtn.replaceWith(closeBtn.cloneNode(true));
+
+    const newYesBtn = document.getElementById('confirm-yes');
+    const newCancelBtn = document.getElementById('confirm-cancel');
+    const newCloseBtn = document.getElementById('confirm-close');
+
+    // Yes button submits the POST form
+    newYesBtn.onclick = () => {
+        const form = document.createElement('form');
+        form.method = 'POST';
+        form.action = '../../backend/customers/assign_admin.php';
+
+        const inputId = document.createElement('input');
+        inputId.type = 'hidden';
+        inputId.name = 'user_id';
+        inputId.value = userId;
+        form.appendChild(inputId);
+
+        const inputAction = document.createElement('input');
+        inputAction.type = 'hidden';
+        inputAction.name = 'action';
+        inputAction.value = 'remove';
+        form.appendChild(inputAction);
+
+        document.body.appendChild(form);
+        form.submit();
+    };
+
+    // Cancel and close buttons hide modal
+    newCancelBtn.onclick = newCloseBtn.onclick = () => {
+        modal.style.display = 'none';
+    };
+
+    // Show modal
+    modal.style.display = 'flex';
+}
