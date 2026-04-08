@@ -36,6 +36,8 @@
                             <input type="email" id="email" name="email" placeholder="Enter your email" required>
                         </div>
 
+                        <p id="emailError" style="color:red; font-size:13px; display:none; margin-top:6px;"></p>
+
                         <button type="submit" class="fpSendCode" id="sendVC"  onclick="verifyCode()">Send Verification Code</button>
 
                         <div class="fpFooter">
@@ -69,6 +71,8 @@
                             <input type="text" maxlength="1" class="codeInput" data-index="4" inputmode="numeric" />
                             <input type="text" maxlength="1" class="codeInput" data-index="5" inputmode="numeric" />
                         </div>
+
+                        <p id="otpError" style="color:red; text-align:center; display:none; margin-top:8px;"></p>
 
                         <button type="submit" class="verifyButton" >Verify Code</button>
 
@@ -138,6 +142,8 @@
                             <span class="passwordMatch" id="passwordMatch"></span>
                         </div>
 
+                        <p id="resetError" style="color:red; text-align:center; display:none; margin-top:8px;"></p>
+                        
                         <button type="submit" class="verifyButton">Reset Password</button>
                     </form>
                 </div>
