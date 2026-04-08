@@ -105,29 +105,7 @@ $currentPage = basename($_SERVER['PHP_SELF']);
                     <div class="search-input-wrapper">
                         <input type="text" name="q" id="desktop-search" class="search-input" placeholder="Search for fragrances..." required autocomplete="off">
                         
-                        <div class="search-suggestions-dropdown" id="desktop-suggestions" style="display: flex;">
-                            <a href="#" class="search-suggestion-item">
-                                <img src="../assets/images/brand_images/placeholder.jpg" alt="Perfume 1">
-                                <div class="suggestion-info">
-                                    <span class="suggestion-name">Golden Night Special Edition</span>
-                                    <span class="suggestion-price">₱1,800.00</span>
-                                </div>
-                            </a>
-                            <a href="#" class="search-suggestion-item">
-                                <img src="../assets/images/brand_images/placeholder.jpg" alt="Perfume 2">
-                                <div class="suggestion-info">
-                                    <span class="suggestion-name">Midnight Oud Extrait</span>
-                                    <span class="suggestion-price">₱2,450.00</span>
-                                </div>
-                            </a>
-                            <a href="#" class="search-suggestion-item">
-                                <img src="../assets/images/brand_images/placeholder.jpg" alt="Perfume 3" >
-                                <div class="suggestion-info">
-                                    <span class="suggestion-name">Velvet Rose & Vanilla</span>
-                                    <span class="suggestion-price">₱1,200.00</span>
-                                </div>
-                            </a>
-                        </div>
+                        <div class="search-suggestions-dropdown" id="desktop-suggestions"></div>
                     </div>
                 </form>
             </li>
@@ -189,61 +167,82 @@ $currentPage = basename($_SERVER['PHP_SELF']);
     
     <script src="../assets/js/notif.js"></script>
     <script>
-    document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function() {
         function setupLiveSearch(inputId, dropdownId) {
             const input = document.getElementById(inputId);
             const dropdown = document.getElementById(dropdownId);
             let debounceTimer;
 
-            if(!input || !dropdown) return;
+            if (!input || !dropdown) return;
 
             input.addEventListener('input', function() {
                 clearTimeout(debounceTimer);
                 const query = this.value.trim();
 
-                if (query.length < 2) {
+                if (query.length < 1) {
                     dropdown.style.display = 'none';
+                    dropdown.innerHTML = '';
                     return;
                 }
 
-                const fakeData = [
-                    { product_id: 1, name: "Golden Night Special Edition", price: 1800, image: "placeholder.jpg" },
-                    { product_id: 2, name: "Midnight Oud Extrait", price: 2450, image: "placeholder.jpg" }
-                ];
-
                 debounceTimer = setTimeout(() => {
-                    dropdown.innerHTML = ''; 
-                    
-                    fakeData.forEach(item => {
-                        const a = document.createElement('a');
-                        a.href = `#`; 
-                        a.className = 'search-suggestion-item';
-                        
-                        const formattedPrice = new Intl.NumberFormat('en-PH', { style: 'currency', currency: 'PHP' }).format(item.price);
-                        
-                        a.innerHTML = `
-                            <img src="../assets/images/brand_images/placeholder.jpg" alt="${item.name}" onerror="this.src='https://via.placeholder.com/45'">
-                            <div class="suggestion-info">
-                                <span class="suggestion-name">${item.name}</span>
-                                <span class="suggestion-price">${formattedPrice}</span>
-                            </div>
-                        `;
-                        dropdown.appendChild(a);
-                    });
-                    
-                    dropdown.style.display = 'flex'; 
-                    
-                }, 300); 
+                    fetch(`../backend/search_suggestions.php?q=${encodeURIComponent(query)}`)
+                        .then(res => res.json())
+                        .then(data => {
+                            dropdown.innerHTML = '';
+
+                            if (data.length === 0) {
+                                dropdown.innerHTML = `
+                                    <div style="padding: 12px 16px; color: #aaa; font-size: 0.85rem;">
+                                        No results found.
+                                    </div>`;
+                                dropdown.style.display = 'flex';
+                                return;
+                            }
+
+                            data.forEach(item => {
+                                const imgSrc = item.image
+                                    ? `../assets/images/products/${item.image}`
+                                    : `../assets/images/brand_images/nocturne.png`;
+
+                                const formattedPrice = new Intl.NumberFormat('en-PH', {
+                                    style: 'currency',
+                                    currency: 'PHP'
+                                }).format(item.price);
+
+                                const a = document.createElement('a');
+                                a.href = `productDetails.php?id=${item.product_id}`;
+                                a.className = 'search-suggestion-item';
+                                a.innerHTML = `
+                                    <img src="${imgSrc}" alt="${item.name}" 
+                                        onerror="this.src='../assets/images/brand_images/nocturne.png'">
+                                    <div class="suggestion-info">
+                                        <span class="suggestion-name">${item.name}</span>
+                                        <span class="suggestion-price">${formattedPrice}</span>
+                                    </div>
+                                `;
+                                dropdown.appendChild(a);
+                            });
+
+                            dropdown.style.display = 'flex';
+                        })
+                        .catch(() => {
+                            dropdown.innerHTML = '';
+                            dropdown.style.display = 'none';
+                        });
+                }, 300);
             });
 
+            // Close when clicking outside
             document.addEventListener('click', function(e) {
                 if (!input.contains(e.target) && !dropdown.contains(e.target)) {
                     dropdown.style.display = 'none';
                 }
             });
-            
+
+            // Reopen on focus if there's already a query
             input.addEventListener('focus', function() {
-                if (this.value.trim().length >= 2 && dropdown.innerHTML !== '') {
+                if (this.value.trim().length >= 1 && dropdown.innerHTML !== '') {
                     dropdown.style.display = 'flex';
                 }
             });

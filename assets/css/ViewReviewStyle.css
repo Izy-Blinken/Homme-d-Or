@@ -1,0 +1,193 @@
+/*--- Main Container ---*/
+#all-reviews-section {
+    padding: 60px 5%;
+    min-height: 80vh;
+    color: whitesmoke;
+}
+
+.all-reviews-container {
+    display: flex;
+    gap: 40px;
+    max-width: 1200px;
+    margin: 0 auto;
+    align-items: flex-start;
+}
+
+/*--- Left Sidebar: Product Summary ---*/
+.reviews-sidebar {
+    flex: 0 0 300px;
+    background-color: #0e101f;
+    border: 1px solid rgba(201, 169, 97, 0.3);
+    border-radius: 8px;
+    padding: 30px;
+    text-align: center;
+    position: sticky;
+    top: 100px; /* Keeps the product visible while scrolling down the reviews */
+}
+
+.sidebar-img {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.reviews-sidebar h2 {
+    color: #f8e189;
+    font-size: 24px;
+    letter-spacing: 2px;
+    margin-bottom: 15px;
+}
+
+.sidebar-rating {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 5px;
+}
+
+.sidebar-rating .score {
+    font-size: 32px;
+    font-weight: bold;
+    color: whitesmoke;
+}
+
+.sidebar-rating .stars {
+    color: #f8e189;
+    font-size: 18px;
+}
+
+.review-count {
+    color: #888;
+    font-size: 14px;
+}
+
+/*--- Right Feed: The Reviews ---*/
+.reviews-feed {
+    flex: 1;
+}
+
+.feed-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.feed-header h3 {
+    font-size: 22px;
+    font-weight: 300;
+    color: #f8e189;
+}
+
+.review-filter {
+    background-color: transparent;
+    color: whitesmoke;
+    border: 1px solid #c9a961;
+    padding: 8px 15px;
+    border-radius: 4px;
+    outline: none;
+    cursor: pointer;
+    font-family: inherit;
+}
+
+.review-filter option {
+    background-color: #0e101f;
+}
+
+/*--- Individual Review Cards ---*/
+.full-review-card {
+    background-color: #0e101f; /* Changed to a solid dark color to block the background waves */
+    border: 1px solid rgba(201, 169, 97, 0.3); /* Matches the gold border of the sidebar */
+    border-radius: 8px;
+    padding: 25px;
+    margin-bottom: 20px;
+    transition: transform 0.3s ease, background-color 0.3s ease, border-color 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3); /* Adds a subtle shadow to lift it off the background */
+}
+
+.full-review-card:hover {
+    background-color: #15182b; /* Slightly lighter on hover for interactivity */
+    border-color: rgba(201, 169, 97, 0.8); /* Brighter gold border on hover */
+}
+
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 15px;
+}
+
+.user-info {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.avatar {
+    width: 45px;
+    height: 45px;
+    background-color: #c9a961;
+    color: #0e101f;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.name-date h4 {
+    margin: 0 0 4px 0;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: whitesmoke !important; /* Forces the name to be white, overriding any global styles */
+}
+
+.verified-badge {
+    color: #c9a961;
+    font-size: 14px;
+}
+
+.name-date span {
+    font-size: 12px;
+    color: #b0b0b0; /* Lightened the date text so it's highly readable */
+}
+
+.card-stars {
+    color: #f8e189;
+    font-size: 14px;
+}
+
+.review-title {
+    font-size: 18px;
+    margin-bottom: 10px;
+    color: #f8e189; /* Changed the title to gold to make it pop */
+}
+
+.review-body {
+    color: whitesmoke; /* Brightened the body text */
+    line-height: 1.6;
+    font-size: 15px;
+}
+
+/*--- Responsive Design ---*/
+@media (max-width: 900px) {
+    .all-reviews-container {
+        flex-direction: column;
+    }
+    
+    .reviews-sidebar {
+        flex: none;
+        width: 100%;
+        position: static; /* Removes sticky behavior on smaller screens */
+        margin-bottom: 30px;
+    }
+}
