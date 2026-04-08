@@ -232,28 +232,10 @@ $currentPage = basename($_SERVER['PHP_SELF']);
                         dropdown.appendChild(a);
                     });
                     
-<<<<<<< HEAD
-                    a.innerHTML = `
-                        <img src="../assets/images/brand_images/placeholder.jpg" alt="${item.name}>
-                        <div class="suggestion-info">
-                            <span class="suggestion-name">${item.name}</span>
-                            <span class="suggestion-price">${formattedPrice}</span>
-                        </div>
-                    `;
-                    dropdown.appendChild(a);
-                });
-                
-                // FORCE THE DROPDOWN TO SHOW!
-                dropdown.style.display = 'flex'; 
-                
-            }, 300); 
-        });
-=======
                     dropdown.style.display = 'flex'; 
                     
                 }, 300); 
             });
->>>>>>> 74e89389185b9c992b3f2797c283a858f908d864
 
             document.addEventListener('click', function(e) {
                 if (!input.contains(e.target) && !dropdown.contains(e.target)) {
