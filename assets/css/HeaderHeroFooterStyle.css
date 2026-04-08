@@ -589,9 +589,7 @@
 
 /*--- Newsletter ---*/
 .newsletter-section {
-    background-color: #0e101f;
-    padding: 120px 40px;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 30px 20px;
 }
 
 .newsletter-container {
@@ -601,16 +599,16 @@
 }
 
 .newsletter-container h2 {
-    font-size: 36px;
+    font-size: 28px; /* Slightly smaller */
     font-weight: 700;
     color: #f8e189;
-    margin-bottom: 15px;
+    margin-bottom: 8px;
 }
 
 .newsletter-container p {
-    font-size: 20px;
+    font-size: 16px;
     color: whitesmoke;
-    margin-bottom: 30px;
+    margin-bottom: 15px;
 }
 
 .newsletter-form {
@@ -663,7 +661,7 @@
 /*--- Footer Links Grid ---*/
 .footer-links-section {
     background-color: #0e101f;
-    padding: 70px 40px;
+    padding: 10px 20px; /* Reduced further */
     border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
@@ -758,7 +756,7 @@
 /*--- Footer Bottom ---*/
 .footer-bottom-section {
     background-color: #0e101f;
-    padding: 40px 40px;
+    padding: 8px 20px; /* Reduced further */
 }
 
 .footer-bottom-container {
@@ -767,11 +765,11 @@
     display: grid;
     grid-template-columns: 1fr auto 1fr;
     align-items: center;
-    gap: 20px;
+    gap: 15px;
 }
 
 .copyright {
-    font-size: 17px;
+    font-size: 14px; /* Scaled down */
     color: whitesmoke;
     margin: 0;
     justify-self: start;
@@ -786,8 +784,9 @@
     line-height: 0;
 }
 
+/* Let's also adjust the logo and copyright margin if needed */
 .footer-logo img {
-    height: 170px;
+    height: 35px; /* Smaller logo */
     width: auto;
     transition: opacity 0.3s ease;
 }
@@ -867,23 +866,23 @@
     }
 
     .newsletter-section {
-        padding: 140px 80px;
+        padding: 40px 40px; /* Reduced to half */
     }
 
     .newsletter-container {
         max-width: 800px;
     }
 
-    .footer-links-section {
-        padding: 90px 100px;
+   .footer-links-section {
+        padding: 15px 30px;
     }
 
     .footer-bottom-section {
-        padding: 90px 100px;
+        padding: 10px 30px;
     }
 
     .footer-logo img {
-        height: 200px;
+        height: 100px;
     }
 }
 
@@ -893,7 +892,7 @@
     }
 
     .footer-links-section {
-        padding: 80px 60px;
+        padding: 50px 60px; /* Changed from 80px */
     }
 }
 

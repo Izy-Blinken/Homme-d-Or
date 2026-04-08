@@ -113,7 +113,9 @@
                             <i class="fa-solid fa-star-half-stroke"></i>
                         </div>
                         <p>Based on 24 reviews</p>
-                        <button class="write-review-btn">Write a Review</button>
+                       <a href="viewReview.php" style="text-decoration: none;">
+                            <button class="write-review-btn">Read All Reviews</button>
+                        </a>
                     </div>
                 </div>
 
