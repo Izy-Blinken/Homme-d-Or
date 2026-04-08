@@ -3,7 +3,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const closeSearchBtn = document.getElementById('closeSearchBtn');
     const searchInput = document.querySelector('.search-form input');
     
-    // Select both the mobile and desktop trigger buttons
     const openSearchBtns = document.querySelectorAll('.openSearchBtnMobile, .openSearchBtnDesktop');
 
     // 1. Open Modal when clicking either search trigger
