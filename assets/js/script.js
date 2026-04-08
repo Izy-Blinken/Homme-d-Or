@@ -198,3 +198,22 @@ function selectSuggestion(inputId, value, suggestionsId, autoSubmit = false) {
         }
     };
 })();
+
+// Customer navbar live search - Desktop & Mobile
+(function () {
+    // Desktop search
+    const desktopSearch = document.getElementById('desktop-search');
+    const desktopSuggestions = document.getElementById('desktop-suggestions');
+    
+    if (desktopSearch && desktopSuggestions) {
+        initLiveSearch('desktop-search', 'desktop-suggestions', '../backend/productLiveSearch.php');
+    }
+
+    // Mobile search
+    const mobileSearch = document.getElementById('mobile-search');
+    const mobileSuggestions = document.getElementById('mobile-suggestions');
+    
+    if (mobileSearch && mobileSuggestions) {
+        initLiveSearch('mobile-search', 'mobile-suggestions', '../backend/productLiveSearch.php');
+    }
+})();

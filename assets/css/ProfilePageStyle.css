@@ -923,3 +923,155 @@
         width: 100%;
     }
 }
+
+.dangerZone {
+    margin: 0 auto;
+    padding: 24px 40px 60px;
+    max-width: 600px;
+    text-align: center;
+}
+.dangerZone h3 {
+    font-family: 'Spartan', sans-serif;
+    font-size: 1rem;
+    font-weight: 600;
+    color: #ffffff;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin: 0 0 0px;
+}
+
+.dangerZone .divider {
+    display: none;
+}
+
+.dangerDesc {
+    font-family: 'Spartan', sans-serif;
+    font-size: 13px;
+    color: rgba(255, 255, 255, 0.7);
+    margin: 0 0 16px;
+    line-height: 1.5;
+    font-weight: 300;
+}
+
+.deleteAccountBtn {
+    font-family: 'Spartan', sans-serif;
+    font-size: 12px;
+    font-weight: 500;
+    padding: 8px 20px;
+    background-color: transparent;
+    color: #e74c3c;
+    border: 1px solid #e74c3c;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.deleteAccountBtn:hover {
+    background-color: #e74c3c;
+    color: #ffffff;
+}
+
+.deleteAccountBtn:active {
+    opacity: 0.85;
+    transform: scale(0.98);
+}
+
+.deleteAccountBtn {
+    font-family: 'Spartan', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    padding: 10px 28px;
+    background-color: transparent;
+    color: #e74c3c;
+    border: 1px solid #e74c3c;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.deleteAccountBtn:hover {
+    background-color: #e74c3c;
+    color: #ffffff;
+    border-color: #e74c3c;
+}
+
+.deleteAccountBtn:active {
+    opacity: 0.85;
+    transform: scale(0.98);
+}
+
+/* Not Logged In CTA */
+.notLoggedInCTA {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 70vh;
+    padding: 40px 20px;
+}
+
+.ctaBox {
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 16px;
+    padding: 48px 40px;
+    max-width: 460px;
+    width: 100%;
+    text-align: center;
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.06);
+}
+
+.ctaIcon {
+    font-size: 56px;
+    color: #d1d5db;
+    margin-bottom: 20px;
+}
+
+.ctaBox h2 {
+    font-size: 22px;
+    font-weight: 700;
+    color: #1a1a1a;
+    margin: 0 0 12px;
+}
+
+.ctaBox p {
+    font-size: 15px;
+    color: #6b7280;
+    line-height: 1.6;
+    margin: 0 0 28px;
+}
+
+.ctaButtons {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+}
+
+.ctaLoginBtn,
+.ctaRegisterBtn {
+    padding: 11px 28px;
+    border-radius: 8px;
+    font-size: 15px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: opacity 0.2s ease, transform 0.15s ease;
+}
+
+.ctaLoginBtn {
+    background-color: #1a1a1a;
+    color: #ffffff;
+    border: 1.5px solid #1a1a1a;
+}
+
+.ctaRegisterBtn {
+    background-color: transparent;
+    color: #1a1a1a;
+    border: 1.5px solid #1a1a1a;
+}
+
+.ctaLoginBtn:hover,
+.ctaRegisterBtn:hover {
+    opacity: 0.8;
+    transform: translateY(-1px);
+}

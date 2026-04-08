@@ -46,5 +46,6 @@ if ($remember) {
     setcookie('remember_token', $token, time() + (30 * 24 * 60 * 60), '/');
 }
 
-header('Location: ../../pages/index.php');
+$redirect = isset($_POST['redirect']) ? $_POST['redirect'] : '../../pages/index.php';
+header('Location: ' . $redirect);
 exit;

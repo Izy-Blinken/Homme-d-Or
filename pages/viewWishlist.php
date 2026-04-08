@@ -15,7 +15,7 @@ if ($identity['type'] !== 'user_id') {
 $user_id = $identity['id'];
 
 // Fetch wishlist items from DB
-$sql = "SELECT w.wishlist_id, w.product_id, p.product_name, p.price, p.product_desc AS description,
+$sql = "SELECT w.wishlist_id, w.product_id, p.product_name, p.price, p.product_desc AS description, 
                pi.image_url
         FROM wishlist w
         JOIN products p ON w.product_id = p.product_id
@@ -53,6 +53,7 @@ $stmt->close();
     <link rel="stylesheet" href="../assets/css/RegLoginModalStyle.css">
     <link rel="stylesheet" href="../assets/css/ProfilePageStyle.css">
     <link rel="stylesheet" href="../assets/css/viewTabs.css">
+    <link rel="stylesheet" href="../assets/css/ReviewCancelOrderStyle.css">
 </head>
 <body> 
     <?php include '../components/header.php'; ?>
