@@ -174,18 +174,18 @@
                             <img id="unifiedImage" src="" width="70" alt="Product Image">
                             <div>
                                 <p id="unifiedProduct"></p>
-                                <small id="unifiedVariant"></small>
+                                <small id="unifiedVariant" style="color: gray; font-weight:bold"></small>
                             </div>
                         </div>
                     </div>
                     <div class="view-section">
                         <h4>INFORMATION</h4>
-                        <p><strong>Quantity:</strong> <span id="unifiedQty"></span></p>
-                        <p><strong>Price:</strong> <span id="unifiedPrice"></span></p>
-                        <p><strong>Subtotal:</strong> <span id="unifiedSubtotal"></span></p>
-                        <p><strong>Payment Method:</strong> <span id="unifiedPayment"></span></p>
-                        <p><strong>Date:</strong> <span id="unifiedDate"></span></p>
-                        <p><strong>Status:</strong> <span id="unifiedStatus"></span></p>
+                        <p><strong style="color: gray;">Quantity:</strong> <span id="unifiedQty" style="color: #c9a961; font-weight:bold"></span></p>
+                        <p><strong style="color: gray;">Price:</strong> <span id="unifiedPrice" style="color: #c9a961; font-weight:bold"></span></p>
+                        <p><strong style="color: gray;">Subtotal:</strong> <span id="unifiedSubtotal" style="color: #c9a961; font-weight:bold"></span></p>
+                        <p><strong style="color: gray;">Payment Method:</strong> <span id="unifiedPayment" style="color: #c9a961; font-weight:bold"></span></p>
+                        <p><strong style="color: gray;">Date:</strong> <span id="unifiedDate" style="color: #c9a961; font-weight:bold"></span></p>
+                        <p><strong style="color: gray;">Status:</strong> <span id="unifiedStatus" style="color: #c9a961; font-weight:bold"></span></p>
                     </div>
                 </div>
             </div>
