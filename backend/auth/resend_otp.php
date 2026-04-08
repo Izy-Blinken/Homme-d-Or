@@ -25,14 +25,18 @@ if (!$user_id || !$email) {
 
 //60 seconds before resend
 $last_result = mysqli_query($conn,
-    "SELECT created_at FROM email_verifications
+    "SELECT expires_at FROM email_verifications
      WHERE user_id = '$user_id'
-     ORDER BY created_at DESC LIMIT 1"
+     ORDER BY expires_at DESC LIMIT 1"
 );
 $last = mysqli_fetch_assoc($last_result);
-if ($last && (time() - strtotime($last['created_at'])) < 60) {
-    echo json_encode(['success' => false, 'message' => 'Please wait before requesting a new code.']);
-    exit;
+$last = mysqli_fetch_assoc($last_result);
+if ($last) {
+    $issued_at = strtotime($last['expires_at']) - (5 * 60); // expires_at minus 5 min = when it was created
+    if ((time() - $issued_at) < 60) {
+        echo json_encode(['success' => false, 'message' => 'Please wait before requesting a new code.']);
+        exit;
+    }
 }
 
 // Generate random OTP
@@ -51,8 +55,8 @@ try {
     $mail->isSMTP();
     $mail->Host       = 'smtp.gmail.com';
     $mail->SMTPAuth   = true;
-    $mail->Username   = 'panglaro.3829@gmail.com';
-    $mail->Password   = 'noseumqbxbwufigh';
+    $mail->Username   = 'hommedor2026@gmail.com';
+    $mail->Password   = 'esoczvhrdrmilpbn';
     $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
     $mail->Port       = 587;
     $mail->SMTPOptions = ['ssl' => [
@@ -61,7 +65,7 @@ try {
         'allow_self_signed' => true
     ]];
 
-    $mail->setFrom('hommedor2026.3829@gmail.com', "Homme d'Or");
+    $mail->setFrom('hommedor2026@gmail.com', "Homme d'Or");
     $mail->addAddress($email, $fname);
     $mail->isHTML(true);
     $mail->Subject = "Your Homme d'Or OTP Verification Code";
@@ -80,6 +84,9 @@ try {
     $mail->send();
     echo json_encode(['success' => true]);
 } catch (Exception $e) {
-    echo json_encode(['success' => false, 'message' => 'Failed to send email. Please try again.']);
-}
+    echo json_encode([
+            'success' => false, 
+            'message' => 'Failed to send email. Please try again.',
+            'debug'   => $mail->ErrorInfo
+        ]);}
 exit;

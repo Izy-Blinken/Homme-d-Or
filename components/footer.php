@@ -76,9 +76,17 @@
                         <label for="terms">I have read and agreed on <a href="terms.php" target="_blank">Terms and Conditions</a></label>
                     </div>
 
-                    <div class="captcha-placeholder" style="border:1px dashed #ccc; padding:1rem; text-align:center; color:#aaa; font-size:0.85rem; margin-bottom:1rem;">
-                        [ Google reCAPTCHA — to be implemented ]
-                    </div>
+                    <div class="captchaContainer">
+                        <div class="captcha-left">
+                            <canvas id="captchaCanvas" width="180" height="58"></canvas>
+                            <button type="button" class="refresh-btn" onclick="generateCaptcha()">↻</button>
+                        </div>
+                        <div class="captcha-right">
+                            <input type="text" id="captchaInput" placeholder="Enter characters" maxlength="6" autocomplete="off" />
+                            <button type="button" onclick="validateCaptcha()">Verify</button>
+                            <div id="captchaStatus" style="font-size:13px; min-height:18px;"></div>
+                        </div>
+                    </div> 
 
                     <div class="regBtn">
                         <p id="signupServerError" style="color:red; text-align:center;"></p>

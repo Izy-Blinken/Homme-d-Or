@@ -100,7 +100,7 @@ $admins = mysqli_query($conn,
                             <label>SEARCH:</label>
                             <input type="text" name="search" placeholder="Search orders..." 
                                 id="search-input" value="<?= htmlspecialchars($filter_search) ?>">
-                            <div id="search-suggestions" class="suggestions-box" style="display:none;"></div>
+                                <div id="search-suggestions" class="suggestions-box" style="display:none;"></div>
                         </div>
 
                         <button type="submit" class="reset-btn">Apply</button>
@@ -313,10 +313,13 @@ $admins = mysqli_query($conn,
                                             <!-- Remove Admin -->
                                             <?php if ($can_assign || $isSuperadmin): ?>
                                             <form method="POST" action="../../backend/customers/assign_admin.php" style="display:inline;"
-                                                onsubmit="return confirm('Remove admin access from <?= htmlspecialchars($a['fname']) ?>?')">
-                                                <input type="hidden" name="user_id" value="<?= $a['user_id'] ?>">
+                                                onsubmit="return confirm('Remove admin access from <?= htmlspecialchars($c['fname']) ?>?')">
+                                                <input type="hidden" name="user_id" value="<?= $c['user_id'] ?>">
                                                 <input type="hidden" name="action" value="remove">
-                                                <button type="submit" class="btn-delete">Remove Admin</button>
+                                                <button type="button" class="btn-delete"
+                                                    onclick="openRemoveAdminModal('<?= $a['user_id'] ?>', '<?= htmlspecialchars($a['fname'] . ' ' . $a['lname']) ?>')">
+                                                    Remove Admin
+                                                </button>
                                             </form>
                                             <?php endif; ?>
 
@@ -594,6 +597,7 @@ $admins = mysqli_query($conn,
                 </div>
             
             </div>
+
         
         <?php endif; ?>
 
