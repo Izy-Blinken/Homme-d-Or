@@ -2,6 +2,20 @@
 include '../backend/db_connect.php';
 include '../backend/get_products_by_category.php';
 $productsByCategory = getProductsByCategory($conn);
+
+$newArrivals = $productsByCategory['New Arrivals'] ?? [];
+
+$sql = "SELECT p.product_id, p.product_name, p.price, p.discounted_price,
+               p.product_status, pi.image_url
+        FROM products p
+        LEFT JOIN product_images pi 
+            ON pi.product_id = p.product_id AND pi.is_primary = 1
+        ORDER BY p.created_at DESC";
+$allProducts = [];
+$result = $conn->query($sql);
+while ($row = $result->fetch_assoc()) {
+    $allProducts[] = $row;
+}
 ?>
 
 <!DOCTYPE html>
@@ -309,29 +323,41 @@ $productsByCategory = getProductsByCategory($conn);
                 <div class="new-arrivals-wrapper">
                     <div class="new-arrivals-overflow">
                         <div class="new-arrivals-grid" id="arrivalsGrid">
-                            Product 1
-                            <div class="new-arrival-card">
-                                <div class="new-arrival-image">
-                                    <img src="../assets/images/brand_images/evrland.jpg" alt="New Arrival 1">
+                            <?php if (empty($newArrivals)): ?>
+                                <p style="color:#ccc; padding: 1rem;">No new arrivals yet.</p>
+                            <?php else: ?>
+                                <?php foreach ($newArrivals as $product):
+                                    $id = $product['product_id'];
+                                    $name = htmlspecialchars($product['product_name']);
+                                    $price = number_format($product['price'], 2);
+                                    $status = $product['product_status'];
+                                    $imgSrc = $product['image_url']
+                                            ? '../assets/images/products/' . htmlspecialchars($product['image_url'])
+                                            : '../assets/images/brand_images/nocturne.png';
+                                    $soldOut = ($status === 'out-of-stock');
+                                ?>
+                                <div class="new-arrival-card">
+                                    <div class="new-arrival-image">
+                                        <img src="<?= $imgSrc ?>" alt="<?= $name ?>">
+                                        <?php if ($soldOut): ?>
+                                            <div class="sold-out-label">SOLD OUT</div>
+                                        <?php endif; ?>
+                                    </div>
+                                    <div class="shop-product-info">
+                                        <h3 class="shop-product-title"><?= $name ?></h3>
+                                        <p class="shop-product-price">₱<?= $price ?></p>
+                                    </div>
+                                    <?php if ($soldOut): ?>
+                                        <button class="arrival-add-cart" disabled>ADD TO CART</button>
+                                    <?php else: ?>
+                                        <button class="arrival-add-cart" 
+                                            onclick="showGeneralToast('Added to cart!', 'info')">
+                                            ADD TO CART
+                                        </button>
+                                    <?php endif; ?>
                                 </div>
-                                <button class="arrival-add-cart" onclick="showGeneralToast('Added to cart!', 'info')">ADD TO CART</button>
-                            </div>
-                        
-                            Product 2 
-                            <div class="new-arrival-card">
-                                <div class="new-arrival-image">
-                                    <img src="../assets/images/brand_images/evrland.jpg" alt="New Arrival 2">
-                                </div>
-                                <button class="arrival-add-cart" onclick="showGeneralToast('Added to cart!', 'info')">ADD TO CART</button>
-                            </div>
-                        
-                            Product 3 
-                            <div class="new-arrival-card">
-                                <div class="new-arrival-image">
-                                    <img src="../assets/images/brand_images/evrland.jpg" alt="New Arrival 3">
-                                </div>
-                                <button class="arrival-add-cart" onclick="showGeneralToast('Added to cart!', 'info')">ADD TO CART</button>
-                            </div> 
+                                <?php endforeach; ?>
+                            <?php endif; ?>
                         </div>
                     </div>
 
@@ -388,6 +414,41 @@ $productsByCategory = getProductsByCategory($conn);
                 <div class="new-arrivals-wrapper-2">
                     <div class="new-arrivals-overflow-2">
                         <div class="new-arrivals-grid" id="arrivalsGrid2">
+                            <?php if (empty($allProducts)): ?>
+                                <p style="color:#ccc; padding: 1rem;">No products yet.</p>
+                            <?php else: ?>
+                                <?php foreach ($allProducts as $product):
+                                    $id = $product['product_id'];
+                                    $name = htmlspecialchars($product['product_name']);
+                                    $price = number_format($product['price'], 2);
+                                    $status = $product['product_status'];
+                                    $imgSrc = $product['image_url']
+                                            ? '../assets/images/products/' . htmlspecialchars($product['image_url'])
+                                            : '../assets/images/brand_images/nocturne.png';
+                                    $soldOut = ($status === 'out-of-stock');
+                                ?>
+                                <div class="new-arrival-card">
+                                    <div class="new-arrival-image">
+                                        <img src="<?= $imgSrc ?>" alt="<?= $name ?>">
+                                        <?php if ($soldOut): ?>
+                                            <div class="sold-out-label">SOLD OUT</div>
+                                        <?php endif; ?>
+                                    </div>
+                                    <div class="shop-product-info">
+                                        <h3 class="shop-product-title"><?= $name ?></h3>
+                                        <p class="shop-product-price">₱<?= $price ?></p>
+                                    </div>
+                                    <?php if ($soldOut): ?>
+                                        <button class="arrival-add-cart" disabled>ADD TO CART</button>
+                                    <?php else: ?>
+                                        <button class="arrival-add-cart"
+                                            onclick="showGeneralToast('Added to cart!', 'info')">
+                                            ADD TO CART
+                                        </button>
+                                    <?php endif; ?>
+                                </div>
+                                <?php endforeach; ?>
+                            <?php endif; ?>
                         </div>
                     </div>
 
