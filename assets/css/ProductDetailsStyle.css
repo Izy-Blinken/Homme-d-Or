@@ -243,9 +243,10 @@
 }
 
 .buynow:hover {
-    background-color: white;
-    border-color: white;
+    background-color: rgb(3, 3, 84) ;
+    border-color: #C9A961;
     transform: translateY(-2px);
+    color: #C9A961;
 }
 
 /* Hollow/Outline for Secondary Action */
@@ -256,7 +257,7 @@
 }
 
 .addtocart:hover {
-    background-color: rgba(201, 169, 97, 0.1);
+    background-color: rgb(3, 3, 84) ;
     transform: translateY(-2px);
 }
 

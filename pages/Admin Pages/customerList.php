@@ -103,7 +103,7 @@ $admins = mysqli_query($conn,
                                 <div id="search-suggestions" class="suggestions-box" style="display:none;"></div>
                         </div>
 
-                        <button type="submit" class="reset-btn">Apply</button>
+                       <button type="submit" class="reset-btn">Apply</button>
                         <a href="customerList.php" id="reset-link" class="reset-btn" style="text-decoration:none; color:black;">Reset</a>
 
                         <?php if ($can_assign || $isSuperadmin): ?>

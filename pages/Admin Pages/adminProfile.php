@@ -143,8 +143,10 @@ if (empty($initials)) $initials = 'H';
 
                     </div>
 
-                    <button class="logout-btn" id="logout-btn">Logout</button>
-
+                    <button class="logout-btn"
+                        onclick="openLogoutModal(null, 'your session', 'logout', this)">
+                        Logout
+                    </button>
                 </div>
 
                 <!-- Brand Info + Business Overview -->

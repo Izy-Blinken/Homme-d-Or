@@ -560,21 +560,20 @@ select option {
 }
 
 .suggestions-box { 
-    background: #0a1e36 !important; 
-    border: 1px solid rgba(212,175,55,0.3) !important; 
-    color: white !important; 
-
+    background: #fff !important; 
+    border:1px solid #ddd !important; 
     position: absolute !important;
     top: calc(100% + 5px) !important; /* Tiny gap below the input */
     left: 0 !important;
+    right: 0 !important;
+    border-radius:8px;
     width: 95% !important;
     min-width: 190px;
     max-height: 300px;
     overflow-y: auto;
-    
-    
+    box-shadow:0 4px 16px rgba(0,0,0,0.12);
+    color: black;
     backdrop-filter: blur(20px);
-    border-radius: 4px;
     box-shadow: 0 15px 35px rgba(0, 0, 0, 0.8) !important;
 
     z-index: 1001 !important;
@@ -587,6 +586,9 @@ select option {
     justify-content: space-between;
     align-items: center;
     transition: all 0.2s ease;
+    color: gray;
+    font-weight: bold;
+    font-size: small;
 }
 
 .suggestion-item:hover {
@@ -594,7 +596,11 @@ select option {
     color: #c9a961 !important;
 }
 
-.suggestion-name { color: white !important; }
+.suggestion-name { 
+    color: black !important;
+    font-weight: bold;
+    font-size: small;
+ }
 
 .badge-delivered {
     background: rgba(46, 125, 50, 0.1) !important;
@@ -930,25 +936,6 @@ hr {
     color: #c9a961 !important;
 }
 
-.suggestions-box {
-    background: #0a1e36 !important;
-    border: 1px solid rgba(212,175,55,0.3) !important;
-    color: white !important;
-}
-
-.suggestion-item {
-    border-bottom: 1px solid rgba(255,255,255,0.1) !important;
-    color: white !important;
-}
-
-.suggestion-item:hover {
-    background: rgba(201,169,97,0.1) !important;
-    color: #c9a961 !important;
-}
-
-.suggestion-name {
-    color: white !important;
-}
 
 /* Responsive breakpoints for tablet, small tablet, and mobile */
 @media (max-width: 1024px) {
