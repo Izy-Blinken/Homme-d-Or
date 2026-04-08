@@ -109,7 +109,10 @@
                 <div class="signupTitle">
                     <h2><b>SIGN IN</b></h2>
                 </div>
+
                 <form action="../backend/loginSignUp/login.php" method="POST">
+                     <input type="hidden" name="redirect" value="<?= htmlspecialchars($_SERVER['REQUEST_URI']) ?>">
+                     
                     <div class="inputGroupLog">
                         <input type="text" name="username" required>
                         <label>USERNAME*</label>
