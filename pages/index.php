@@ -1,4 +1,5 @@
 <?php
+session_start(); // ← ADD THIS
 include '../backend/db_connect.php';
 include '../backend/get_products_by_category.php';
 $productsByCategory = getProductsByCategory($conn);
@@ -16,6 +17,14 @@ $result = $conn->query($sql);
 while ($row = $result->fetch_assoc()) {
     $allProducts[] = $row;
 }
+$wishlistedIds = [];
+if (!empty($_SESSION['user_id'])) {
+    $wl_result = $conn->query("SELECT product_id FROM wishlist WHERE user_id = " . intval($_SESSION['user_id']));
+    while ($wl_row = $wl_result->fetch_assoc()) {
+        $wishlistedIds[] = $wl_row['product_id'];
+    }
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -166,66 +175,79 @@ while ($row = $result->fetch_assoc()) {
            <!-- PRODUCTS SECTION -->
            
             <section class="products-section">
-
                 <div class="products-container">
 
-                    <div class="products-grid fade-in">
+                    <div class="products-carousel-wrapper">
+                        <button class="carousel-nav-btn prev" id="featPrev"><i class="fas fa-chevron-left"></i></button>
                         
-                        <?php
-                        $sql = "
-                            SELECT p.product_id, p.product_name, p.price, p.discounted_price,
-                                p.product_status, pi.image_url
-                            FROM products p
-                            LEFT JOIN product_images pi 
-                                ON pi.product_id = p.product_id AND pi.is_primary = 1
-                            ORDER BY p.created_at DESC
-                        ";
-                        
-                        $result = $conn->query($sql);
-                        while ($product = $result->fetch_assoc()):
-                            $id = $product['product_id'];
-                            $name = htmlspecialchars($product['product_name']);
-                            $price = number_format($product['price'], 2);
-                            $status = $product['product_status'];
-                            $imgSrc = $product['image_url'] 
-                                    ? '../assets/images/products/' . htmlspecialchars($product['image_url'])
-                                    : '../assets/images/brand_images/nocturne.png';
-                            $soldOut = ($status === 'out-of-stock');
-                        ?>
-                        
-                        <div class="product-card">
-                            <div class="product-card-image">
-                                <img src="<?= $imgSrc ?>" alt="<?= $name ?>">
+                        <div class="products-scroll-area" id="featScrollArea">
+                            <?php
+                            $sql = "
+                                SELECT p.product_id, p.product_name, p.price, p.discounted_price,
+                                    p.product_status, pi.image_url
+                                FROM products p
+                                LEFT JOIN product_images pi 
+                                    ON pi.product_id = p.product_id AND pi.is_primary = 1
+                                ORDER BY p.created_at DESC
+                            ";
+                            
+                            $result = $conn->query($sql);
+                            while ($product = $result->fetch_assoc()):
+                                $id = $product['product_id'];
+                                $name = htmlspecialchars($product['product_name']);
+                                $price = number_format($product['price'], 2);
+                                $status = $product['product_status'];
+                                $imgSrc = $product['image_url'] 
+                                        ? '../assets/images/products/' . htmlspecialchars($product['image_url'])
+                                        : '../assets/images/brand_images/nocturne.png';
+                                $soldOut = ($status === 'out-of-stock');
+                            ?>
+                            
+                            <div class="product-card">
+                                <div class="product-card-image">
+                                    <img src="<?= $imgSrc ?>" alt="<?= $name ?>">
+                                    <?php if ($soldOut): ?>
+                                        <div class="sold-out-label">SOLD OUT</div>
+                                    <?php else: ?>
+                                        <?php if (!empty($_SESSION['user_id'])): 
+                                            $isWishlisted = in_array($id, $wishlistedIds);
+                                        ?>
+                                            <button class="wishlist-btn <?= $isWishlisted ? 'wishlisted' : '' ?>"
+                                                    id="wishlist-card-<?= $id ?>"
+                                                    onclick="toggleCardWishlist(<?= $id ?>, this)"
+                                                    style="color: <?= $isWishlisted ? '#c9a961' : '#fff' ?>">
+                                                <i class="<?= $isWishlisted ? 'fa-solid' : 'fa-regular' ?> fa-heart"></i>
+                                            </button>
+                                        <?php else: ?>
+                                            <button class="wishlist-btn" onclick="openLoginModal(); showGeneralToast('Please log in to save to your Wishlist!', 'info');"><i class="fa-regular fa-heart"></i></button>
+                                        <?php endif; ?>
+
+                                        <button class="quick-view-btn" onclick="window.location.href='productDetails.php?id=<?= $id ?>'">Quick View</button>
+                                    <?php endif; ?>
+                                </div>
+
                                 <?php if ($soldOut): ?>
-                                    <div class="sold-out-label">SOLD OUT</div>
+                                    <button class="add-to-cart-btn" disabled>ADD TO CART</button>
                                 <?php else: ?>
-                                    <button class="wishlist-btn" 
-                                        onclick="showGeneralToast('Added to wishlist!', 'info')">
-                                        <i class="fa-solid fa-heart"></i>
-                                    </button>
-                                    <button class="quick-view-btn" 
-                                        onclick="window.location.href='productDetails.php?id=<?= $id ?>'">
-                                        Quick View
-                                    </button>
+                                    <?php if (!empty($_SESSION['user_id']) || !empty($_SESSION['guest_id'])): ?>
+                                        <button class="add-to-cart-btn" onclick="addToCart(<?= $id ?>)">ADD TO CART</button>
+                                    <?php else: ?>
+                                        <button class="add-to-cart-btn" onclick="openLoginModal(); showGeneralToast('Please login or continue as guest to shop.', 'error');">ADD TO CART</button>
+                                    <?php endif; ?>
                                 <?php endif; ?>
-                            </div>
 
-                            <?php if ($soldOut): ?>
-                                <button class="add-to-cart-btn" disabled>ADD TO CART</button>
-                            <?php else: ?>
-                                <button class="add-to-cart-btn" 
-                                    onclick="showGeneralToast('Added to cart!', 'info')">
-                                    ADD TO CART
-                                </button>
-                            <?php endif; ?>
-
-                            <div class="shop-product-info">
-                                <h3 class="shop-product-title"><?= $name ?></h3>
-                                <p class="shop-product-price">₱<?= $price ?></p>
+                                <div class="shop-product-info">
+                                    <h3 class="shop-product-title"><?= $name ?></h3>
+                                    <p class="shop-product-price">₱<?= $price ?></p>
+                                </div>
                             </div>
+                            <?php endwhile; ?>
                         </div>
-                        <?php endwhile; ?>
+
+                        <button class="carousel-nav-btn next" id="featNext"><i class="fas fa-chevron-right"></i></button>
+                        </div> <div class="line-indicators" id="featIndicators"></div>
                     </div>
+
                 </div>
             </section>
        </div>
@@ -320,55 +342,69 @@ while ($row = $result->fetch_assoc()) {
                     <div class="header-line"></div>
                 </div>
                 
-                <div class="new-arrivals-wrapper">
-                    <div class="new-arrivals-overflow">
-                        <div class="new-arrivals-grid" id="arrivalsGrid">
-                            <?php if (empty($newArrivals)): ?>
-                                <p style="color:#ccc; padding: 1rem;">No new arrivals yet.</p>
-                            <?php else: ?>
-                                <?php foreach ($newArrivals as $product):
-                                    $id = $product['product_id'];
-                                    $name = htmlspecialchars($product['product_name']);
-                                    $price = number_format($product['price'], 2);
-                                    $status = $product['product_status'];
-                                    $imgSrc = $product['image_url']
-                                            ? '../assets/images/products/' . htmlspecialchars($product['image_url'])
-                                            : '../assets/images/brand_images/nocturne.png';
-                                    $soldOut = ($status === 'out-of-stock');
-                                ?>
-                                <div class="new-arrival-card">
-                                    <div class="new-arrival-image">
-                                        <img src="<?= $imgSrc ?>" alt="<?= $name ?>">
-                                        <?php if ($soldOut): ?>
-                                            <div class="sold-out-label">SOLD OUT</div>
-                                        <?php endif; ?>
-                                    </div>
-                                    <div class="shop-product-info">
-                                        <h3 class="shop-product-title"><?= $name ?></h3>
-                                        <p class="shop-product-price">₱<?= $price ?></p>
-                                    </div>
+                <div class="products-carousel-wrapper">
+                    <button class="carousel-nav-btn prev" id="newArrPrev"><i class="fas fa-chevron-left"></i></button>
+                    
+                    <div class="products-scroll-area" id="newArrScrollArea">
+                        <?php if (empty($newArrivals)): ?>
+                            <p style="color:#ccc; padding: 1rem;">No new arrivals yet.</p>
+                        <?php else: ?>
+                            <?php 
+                                foreach ($newArrivals as $product):
+                                $id = $product['product_id'];
+                                $name = htmlspecialchars($product['product_name']);
+                                $price = number_format($product['price'], 2);
+                                $status = $product['product_status'];
+                                $imgSrc = $product['image_url']
+                                        ? '../assets/images/products/' . htmlspecialchars($product['image_url'])
+                                        : '../assets/images/brand_images/nocturne.png';
+                                $soldOut = ($status === 'out-of-stock');
+                            ?>
+                            <div class="product-card">
+                                <div class="product-card-image">
+                                    <img src="<?= $imgSrc ?>" alt="<?= $name ?>">
                                     <?php if ($soldOut): ?>
-                                        <button class="arrival-add-cart" disabled>ADD TO CART</button>
+                                        <div class="sold-out-label">SOLD OUT</div>
                                     <?php else: ?>
-                                        <button class="arrival-add-cart" 
-                                            onclick="showGeneralToast('Added to cart!', 'info')">
-                                            ADD TO CART
-                                        </button>
+                                        <?php if (!empty($_SESSION['user_id'])): 
+                                                $isWishlisted = in_array($id, $wishlistedIds); ?>
+                                            <button class="wishlist-btn <?= $isWishlisted ? 'wishlisted' : '' ?>"
+                                                    id="wishlist-card-<?= $id ?>"
+                                                    onclick="toggleCardWishlist(<?= $id ?>, this)"
+                                                    style="color: <?= $isWishlisted ? '#c9a961' : '#fff' ?>">
+                                                <i class="<?= $isWishlisted ? 'fa-solid' : 'fa-regular' ?> fa-heart"></i>
+                                            </button>
+                                        <?php else: ?>
+                                            <button class="wishlist-btn" onclick="openLoginModal(); showGeneralToast('Please log in to save to your Wishlist!', 'info');"><i class="fa-regular fa-heart"></i></button>
+                                        <?php endif; ?>
+
+                                        <button class="quick-view-btn" onclick="window.location.href='productDetails.php?id=<?= $id ?>'">Quick View</button>
                                     <?php endif; ?>
                                 </div>
-                                <?php endforeach; ?>
-                            <?php endif; ?>
-                        </div>
+
+                                <?php if ($soldOut): ?>
+                                    <button class="add-to-cart-btn" disabled>ADD TO CART</button>
+                                <?php else: ?>
+                                    <?php if (!empty($_SESSION['user_id']) || !empty($_SESSION['guest_id'])): ?>
+                                        <button class="add-to-cart-btn" onclick="addToCart(<?= $id ?>)">ADD TO CART</button>
+                                    <?php else: ?>
+                                        <button class="add-to-cart-btn" onclick="openLoginModal(); showGeneralToast('Please login or continue as guest to shop.', 'error');">ADD TO CART</button>
+                                    <?php endif; ?>
+                                <?php endif; ?>
+
+                                <div class="shop-product-info">
+                                    <h3 class="shop-product-title"><?= $name ?></h3>
+                                    <p class="shop-product-price">₱<?= $price ?></p>
+                                </div>
+                            </div>
+                            <?php endforeach; ?>
+                        <?php endif; ?>
                     </div>
 
-                    <button class="scroll-next-btn" id="nextBtn"><i class="fas fa-chevron-right"></i></button>
-
-                <div class="line-indicators" id="lineIndicators">
-                    <span class="indicator active"></span>
-                    <span class="indicator"></span>
-                    <span class="indicator"></span>
+                    <button class="carousel-nav-btn next" id="newArrNext"><i class="fas fa-chevron-right"></i></button>
+                    </div> <div class="line-indicators" id="newArrIndicators"></div>
                 </div>
-                </div>
+                
             </div>
         </section>
     </div>
@@ -403,7 +439,7 @@ while ($row = $result->fetch_assoc()) {
         </section>
 
         <!-- NEW ARRIVALS SECTION -->
-        <section class="new-arrivals-section-2 fade-in">
+       <section class="new-arrivals-section-2 fade-in">
             <div class="new-arrivals-container-2">
                 <div class="section-header">
                     <div class="header-line"></div>
@@ -411,54 +447,70 @@ while ($row = $result->fetch_assoc()) {
                     <div class="header-line"></div>
                 </div>
                 
-                <div class="new-arrivals-wrapper-2">
-                    <div class="new-arrivals-overflow-2">
-                        <div class="new-arrivals-grid" id="arrivalsGrid2">
-                            <?php if (empty($allProducts)): ?>
-                                <p style="color:#ccc; padding: 1rem;">No products yet.</p>
-                            <?php else: ?>
-                                <?php foreach ($allProducts as $product):
-                                    $id = $product['product_id'];
-                                    $name = htmlspecialchars($product['product_name']);
-                                    $price = number_format($product['price'], 2);
-                                    $status = $product['product_status'];
-                                    $imgSrc = $product['image_url']
-                                            ? '../assets/images/products/' . htmlspecialchars($product['image_url'])
-                                            : '../assets/images/brand_images/nocturne.png';
-                                    $soldOut = ($status === 'out-of-stock');
-                                ?>
-                                <div class="new-arrival-card">
-                                    <div class="new-arrival-image">
-                                        <img src="<?= $imgSrc ?>" alt="<?= $name ?>">
-                                        <?php if ($soldOut): ?>
-                                            <div class="sold-out-label">SOLD OUT</div>
-                                        <?php endif; ?>
-                                    </div>
-                                    <div class="shop-product-info">
-                                        <h3 class="shop-product-title"><?= $name ?></h3>
-                                        <p class="shop-product-price">₱<?= $price ?></p>
-                                    </div>
+                <div class="products-carousel-wrapper">
+                    <button class="carousel-nav-btn prev" id="selPrev"><i class="fas fa-chevron-left"></i></button>
+                    
+                    <div class="products-scroll-area" id="selScrollArea">
+                        <?php if (empty($allProducts)): ?>
+                            <p style="color:#ccc; padding: 1rem;">No products yet.</p>
+                        <?php else: ?>
+                            <?php 
+                            $count2 = 0;
+                            foreach ($allProducts as $product):
+                                if ($count2 >= 8) break; // Limits to 8 items
+                                $count2++;
+                                $id = $product['product_id'];
+                                $name = htmlspecialchars($product['product_name']);
+                                $price = number_format($product['price'], 2);
+                                $status = $product['product_status'];
+                                $imgSrc = $product['image_url']
+                                        ? '../assets/images/products/' . htmlspecialchars($product['image_url'])
+                                        : '../assets/images/brand_images/nocturne.png';
+                                $soldOut = ($status === 'out-of-stock');
+                            ?>
+                            <div class="product-card">
+                                <div class="product-card-image">
+                                    <img src="<?= $imgSrc ?>" alt="<?= $name ?>">
                                     <?php if ($soldOut): ?>
-                                        <button class="arrival-add-cart" disabled>ADD TO CART</button>
+                                        <div class="sold-out-label">SOLD OUT</div>
                                     <?php else: ?>
-                                        <button class="arrival-add-cart"
-                                            onclick="showGeneralToast('Added to cart!', 'info')">
-                                            ADD TO CART
-                                        </button>
+                                        <?php if (!empty($_SESSION['user_id'])): 
+                                                $isWishlisted = in_array($id, $wishlistedIds); ?>
+                                            <button class="wishlist-btn <?= $isWishlisted ? 'wishlisted' : '' ?>"
+                                                    id="wishlist-card-<?= $id ?>"
+                                                    onclick="toggleCardWishlist(<?= $id ?>, this)"
+                                                    style="color: <?= $isWishlisted ? '#c9a961' : '#fff' ?>">
+                                                <i class="<?= $isWishlisted ? 'fa-solid' : 'fa-regular' ?> fa-heart"></i>
+                                            </button>
+                                        <?php else: ?>
+                                            <button class="wishlist-btn" onclick="openLoginModal(); showGeneralToast('Please log in to save to your Wishlist!', 'info');"><i class="fa-regular fa-heart"></i></button>
+                                        <?php endif; ?>
+
+                                        <button class="quick-view-btn" onclick="window.location.href='productDetails.php?id=<?= $id ?>'">Quick View</button>
                                     <?php endif; ?>
                                 </div>
-                                <?php endforeach; ?>
-                            <?php endif; ?>
-                        </div>
+
+                                <?php if ($soldOut): ?>
+                                    <button class="add-to-cart-btn" disabled>ADD TO CART</button>
+                                <?php else: ?>
+                                    <?php if (!empty($_SESSION['user_id']) || !empty($_SESSION['guest_id'])): ?>
+                                        <button class="add-to-cart-btn" onclick="addToCart(<?= $id ?>)">ADD TO CART</button>
+                                    <?php else: ?>
+                                        <button class="add-to-cart-btn" onclick="openLoginModal(); showGeneralToast('Please login or continue as guest to shop.', 'error');">ADD TO CART</button>
+                                    <?php endif; ?>
+                                <?php endif; ?>
+
+                                <div class="shop-product-info">
+                                    <h3 class="shop-product-title"><?= $name ?></h3>
+                                    <p class="shop-product-price">₱<?= $price ?></p>
+                                </div>
+                            </div>
+                            <?php endforeach; ?>
+                        <?php endif; ?>
                     </div>
 
-                    <button class="scroll-next-btn" id="nextBtn2"><i class="fas fa-chevron-right"></i></button>
-
-                    <div class="line-indicators" id="lineIndicators2">
-                        <span class="indicator active"></span>
-                        <span class="indicator"></span>
-                        <span class="indicator"></span>
-                    </div>
+                    <button class="carousel-nav-btn next" id="selNext"><i class="fas fa-chevron-right"></i></button>
+                    </div> <div class="line-indicators" id="selIndicators"></div>
                 </div>
             </div>
         </section>
@@ -599,11 +651,64 @@ while ($row = $result->fetch_assoc()) {
         </div>
     </section>
 
+    
+
     <div id="generalToast" class="generalToast"></div>
 
     <script src="../assets/js/script.js"></script>
-
     <script src="../assets/js/HomepageAnimations.js"></script>
+
+    <script>
+    function toggleCardWishlist(productId, btn) {
+    const icon = btn.querySelector('i');
+    fetch('../backend/add_to_wishlist.php', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: 'product_id=' + productId
+    })
+    .then(res => res.json())
+    .then(data => {
+        if (data.status === 'added') {
+            icon.classList.replace('fa-regular', 'fa-solid');
+            btn.style.color = '#c9a961';
+            btn.title = 'Remove from Wishlist';
+            showGeneralToast('Added to wishlist!', 'success'); // ← add this
+        } else if (data.status === 'removed') {
+            icon.classList.replace('fa-solid', 'fa-regular');
+            btn.style.color = '#fff';
+            btn.title = 'Add to Wishlist';
+            showGeneralToast('Removed from wishlist.', 'info'); // ← add this
+        } else {
+            showGeneralToast(data.message, 'error'); // ← add this
+        }
+    })
+    .catch(err => console.error('Wishlist error:', err));
+}
+
+    function addToCartFromCard(productId, btn) {
+        const original = btn.textContent;
+        btn.disabled = true;
+        btn.textContent = 'Adding...';
+        fetch('../backend/add_to_cart.php', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            body: 'product_id=' + productId + '&quantity=1'
+        })
+        .then(res => res.json())
+        .then(data => {
+            btn.textContent = data.status === 'success' ? 'Added!' : 'Error';
+            setTimeout(() => {
+                btn.textContent = original;
+                btn.disabled = false;
+            }, 1500);
+        })
+        .catch(() => {
+            btn.textContent = original;
+            btn.disabled = false;
+        });
+    }
+    </script>
+
     <?php include '../components/footer.php'; ?>
 
     </body>

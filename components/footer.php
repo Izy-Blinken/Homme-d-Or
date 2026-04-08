@@ -96,7 +96,7 @@
                     <div class="regLog">
                         <label>
                             <a href="#" onclick="event.preventDefault(); openLoginModal();">LOGIN</a> or
-                            <a href="#" onclick="event.preventDefault(); closeSignupModal();">CONTINUE AS GUEST</a>
+                            <a href="../backend/loginSignUp/guest_login.php">CONTINUE AS GUEST</a>
                         </label>
                     </div>
                 </form>
@@ -360,6 +360,26 @@
                     </div>
                 </div>
             </div>
+
+
+            <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                const urlParams = new URLSearchParams(window.location.search);
+                
+                // If the URL has our secret signal from the Guest button
+                if (urlParams.get('guest_activated') === 'true') {
+                    
+                    // 1. Clean the URL so it looks normal again
+                    const newUrl = window.location.pathname + window.location.search.replace(/[\?&]guest_activated=true/, '');
+                    window.history.replaceState({}, document.title, newUrl);
+                    
+                    // 2. Trigger the visible "mark" (Your Toast Notification!)
+                    if (typeof showGeneralToast === 'function') {
+                        showGeneralToast('Guest Mode Activated! You can now add items to your cart.', 'success');
+                    }
+                }
+            });
+        </script>
         </footer>
 
         <!-- CSS Inclusions -->
@@ -371,7 +391,8 @@
         <script>
             const USER_ID = <?= json_encode($_SESSION['user_id'] ?? null) ?>;
         </script>
-
+        
+        
         <!-- Final JS Inclusions (CLEANED - Duplicates Removed) -->
         <script src="../assets/js/regModal.js"></script>
         <script src="../assets/js/logModal.js"></script>
