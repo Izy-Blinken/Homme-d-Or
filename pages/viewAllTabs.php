@@ -19,7 +19,6 @@
         <link rel="stylesheet" href="../assets/css/ProfilePageStyle.css">
         <link rel="stylesheet" href="../assets/css/viewTabs.css">
         <link rel="stylesheet" href="../assets/css/ReviewCancelOrderStyle.css">
-
 </head>
 
 <body> 
@@ -499,7 +498,7 @@
                         <img id="viewImage" src="" width="70" alt="Product Image">
                         <div>
                             <p id="viewName"></p>
-                            <small id="viewVariant"></small>
+                            <small id="viewVariant" style="color: gray; font-weight:bold;" ></small>
                         </div>
                     </div>
                 </div>
@@ -507,11 +506,11 @@
                 <!-- Order Info -->
                 <div class="view-section">
                     <h4>ORDER INFORMATION</h4>
-                    <p><strong>Quantity:</strong> <span id="viewQty"></span></p>
-                    <p><strong>Total:</strong> <span id="viewTotal"></span></p>
-                    <p><strong>Payment Method:</strong> <span id="viewPayment"></span></p>
-                    <p><strong>Order Date:</strong> <span id="viewDate"></span></p>
-                    <p><strong>Status:</strong> <span id="viewStatus"></span></p>
+                    <p><strong style="color: gray;">Quantity:</strong> <span id="viewQty"></span></p>
+                    <p><strong style="color:gray";>Total:</strong> <span id="viewTotal"></span></p>
+                    <p><strong style="color:gray";>Payment Method:</strong> <span id="viewPayment"></span></p>
+                    <p><strong style="color:gray">Order Date:</strong> <span id="viewDate"></span></p>
+                    <p><strong style="color:gray">Status:</strong> <span id="viewStatus"></span></p>
                 </div>
             </div>
         </div>

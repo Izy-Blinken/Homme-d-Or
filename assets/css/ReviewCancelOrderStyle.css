@@ -10,7 +10,7 @@
     align-items: center;
     justify-content: center;
     padding: 1rem;
-    z-index: 1000;
+    z-index: 9999 !important;
 }
 
 .romcomOverlay.show {
@@ -58,7 +58,7 @@
 
 .romcomDivider {
     height: 1px;
-    background: #e2e8f0;
+    background: gray !important;
     margin: 0 2.5rem;
     flex-shrink: 0;
 }
@@ -241,9 +241,9 @@ textarea::placeholder {
 }
 
 .romcomBtnClose:hover {
-    background: #c9a961;
-    border:1px solid white;
-    color: white;
+    background: transparent;
+    border:1px solid #c9a961;
+    color: #c9a961;
 }
 
 .romcomBtnSubmit:disabled {
@@ -354,9 +354,13 @@ textarea::placeholder {
     background: rgba(0, 0, 0, 0.7);
 }
 
-/*  View Modal Content */
+/*  View Modal Content  eto yun*/
 #viewOrderModal .romcomModalContent {
-    background: #2A2D34;
+    background: rgb(14, 16, 31);
+    backdrop-filter: blur(12px);           
+    -webkit-backdrop-filter: blur(12px);  
+    border: 1px solid #c9a961;  
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6);
     width: 100%;
     max-width: 32rem;
     display: flex;
@@ -380,14 +384,13 @@ textarea::placeholder {
 /* Divider */
 #viewOrderModal .romcomDivider {
     height: 1px;
-    background: whitesmoke;
+    background: gray !important;
     margin: 0 2rem;
 }
 
 /* Modal Body */
 #viewOrderModal .romcomBody {
     padding: 2rem 2.5rem;
-    color: #e2e8f0;
     display: flex;
     flex-direction: column;
     gap: 1.5rem;
@@ -500,3 +503,73 @@ textarea::placeholder {
         align-items: flex-start;
     }
 }
+
+/* Ensure description text wraps properly */
+#WDescription {
+    display: block;
+    margin-top: 5px;
+    font-weight: 400;
+    color: #e2e8f0;
+    line-height: 1.4;
+}
+
+.view-section p {
+    margin-bottom: 0.8rem;
+    padding-bottom: 0.5rem;
+}
+
+.WishlistButtonGroup {
+    display: flex;
+    gap: 0.75rem;
+}
+
+.WishlistButtonGroup button {
+    flex: 1;
+    padding: 0.875rem 1.5rem;
+    border: none;
+    font-weight: 600;
+    font-size: 0.875rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+/* eto 2 */
+.WishlistBtnSubmit {
+    background: #c9a961;
+    border: 1px solid #c9a961;
+    color: rgb(14, 16, 31);
+}
+
+.WishlistBtnSubmit:hover {
+    border: 1px solid #c9a961 !important;
+    background: #080051;
+    color: #c9a961;
+}
+
+.WishlistBtnClose {
+    border: 1px solid #c9a961 !important;
+    background: transparent;
+    color: #c9a961;
+}
+
+.WishlistBtnClose:hover {
+    background: lightslategray;
+    color: rgb(14, 16, 31);
+    border: 1px solid lightslategray !important;
+}
+
+#viewWishlistModal .romcomModalContent {
+    background: rgb(14, 16, 31);
+    backdrop-filter: blur(12px);           
+    -webkit-backdrop-filter: blur(12px);  
+    border: 1px solid #c9a961;  
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6);
+    width: 100%;
+    max-width: 32rem;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
