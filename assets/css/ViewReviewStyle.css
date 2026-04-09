@@ -33,7 +33,6 @@
     width: 150px;
     height: 150px;
     object-fit: cover;
-    border-radius: 5px;
     margin-bottom: 20px;
     border: 1px solid rgba(255, 255, 255, 0.1);
 }
@@ -91,10 +90,9 @@
 
 .review-filter {
     background-color: transparent;
-    color: whitesmoke;
+    color: #c9a961;
     border: 1px solid #c9a961;
     padding: 8px 15px;
-    border-radius: 4px;
     outline: none;
     cursor: pointer;
     font-family: inherit;
