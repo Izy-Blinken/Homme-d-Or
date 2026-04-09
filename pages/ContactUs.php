@@ -13,6 +13,7 @@
         <link rel="stylesheet" href="../assets/css/CartPageStyle.css">
         <link rel="stylesheet" href="../assets/css/RegLoginModalStyle.css">
         <link rel="stylesheet" href="../assets/css/ProfilePageStyle.css">
+        
     </head>
 
     <body>
@@ -161,7 +162,7 @@
                     <div class="divider"></div>
                     <p class="dangerDesc">Once you delete your account, all your data will be permanently removed and cannot be recovered.</p>
                     <button class="deleteAccountBtn" onclick="openDeleteModal()">Delete Account</button>
-                </div> 
+                </div>
 
             <?php endif; ?>
 
@@ -230,23 +231,10 @@
 
                         <!-- Password -->
                         <div class="editModalFormSection">
-                            <h3>Change Password</h3>
-                            <p class="passwordNote">Leave blank if you don't want to change your password</p>
-
-                            <div class="editModalFormGroup">
-                                <label>Current Password</label>
-                                <input type="password" id="currentPassword" placeholder="Enter current password">
-                            </div>
-
-                            <div class="editModalFormGroup">
-                                <label>New Password</label>
-                                <input type="password" id="newPassword" placeholder="Enter new password">
-                            </div>
-
-                            <div class="editModalFormGroup">
-                                <label>Confirm New Password</label>
-                                <input type="password" id="confirmPassword" placeholder="Confirm new password">
-                            </div>
+                            <h3>Password</h3>
+                            <button type="button" class="editModalSaveBtn" style="width:100%;" onclick="closeEditModal(); openChangePasswordModal();">
+                                Change Password
+                            </button>
 
                             <div class="forgotP" style="margin-left:80%;">
                                 <a href="forgotPassword.php">Forgot Password?</a>
@@ -277,6 +265,107 @@
                     <button class="cancelConfirmBtn" onclick="cancelDiscard()">Keep Editing</button>
                     <button class="confirmBtn" onclick="confirmDiscard()">Discard</button>
                 </div>
+            </div>
+        </div>
+
+        <!-- Change Password Modal -->
+        <div id="changePasswordModal" class="verificationModal" style="display:none;">
+            <div class="verificationModalContent">
+                <button class="closeModal" onclick="closeChangePasswordModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+
+                <div class="modalHeader">
+                    <h2>Change Password</h2>
+                    <p class="modalSubtitle" id="cpModalSubtitle">We'll send a verification code to your email first</p>
+                </div>
+
+                <!-- Step 1: Current password + send OTP -->
+                <div id="cpStep1">
+                    <div class="formGroup" style="margin-bottom:16px;">
+                        <label>Current Password</label>
+                        <div class="passwordInputWrapper">
+                            <input type="password" id="cpCurrentPassword" placeholder="Enter current password">
+                            <button type="button" class="togglePassword" onclick="toggleCpVisibility('cpCurrentPassword', this)">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <p id="cpStep1Error" style="color:red;font-size:13px;display:none;margin-bottom:12px;"></p>
+                    <button type="button" class="verifyButton" onclick="sendChangePasswordOtp()">Send Verification Code</button>
+                </div>
+
+                <!-- Step 2: OTP -->
+                <div id="cpStep2" style="display:none;">
+                    <p class="modalSubtitle" style="margin-bottom:16px;">Enter the 6-digit code sent to your email</p>
+                    <div class="codeInputContainer">
+                        <input type="text" maxlength="1" class="cpCodeInput" inputmode="numeric" />
+                        <input type="text" maxlength="1" class="cpCodeInput" inputmode="numeric" />
+                        <input type="text" maxlength="1" class="cpCodeInput" inputmode="numeric" />
+                        <input type="text" maxlength="1" class="cpCodeInput" inputmode="numeric" />
+                        <input type="text" maxlength="1" class="cpCodeInput" inputmode="numeric" />
+                        <input type="text" maxlength="1" class="cpCodeInput" inputmode="numeric" />
+                    </div>
+                    <p id="cpOtpError" style="color:red;text-align:center;font-size:13px;display:none;margin-top:8px;"></p>
+                    <button type="button" class="verifyButton" style="margin-top:16px;" onclick="verifyCpOtp()">Verify Code</button>
+                    <div class="resendSection">
+                        <p>Didn't receive the code?</p>
+                        <button type="button" class="resendButton" id="cpResendBtn" onclick="sendChangePasswordOtp(true)">Resend Code</button>
+                    </div>
+                </div>
+
+                <!-- Step 3: New password -->
+                <div id="cpStep3" style="display:none;">
+                    <div class="passwordRequirements">
+                        <p class="requirementsTitle">Password must contain:</p>
+                        <ul>
+                            <li id="cp-req-length"><i class="fas fa-circle"></i> At least 8 characters</li>
+                            <li id="cp-req-uppercase"><i class="fas fa-circle"></i> One uppercase letter</li>
+                            <li id="cp-req-lowercase"><i class="fas fa-circle"></i> One lowercase letter</li>
+                            <li id="cp-req-number"><i class="fas fa-circle"></i> One number</li>
+                        </ul>
+                    </div>
+
+                    <div class="formGroup" style="margin-bottom:16px;">
+                        <label>New Password</label>
+                        <div class="passwordInputWrapper">
+                            <input type="password" id="cpNewPassword" placeholder="Enter new password">
+                            <button type="button" class="togglePassword" onclick="toggleCpVisibility('cpNewPassword', this)">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                        </div>
+                        <div class="passwordStrength">
+                            <div class="strengthBar">
+                                <div class="strengthBarFill" id="cpStrengthBarFill"></div>
+                            </div>
+                            <span class="strengthText" id="cpStrengthText"></span>
+                        </div>
+                    </div>
+
+                    <div class="formGroup" style="margin-bottom:16px;">
+                        <label>Confirm New Password</label>
+                        <div class="passwordInputWrapper">
+                            <input type="password" id="cpConfirmPassword" placeholder="Confirm new password">
+                            <button type="button" class="togglePassword" onclick="toggleCpVisibility('cpConfirmPassword', this)">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                        </div>
+                        <span class="passwordMatch" id="cpPasswordMatch"></span>
+                    </div>
+
+                    <p id="cpResetError" style="color:red;text-align:center;font-size:13px;display:none;margin-bottom:12px;"></p>
+                    <button type="button" class="verifyButton" onclick="submitNewPassword()">Save New Password</button>
+                </div>
+
+                <!-- Step 4: Success -->
+                <div id="cpStep4" style="display:none;">
+                    <div class="modalHeader">
+                        <h2>Password Changed!</h2>
+                        <p class="modalSubtitle">Your password has been updated successfully.</p>
+                    </div>
+                    <button type="button" class="verifyButton" onclick="closeChangePasswordModal()">Done</button>
+                </div>
+
             </div>
         </div>
 

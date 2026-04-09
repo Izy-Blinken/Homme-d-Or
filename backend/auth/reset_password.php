@@ -16,9 +16,9 @@ if (empty($_SESSION['reset_verified']) || empty($_SESSION['reset_email'])) {
     exit;
 }
 
-$email    = $_SESSION['reset_email'];
+$email = $_SESSION['reset_email'];
 $password = $_POST['password'] ?? '';
-$confirm  = $_POST['confirm_password'] ?? '';
+$confirm = $_POST['confirm_password'] ?? '';
 
 if (!$password || !$confirm) {
     echo json_encode(['success' => false, 'message' => 'Please fill in all fields.']);
@@ -40,7 +40,7 @@ if (
     exit;
 }
 
-$hashed     = password_hash($password, PASSWORD_DEFAULT);
+$hashed = password_hash($password, PASSWORD_DEFAULT);
 $safe_email = mysqli_real_escape_string($conn, $email);
 
 mysqli_query($conn, "UPDATE users SET user_password = '$hashed' WHERE email = '$safe_email'");

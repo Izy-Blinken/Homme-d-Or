@@ -43,9 +43,9 @@ if ($last && (time() - strtotime($last['created_at'])) < 60) {
 }
 
 // Generate OTP
-$otp        = str_pad(random_int(0, 999999), 6, '0', STR_PAD_LEFT);
+$otp = str_pad(random_int(0, 999999), 6, '0', STR_PAD_LEFT);
 $expires_at = date('Y-m-d H:i:s', strtotime('+5 minutes'));
-$safe_otp   = mysqli_real_escape_string($conn, $otp);
+$safe_otp = mysqli_real_escape_string($conn, $otp);
 
 // Delete old tokens for this email
 mysqli_query($conn, "DELETE FROM password_resets WHERE email = '$safe_email'");
@@ -60,15 +60,15 @@ mysqli_query($conn,
 $mail = new PHPMailer(true);
 try {
     $mail->isSMTP();
-    $mail->Host       = 'smtp.gmail.com';
-    $mail->SMTPAuth   = true;
-    $mail->Username   = 'hommedor2026@gmail.com';
-    $mail->Password   = 'esoczvhrdrmilpbn';
+    $mail->Host = 'smtp.gmail.com';
+    $mail->SMTPAuth = true;
+    $mail->Username = 'hommedor2026@gmail.com';
+    $mail->Password = 'esoczvhrdrmilpbn';
     $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
-    $mail->Port       = 587;
-    $mail->Timeout    = 15;
+    $mail->Port = 587;
+    $mail->Timeout = 15;
     $mail->SMTPOptions = ['ssl' => [
-        'verify_peer'      => false,
+        'verify_peer' => false,
         'verify_peer_name' => false,
         'allow_self_signed' => true
     ]];

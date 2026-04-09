@@ -4,7 +4,7 @@ if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
-include_once '../backend/db_connect.php'; 
+include_once '../backend/db_connect.php';
 $identity = getCurrentUserId();
 
 // THE BOUNCER: Kick complete strangers back to the homepage
@@ -21,7 +21,7 @@ if (!isset($_SESSION['selected_items'])) {
     $_SESSION['selected_items'] = [];
 }
 
-// --- HANDLE FORM SUBMISSIONS (Update Qty, Remove, Toggle) ---
+// HANDLE FORM SUBMISSIONS (Update Qty, Remove, Toggle)
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $cart_id = intval($_POST['cart_id']);
 
@@ -55,8 +55,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     exit;
 }
 
-// --- FETCH CART ITEMS FROM DATABASE ---
-$sql = "SELECT c.cart_id, c.quantity, p.product_name, p.price, pi.image_url 
+// FETCH CART ITEMS FROM DATABASE
+$sql = "SELECT c.cart_id, c.quantity, p.product_name, p.price, pi.image_url
         FROM cart c
         JOIN products p ON c.product_id = p.product_id
         LEFT JOIN product_images pi ON pi.product_id = p.product_id AND pi.is_primary = 1
@@ -103,13 +103,13 @@ $_SESSION['initialized_cart_selections'] = true;
             <h1 class="cart-title">Shopping Cart</h1>
             <div class="cart-wrapper">
                 <section class="cart-items">
-                    <?php 
+                    <?php
                     $subtotal = 0;
                     $selectedCount = 0;
                     if (empty($cartItems)) {
                         echo "<div class='empty-cart-msg'>Your cart is completely empty. Time to find a new signature scent!</div>";
                     }
-                    foreach($cartItems as $item): 
+                    foreach($cartItems as $item):
                         $isSelected = in_array($item['cart_id'], $_SESSION['selected_items']);
                         $totalPrice = $item['price'] * $item['quantity'];
                         if ($isSelected) {

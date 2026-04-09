@@ -1,7 +1,7 @@
 
     document.addEventListener('DOMContentLoaded', function() {
         
-    //rotating green animation
+    // rotating green animation
         
         const greetings = [
             { language: 'English', text: 'Welcome' },
@@ -27,7 +27,7 @@
                 // Fade in
                 greetingElement.style.opacity = '1';
                 greetingElement.style.transform = 'translateY(0)';
-            }, 500); 
+            }, 500);
         }
         
         setTimeout(() => {
@@ -35,7 +35,7 @@
             setInterval(rotateGreeting, 3000);
         }, 2000);
         
-        //Scroll to sections
+        // Scroll to sections
 
         const categoryLinks = document.querySelectorAll('.shop-category-link');
         const sections = document.querySelectorAll('.shop-products-section');
@@ -59,8 +59,8 @@
                         const timeElapsed = currentTime - start;
                         const progress = Math.min(timeElapsed / duration, 1);
                         
-                        const ease = progress < 0.5 
-                            ? 4 * progress * progress * progress 
+                        const ease = progress < 0.5
+                            ? 4 * progress * progress * progress
                             : 1 - Math.pow(-2 * progress + 2, 3) / 2;
                         
                         window.scrollTo(0, startPosition + (distance * ease));
@@ -77,7 +77,7 @@
             });
         });
         
-        //Active link highlight
+        // Active link highlight
         
         function updateActiveLink() {
             let current = '';
@@ -111,7 +111,7 @@
             });
         });
         
-        //Add to cart
+        // Add to cart
         
         const addToCartButtons = document.querySelectorAll('.shop-add-to-cart');
         
@@ -145,7 +145,7 @@
             });
         });
         
-        //floating animation
+        // floating animation
         
         function createFloatingNotification(productName) {
             const notification = document.createElement('div');
@@ -190,7 +190,7 @@
             }, 2500);
         }
         
-        //Product card hover effects
+        // Product card hover effects
 
         const productCards = document.querySelectorAll('.shop-product-card');
         
@@ -286,7 +286,7 @@
                 // 4. Add the glowing blink effect once it's in view
                 setTimeout(() => {
                     targetProduct.classList.add('highlight-blink');
-                }, 500); 
+                }, 500);
             }, 100);
             
             // Clean up the URL so it doesn't blink again if they refresh

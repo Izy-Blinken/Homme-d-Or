@@ -16,7 +16,7 @@ if (!isset($_SESSION['user_id'])) {
 }
 
 $user_id = $_SESSION['user_id'];
-$otp     = trim($_POST['code'] ?? '');
+$otp = trim($_POST['code'] ?? '');
 
 if (strlen($otp) !== 6) {
     echo json_encode(['success' => false, 'message' => 'Please enter the 6-digit code.']);
@@ -37,6 +37,19 @@ $data = mysqli_fetch_assoc($result);
 
 if (!$data) {
     echo json_encode(['success' => false, 'message' => 'Invalid or expired code.']);
+    exit;
+}
+
+// Check if user is an admin
+$adminCheck = mysqli_fetch_assoc(mysqli_query($conn,
+    "SELECT admin_id FROM admins WHERE user_id = '$user_id' LIMIT 1"
+));
+
+if ($adminCheck) {
+    echo json_encode([
+        'success' => false,
+        'message' => 'Your account is currently assigned as an admin. Please contact the superadmin to remove your admin role before deleting your account.'
+    ]);
     exit;
 }
 

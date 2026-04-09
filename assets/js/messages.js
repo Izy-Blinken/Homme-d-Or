@@ -76,7 +76,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     const avatarClass = c.type === 'admin' || c.type === 'superadmin' ? 'convo-avatar admin-avatar' : 'convo-avatar';
                     const escalatedLabel = c.type === 'escalated' ? `<span style="font-size:0.7rem; background:#e65100; color:white; padding:1px 6px; margin-left:4px;">ESCALATED</span>` : '';
                     const archivedLabel = c.archived ? `<span style="font-size:0.7rem; background:#888; color:white; padding:1px 6px; margin-left:4px;">ARCHIVED</span>` : '';
-                    const label = escalatedLabel + archivedLabel;                    
+                    const label = escalatedLabel + archivedLabel;
                     const onClick = isActive ? 'onclick="return false;"' : '';
                     
                     return `

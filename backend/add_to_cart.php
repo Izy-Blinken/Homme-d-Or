@@ -1,7 +1,7 @@
 <?php
 // Start session and connect to DB
 session_start();
-include_once 'db_connect.php'; 
+include_once 'db_connect.php';
 
 // Prepare to send JSON back to the javascript
 header('Content-Type: application/json');
@@ -12,7 +12,7 @@ $identity = getCurrentUserId();
 if ($identity['type'] === 'stranger') {
     ob_clean();
     echo json_encode([
-        'status' => 'error', 
+        'status' => 'error',
         'message' => 'Please login or continue as guest to shop.'
     ]);
     exit;
@@ -25,7 +25,7 @@ if (isset($_POST['product_id'])) {
     $id_column = ($identity['type'] === 'user_id') ? 'user_id' : 'guest_id';
     $id_value = $identity['id'];
 
-    // --- FAILSAFE: Ensure guest exists in the database before proceeding ---
+    // FAILSAFE: Ensure guest exists in the database before proceeding
     if ($id_column === 'guest_id') {
 
         // The session stores a string like "guest_abc123"

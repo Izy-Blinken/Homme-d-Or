@@ -1,6 +1,4 @@
-// ==========================================
 // 1. TAB SWITCHING LOGIC
-// ==========================================
 function activateTab(tabName) {
     document.querySelectorAll('.report-tab').forEach(t => {
         t.classList.toggle('active', t.dataset.tab === tabName);
@@ -20,17 +18,15 @@ const activeTab = new URLSearchParams(window.location.search).get('active_tab') 
 activateTab(activeTab);
 
 
-// ==========================================
 // 2. LUXURY CHART.JS LOGIC
-// ==========================================
 function makeChart(canvasId, labels, data, label, color) {
     const canvas = document.getElementById(canvasId);
     if (!canvas) return; // Safety check
     const ctx = canvas.getContext('2d');
 
     let gradient = ctx.createLinearGradient(0, 0, 0, 400);
-    gradient.addColorStop(0, 'rgba(201, 169, 97, 0.7)'); 
-    gradient.addColorStop(1, 'rgba(201, 169, 97, 0.05)'); 
+    gradient.addColorStop(0, 'rgba(201, 169, 97, 0.7)');
+    gradient.addColorStop(1, 'rgba(201, 169, 97, 0.05)');
 
     Chart.defaults.font.family = "'League Spartan', sans-serif";
     Chart.defaults.color = "#aaa";
@@ -46,10 +42,10 @@ function makeChart(canvasId, labels, data, label, color) {
                 data: data,
                 borderColor: '#c9a961',
                 backgroundColor: gradient,
-                borderWidth: isBarChart ? 2 : 3, 
-                borderRadius: isBarChart ? 6 : 0, 
-                barPercentage: 0.5, 
-                tension: 0.4, 
+                borderWidth: isBarChart ? 2 : 3,
+                borderRadius: isBarChart ? 6 : 0,
+                barPercentage: 0.5,
+                tension: 0.4,
                 fill: true,
                 pointBackgroundColor: '#c9a961',
                 pointBorderColor: '#0a1e36',
@@ -62,7 +58,7 @@ function makeChart(canvasId, labels, data, label, color) {
             responsive: true,
             maintainAspectRatio: false,
             plugins: {
-                legend: { display: false }, 
+                legend: { display: false },
                 tooltip: {
                     backgroundColor: 'rgba(0, 0, 0, 0.8)',
                     titleFont: { size: 14, family: "'League Spartan', sans-serif", weight: '700' },
@@ -82,16 +78,16 @@ function makeChart(canvasId, labels, data, label, color) {
             scales: {
                 x: {
                     grid: { color: 'rgba(255, 255, 255, 0.05)' },
-                    border: { display: false }, 
+                    border: { display: false },
                     ticks: { color: '#888', padding: 10, font: { size: 11 } }
                 },
                 y: {
                     beginAtZero: true,
                     grid: { color: 'rgba(255, 255, 255, 0.05)' },
                     border: { display: false },
-                    ticks: { 
-                        color: '#888', 
-                        padding: 10, 
+                    ticks: {
+                        color: '#888',
+                        padding: 10,
                         font: { size: 11 },
                         callback: function(value) {
                             if (value >= 1000) return (value / 1000) + 'k';
@@ -105,18 +101,16 @@ function makeChart(canvasId, labels, data, label, color) {
 }
 
 
-// ==========================================
 // 3. EXPORT PDF LOGIC
-// ==========================================
 function exportPDF(tab) {
     const { jsPDF } = window.jspdf;
     const doc = new jsPDF();
 
     const titles = {
-        revenue:   'Revenue Report',
-        sales:     'Sales Report',
-        orders:    'Orders Report',
-        products:  'Products Report',
+        revenue: 'Revenue Report',
+        sales: 'Sales Report',
+        orders: 'Orders Report',
+        products: 'Products Report',
         customers: 'Customers Report'
     };
 
@@ -151,7 +145,7 @@ function exportPDF(tab) {
     const tableEl = document.getElementById(tab + '-table');
     if (tableEl) {
         const headers = [...tableEl.querySelectorAll('th')].map(th => th.textContent.trim());
-        const rows    = [...tableEl.querySelectorAll('tbody tr')].map(tr =>
+        const rows = [...tableEl.querySelectorAll('tbody tr')].map(tr =>
             [...tr.querySelectorAll('td')].map(td => td.textContent.trim())
         );
 

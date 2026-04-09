@@ -11,7 +11,7 @@ if (empty($_SESSION['superadmin_id'])) {
 
 $superadmin_id = (int) $_SESSION['superadmin_id'];
 
-//Store details
+// Store details
 $store = mysqli_fetch_assoc(mysqli_query($conn,
     "SELECT * FROM store_settings WHERE id = 1"
 ));
@@ -20,7 +20,7 @@ $sadmin = mysqli_fetch_assoc(mysqli_query($conn,
     "SELECT email FROM superadmins WHERE superadmin_id = $superadmin_id"
 ));
 
-//Sale performance
+// Sale performance
 $totalProducts = mysqli_fetch_assoc(mysqli_query($conn, "SELECT COUNT(*) AS val FROM products"))['val'];
 $activeProducts = mysqli_fetch_assoc(mysqli_query($conn, "SELECT COUNT(*) AS val FROM products WHERE product_status = 'in-stock'"))['val'];
 $outOfStock = mysqli_fetch_assoc(mysqli_query($conn, "SELECT COUNT(*) AS val FROM products WHERE product_status = 'out-of-stock'"))['val'];
@@ -32,7 +32,7 @@ $pendingOrders = mysqli_fetch_assoc(mysqli_query($conn, "SELECT COUNT(*) AS val 
 $cancelledOrders = mysqli_fetch_assoc(mysqli_query($conn, "SELECT COUNT(*) AS val FROM orders WHERE order_status = 'cancelled'"))['val'];
 $successRate = $totalOrders > 0 ? round(($completedOrders / $totalOrders) * 100, 1) : 0;
 
-//Financial Summary
+// Financial Summary
 $totalRevenue = mysqli_fetch_assoc(mysqli_query($conn,
     "SELECT COALESCE(SUM(total_amount), 0) AS val FROM orders WHERE order_status = 'completed'"))['val'];
 
@@ -56,12 +56,12 @@ $avgOrderValue = $completedOrders > 0
     ? round($totalRevenue / $completedOrders, 2)
     : 0;
 
-// Customer Statistics 
+// Customer Statistics
 $totalCustomers = mysqli_fetch_assoc(mysqli_query($conn,
     "SELECT COUNT(*) AS val FROM users"))['val'];
 
 $returningCustomers = mysqli_fetch_assoc(mysqli_query($conn,
-    "SELECT COUNT(*) AS val FROM (SELECT user_id FROM orders WHERE user_id IS NOT NULL GROUP BY user_id HAVING COUNT(*) > 1) 
+    "SELECT COUNT(*) AS val FROM (SELECT user_id FROM orders WHERE user_id IS NOT NULL GROUP BY user_id HAVING COUNT(*) > 1)
      AS ret"))['val'];
 
 $newThisMonth = mysqli_fetch_assoc(mysqli_query($conn, "SELECT COUNT(*) AS val FROM users

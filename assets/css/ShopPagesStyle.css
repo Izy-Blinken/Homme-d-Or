@@ -42,9 +42,9 @@ body {
 
 .tab {
   /* CHANGED: This forces each tab to grow and fill the available space evenly */
-  flex: 1; 
+  flex: 1;
   /* ADDED: This keeps the text perfectly centered in its new, wider box */
-  text-align: center; 
+  text-align: center;
   
   font-size: clamp(0.55rem, 0.95vw, 0.72rem);
   letter-spacing: 0.18em;
@@ -105,7 +105,7 @@ body {
 .hero-bg-effects {
   position: absolute;
   inset: 0;
-  background-image: 
+  background-image:
     linear-gradient(rgba(201, 168, 76, 0.035) 1px, transparent 1px),
     linear-gradient(90deg, rgba(201, 168, 76, 0.035) 1px, transparent 1px);
   background-size: clamp(40px, 7vw, 80px) clamp(40px, 7vw, 80px);
@@ -267,7 +267,7 @@ body {
 }
 
 
-/* --- Search & Filter Controls --- */
+/* Search & Filter Controls --- */
 .shop-controls {
   display: flex;
   flex-wrap: wrap;
@@ -330,7 +330,7 @@ body {
   border: 1px solid rgba(201, 168, 76, 0.3);
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
   z-index: 50;
-  display: none; 
+  display: none;
   max-height: 250px;
   overflow-y: auto;
 }
@@ -434,7 +434,7 @@ body {
   padding: 0 var(--page-padding) var(--section-gap);
   display: grid;
   /* Change the 230px below to 280px */
-  grid-template-columns: repeat(auto-fill, minmax(min(280px, 100%), 1fr)); 
+  grid-template-columns: repeat(auto-fill, minmax(min(280px, 100%), 1fr));
   gap: clamp(14px, 2.5vw, 28px);
 }
 
@@ -671,7 +671,7 @@ body {
 
 /* Sale banner */
 .sale-banner {
-  margin: clamp(24px, 3.5vw, 48px) var(--page-padding); 
+  margin: clamp(24px, 3.5vw, 48px) var(--page-padding);
   background: linear-gradient(135deg, rgba(218, 198, 49, 0.35), rgba(238, 221, 35, 0.5));
   border: 1px solid rgba(238, 221, 35, 0.35);
   padding: clamp(20px, 3vw, 40px);
@@ -763,7 +763,7 @@ body {
   font-size: clamp(1.2rem, 2.5vw, 2rem);
   font-weight: 900;
   /* CHANGED: Swapped low opacity for solid gold */
-  color: var(--gold); 
+  color: var(--gold);
   min-width: clamp(28px, 4vw, 44px);
   text-align: center;
 }
@@ -820,7 +820,7 @@ body {
   left: 12px;
   font-size: clamp(2rem, 5vw, 4rem);
   /* CHANGED: Increased opacity from 0.07 to 0.8 for much better visibility */
-  color: rgba(201, 168, 76, 0.8); 
+  color: rgba(201, 168, 76, 0.8);
   font-weight: 900;
   line-height: 1;
 }
@@ -884,7 +884,7 @@ body {
   margin-top: 3px;
 }
 
-/* --- SEARCH EMPTY STATE --- */
+/* SEARCH EMPTY STATE --- */
 .empty-search-state {
     display: flex;
     flex-direction: column;
@@ -926,7 +926,7 @@ body {
 }
 
 .card-btn {
-  z-index: 1; 
+  z-index: 1;
 }
 
 /* 2. Trigger the gold fill ONLY on the #1 Featured Card when hovered */

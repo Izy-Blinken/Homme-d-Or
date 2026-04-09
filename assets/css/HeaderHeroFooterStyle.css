@@ -98,7 +98,7 @@
     transform: scale(1.1);
 }
 
-/*--- SHOP Dropdown (inside slide menu) ---*/
+/* SHOP Dropdown (inside slide menu) ---*/
 .logo-slide-menu .dropdown {
     position: relative;
 }
@@ -169,7 +169,7 @@
     transform: none;
 }
 
-/*--- Header Bar ---*/
+/* Header Bar ---*/
 #header {
     display: flex;
     align-items: center;
@@ -184,7 +184,7 @@
     left: 0;
 }
 
-/*--- Fix for Search Button Colors ---*/
+/* Fix for Search Button Colors ---*/
 .logo-slide-menu .search-link,
 .mobile-menu button[type="submit"] {
     color: whitesmoke;
@@ -197,7 +197,7 @@
     transform: scale(1.1);
 }
 
-/*--- Navbar Right ---*/
+/* Navbar Right ---*/
 .nav-wrapper {
     display: flex;
     align-items: center;
@@ -231,7 +231,7 @@
     transform: scale(1.1);
 }
 
-/*--- Country Dropdown ---*/
+/* Country Dropdown ---*/
 .country-dropdown {
     position: relative;
 }
@@ -290,7 +290,7 @@
     padding-left: 25px;
 }
 
-/*--- Expanding Search ---*/
+/* Expanding Search ---*/
 .logo-slide-menu .search-container {
     position: relative;
     display: flex;
@@ -353,7 +353,7 @@
     box-shadow: 0 0 15px rgba(248, 225, 137, 0.3);
 }
 
-/*--- General Dropdown ---*/
+/* General Dropdown ---*/
 .dropdown {
     position: relative;
 }
@@ -414,7 +414,7 @@
     padding-left: 25px;
 }
 
-/*--- Profile Dropdown ---*/
+/* Profile Dropdown ---*/
 .profile-dropdown {
     position: relative;
 }
@@ -595,7 +595,7 @@
     margin-top: 0;
 }
 
-/*--- Newsletter ---*/
+/* Newsletter ---*/
 .newsletter-section {
     padding: 30px 20px;
 }
@@ -666,7 +666,7 @@
     transform: scale(1.05);
 }
 
-/*--- Footer Links Grid ---*/
+/* Footer Links Grid ---*/
 .footer-links-section {
     background-color: #0e101f;
     padding: 10px 20px; /* Reduced further */
@@ -718,7 +718,7 @@
     transform: scale(1.1);
 }
 
-/*--- Contact List ---*/
+/* Contact List ---*/
 .contact-list {
     list-style: none;
     padding: 0;
@@ -742,7 +742,7 @@
     min-width: 20px;
 }
 
-/*--- Social Icons ---*/
+/* Social Icons ---*/
 .social-icons {
     display: flex;
     gap: 16px;
@@ -761,7 +761,7 @@
     transform: scale(1.1);
 }
 
-/*--- Footer Bottom ---*/
+/* Footer Bottom ---*/
 .footer-bottom-section {
     background-color: #0e101f;
     padding: 8px 20px; /* Reduced further */
@@ -1360,9 +1360,7 @@
     pointer-events: none;
 }
 
-/*=========================================*/
-/* PREMIUM NOTIFICATION PANEL              */
-/*=========================================*/
+/* NOTIFICATION PANEL */
 
 .notif-panel {
     position: absolute;
@@ -1381,14 +1379,14 @@
     overflow: hidden; /* Keeps the rounded corners clean */
 }
 
-/*--- Force the badge to anchor directly to the bell icon ---*/
+/* Force the badge to anchor directly to the bell icon ---*/
 #notif-bell {
     position: relative !important;
     display: inline-flex !important;
     align-items: center;
 }
 
-/*--- Fine-tune the badge position ---*/
+/* Fine-tune the badge position ---*/
 .notif-count {
     position: absolute !important;
     top: -6px !important;
@@ -1449,14 +1447,14 @@
     width: 6px;
 }
 .notif-list::-webkit-scrollbar-track {
-    background: #f8f9fa; 
+    background: #f8f9fa;
 }
 .notif-list::-webkit-scrollbar-thumb {
-    background: #e0e0e0; 
+    background: #e0e0e0;
     border-radius: 10px;
 }
 .notif-list::-webkit-scrollbar-thumb:hover {
-    background: #c9a961; 
+    background: #c9a961;
 }
 
 /* Individual Item Layout */
@@ -1636,7 +1634,7 @@
     margin: 0.75rem 0;
 }
 
-/*--- Header Language Toggle ---*/
+/* Header Language Toggle ---*/
 .header-lang-toggle {
     display: flex;
     align-items: center;
@@ -1667,15 +1665,11 @@
 }
 
 
-/* ==========================================================================
-   SEARCH SUGGESTIONS DROPDOWN
-   ========================================================================== */
-
 .search-suggestions-dropdown {
     position: absolute;
     top: 100%;
     left: 0;
-    width: 100%; 
+    width: 100%;
     background: rgba(14, 16, 31, 0.95);
     backdrop-filter: blur(15px);
     -webkit-backdrop-filter: blur(15px);

@@ -46,7 +46,7 @@ while ($row = mysqli_fetch_assoc($productResult)) {
 
 echo json_encode([
     'customers' => $customers,
-    'products'  => $products
+    'products' => $products
 ]);
 
 ?>

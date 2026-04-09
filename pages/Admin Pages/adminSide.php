@@ -25,24 +25,24 @@ checkAdminAccess($conn);
                 <h2 class="page-title">Dashboard</h2>
 
                 <?php
-                    //Total revenue
+                    // Total revenue
                     $TotalRevenue = mysqli_fetch_assoc(
                         mysqli_query($conn, "SELECT COALESCE(SUM(total_amount), 0) AS total FROM orders WHERE order_status = 'Completed'")
                         )['total'];
 
-                    //Total orders
+                    // Total orders
                     $TotalOrders = mysqli_fetch_assoc(mysqli_query($conn,"SELECT COUNT(*) AS total FROM orders"))['total'];
 
-                    //Total products
+                    // Total products
                     $TotalProducts = mysqli_fetch_assoc(mysqli_query($conn, "SELECT COUNT(*) AS total FROM products"))['total'];
 
-                    //Total Customers
+                    // Total Customers
                     $TotalCustomers = mysqli_fetch_assoc(mysqli_query($conn, "SELECT COUNT(*) AS total FROM users"))['total'];
 
 
-                    //Compare this month and last month (yung mga anik2 sa baba na % etc)
+                    // Compare this month and last month (yung mga anik2 sa baba na % etc)
 
-                    //REVENUE COMPARISON
+                    // REVENUE COMPARISON
                     $RevThisMonth = mysqli_fetch_assoc(
                         mysqli_query($conn, "SELECT COALESCE(SUM(total_amount), 0) AS val FROM orders WHERE order_status = 'Completed' AND MONTH(created_at) = MONTH(CURRENT_DATE()) AND YEAR(created_at) = YEAR(CURRENT_DATE())")
                     )['val'];
@@ -51,7 +51,7 @@ checkAdminAccess($conn);
                         mysqli_query($conn, "SELECT COALESCE(SUM(total_amount), 0) AS val FROM orders WHERE order_status = 'Completed' AND MONTH(created_at) = MONTH(CURRENT_DATE() - INTERVAL 1 MONTH) AND YEAR(created_at) = YEAR(CURRENT_DATE() - INTERVAL 1 MONTH)")
                     )['val'];
 
-                    //ORDERS COMPARISON
+                    // ORDERS COMPARISON
                     $OrdersThisMonth = mysqli_fetch_assoc(
                         mysqli_query($conn, "SELECT COUNT(*) AS val FROM orders WHERE MONTH(created_at) = MONTH(CURRENT_DATE()) AND YEAR(created_at) = YEAR(CURRENT_DATE())")
                     )['val'];
@@ -60,7 +60,7 @@ checkAdminAccess($conn);
                         mysqli_query($conn, "SELECT COUNT(*) AS val FROM orders WHERE MONTH(created_at) = MONTH(CURRENT_DATE() - INTERVAL 1 MONTH) AND YEAR(created_at) = YEAR(CURRENT_DATE() - INTERVAL 1 MONTH)")
                     )['val'];
 
-                    //PRODUCTS COMPARISON
+                    // PRODUCTS COMPARISON
                     $ProductsThisMonth = mysqli_fetch_assoc(
                         mysqli_query($conn, "SELECT COUNT(*) AS val FROM products WHERE MONTH(created_at) = MONTH(CURRENT_DATE()) AND YEAR(created_at) = YEAR(CURRENT_DATE())")
                     )['val'];
@@ -69,7 +69,7 @@ checkAdminAccess($conn);
                         mysqli_query($conn, "SELECT COUNT(*) AS val FROM products WHERE MONTH(created_at) = MONTH(CURRENT_DATE() - INTERVAL 1 MONTH) AND YEAR(created_at) = YEAR(CURRENT_DATE() - INTERVAL 1 MONTH)")
                     )['val'];
 
-                    //CUSTOMERS COMPARISON
+                    // CUSTOMERS COMPARISON
                     $CustomersThisMonth = mysqli_fetch_assoc(
                         mysqli_query($conn, "SELECT COUNT(*) AS val FROM users WHERE MONTH(created_at) = MONTH(CURRENT_DATE()) AND YEAR(created_at) = YEAR(CURRENT_DATE())")
                     )['val'];
@@ -78,15 +78,15 @@ checkAdminAccess($conn);
                         mysqli_query($conn, "SELECT COUNT(*) AS val FROM users WHERE MONTH(created_at) = MONTH(CURRENT_DATE() - INTERVAL 1 MONTH) AND YEAR(created_at) = YEAR(CURRENT_DATE() - INTERVAL 1 MONTH)")
                     )['val'];
 
-                    //PERCENTAGE COMPUTATION
+                    // PERCENTAGE COMPUTATION
                     $RevPercent = $RevLastMonth > 0 ? round((($RevThisMonth - $RevLastMonth) / $RevLastMonth) * 100, 2) : 0;
                     $OrdersPercent = $OrdersLastMonth > 0 ? round((($OrdersThisMonth - $OrdersLastMonth) / $OrdersLastMonth) * 100, 2) : 0;
                     $ProductsPercent = $ProductsLastMonth > 0 ? round((($ProductsThisMonth - $ProductsLastMonth) / $ProductsLastMonth) * 100, 2) : 0;
                     $CustomersPercent = $CustomersLastMonth > 0 ? round((($CustomersThisMonth - $CustomersLastMonth) / $CustomersLastMonth) * 100, 2) : 0;
 
-                    //Recent Orders
+                    // Recent Orders
                     $RecentOrders = mysqli_query($conn, "SELECT order_id, fname, lname, total_amount, order_status, created_at
-                        FROM orders 
+                        FROM orders
                         ORDER BY created_at DESC
                         LIMIT 5");
                 ?>
@@ -107,7 +107,7 @@ checkAdminAccess($conn);
                             <?php endif; ?>
 
                         </div>
-                    </button>                
+                    </button>
                     
                     <button onclick="window.location.href='salesReport.php?active_tab=orders'">
                         

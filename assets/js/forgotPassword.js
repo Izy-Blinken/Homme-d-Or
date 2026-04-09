@@ -4,30 +4,30 @@ document.addEventListener('DOMContentLoaded', function () {
     if (!emailForm) return; // Not on forgot password page, stop here
 
     // ── Element references ────────────────────────────────
-    const verificationModal    = document.getElementById('verificationModal');
-    const changePasswordModal  = document.getElementById('changePasswordModal');
-    const successModal         = document.getElementById('successModal');
+    const verificationModal = document.getElementById('verificationModal');
+    const changePasswordModal = document.getElementById('changePasswordModal');
+    const successModal = document.getElementById('successModal');
 
-    const verificationForm     = document.getElementById('verificationForm');
-    const changePasswordForm   = document.getElementById('changePasswordForm');
+    const verificationForm = document.getElementById('verificationForm');
+    const changePasswordForm = document.getElementById('changePasswordForm');
 
-    const closeVerificationBtn   = document.getElementById('closeVerificationModal');
+    const closeVerificationBtn = document.getElementById('closeVerificationModal');
     const closeChangePasswordBtn = document.getElementById('closeChangePasswordModal');
 
-    const codeInputs             = document.querySelectorAll('.codeInput');
-    const userEmailSpan          = document.getElementById('userEmail');
-    const newPasswordInput       = document.getElementById('newPassword');
-    const confirmPasswordInput   = document.getElementById('confirmPassword');
-    const toggleNewPasswordBtn   = document.getElementById('toggleNewPassword');
+    const codeInputs = document.querySelectorAll('.codeInput');
+    const userEmailSpan = document.getElementById('userEmail');
+    const newPasswordInput = document.getElementById('newPassword');
+    const confirmPasswordInput = document.getElementById('confirmPassword');
+    const toggleNewPasswordBtn = document.getElementById('toggleNewPassword');
     const toggleConfirmPasswordBtn = document.getElementById('toggleConfirmPassword');
-    const strengthBarFill        = document.getElementById('strengthBarFill');
-    const strengthText           = document.getElementById('strengthText');
-    const passwordMatch          = document.getElementById('passwordMatch');
-    const reqLength              = document.getElementById('req-length');
-    const reqUppercase           = document.getElementById('req-uppercase');
-    const reqLowercase           = document.getElementById('req-lowercase');
-    const reqNumber              = document.getElementById('req-number');
-    const resendButton           = document.getElementById('resendButton');
+    const strengthBarFill = document.getElementById('strengthBarFill');
+    const strengthText = document.getElementById('strengthText');
+    const passwordMatch = document.getElementById('passwordMatch');
+    const reqLength = document.getElementById('req-length');
+    const reqUppercase = document.getElementById('req-uppercase');
+    const reqLowercase = document.getElementById('req-lowercase');
+    const reqNumber = document.getElementById('req-number');
+    const resendButton = document.getElementById('resendButton');
 
     let resendCooldown = null;
 
@@ -93,17 +93,17 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     function checkPasswordMatch() {
-        const pw  = newPasswordInput.value;
+        const pw = newPasswordInput.value;
         const cpw = confirmPasswordInput.value;
         if (cpw === '') {
             passwordMatch.textContent = '';
-            passwordMatch.className   = 'passwordMatch';
+            passwordMatch.className = 'passwordMatch';
         } else if (pw === cpw) {
             passwordMatch.textContent = 'Passwords match';
-            passwordMatch.className   = 'passwordMatch match';
+            passwordMatch.className = 'passwordMatch match';
         } else {
             passwordMatch.textContent = 'Passwords do not match';
-            passwordMatch.className   = 'passwordMatch no-match';
+            passwordMatch.className = 'passwordMatch no-match';
         }
     }
 
@@ -112,7 +112,7 @@ document.addEventListener('DOMContentLoaded', function () {
         e.preventDefault();
         clearError('emailError');
 
-        const email     = document.getElementById('email').value.trim();
+        const email = document.getElementById('email').value.trim();
         const submitBtn = document.getElementById('sendVC');
         submitBtn.disabled = true;
         submitBtn.textContent = 'Sending...';
@@ -242,25 +242,25 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // ── Password strength ─────────────────────────────────
     newPasswordInput.addEventListener('input', function () {
-        const password     = this.value;
-        const hasLength    = password.length >= 8;
+        const password = this.value;
+        const hasLength = password.length >= 8;
         const hasUppercase = /[A-Z]/.test(password);
         const hasLowercase = /[a-z]/.test(password);
-        const hasNumber    = /[0-9]/.test(password);
+        const hasNumber = /[0-9]/.test(password);
 
-        updateRequirement(reqLength,    hasLength);
+        updateRequirement(reqLength, hasLength);
         updateRequirement(reqUppercase, hasUppercase);
         updateRequirement(reqLowercase, hasLowercase);
-        updateRequirement(reqNumber,    hasNumber);
+        updateRequirement(reqNumber, hasNumber);
 
         let strength = [hasLength, hasUppercase, hasLowercase, hasNumber].filter(Boolean).length;
 
         strengthBarFill.className = 'strengthBarFill';
-        strengthText.className    = 'strengthText';
+        strengthText.className = 'strengthText';
 
         if (strength === 0) {
             strengthBarFill.style.width = '0%';
-            strengthText.textContent    = '';
+            strengthText.textContent = '';
         } else if (strength <= 2) {
             strengthBarFill.classList.add('weak');
             strengthText.classList.add('weak');
@@ -286,7 +286,7 @@ document.addEventListener('DOMContentLoaded', function () {
         clearError('resetError');
 
         const password = newPasswordInput.value;
-        const confirm  = confirmPasswordInput.value;
+        const confirm = confirmPasswordInput.value;
 
         if (
             password.length < 8 ||
@@ -328,4 +328,4 @@ document.addEventListener('DOMContentLoaded', function () {
         if (modal) modal.addEventListener('click', e => { if (e.target === modal) closeModal(modal); });
     });
 
-}); 
+});

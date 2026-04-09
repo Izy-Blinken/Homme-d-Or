@@ -1,4 +1,4 @@
-// Modal open/close 
+// Modal open/close
 const editModal = document.getElementById('edit-modal');
 const openBtn = document.getElementById('edit-profile-btn');
 const closeBtn = document.getElementById('edit-modal-close');
@@ -23,7 +23,7 @@ document.getElementById('edit-profile-form').addEventListener('submit', async fu
     const formData = new FormData(this);
 
     try {
-        const res  = await fetch('../../backend/profile/update_profile.php', {
+        const res = await fetch('../../backend/profile/update_profile.php', {
             method: 'POST',
             body: formData
         });
@@ -56,7 +56,7 @@ function showToast(message, isError = false) {
     }
     toast.textContent = message;
     toast.style.background = isError ? '#ef5350' : '#c9a961';
-    toast.style.color = isError ? 'white'   : 'black';
+    toast.style.color = isError ? 'white' : 'black';
     toast.style.display = 'block';
 
     clearTimeout(toast._timeout);

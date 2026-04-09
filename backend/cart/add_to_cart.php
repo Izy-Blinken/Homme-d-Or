@@ -13,7 +13,7 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 }
 
 $product_id = isset($_POST['product_id']) ? (int)$_POST['product_id'] : 0;
-$quantity   = isset($_POST['quantity'])   ? (int)$_POST['quantity']   : 1;
+$quantity = isset($_POST['quantity']) ? (int)$_POST['quantity'] : 1;
 $variant_id = isset($_POST['variant_id']) ? (int)$_POST['variant_id'] : null;
 
 if ($product_id <= 0) {
@@ -21,7 +21,7 @@ if ($product_id <= 0) {
     exit;
 }
 
-// --- Check product exists and is in stock ---
+// Check product exists and is in stock
 $prod = mysqli_query($conn, "SELECT product_id, product_status, stock_qty FROM products WHERE product_id = $product_id");
 $product = mysqli_fetch_assoc($prod);
 
@@ -35,8 +35,8 @@ if ($product['product_status'] === 'out-of-stock' || $product['stock_qty'] <= 0)
     exit;
 }
 
-// --- Determine if logged in user or guest ---
-$user_id  = isset($_SESSION['user_id'])  ? (int)$_SESSION['user_id']  : null;
+// Determine if logged in user or guest
+$user_id = isset($_SESSION['user_id']) ? (int)$_SESSION['user_id'] : null;
 $guest_id = isset($_SESSION['guest_id']) ? (int)$_SESSION['guest_id'] : null;
 
 // If neither, treat as guest (you can change this to require login)
@@ -45,14 +45,14 @@ if (!$user_id && !$guest_id) {
     exit;
 }
 
-$variant_sql  = $variant_id ? $variant_id : 'NULL';
-$user_sql     = $user_id    ? $user_id    : 'NULL';
-$guest_sql    = $guest_id   ? $guest_id   : 'NULL';
+$variant_sql = $variant_id ? $variant_id : 'NULL';
+$user_sql = $user_id ? $user_id : 'NULL';
+$guest_sql = $guest_id ? $guest_id : 'NULL';
 
-// --- Check if already in cart ---
+// Check if already in cart
 $check_sql = "SELECT cart_id, quantity FROM cart WHERE product_id = $product_id";
-$check_sql .= $user_id  ? " AND user_id = $user_id"   : " AND user_id IS NULL";
-$check_sql .= $guest_id ? " AND guest_id = $guest_id"  : " AND guest_id IS NULL";
+$check_sql .= $user_id ? " AND user_id = $user_id" : " AND user_id IS NULL";
+$check_sql .= $guest_id ? " AND guest_id = $guest_id" : " AND guest_id IS NULL";
 $check_sql .= $variant_id ? " AND variant_id = $variant_id" : " AND variant_id IS NULL";
 
 $check = mysqli_query($conn, $check_sql);
@@ -60,8 +60,8 @@ $check = mysqli_query($conn, $check_sql);
 if (mysqli_num_rows($check) > 0) {
     // Already in cart — update quantity
     $existing = mysqli_fetch_assoc($check);
-    $new_qty  = $existing['quantity'] + $quantity;
-    $cart_id  = $existing['cart_id'];
+    $new_qty = $existing['quantity'] + $quantity;
+    $cart_id = $existing['cart_id'];
 
     mysqli_query($conn, "UPDATE cart SET quantity = $new_qty WHERE cart_id = $cart_id");
     echo json_encode(['success' => true, 'message' => 'Cart updated.']);

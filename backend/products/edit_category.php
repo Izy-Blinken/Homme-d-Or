@@ -4,7 +4,7 @@ include '../db_connect.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-    $category_id   = $_POST['category_id'];
+    $category_id = $_POST['category_id'];
     $category_name = trim($_POST['category_name']);
 
     if (empty($category_name)) {
@@ -14,8 +14,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     // Check if name already used by another category
-    $check = mysqli_query($conn, "SELECT category_id FROM categories 
-            WHERE category_name = '$category_name' 
+    $check = mysqli_query($conn, "SELECT category_id FROM categories
+            WHERE category_name = '$category_name'
             AND category_id != '$category_id'");
             
     if (mysqli_num_rows($check) > 0) {

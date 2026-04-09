@@ -17,9 +17,9 @@ body {
 }
 
 /* Global heading styles */
-h1, h2 { 
-    font-weight: 700; 
-    color: white !important; 
+h1, h2 {
+    font-weight: 700;
+    color: white !important;
     text-transform: uppercase;
     letter-spacing: 1px;
 }
@@ -281,29 +281,29 @@ div[style*="#fff0f0"] {
 }
 
 /* Fixes overlapping text in stat cards, info rows, filter labels, tabs, and export buttons */
-.stat-value, .report-value, .cstat-value { 
-    margin: 0.5rem 0 !important; 
-    font-size: 1.8rem !important; 
-    font-weight: 800 !important; 
-    color: white !important; 
+.stat-value, .report-value, .cstat-value {
+    margin: 0.5rem 0 !important;
+    font-size: 1.8rem !important;
+    font-weight: 800 !important;
+    color: white !important;
     line-height: 1.2 !important;
 }
 
-.info-row-value { 
-    margin: 0 !important; 
-    font-size: 0.95rem !important; 
-    font-weight: 600 !important; 
-    color: white !important; 
+.info-row-value {
+    margin: 0 !important;
+    font-size: 0.95rem !important;
+    font-weight: 600 !important;
+    color: white !important;
     line-height: 1.5 !important;
 }
 
-.info-row, .product-row, .category-list-item, .review-row { 
-    padding: 1rem 0 !important; 
-    gap: 1.5rem !important; 
+.info-row, .product-row, .category-list-item, .review-row {
+    padding: 1rem 0 !important;
+    gap: 1.5rem !important;
 }
 
 .filter-group label, .form-group label {
-    margin-bottom: 8px !important; 
+    margin-bottom: 8px !important;
     display: block !important;
 }
 
@@ -559,9 +559,9 @@ select option {
     border-color: #5c6bc0 !important;
 }
 
-.suggestions-box { 
-    background: #fff !important; 
-    border:1px solid #ddd !important; 
+.suggestions-box {
+    background: #fff !important;
+    border:1px solid #ddd !important;
     position: absolute !important;
     top: calc(100% + 5px) !important; /* Tiny gap below the input */
     left: 0 !important;
@@ -579,7 +579,7 @@ select option {
     z-index: 1001 !important;
 }
 
-.suggestion-item { 
+.suggestion-item {
     padding: 12px 16px !important;
     border-bottom: 1px solid rgba(255, 255, 255, 0.05) !important;
     display: flex;
@@ -596,7 +596,7 @@ select option {
     color: #c9a961 !important;
 }
 
-.suggestion-name { 
+.suggestion-name {
     color: black !important;
     font-weight: bold;
     font-size: small;
@@ -893,7 +893,7 @@ hr {
     border-top-color: rgba(255,255,255,0.1) !important;
 }
 
-#view-no-image {
+# view-no-image {
     background: rgba(0,0,0,0.4) !important;
     border-color: rgba(212,175,55,0.3) !important;
     color: #aaa !important;
@@ -964,7 +964,7 @@ hr {
 
 /* Global spacing and breathing room across cards, grids, filters, and buttons */
 .stat-card, .table-container, .filter-bar, .report-card, .profile-header-card, .info-card, .customer-stats-card, .chart-container, .detail-grid {
-    padding: 2rem !important; 
+    padding: 2rem !important;
     margin-bottom: 2rem !important;
 }
 
@@ -1032,7 +1032,7 @@ td {
 }
 
 .stat-label, .report-label, .cstat-label, .info-card-title {
-    margin-bottom: 20px !important; 
+    margin-bottom: 20px !important;
     display: block !important;
 }
 
@@ -1118,8 +1118,8 @@ td {
 }
 
 .logout-btn {
-    height: auto !important; 
-    padding: 8px 20px !important; 
+    height: auto !important;
+    padding: 8px 20px !important;
 }
 
 /* Filter bar button alignment to match input field height */
@@ -1127,7 +1127,7 @@ td {
     align-items: flex-end !important;
 }
 
-.filter-bar .tab-btn, 
+.filter-bar .tab-btn,
 .filter-bar .reset-btn,
 .filter-bar .export-btn {
     margin-bottom: 16px !important;
@@ -1137,7 +1137,7 @@ td {
     justify-content: center !important;
 }
 
-.filter-group input, 
+.filter-group input,
 .filter-group select {
     height: 43px !important;
     box-sizing: border-box !important;
@@ -1147,7 +1147,7 @@ td {
 .chart-container {
     position: relative !important;
     height: 350px !important;
-    width: 100% !important; 
+    width: 100% !important;
     padding: 1.5rem !important;
     margin-bottom: 2rem !important;
 }
@@ -1193,7 +1193,7 @@ td {
     display: grid !important;
     grid-template-columns: repeat(2, 1fr) !important;
     gap: 1.5rem 2rem !important;
-    padding: 2rem !important; 
+    padding: 2rem !important;
 }
 
 .detail-item {
@@ -1203,11 +1203,11 @@ td {
 }
 
 .detail-item label {
-    color: #888 !important; 
+    color: #888 !important;
     font-size: 0.75rem !important;
     letter-spacing: 1.5px !important;
     text-transform: uppercase !important;
-    margin-bottom: 6px !important; 
+    margin-bottom: 6px !important;
     display: block !important;
 }
 
@@ -1215,7 +1215,7 @@ td {
     color: white !important;
     font-size: 1.05rem !important;
     font-weight: 500 !important;
-    word-break: break-word !important; 
+    word-break: break-word !important;
     display: block !important;
 }
 
@@ -1231,7 +1231,7 @@ td {
 
 
 /* + Button */
-#initiate-chat-btn {
+# initiate-chat-btn {
     position: absolute;
     bottom: 1.2rem;
     right: 1.2rem;
@@ -1252,12 +1252,12 @@ td {
     z-index: 10;
 }
 
-#initiate-chat-btn:hover {
+# initiate-chat-btn:hover {
     background: #2c3e55;
 }
 
 /* Search Panel */
-#chat-search-panel {
+# chat-search-panel {
     display: none;
     position: absolute;
     bottom: 4.2rem;
@@ -1271,11 +1271,11 @@ td {
     overflow: hidden;
 }
 
-#chat-search-panel.open {
+# chat-search-panel.open {
     display: block;
 }
 
-#chat-search-input {
+# chat-search-input {
     width: 100%;
     padding: 0.65rem 0.9rem;
     border: none;
@@ -1285,7 +1285,7 @@ td {
     box-sizing: border-box;
 }
 
-#chat-search-results {
+# chat-search-results {
     max-height: 260px;
     overflow-y: auto;
 }

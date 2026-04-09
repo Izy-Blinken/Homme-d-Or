@@ -60,7 +60,7 @@ $currentPage = basename($_SERVER['PHP_SELF']);
                     
                     <div class="search-suggestions-dropdown mobile-suggestions-box" id="mobile-suggestions"></div>
                 </form>
-            </li>   
+            </li>
         </ul>
 
         <ul class="logo-slide-menu" id="desktopMenu">
@@ -120,7 +120,7 @@ $currentPage = basename($_SERVER['PHP_SELF']);
                         <div class="notif-empty">No notifications yet.</div>
                     </div>
                 </div>
-            </li>            
+            </li>
             
             <li><a class="<?php echo ($currentPage == 'cart.php') ? 'active' : ''; ?>" href="cart.php"><i class="fa-solid fa-shopping-cart"></i></a></li>
             
@@ -133,7 +133,7 @@ $currentPage = basename($_SERVER['PHP_SELF']);
                         <div class="profile-header">
                             <?= htmlspecialchars($_SESSION['user_fname']) ?>
                         </div>
-                        <p class="profile-subtext">Welcome back!</p>
+                        <p class="profile-subtext">Welcome!</p>
                         <a href="../backend/loginSignUp/logout.php" class="profile-login-btn">Logout</a>
                     <?php else: ?>
                         <div class="profile-header">
@@ -197,7 +197,7 @@ $currentPage = basename($_SERVER['PHP_SELF']);
                                 a.href = `productDetails.php?id=${item.product_id}`;
                                 a.className = 'search-suggestion-item';
                                 a.innerHTML = `
-                                    <img src="${imgSrc}" alt="${item.name}" 
+                                    <img src="${imgSrc}" alt="${item.name}"
                                         onerror="this.src='../assets/images/brand_images/nocturne.png'">
                                     <div class="suggestion-info">
                                         <span class="suggestion-name">${item.name}</span>

@@ -179,7 +179,7 @@ textarea::placeholder {
 .radio-option input[type="radio"] {
     width: 16px;
     height: 16px;
-    accent-color: black; 
+    accent-color: black;
     cursor: pointer;
 }
 
@@ -354,12 +354,12 @@ textarea::placeholder {
     background: rgba(0, 0, 0, 0.7);
 }
 
-/*  View Modal Content  eto yun*/
+/* View Modal Content eto yun*/
 #viewOrderModal .romcomModalContent {
     background: rgb(14, 16, 31);
-    backdrop-filter: blur(12px);           
-    -webkit-backdrop-filter: blur(12px);  
-    border: 1px solid #c9a961;  
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid #c9a961;
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6);
     width: 100%;
     max-width: 32rem;
@@ -562,9 +562,9 @@ textarea::placeholder {
 
 #viewWishlistModal .romcomModalContent {
     background: rgb(14, 16, 31);
-    backdrop-filter: blur(12px);           
-    -webkit-backdrop-filter: blur(12px);  
-    border: 1px solid #c9a961;  
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid #c9a961;
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6);
     width: 100%;
     max-width: 32rem;

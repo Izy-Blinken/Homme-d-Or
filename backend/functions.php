@@ -20,7 +20,7 @@ function getAllProducts()
 function addProduct($name, $price, $description, $stock, $image)
 {
     global $conn;
-    $sql = "INSERT INTO products (name, price, description, stock, image) 
+    $sql = "INSERT INTO products (name, price, description, stock, image)
             VALUES ('$name', $price, '$description', $stock, '$image')";
     return mysqli_query($conn, $sql);
 }

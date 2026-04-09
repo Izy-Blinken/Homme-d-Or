@@ -11,7 +11,7 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 }
 
 $user_id = $_SESSION['pending_user_id'] ?? null;
-$otp     = trim($_POST['code'] ?? '');  // JS sends a plain 6-digit string
+$otp = trim($_POST['code'] ?? ''); // JS sends a plain 6-digit string
 
 if (!$user_id || strlen($otp) !== 6) {
     echo json_encode(['success' => false, 'message' => 'Invalid request.']);
@@ -53,9 +53,9 @@ unset(
 );
 
 // Set logged-in session
-$_SESSION['user_id']        = $user['user_id'];
-$_SESSION['user_fname']     = $user['fname'];
-$_SESSION['user_email']     = $user['email'];
+$_SESSION['user_id'] = $user['user_id'];
+$_SESSION['user_fname'] = $user['fname'];
+$_SESSION['user_email'] = $user['email'];
 $_SESSION['signup_success'] = true;
 
 echo json_encode(['success' => true]);

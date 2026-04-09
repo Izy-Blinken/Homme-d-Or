@@ -11,7 +11,7 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 }
 
 $email = $_SESSION['reset_email'] ?? null;
-$otp   = trim($_POST['code'] ?? '');
+$otp = trim($_POST['code'] ?? '');
 
 if (!$email || strlen($otp) !== 6) {
     echo json_encode(['success' => false, 'message' => 'Invalid request.']);
@@ -19,7 +19,7 @@ if (!$email || strlen($otp) !== 6) {
 }
 
 $safe_email = mysqli_real_escape_string($conn, $email);
-$safe_otp   = mysqli_real_escape_string($conn, $otp);
+$safe_otp = mysqli_real_escape_string($conn, $otp);
 
 $row = mysqli_fetch_assoc(mysqli_query($conn,
     "SELECT * FROM password_resets

@@ -1,6 +1,4 @@
-// ==========================================
 // 1. DROPDOWN MENU TOGGLE LOGIC
-// ==========================================
 document.querySelectorAll('.filter-btn').forEach(btn => {
     btn.addEventListener('click', function(e) {
         e.stopPropagation();
@@ -19,9 +17,7 @@ document.addEventListener('click', function() {
     });
 });
 
-// ==========================================
 // 2. SORTING LOGIC (Handles both pages)
-// ==========================================
 document.querySelectorAll('.filter-option').forEach(option => {
     option.addEventListener('click', function() {
         const filterType = this.textContent.trim();
@@ -60,7 +56,7 @@ document.querySelectorAll('.filter-option').forEach(option => {
                 rows.sort((a, b) => {
                     const dateA = a.querySelector('span:nth-child(2)').childNodes[0].textContent.trim();
                     const dateB = b.querySelector('span:nth-child(2)').childNodes[0].textContent.trim();
-                    return dateB.localeCompare(dateA); 
+                    return dateB.localeCompare(dateA);
                 });
             } else if (filterType === 'By Price') {
                 // NEW LOGIC: Sort by Price
@@ -78,9 +74,7 @@ document.querySelectorAll('.filter-option').forEach(option => {
     });
 });
 
-// ==========================================
 // 3. SEARCH LOGIC (History Page Only)
-// ==========================================
 const searchInput = document.querySelector('.history-controls input');
 const searchBtn = document.querySelector('.search-btn');
 

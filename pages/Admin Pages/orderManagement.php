@@ -1,4 +1,4 @@
-<?php 
+<?php
     session_start();
     include '../../backend/db_connect.php';
     include '../../backend/orders/auto_advance.php'; //trigger lng kapag naka-open file n to
@@ -24,8 +24,8 @@
     if ($filter_search){
 
         $safe_search = mysqli_real_escape_string($conn, $filter_search);
-        $where .= " AND (o.fname LIKE '%$safe_search%' 
-                    OR o.lname LIKE '%$safe_search%' 
+        $where .= " AND (o.fname LIKE '%$safe_search%'
+                    OR o.lname LIKE '%$safe_search%'
                     OR CONCAT(o.fname, ' ', o.lname) LIKE '%$safe_search%'
                     OR o.order_id LIKE '%$safe_search%')";
     }
@@ -98,7 +98,7 @@
 
                         <div class="filter-group search-group" style="position:relative;">
                             <label>SEARCH:</label>
-                            <input type="text" name="search" placeholder="Search orders..." 
+                            <input type="text" name="search" placeholder="Search orders..."
                                 id="search-input" value="<?= htmlspecialchars($filter_search) ?>">
                             <div id="search-suggestions" class="suggestions-box" style="display:none;"></div>
                         </div>

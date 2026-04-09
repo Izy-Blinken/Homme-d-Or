@@ -9,7 +9,7 @@ if (!isset($_POST['image_id']) || !isset($_POST['product_id'])) {
     exit;
 }
 
-$image_id   = (int) $_POST['image_id'];
+$image_id = (int) $_POST['image_id'];
 $product_id = (int) $_POST['product_id'];
 
 // Get image info before deleting

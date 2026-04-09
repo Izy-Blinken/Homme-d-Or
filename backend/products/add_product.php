@@ -1,6 +1,7 @@
 <?php
 session_start();
 include '../db_connect.php';
+require_once '../notifications/notify.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
@@ -26,7 +27,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $product_status = 'in-stock';
     }
 
-    // Check SKU
     $check = mysqli_query($conn, "SELECT product_id FROM products WHERE sku = '$sku'");
     if (mysqli_num_rows($check) > 0) {
         $_SESSION['error'] = 'SKU already exists.';
@@ -37,12 +37,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $cat_val = $category_id ? "'$category_id'" : "NULL";
     $disc_val = $discounted_price ? "'$discounted_price'" : "NULL";
 
-    $sql = "INSERT INTO products 
-            (category_id, product_name, product_desc, price, discounted_price, sku, stock_qty, product_status) 
+    $sql = "INSERT INTO products
+            (category_id, product_name, product_desc, price, discounted_price, sku, stock_qty, product_status)
             VALUES ($cat_val, '$product_name', '$product_desc', '$price', $disc_val, '$sku', '$stock_qty', '$product_status')";
 
     if (mysqli_query($conn, $sql)) {
         $product_id = mysqli_insert_id($conn);
+
+        // ── SALE NOTIFICATION ──────────────────────────────────────────
+        // category_id 3 = Sale. Notify users who wishlisted this product.
+        if ($category_id == 3) {
+            $wishers = mysqli_query($conn,
+                "SELECT user_id FROM wishlist WHERE product_id = '$product_id'");
+            while ($w = mysqli_fetch_assoc($wishers)) {
+                insertNotif($conn, $w['user_id'], 'sale_product',
+                    "'{$product_name}' from your wishlist is now on sale!", $product_id);
+            }
+        }
 
         // Handle multiple image uploads (max 5)
         if (!empty($_FILES['product_images']['name'][0])) {
@@ -58,12 +69,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                 if (move_uploaded_file($_FILES['product_images']['tmp_name'][$i], $target)) {
                     $is_primary = ($i === $primary_index) ? 1 : 0;
-                    mysqli_query($conn, "INSERT INTO product_images (product_id, image_url, is_primary) 
+                    mysqli_query($conn, "INSERT INTO product_images (product_id, image_url, is_primary)
                         VALUES ('$product_id', '$filename', '$is_primary')");
                 }
             }
 
-            // Ensure at least one primary exists
             $has_primary = mysqli_fetch_assoc(mysqli_query($conn,
                 "SELECT COUNT(*) AS cnt FROM product_images WHERE product_id = '$product_id' AND is_primary = 1"
             ));

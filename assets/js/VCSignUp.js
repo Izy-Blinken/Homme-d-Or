@@ -2,21 +2,21 @@
     'use strict';
 
 
-    const registerForm       = document.getElementById('registerForm');
-    const signupModal        = document.getElementById('signupModal');
-    const signupVerifyModal  = document.getElementById('signupVerifyModal');
+    const registerForm = document.getElementById('registerForm');
+    const signupModal = document.getElementById('signupModal');
+    const signupVerifyModal = document.getElementById('signupVerifyModal');
     const signupSuccessModal = document.getElementById('signupSuccessModal');
-    const signupVerifyForm   = document.getElementById('signupVerifyForm');
-    const signupCodeInputs   = document.querySelectorAll('.signupCodeInput');
-    const signupResendBtn    = document.getElementById('signupResendBtn');
-    const signupSuccessBtn   = document.getElementById('signupSuccessBtn');
-    const closeSignupVerify  = document.getElementById('closeSignupVerify');
-    const otpError           = document.getElementById('otpError');
+    const signupVerifyForm = document.getElementById('signupVerifyForm');
+    const signupCodeInputs = document.querySelectorAll('.signupCodeInput');
+    const signupResendBtn = document.getElementById('signupResendBtn');
+    const signupSuccessBtn = document.getElementById('signupSuccessBtn');
+    const closeSignupVerify = document.getElementById('closeSignupVerify');
+    const otpError = document.getElementById('otpError');
 
     if (registerForm) {
         registerForm.addEventListener('submit', function (e) {
             const password = document.getElementById('regPassword')?.value ?? '';
-            const confirm  = document.getElementById('regConfirmPassword')?.value ?? '';
+            const confirm = document.getElementById('regConfirmPassword')?.value ?? '';
 
             if (password !== confirm) {
                 e.preventDefault();
@@ -206,7 +206,7 @@
             });
         }
 
-        //Succes
+        // Succes
         if (signupSuccessBtn) {
             signupSuccessBtn.addEventListener('click', function () {
                 closeModal(signupSuccessModal);

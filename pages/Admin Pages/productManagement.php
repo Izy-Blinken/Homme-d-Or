@@ -10,7 +10,7 @@
     $can_delete = hasPermission($conn, 'can_delete_product');
 
     $success = $_SESSION['success'] ?? null;
-    $error = $_SESSION['error']   ?? null;
+    $error = $_SESSION['error'] ?? null;
     unset($_SESSION['success'], $_SESSION['error']);
 
     $filter_category = $_GET['category'] ?? '';
@@ -89,7 +89,7 @@
                 <!-- Category Tabs + Buttons -->
                 <div class="category-tabs">
                     <div class="tabs-group">
-                        <a href="productManagement.php" 
+                        <a href="productManagement.php"
                            class="tab-btn <?= !$filter_category ? 'active' : '' ?>">
                             All Products
                         </a>
@@ -99,7 +99,7 @@
                             while ($cat = mysqli_fetch_assoc($categories)):
                         ?>
 
-                        <a href="productManagement.php?category=<?= $cat['category_id'] ?>" 
+                        <a href="productManagement.php?category=<?= $cat['category_id'] ?>"
                            class="tab-btn <?= $filter_category == $cat['category_id'] ? 'active' : '' ?>">
                             <?= htmlspecialchars($cat['category_name']) ?>
                         </a>
@@ -108,7 +108,7 @@
                     </div>
 
                     <div style="display:flex; gap:0.5rem;">
-                        <button class="add-product-btn" id="manage-categories-btn" 
+                        <button class="add-product-btn" id="manage-categories-btn"
                                 style="background:white; color:black; border:1px solid #ccc;">
                             Manage Categories
                         </button>
@@ -132,8 +132,8 @@
                             <label>STOCK STATUS:</label>
                             <select name="stock" id="stock-filter">
                                 <option value="">All Stock Status</option>
-                                <option value="in-stock" <?= $filter_stock === 'in-stock'     ? 'selected' : '' ?>>In Stock</option>
-                                <option value="low-stock" <?= $filter_stock === 'low-stock'    ? 'selected' : '' ?>>Low Stock</option>
+                                <option value="in-stock" <?= $filter_stock === 'in-stock' ? 'selected' : '' ?>>In Stock</option>
+                                <option value="low-stock" <?= $filter_stock === 'low-stock' ? 'selected' : '' ?>>Low Stock</option>
                                 <option value="out-of-stock" <?= $filter_stock === 'out-of-stock' ? 'selected' : '' ?>>Out of Stock</option>
                             </select>
                         </div>
@@ -151,16 +151,16 @@
                             <label>SORT BY:</label>
                             <select name="sort" id="sort-filter">
                                 <option value="">Default</option>
-                                <option value="price-asc" <?= $filter_sort === 'price-asc'  ? 'selected' : '' ?>>Price: Low to High</option>
+                                <option value="price-asc" <?= $filter_sort === 'price-asc' ? 'selected' : '' ?>>Price: Low to High</option>
                                 <option value="price-desc" <?= $filter_sort === 'price-desc' ? 'selected' : '' ?>>Price: High to Low</option>
-                                <option value="name-asc" <?= $filter_sort === 'name-asc'   ? 'selected' : '' ?>>Name: A–Z</option>
-                                <option value="stock-asc" <?= $filter_sort === 'stock-asc'  ? 'selected' : '' ?>>Stock: Low to High</option>
+                                <option value="name-asc" <?= $filter_sort === 'name-asc' ? 'selected' : '' ?>>Name: A–Z</option>
+                                <option value="stock-asc" <?= $filter_sort === 'stock-asc' ? 'selected' : '' ?>>Stock: Low to High</option>
                             </select>
                         </div>
 
                         <div class="filter-group search-group" style="position: relative;">
                             <label>SEARCH:</label>
-                            <input type="text" name="search" placeholder="Search products..." 
+                            <input type="text" name="search" placeholder="Search products..."
                                    id="search-input" value="<?= htmlspecialchars($filter_search) ?>">
                             <div id="search-suggestions" class="suggestions-box" style="display:none;"></div>
                         </div>
@@ -199,7 +199,7 @@
                                                 <div class="product-img-cell">
 
                                                     <?php if ($product['primary_image']): ?>
-                                                        <img src="../../assets/images/products/<?= htmlspecialchars($product['primary_image']) ?>" 
+                                                        <img src="../../assets/images/products/<?= htmlspecialchars($product['primary_image']) ?>"
                                                              alt="<?= htmlspecialchars($product['product_name']) ?>"
                                                              style="width:44px;height:44px;object-fit:cover;">
                                                     <?php endif; ?>
@@ -248,7 +248,7 @@
                                                 <?php endif; ?>
 
                                                 <?php if ($can_delete): ?>
-                                                <button class="btn-delete" 
+                                                <button class="btn-delete"
                                                     data-id="<?= $product['product_id'] ?>"
                                                     data-name="<?= htmlspecialchars($product['product_name']) ?>">Delete
                                                 </button>
@@ -304,10 +304,10 @@
                 <div style="max-height:340px; overflow-y:auto;">
 
                     <?php
-                        $cat_list = mysqli_query($conn, "SELECT c.*, COUNT(p.product_id) AS product_count 
-                                                          FROM categories c 
-                                                          LEFT JOIN products p ON p.category_id = c.category_id 
-                                                          GROUP BY c.category_id 
+                        $cat_list = mysqli_query($conn, "SELECT c.*, COUNT(p.product_id) AS product_count
+                                                          FROM categories c
+                                                          LEFT JOIN products p ON p.category_id = c.category_id
+                                                          GROUP BY c.category_id
                                                           ORDER BY c.category_name ASC");
                                                           
                         if (mysqli_num_rows($cat_list) > 0):
@@ -345,7 +345,7 @@
                                 </button>
 
                                 <?php else: ?>
-                                <button class="btn-delete-cat" style="padding:5px 12px; font-size:0.78rem; opacity:0.4; cursor:not-allowed;" 
+                                <button class="btn-delete-cat" style="padding:5px 12px; font-size:0.78rem; opacity:0.4; cursor:not-allowed;"
                                         disabled title="Cannot delete category has products assigned">
                                     Delete
                                 </button>
@@ -356,7 +356,7 @@
                         </div>
 
                         <!-- Edit mode -->
-                        <form class="cat-edit-form" id="cat-edit-form-<?= $c['category_id'] ?>" 
+                        <form class="cat-edit-form" id="cat-edit-form-<?= $c['category_id'] ?>"
                               action="../../backend/products/edit_category.php" method="POST"
                               style="display:none; align-items:center; gap:0.75rem; width:100%;">
 
@@ -365,7 +365,7 @@
                             
                             <div style="display:flex; gap:0.4rem; flex-shrink:0;">
                                 <button type="submit" class="btn-save" style="padding:5px 14px; font-size:0.78rem;">Save</button>
-                                <button type="button" class="btn-cancel cat-edit-cancel" 
+                                <button type="button" class="btn-cancel cat-edit-cancel"
                                         style="padding:5px 10px; font-size:0.78rem;"
                                         data-id="<?= $c['category_id'] ?>">Cancel</button>
                             </div>
@@ -397,7 +397,7 @@
 
                 <div class="modal-footer">
                     <button class="btn-cancel" id="cat-delete-modal-cancel">Cancel</button>
-                    <a href="#" id="cat-delete-confirm-btn" class="btn-save" 
+                    <a href="#" id="cat-delete-confirm-btn" class="btn-save"
                        style="background:#c00; text-decoration:none;">Delete</a>
                 </div>
 
@@ -717,7 +717,7 @@
 
                 <div class="modal-footer">
                     <button class="btn-cancel" id="delete-modal-cancel">Cancel</button>
-                    <a href="#" id="delete-confirm-btn" class="btn-save" 
+                    <a href="#" id="delete-confirm-btn" class="btn-save"
                        style="background:#c00; text-decoration:none;">Delete</a>
                 </div>
 
