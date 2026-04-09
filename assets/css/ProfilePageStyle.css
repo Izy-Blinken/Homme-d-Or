@@ -1022,7 +1022,7 @@
     max-width: 500px;
     width: 100%;
     text-align: center;
-   background: rgba(8, 10, 22, 0.55);
+    background: rgba(8, 10, 22, 0.55);
     backdrop-filter: blur(16px);
     -webkit-backdrop-filter: blur(16px);
     border: 1px solid #c9a961;
