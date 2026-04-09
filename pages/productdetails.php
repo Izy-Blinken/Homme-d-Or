@@ -86,6 +86,62 @@ $imgSrc = $product['image_url']
             .wishlist-btn.wishlisted i {
                 font-weight: 900; /* solid heart */
             }
+
+            /* Modal content box */
+            .popup-modal, .custom-modal {
+                position: fixed;
+                z-index: 9999;
+                left: 0;
+                top: 0;
+                width: 100%;
+                height: 100%;
+                background-color: rgba(0,0,0,0.6);
+                
+                display: none;         /* hidden by default */
+                justify-content: center; 
+                align-items: center;  
+            }
+
+            .popup-content, .custom-modal-content {
+                position: relative;
+                background-color: rgb(14, 16, 31);
+                color: #fff;
+                padding: 20px;
+                width: 90%;
+                max-width: 400px;
+                text-align: center;
+                box-shadow: 0px 5px 15px rgba(0,0,0,0.3);
+                border: 1px solid #c9a961;
+                margin: 0;
+            }
+
+            /* Close button */
+            .popup-close, .close-modal{
+                color: white;
+                float: right;
+                font-size: 24px;
+                font-weight: bold;
+                cursor: pointer;
+                position: absolute;      
+                top: 10px;                
+                right: 15px;   
+            }
+            .popup-close:hover, .close-modal:hover {
+                color: #c9a961;
+            }
+            .register-btn{
+                margin-top: 10px; 
+                padding: 10px 20px; 
+                background:#c9a961; 
+                color:#fff; 
+                border:1px solid #c9a961;
+                cursor:pointer;
+            }
+            .register-btn:hover{
+                color:#c9a961;
+                border: 1px solid #c9a961;
+                background-color: rgb(3,3,84);
+            }
         </style>
     </head>
     <body>
@@ -145,9 +201,15 @@ $imgSrc = $product['image_url']
                             </a>
                             
                             <!-- Add to Cart -->
-                            <button class="addtocart" onclick="addToCart(<?php echo $product_id; ?>)">
-                                <i class="fa-solid fa-cart-shopping"></i> Add to Cart
-                            </button>
+                            <?php if ($identity['type'] === 'user_id'): ?>
+                                <button class="addtocart" onclick="addToCart(<?php echo $product_id; ?>)">
+                                    <i class="fa-solid fa-cart-shopping"></i> Add to Cart
+                                </button>
+                            <?php else: ?>
+                                <button class="addtocart" onclick="showCreateAccountModal()">
+                                    <i class="fa-solid fa-cart-shopping"></i> Add to Cart
+                                </button>
+                            <?php endif; ?>
 
                             <!-- ❤️ Wishlist Heart Button (registered users only) -->
                             <?php if ($identity['type'] === 'user_id'): ?>
@@ -157,8 +219,8 @@ $imgSrc = $product['image_url']
                                     <i class="<?php echo $isWishlisted ? 'fa-solid' : 'fa-regular'; ?> fa-heart"></i>
                                 </button>
                             <?php elseif ($identity['type'] === 'guest_id'): ?>
-                                <!-- Guest sees heart but gets a prompt -->
-                                <button class="wishlist-btn" onclick="alert('Please create an account to save items to your wishlist!')">
+                                <!-- Guest sees heart but triggers modal instead of alert -->
+                                <button class="wishlist-btn" onclick="showGuestModal()">
                                     <i class="fa-regular fa-heart"></i>
                                 </button>
                             <?php endif; ?>
@@ -277,6 +339,28 @@ $imgSrc = $product['image_url']
             </section>
         </main>
 
+        <!-- Guest Wishlist Modal -->
+        <div id="guestWishlistModal" class="popup-modal">
+            <div class="popup-content">
+                <span class="popup-close" onclick="closeGuestModal()">&times;</span>
+                <p style="color:white">Please create an account to save items to your wishlist!</p>
+                    <button class="register-btn" onclick="openSignupModal(); closeGuestModal();" >
+                        Register Now
+                    </button>
+            </div>
+        </div>
+
+        <!-- Add to Cart Modal -->
+        <div id="createAccountModal" class="custom-modal">
+            <div class="custom-modal-content">
+                <span class="close-modal" onclick="closeCreateAccountModal()">&times;</span>
+                <p style="color:white">Please create an account to save items to your cart!</p>
+                    <button class="register-btn" onclick="openSignupModal(); closeGuestModal();" >
+                        Register Now
+                    </button>
+            </div>
+        </div>
+
         <?php include '../components/footer.php'; ?>
         <script src="../assets/js/HomepageAnimations.js"></script>
         <script src="../assets/js/productDetails.js"></script>
@@ -322,6 +406,31 @@ $imgSrc = $product['image_url']
                 })
                 .catch(err => console.error('Wishlist error:', err));
             }
+
+            function showGuestModal() {
+                document.getElementById('guestWishlistModal').style.display = 'flex';
+            }
+
+            function closeGuestModal() {
+                document.getElementById('guestWishlistModal').style.display = 'none';
+            }
+
+        function showCreateAccountModal() {
+            document.getElementById('createAccountModal').style.display = 'flex';
+        }
+
+        function closeCreateAccountModal() {
+            document.getElementById('createAccountModal').style.display = 'none';
+        }
+
+       window.onclick = function(event) {
+            const guestModal = document.getElementById('guestWishlistModal');
+            const cartModal = document.getElementById('createAccountModal');
+
+            if (event.target == guestModal) guestModal.style.display = 'none';
+            if (event.target == cartModal) cartModal.style.display = 'none';
+        };
+
         </script>
     </body>
 </html>
