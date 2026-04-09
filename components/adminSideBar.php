@@ -62,6 +62,9 @@ function canSeeAny(array $perms) {
 
         <?php if ($isSuperadmin): ?>
         <a href="voucherManagement.php" class="menu-opt <?= $currentPage === 'voucherManagement.php' ? 'active' : '' ?>">Vouchers</a>
+        <a href="admin_blog.php" class="menu-opt <?= $currentPage === 'admin_blog.php' ? 'active' : '' ?>">Blog</a>
+        <a href="admin_about.php" class="menu-opt <?= $currentPage === 'admin_about.php' ? 'active' : '' ?>">About Us</a>
+        <a href="admin_newsletter.php" class="menu-opt <?= $currentPage === 'admin_newsletter.php' ? 'active' : '' ?>">Newsletter</a>
         <?php endif; ?>
 
         <!-- chats: lahat -->
