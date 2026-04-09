@@ -1014,18 +1014,21 @@
     align-items: center;
     justify-content: center;
     min-height: 70vh;
-    padding: 40px 20px;
+    padding: 60px 20px;
 }
 
 .ctaBox {
-    background: #ffffff;
-    border: 1px solid #e5e7eb;
-    border-radius: 16px;
-    padding: 48px 40px;
-    max-width: 460px;
+    padding: 80px 80px;
+    max-width: 500px;
     width: 100%;
     text-align: center;
-    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.06);
+   background: rgba(8, 10, 22, 0.55);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid #c9a961;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6),
+        inset 0 1px 0 rgba(255, 255, 255, 0.05);
+    margin-top: 50px;
 }
 
 .ctaIcon {
@@ -1037,13 +1040,13 @@
 .ctaBox h2 {
     font-size: 22px;
     font-weight: 700;
-    color: #1a1a1a;
+    color: #c9a961;
     margin: 0 0 12px;
 }
 
 .ctaBox p {
     font-size: 15px;
-    color: #6b7280;
+    color: whitesmoke;
     line-height: 1.6;
     margin: 0 0 28px;
 }
@@ -1057,7 +1060,6 @@
 .ctaLoginBtn,
 .ctaRegisterBtn {
     padding: 11px 28px;
-    border-radius: 8px;
     font-size: 15px;
     font-weight: 600;
     text-decoration: none;
@@ -1065,15 +1067,27 @@
 }
 
 .ctaLoginBtn {
-    background-color: #1a1a1a;
+    background-color: #c9a961;
     color: #ffffff;
-    border: 1.5px solid #1a1a1a;
+    border: 1px solid #c9a961;
+}
+
+.ctaLoginBtn:hover{
+    color:#c9a961;
+    background-color: rgb(3, 3, 84);
+    border: 1px solid #c9a961;
 }
 
 .ctaRegisterBtn {
     background-color: transparent;
-    color: #1a1a1a;
-    border: 1.5px solid #1a1a1a;
+    color: #c9a961;
+    border: 1.5px solid #c9a961;
+}
+
+.ctaRegisterBtn:hover{
+    color:#c9a961;
+    background-color: rgb(3, 3, 84);
+    border: 1px solid #c9a961;
 }
 
 .ctaLoginBtn:hover,
