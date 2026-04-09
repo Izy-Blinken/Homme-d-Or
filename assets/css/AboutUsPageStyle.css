@@ -1,500 +1,287 @@
-/*ABOUT US PAGE*/
-
-.mainBG{
+.about-hero {
     position: relative;
-    background-image: url('../images/brand_images/bg-image.jpg');
-    background-size: cover;
-    background-position: center;
-    background-attachment: fixed;
-    background-repeat: no-repeat;
-    min-height: 100vh;
-}
-
-/*Our Story*/
-.aboutUs-container {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 80px;
-    padding: 120px 80px;
-    max-width: 1600px;
-    margin: 0 auto;
-}
-
-.aboutUs-text {
-    flex: 1;
-    max-width: 800px;
-    background: rgba(8, 10, 22, 0.55);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6),
-        inset 0 1px 0 rgba(255, 255, 255, 0.05);
-    padding: 60px;
-    border: 1px solid rgba(212,175,55,0.5);
-}
-
-.aboutUs-container h3 {
-    margin-top: 0;
-    margin-bottom: 30px;
-    font-size: 3.5rem;
-    font-family: 'Spartan', sans-serif;
-    color: white;
-    font-weight: 300;
-    letter-spacing: 2px;
-    text-align: left;
-}
-
-.aboutUs-container p {
-    margin: 0;
-    font-size: 1.1rem;
-    color: #ffffff;
-    text-align: justify;
-    font-family: 'Spartan', sans-serif;
-    line-height: 2;
-    font-weight: 300;
-}
-
-.aboutUs-container img {
-    flex-shrink: 0;
-    width: 500px;
-    height: 500px;
-    object-fit: cover;
-    transition: transform 0.3s ease;
-    border: 2px solid rgba(212,175,55,0.5);
-}
-
-.aboutUs-container img:hover {
-    transform: translateY(-5px);
-    border: 2px solid rgba(212,175,55,0.5);
-}
-
-/*Shop Description*/
-.shopDesc {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 80px;
-    padding: 120px 80px;
-    max-width: 1600px;
-    margin: 0 auto;
-}
-
-.shopDesc img {
-    flex-shrink: 0;
-    width: 500px;
-    height: 500px;
-    object-fit: cover;
-    transition: transform 0.3s ease;
-    border: 2px solid rgba(212,175,55,0.5);
-}
-
-.shopDesc img:hover {
-    transform: translateY(-5px);
-    border: 2px solid rgba(212,175,55,0.5);
-}
-
-.shopDesc-text {
-    flex: 1;
-    max-width: 800px;
-    background: rgba(8, 10, 22, 0.55);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6),
-        inset 0 1px 0 rgba(255, 255, 255, 0.05);
-    padding: 60px;
-    border: 1px solid rgba(212,175,55,0.5);
-}
-
-.shopDesc-text h3 {
-    margin-top: 0;
-    margin-bottom: 30px;
-    font-size: 3.5rem;
-    font-family: 'Spartan', sans-serif;
-    color: white;
-    font-weight: 300;
-    letter-spacing: 2px;
-    text-align: left;
-}
-
-.shopDesc-text p {
-    margin: 0;
-    font-size: 1.1rem;
-    color: #ffffff;
-    text-align: justify;
-    font-family: 'Spartan', sans-serif;
-    line-height: 2;
-    font-weight: 300;
-}
-
-/*Authors Section*/
-.authors {
-    max-width: 1600px;
-    margin: 0 auto;
-    padding: 100px 80px;
-}
-
-.authTitle {
-    text-align: center;
-    margin-bottom: 80px;
-}
-
-.authTitle h3 {
-    font-size: 3rem;
-    margin-bottom: 0;
-    font-family: 'Spartan', sans-serif;
-    color: white;
-    font-weight: 300;
-    letter-spacing: 2px;
-}
-
-.authContainer {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 40px;
-    margin-bottom: 60px;
-}
-
-.authBox {
     width: 100%;
-    aspect-ratio: 2 / 3;
-    background: rgba(8, 10, 22, 0.55);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6),
-        inset 0 1px 0 rgba(255, 255, 255, 0.05);
+    height: 600px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     overflow: hidden;
-    transition: transform 0.3s ease;
-    cursor: pointer;
-    border: 2px solid rgba(212,175,55,0.5);
 }
-
-.authBox:hover {
-    transform: translateY(-5px);
-    background: rgba(0, 0, 0, 0.6);
-    border: 2px solid rgba(212,175,55,0.5);
-}
-
-.authDescription {
-    background: rgba(8, 10, 22, 0.55);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6),
-        inset 0 1px 0 rgba(255, 255, 255, 0.05);
-    padding: 50px 80px;
-    text-align: center;
-    margin: 0 auto;
-    max-width: 1200px;
-    border: 1px solid rgba(212,175,55,0.5);
-}
-
-.authDescription h3 {
-    margin: 0 0 30px 0;
-    font-size: 1.8rem;
-    font-family: 'Spartan', sans-serif;
-    color: white;
-    font-weight: 400;
-    letter-spacing: 1px;
-}
-
-.authDescription .description-text p {
-    margin: 0;
-    line-height: 2;
-    text-align: justify;
-    font-family: 'Spartan', sans-serif;
-    color: #ffffff;
-    font-size: 1.1rem;
-    font-weight: 300;
-}
-
-/*Highlights Section*/
-#highlights {
-    max-width: 1600px;
-    margin: 0 auto;
-    padding: 100px 80px;
-}
-
-.ads-container {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 40px;
-    margin-bottom: 60px;
-}
-
-.ad-box {
-    background: #000;
-    overflow: hidden;
-    transition: transform 0.3s ease;
-    cursor: pointer;
-    height: 500px;
-}
-
-.ad-box img {
+.about-hero-bg {
+    position: absolute;
+    inset: 0;
     width: 100%;
     height: 100%;
     object-fit: cover;
-    display: block;
-    transition: transform 0.3s ease;
+    z-index: 0;
 }
-
-.ad-box:hover {
-    transform: translateY(-5px);
+.about-hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0,0,0,0.6);
+    z-index: 1;
 }
-
-.ad-box:hover img {
-    transform: scale(1.05);
+.about-hero-content {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    padding: 0 40px;
 }
-
-.content-container {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 40px;
-}
-
-.content-item {
-    background: rgba(8, 10, 22, 0.55);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6),
-        inset 0 1px 0 rgba(255, 255, 255, 0.05);
-    padding: 50px;
-    transition: all 0.3s ease;
-}
-
-.content-item:hover {
-    transform: translateY(-5px);
-    background: rgba(0, 0, 0, 0.6);
-}
-
-.content-item h3 {
-    color: white;
-    margin-bottom: 25px;
-    font-size: 1.8rem;
+.about-hero-content h1 {
     font-family: 'Spartan', sans-serif;
-    font-weight: 400;
-    letter-spacing: 1px;
-}
-
-.content-item p {
+    font-size: 3.5rem;
+    font-weight: 300;
     color: #ffffff;
-    line-height: 2;
-    margin-bottom: 35px;
-    text-align: justify;
+    letter-spacing: 6px;
+    text-transform: uppercase;
+    margin: 0 0 20px;
+}
+.about-hero-content p {
     font-family: 'Spartan', sans-serif;
-    font-size: 1.1rem;
+    font-size: 1rem;
+    color: rgba(255,255,255,0.6);
+    font-weight: 300;
+    letter-spacing: 2px;
+}
+.about-hero-line {
+    width: 60px;
+    height: 1px;
+    background: rgba(212,175,55,0.6);
+    margin: 20px auto;
+}
+.about-story {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 120px 80px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+}
+.about-story-text h2 {
+    font-family: 'Spartan', sans-serif;
+    font-size: 2.8rem;
+    font-weight: 300;
+    color: #ffffff;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    margin: 0 0 30px;
+}
+.about-story-text p {
+    font-family: 'Spartan', sans-serif;
+    font-size: 1rem;
+    color: rgba(255,255,255,0.7);
+    line-height: 2;
     font-weight: 300;
 }
-
-.content-item button {
-    background: transparent;
-    color: white;
-    padding: 15px 40px;
-    border: 2px solid white;
-    cursor: pointer;
-    font-size: 1rem;
-    font-weight: 400;
+.about-story-text .gold-line {
+    width: 50px;
+    height: 1px;
+    background: rgba(212,175,55,0.5);
+    margin-bottom: 30px;
+}
+.about-story-img {
+    width: 100%;
+    height: 500px;
+    object-fit: cover;
+    border: 1px solid rgba(212,175,55,0.4);
+}
+.about-story-img-placeholder {
+    width: 100%;
+    height: 500px;
+    background: rgba(212,175,55,0.05);
+    border: 1px solid rgba(212,175,55,0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.about-story-img-placeholder i {
+    font-size: 3rem;
+    color: rgba(212,175,55,0.2);
+}
+.about-values {
+    padding: 100px 80px;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+.about-section-title {
+    font-family: 'Spartan', sans-serif;
+    font-size: 2.2rem;
+    font-weight: 300;
+    color: #ffffff;
+    letter-spacing: 4px;
     text-transform: uppercase;
+    text-align: center;
+    margin: 0 0 16px;
+}
+.about-section-line {
+    width: 60px;
+    height: 1px;
+    background: rgba(212,175,55,0.5);
+    margin: 0 auto 60px;
+}
+.values-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+}
+.value-card {
+    background: rgba(0,0,0,0.6);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    border: 1px solid rgba(212,175,55,0.3);
+    padding: 50px 36px;
+    text-align: center;
+    transition: transform 0.3s ease, border-color 0.3s ease;
+}
+.value-card:hover {
+    transform: translateY(-6px);
+    border-color: rgba(212,175,55,0.7);
+}
+.value-card i {
+    font-size: 2rem;
+    color: #c9a961;
+    margin-bottom: 20px;
+}
+.value-card h3 {
+    font-family: 'Spartan', sans-serif;
+    font-size: 1rem;
+    font-weight: 600;
+    color: #ffffff;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin: 0 0 14px;
+}
+.value-card p {
+    font-family: 'Spartan', sans-serif;
+    font-size: 0.9rem;
+    color: rgba(255,255,255,0.6);
+    line-height: 1.8;
+    font-weight: 300;
+    margin: 0;
+}
+.about-team {
+    padding: 100px 80px;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+.team-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 30px;
+}
+.team-card {
+    background: rgba(0,0,0,0.6);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    border: 1px solid rgba(212,175,55,0.3);
+    overflow: hidden;
+    transition: transform 0.3s ease;
+}
+.team-card:hover { transform: translateY(-6px); }
+.team-card-img {
+    width: 100%;
+    height: 260px;
+    object-fit: cover;
+    display: block;
+}
+.team-card-placeholder {
+    width: 100%;
+    height: 260px;
+    background: rgba(212,175,55,0.05);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.team-card-placeholder i {
+    font-size: 2.5rem;
+    color: rgba(212,175,55,0.2);
+}
+.team-card-info {
+    padding: 24px;
+    text-align: center;
+}
+.team-card-info h4 {
+    font-family: 'Spartan', sans-serif;
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: #ffffff;
     letter-spacing: 2px;
-    transition: all 0.3s ease;
+    text-transform: uppercase;
+    margin: 0 0 8px;
 }
-
-.content-item button:hover {
-    background: white;
-    color: #000;
+.team-card-info p {
+    font-family: 'Spartan', sans-serif;
+    font-size: 0.8rem;
+    color: #c9a961;
+    font-weight: 300;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin: 0;
 }
-
-/* Tablet */
+.about-milestones {
+    padding: 100px 80px;
+    max-width: 900px;
+    margin: 0 auto;
+}
+.timeline {
+    position: relative;
+    padding-left: 40px;
+}
+.timeline::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 1px;
+    background: rgba(212,175,55,0.3);
+}
+.timeline-item {
+    position: relative;
+    margin-bottom: 50px;
+}
+.timeline-item:last-child { margin-bottom: 0; }
+.timeline-dot {
+    position: absolute;
+    left: -44px;
+    top: 4px;
+    width: 10px;
+    height: 10px;
+    background: #c9a961;
+    border-radius: 50%;
+}
+.timeline-year {
+    font-family: 'Spartan', sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    color: #c9a961;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+}
+.timeline-event {
+    font-family: 'Spartan', sans-serif;
+    font-size: 1rem;
+    color: rgba(255,255,255,0.75);
+    font-weight: 300;
+    line-height: 1.8;
+}
 @media (max-width: 1024px) {
-    .aboutUs-container,
-    .shopDesc {
-        flex-direction: column;
-        padding: 80px 40px;
-        text-align: center;
-    }
-    
-    .aboutUs-container img,
-    .shopDesc img {
-        width: 400px;
-        height: 400px;
-    }
-    
-    .aboutUs-text,
-    .shopDesc-text {
-        padding: 50px;
-    }
-    
-    .aboutUs-container h3,
-    .shopDesc-text h3 {
-        font-size: 3rem;
-        text-align: center;
-    }
-    
-    .authors,
-    #highlights {
-        padding: 80px 40px;
-    }
-    
-    .authTitle h3 {
-        font-size: 2.5rem;
-        margin-bottom: 60px;
-    }
-    
-    .authContainer {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 30px;
-    }
-    
-    .authDescription {
-        padding: 40px 60px;
-    }
-    
-    .ads-container,
-    .content-container {
-        grid-template-columns: 1fr;
-        gap: 30px;
-    }
+    .about-story { grid-template-columns: 1fr; padding: 80px 40px; gap: 40px; }
+    .about-story-img, .about-story-img-placeholder { height: 350px; }
+    .about-values, .about-team, .about-milestones { padding: 80px 40px; }
+    .values-grid { grid-template-columns: repeat(2, 1fr); }
+    .team-grid { grid-template-columns: repeat(2, 1fr); }
 }
-
-/* Mobile */
 @media (max-width: 768px) {
-    .aboutUs-container,
-    .shopDesc {
-        padding: 60px 20px;
-    }
-    
-    .aboutUs-container img,
-    .shopDesc img {
-        width: 300px;
-        height: 300px;
-    }
-    
-    .aboutUs-text,
-    .shopDesc-text {
-        padding: 40px 30px;
-    }
-    
-    .aboutUs-container h3,
-    .shopDesc-text h3 {
-        font-size: 2.5rem;
-    }
-    
-    .aboutUs-container p,
-    .shopDesc-text p {
-        font-size: 1rem;
-    }
-    
-    .authors,
-    #highlights {
-        padding: 60px 20px;
-    }
-    
-    .authTitle h3 {
-        font-size: 2rem;
-        margin-bottom: 40px;
-    }
-    
-    .authContainer {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 25px;
-    }
-    
-    .authDescription {
-        padding: 40px 30px;
-    }
-    
-    .authDescription h3 {
-        font-size: 1.5rem;
-    }
-    
-    .authDescription .description-text p {
-        font-size: 1rem;
-    }
-    
-    .content-item {
-        padding: 40px 30px;
-    }
-    
-    .content-item h3 {
-        font-size: 1.5rem;
-    }
-    
-    .content-item p {
-        font-size: 1rem;
-    }
-    
-    .ad-box {
-        height: 400px;
-    }
+    .about-hero { height: 400px; }
+    .about-hero-content h1 { font-size: 2.2rem; }
+    .about-story, .about-values, .about-team, .about-milestones { padding: 60px 20px; }
+    .values-grid { grid-template-columns: 1fr; }
+    .team-grid { grid-template-columns: repeat(2, 1fr); }
+    .about-story-text h2 { font-size: 2rem; }
 }
-
-/* Small Mobile */
 @media (max-width: 480px) {
-    .aboutUs-container,
-    .shopDesc {
-        padding: 40px 20px;
-    }
-    
-    .aboutUs-container img,
-    .shopDesc img {
-        width: 250px;
-        height: 250px;
-    }
-    
-    .aboutUs-text,
-    .shopDesc-text {
-        padding: 30px 20px;
-    }
-    
-    .aboutUs-container h3,
-    .shopDesc-text h3 {
-        font-size: 2rem;
-    }
-    
-    .aboutUs-container p,
-    .shopDesc-text p {
-        font-size: 0.95rem;
-    }
-    
-    .authors,
-    #highlights {
-        padding: 40px 20px;
-    }
-    
-    .authTitle h3 {
-        font-size: 1.8rem;
-    }
-    
-    .authContainer {
-        grid-template-columns: 1fr;
-        gap: 25px;
-    }
-    
-    .authDescription {
-        padding: 30px 20px;
-    }
-    
-    .authDescription h3 {
-        font-size: 1.3rem;
-    }
-    
-    .content-item {
-        padding: 30px 20px;
-    }
-    
-    .content-item h3 {
-        font-size: 1.3rem;
-    }
-    
-    .content-item button {
-        padding: 12px 30px;
-        font-size: 0.9rem;
-    }
-    
-    .ad-box {
-        height: 300px;
-    }
+    .team-grid { grid-template-columns: 1fr; }
 }
