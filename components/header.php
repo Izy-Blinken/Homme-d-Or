@@ -133,7 +133,7 @@ $currentPage = basename($_SERVER['PHP_SELF']);
                         <div class="profile-header">
                             <?= htmlspecialchars($_SESSION['user_fname']) ?>
                         </div>
-                        <p class="profile-subtext">Welcome back!</p>
+                        <p class="profile-subtext">Welcome!</p>
                         <a href="../backend/loginSignUp/logout.php" class="profile-login-btn">Logout</a>
                     <?php else: ?>
                         <div class="profile-header">

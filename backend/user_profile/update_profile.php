@@ -1,21 +1,21 @@
 <?php
 session_start();
 require '../db_connect.php';
+require_once '../notifications/notify.php';
 
 if (!isset($_SESSION['user_id'])) {
     echo json_encode(['success' => false, 'message' => 'Not logged in']);
     exit;
 }
 
-$user_id = $_SESSION['user_id'];
-
-$fname = trim($_POST['fname'] ?? '');
-$lname = trim($_POST['lname'] ?? '');
-$bday = trim($_POST['bday'] ?? '');
-$phone = trim($_POST['phone'] ?? '');
-$email = trim($_POST['email'] ?? '');
+$user_id          = $_SESSION['user_id'];
+$fname            = trim($_POST['fname'] ?? '');
+$lname            = trim($_POST['lname'] ?? '');
+$bday             = trim($_POST['bday'] ?? '');
+$phone            = trim($_POST['phone'] ?? '');
+$email            = trim($_POST['email'] ?? '');
 $current_password = $_POST['current_password'] ?? '';
-$new_password = $_POST['new_password'] ?? '';
+$new_password     = $_POST['new_password'] ?? '';
 $confirm_password = $_POST['confirm_password'] ?? '';
 
 if (empty($fname) || empty($lname) || empty($email)) {
@@ -28,7 +28,6 @@ if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
     exit;
 }
 
-// Check if email is already used by another account
 $check = $conn->prepare("SELECT user_id FROM users WHERE email = ? AND user_id != ?");
 $check->bind_param("si", $email, $user_id);
 $check->execute();
@@ -38,7 +37,8 @@ if ($check->num_rows > 0) {
     exit;
 }
 
-// If any password field is filled, process the password change
+$password_changed = false;
+
 if (!empty($current_password) || !empty($new_password) || !empty($confirm_password)) {
 
     if (empty($current_password) || empty($new_password) || empty($confirm_password)) {
@@ -67,10 +67,11 @@ if (!empty($current_password) || !empty($new_password) || !empty($confirm_passwo
     }
 
     $hashed_new = password_hash($new_password, PASSWORD_DEFAULT);
-    $bday_val = empty($bday) ? null : $bday;
+    $bday_val   = empty($bday) ? null : $bday;
 
     $stmt = $conn->prepare("UPDATE users SET fname=?, lname=?, bday=?, phone=?, email=?, user_password=? WHERE user_id=?");
     $stmt->bind_param("ssssssi", $fname, $lname, $bday_val, $phone, $email, $hashed_new, $user_id);
+    $password_changed = true;
 
 } else {
 
@@ -83,6 +84,13 @@ if (!empty($current_password) || !empty($new_password) || !empty($confirm_passwo
 if ($stmt->execute()) {
     $_SESSION['fname'] = $fname;
     $_SESSION['lname'] = $lname;
+
+    // ── PASSWORD CHANGE NOTIFICATION ──────────────────────────────
+    if ($password_changed) {
+        insertNotif($conn, $user_id, 'password_change',
+            'Your password was successfully changed. If this wasn\'t you, contact support immediately.', null);
+    }
+
     echo json_encode(['success' => true, 'message' => 'Profile updated successfully!']);
 } else {
     echo json_encode(['success' => false, 'message' => 'Something went wrong. Please try again.']);

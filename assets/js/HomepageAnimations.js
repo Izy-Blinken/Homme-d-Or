@@ -83,7 +83,6 @@ document.addEventListener('DOMContentLoaded', function() {
     });
     
 
-    // --- SLEEK HORIZONTAL SCROLL CAROUSELS ---
     // Helper function to initialize any horizontal carousel with dynamic indicators
     function setupHorizontalCarousel(scrollAreaId, prevBtnId, nextBtnId, indicatorsId) {
         const scrollArea = document.getElementById(scrollAreaId);

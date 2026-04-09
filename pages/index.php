@@ -199,7 +199,7 @@ if (!empty($_SESSION['user_id'])) {
                                 $status = $product['product_status'];
                                 $imgSrc = $product['image_url'] 
                                         ? '../assets/images/products/' . htmlspecialchars($product['image_url'])
-                                        : '../assets/images/brand_images/nocturne.png';
+                                        : '../assets/images/product_images/image_unavailable.png';
                                 $soldOut = ($status === 'out-of-stock');
                             ?>
                             

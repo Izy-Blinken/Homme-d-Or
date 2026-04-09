@@ -1,6 +1,7 @@
 <?php
 session_start();
 include '../db_connect.php';
+require_once '../notifications/notify.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
@@ -19,6 +20,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         exit;
     }
 
+    // ── FETCH OLD STATE before updating ───────────────────────────────
+    $old = mysqli_fetch_assoc(mysqli_query($conn,
+        "SELECT product_status, category_id FROM products WHERE product_id = '$product_id'"));
+    $old_status      = $old['product_status'];
+    $old_category_id = $old['category_id'];
+
     if ($stock_qty == 0) {
         $product_status = 'out-of-stock';
     } elseif ($stock_qty <= 10) {
@@ -27,7 +34,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $product_status = 'in-stock';
     }
 
-    // Handle new image uploads (appends to existing, max 5 total)
+    // Handle new image uploads
     if (!empty($_FILES['product_images']['name'][0])) {
         $upload_dir = '../../assets/images/products/';
 
@@ -49,7 +56,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $target   = $upload_dir . $filename;
 
             if (move_uploaded_file($_FILES['product_images']['tmp_name'][$i], $target)) {
-                // Only set as primary if no primary exists yet
                 $is_primary = (!$has_primary && $i === 0) ? 1 : 0;
                 mysqli_query($conn, "INSERT INTO product_images (product_id, image_url, is_primary) 
                     VALUES ('$product_id', '$filename', '$is_primary')");
@@ -58,7 +64,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     }
 
-    // Check SKU duplicate
     $check = mysqli_query($conn, "SELECT product_id FROM products WHERE sku = '$sku' AND product_id != '$product_id'");
     if (mysqli_num_rows($check) > 0) {
         $_SESSION['error'] = 'SKU already exists.';
@@ -67,7 +72,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     $cat_val  = $category_id      ? "'$category_id'"      : "NULL";
-    $disc_val = $discounted_price  ? "'$discounted_price'" : "NULL";
+    $disc_val = $discounted_price ? "'$discounted_price'" : "NULL";
 
     $sql = "UPDATE products SET
                 product_name     = '$product_name',
@@ -84,6 +89,28 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $_SESSION['error'] = 'Failed to update product.';
         header('Location: ../../pages/Admin Pages/productManagement.php');
         exit;
+    }
+
+    // ── RESTOCK NOTIFICATION ───────────────────────────────────────────
+    // Only fires if product was out-of-stock and now has stock
+    if ($old_status === 'out-of-stock' && $stock_qty > 0) {
+        $wishers = mysqli_query($conn,
+            "SELECT user_id FROM wishlist WHERE product_id = '$product_id'");
+        while ($w = mysqli_fetch_assoc($wishers)) {
+            insertNotif($conn, $w['user_id'], 'restock',
+                "Good news! '{$product_name}' from your wishlist is back in stock.", $product_id);
+        }
+    }
+
+    // ── SALE NOTIFICATION ──────────────────────────────────────────────
+    // Only fires if category just changed TO Sale (category_id 3)
+    if ($category_id == 3 && $old_category_id != 3) {
+        $wishers = mysqli_query($conn,
+            "SELECT user_id FROM wishlist WHERE product_id = '$product_id'");
+        while ($w = mysqli_fetch_assoc($wishers)) {
+            insertNotif($conn, $w['user_id'], 'sale_product',
+                "'{$product_name}' from your wishlist is now on sale!", $product_id);
+        }
     }
 
     // Update existing variants

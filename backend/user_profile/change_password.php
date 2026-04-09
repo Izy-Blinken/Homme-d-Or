@@ -1,6 +1,7 @@
 <?php
 session_start();
 require '../db_connect.php';
+require_once '../notifications/notify.php';
 header('Content-Type: application/json');
 
 if (!isset($_SESSION['user_id']) || empty($_SESSION['cp_verified'])) {
@@ -8,8 +9,8 @@ if (!isset($_SESSION['user_id']) || empty($_SESSION['cp_verified'])) {
     exit;
 }
 
-$user_id = $_SESSION['user_id'];
-$new_password = $_POST['new_password'] ?? '';
+$user_id          = $_SESSION['user_id'];
+$new_password     = $_POST['new_password']     ?? '';
 $confirm_password = $_POST['confirm_password'] ?? '';
 
 if (!$new_password || !$confirm_password) {
@@ -33,12 +34,17 @@ if (
 }
 
 $hashed = password_hash($new_password, PASSWORD_DEFAULT);
-$stmt = $conn->prepare("UPDATE users SET user_password = ? WHERE user_id = ?");
+$stmt   = $conn->prepare("UPDATE users SET user_password = ? WHERE user_id = ?");
 $stmt->bind_param("si", $hashed, $user_id);
 
 if ($stmt->execute()) {
     unset($_SESSION['cp_verified'], $_SESSION['cp_email']);
     mysqli_query($conn, "DELETE FROM password_resets WHERE email = '" . mysqli_real_escape_string($conn, $_SESSION['user_email'] ?? '') . "'");
+
+    // ── PASSWORD CHANGE NOTIFICATION ──────────────────────────────
+    insertNotif($conn, $user_id, 'password_change',
+        "Your password was successfully changed. If this wasn't you, contact support immediately.", null);
+
     echo json_encode(['success' => true]);
 } else {
     echo json_encode(['success' => false, 'message' => 'Failed to update password.']);

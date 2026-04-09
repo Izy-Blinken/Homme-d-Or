@@ -277,7 +277,7 @@
 
                 <div class="modalHeader">
                     <h2>Change Password</h2>
-                    <p class="modalSubtitle">We'll send a verification code to your email first</p>
+                    <p class="modalSubtitle" id="cpModalSubtitle">We'll send a verification code to your email first</p>
                 </div>
 
                 <!-- Step 1: Current password + send OTP -->

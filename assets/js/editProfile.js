@@ -72,8 +72,8 @@ function loadProfile() {
         } else {
             data.wishlist.forEach(function(item) {
                 const imgUrl = item.image_url
-                    ? '../assets/images/products_images/' + item.image_url
-                    : '../assets/images/products_images/nocturne.png';
+                    ? '../assets/images/products/' + item.image_url
+                    : '../assets/images/products_images/image_unavailable.png';
 
                 const displayPrice = item.discounted_price
                     ? '₱' + parseFloat(item.discounted_price).toLocaleString('en-PH', { minimumFractionDigits: 2 })
@@ -333,6 +333,10 @@ function openChangePasswordModal() {
     document.getElementById('cpStep4').style.display = 'none';
     document.getElementById('cpCurrentPassword').value = '';
     document.getElementById('cpStep1Error').style.display = 'none';
+    
+    document.querySelector('#changePasswordModal .modalHeader').style.display = 'block';
+    document.getElementById('cpModalSubtitle').style.display = 'block';
+
     modal.classList.remove('closing');
     modal.style.display = 'flex';
     document.body.style.overflow = 'hidden';
@@ -494,6 +498,8 @@ function submitNewPassword() {
         if (data.success) {
             document.getElementById('cpStep3').style.display = 'none';
             document.getElementById('cpStep4').style.display = 'block';
+            document.querySelector('#changePasswordModal .modalHeader').style.display = 'none';
+        
         } else {
             errorEl.textContent = data.message || 'Failed to change password.';
             errorEl.style.display = 'block';

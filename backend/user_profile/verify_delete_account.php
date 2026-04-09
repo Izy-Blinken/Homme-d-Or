@@ -40,6 +40,19 @@ if (!$data) {
     exit;
 }
 
+// Check if user is an admin
+$adminCheck = mysqli_fetch_assoc(mysqli_query($conn,
+    "SELECT admin_id FROM admins WHERE user_id = '$user_id' LIMIT 1"
+));
+
+if ($adminCheck) {
+    echo json_encode([
+        'success' => false,
+        'message' => 'Your account is currently assigned as an admin. Please contact the superadmin to remove your admin role before deleting your account.'
+    ]);
+    exit;
+}
+
 // Delete all user data
 mysqli_query($conn, "DELETE FROM email_verifications WHERE user_id = '$user_id'");
 mysqli_query($conn, "DELETE FROM users WHERE user_id = '$user_id'");
