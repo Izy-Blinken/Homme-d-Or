@@ -15,7 +15,7 @@
 
 /*Modal Content Box*/
 .modal-content {
-    background-color: #2A2D34;
+    background-color: rgb(14, 16, 31);
     margin: 2% auto;
     padding: 50px 60px;
     width: 90%;
@@ -143,7 +143,7 @@ input[type="date"] {
 .modal .inputGroupCP input:valid ~ label {
     top: -10px;
     font-size: 11px;
-    color: white;
+    color: gray;
     font-weight: 500;
 }
 
@@ -156,7 +156,7 @@ input[type="date"] {
     gap: 12px;
     margin-top: 10px;
     padding: 15px;
-    background-color: #2A2D34;
+    background-color: rgb(14, 16, 31);
     border-left: 3px solid goldenrod;
 }
 
@@ -196,9 +196,7 @@ input[type="date"] {
     align-items: center;
     gap: 16px;
     padding: 16px;
-    background: #f8f8f8;
-    border: 1px solid #ddd;
-    border-radius: 8px;
+    background: rgb(14, 16, 31);
 }
 
 .modal .captchaContainer .captcha-left {
@@ -209,8 +207,6 @@ input[type="date"] {
 }
 
 .modal .captchaContainer canvas {
-    border-radius: 6px;
-    border: 1px solid #ccc;
     background: #f0eeee;
 }
 
@@ -227,18 +223,31 @@ input[type="date"] {
     flex-direction: column;
     gap: 8px;
     flex: 1;
-    min-width: 0;
 }
 
 .modal .captchaContainer .captcha-right input,
 .modal .captchaContainer .captcha-right button {
     width: 100%;
     box-sizing: border-box;
+    height: 40px;
+}
+
+.captcha-right button{
+    background-color: rgb(14, 16, 31);
+    border: 1px solid #c9a961;
+    color: #c9a961;
+}
+
+.captcha-right button:hover{
+    background-color: rgb(3, 3, 84) ;
+    border: 1px solid #c9a961 !important;
+    color: #c9a961 !important;
 }
 
 
 .modal .captchaContainer::before {
     content: "CAPTCHA VERIFICATION";
+    color: #c9a961;
 }
 
 /*Register btn*/
@@ -312,7 +321,7 @@ input[type="date"] {
 /* Password Requirements Box */
 .passwordRequirementsReg {
     grid-column: 1 / -1;
-    background-color: #2A2D34;
+    background-color: rgb(14, 16, 31);
     border-left: 3px solid rgb(255, 221, 30);
     padding: 15px 20px;
     margin: 10px 0 5px 0;
@@ -620,7 +629,7 @@ input[type="date"] {
 }
 
 .or-divider span {
-    background-color: #2A2D34;
+    background-color: rgb(14, 16, 31);
     padding: 0 30px;
     color: white;
     font-size: 14px;
@@ -631,7 +640,7 @@ input[type="date"] {
 
 /*Member exclusive*/
 .member-exclusive {
-    background: #2A2D34;
+    background: rgb(14, 16, 31);
     padding: 30px 0;
     padding-bottom: 15px;
     text-align: center;
@@ -681,7 +690,7 @@ input[type="date"] {
 .create-account-btn {
     width: 90%;
     padding: 14px;
-    background-color: #3A3F47;
+    background-color: rgb(14, 16, 31);
     color: #c9a961;
     border: 1px solid #c9a961;
     font-size: 15px;
@@ -692,11 +701,10 @@ input[type="date"] {
 }
 
 .create-account-btn:hover {
-    background-color: lightslategray;
-    color: black;
-    border: 1px solid black;
+    background-color: rgb(3, 3, 84) ;
+    color: #c9a961;
+    border: 1px solid #c9a961 !important;
     transform: translateY(-2px);
-    box-shadow: 0 6px 12px rgba(91, 192, 222, 0.3);
 }
 
 /*Modal animation*/

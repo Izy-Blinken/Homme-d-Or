@@ -1,60 +1,90 @@
 <?php
-// Safely start session
+// WAKE UP THE SESSION
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
-// --- TEST MODE: FORCING A CART RESET ---
-// (Delete this 'unset' line later when you hook up your real add-to-cart buttons!)
-unset($_SESSION['cart']); 
-// ---------------------------------------
+include_once '../backend/db_connect.php'; 
+$identity = getCurrentUserId();
 
-// Expanded sample cart items (Now includes 'selected' => true)
-if (!isset($_SESSION['cart'])) {
-    $_SESSION['cart'] = [
-        1 => ['name' => 'Midnight Oud', 'price' => 3499, 'qty' => 1, 'img' => '../assets/images/products_images/nocturne.png', 'desc' => '50ml • Premium Collection', 'selected' => true],
-        2 => ['name' => 'Wally B.', 'price' => 2999, 'qty' => 2, 'img' => '../assets/images/products_images/customerPic.png', 'desc' => '30ml • AlbubNation', 'selected' => true],
-        3 => ['name' => 'Ocean Breeze', 'price' => 1850, 'qty' => 1, 'img' => '../assets/images/products_images/nocturne.png', 'desc' => '100ml • Summer Collection', 'selected' => true],
-        4 => ['name' => 'Vanilla Dreams', 'price' => 2100, 'qty' => 3, 'img' => '../assets/images/products_images/customerPic.png', 'desc' => '50ml • Signature Scent', 'selected' => true]
-    ];
+// THE BOUNCER: Kick complete strangers back to the homepage
+if ($identity['type'] === 'stranger') {
+    header("Location: index.php?login_required=true");
+    exit;
 }
 
-// Handle form submissions (quantities, removing, and toggling checkboxes)
+$id_column = ($identity['type'] === 'user_id') ? 'user_id' : 'guest_id';
+$id_value = $identity['id'];
+
+// Initialize selection session if it doesn't exist
+if (!isset($_SESSION['selected_items'])) {
+    $_SESSION['selected_items'] = [];
+}
+
+// --- HANDLE FORM SUBMISSIONS (Update Qty, Remove, Toggle) ---
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $id = $_POST['product_id'];
+    $cart_id = intval($_POST['cart_id']);
 
     if (isset($_POST['increase'])) {
-        $_SESSION['cart'][$id]['qty']++;
+        $stmt = $conn->prepare("UPDATE cart SET quantity = quantity + 1 WHERE cart_id = ? AND $id_column = ?");
+        $stmt->bind_param("is", $cart_id, $id_value);
+        $stmt->execute();
     }
-
-    if (isset($_POST['decrease']) && $_SESSION['cart'][$id]['qty'] > 1) {
-        $_SESSION['cart'][$id]['qty']--;
+    if (isset($_POST['decrease'])) {
+        $stmt = $conn->prepare("UPDATE cart SET quantity = GREATEST(quantity - 1, 1) WHERE cart_id = ? AND $id_column = ?");
+        $stmt->bind_param("is", $cart_id, $id_value);
+        $stmt->execute();
     }
-
     if (isset($_POST['remove'])) {
-        unset($_SESSION['cart'][$id]);
+        $stmt = $conn->prepare("DELETE FROM cart WHERE cart_id = ? AND $id_column = ?");
+        $stmt->bind_param("is", $cart_id, $id_value);
+        $stmt->execute();
+        if (($key = array_search($cart_id, $_SESSION['selected_items'])) !== false) {
+            unset($_SESSION['selected_items'][$key]);
+        }
     }
-
-    // NEW: Handle Checkbox Toggle
     if (isset($_POST['toggle_select'])) {
-        // Flip the boolean value (true becomes false, false becomes true)
-        $_SESSION['cart'][$id]['selected'] = !$_SESSION['cart'][$id]['selected'];
+        if (in_array($cart_id, $_SESSION['selected_items'])) {
+            $key = array_search($cart_id, $_SESSION['selected_items']);
+            unset($_SESSION['selected_items'][$key]);
+        } else {
+            $_SESSION['selected_items'][] = $cart_id;
+        }
     }
-
     header("Location: cart.php");
     exit;
 }
 
+// --- FETCH CART ITEMS FROM DATABASE ---
+$sql = "SELECT c.cart_id, c.quantity, p.product_name, p.price, pi.image_url 
+        FROM cart c
+        JOIN products p ON c.product_id = p.product_id
+        LEFT JOIN product_images pi ON pi.product_id = p.product_id AND pi.is_primary = 1
+        WHERE c.$id_column = ?";
+
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("s", $id_value);
+$stmt->execute();
+$result = $stmt->get_result();
+
+$cartItems = [];
+while ($row = $result->fetch_assoc()) {
+    $cartItems[] = $row;
+    if (!isset($_SESSION['initialized_cart_selections'])) {
+        $_SESSION['selected_items'][] = $row['cart_id'];
+    }
+}
+$_SESSION['initialized_cart_selections'] = true;
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
     <head>
         <meta charset="UTF-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Cart | Homme d'Or</title>
-        <link rel="stylesheet" href="../assets/icons/fontawesome/css/all.min.css">
         <link rel="stylesheet" href="../assets/css/style.css">
+        <link rel="stylesheet" href="../assets/icons/fontawesome/css/all.min.css">
         <link rel="stylesheet" href="../assets/css/HeaderHeroFooterStyle.css">
         <link rel="stylesheet" href="../assets/css/CheckoutPageStyle.css">
         <link rel="stylesheet" href="../assets/css/OrderAgainStyle.css">
@@ -65,104 +95,72 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <link rel="stylesheet" href="../assets/css/RegLoginModalStyle.css">
         <link rel="stylesheet" href="../assets/css/ProfilePageStyle.css">
     </head>
-
     <body>
-
         <?php include '../components/header.php'; ?>
-
         <main class="mainBG">
-            <a href="javascript:history.back()" class="back-button">
-                <i class="fa-solid fa-chevron-left"></i> 
-            </a>
-
+            <a href="javascript:history.back()" class="back-button"><i class="fa-solid fa-chevron-left"></i></a>
             <section class="cart-page">
             <h1 class="cart-title">Shopping Cart</h1>
             <div class="cart-wrapper">
-
                 <section class="cart-items">
                     <?php 
                     $subtotal = 0;
                     $selectedCount = 0;
-                    
-                    if (empty($_SESSION['cart'])) {
+                    if (empty($cartItems)) {
                         echo "<div class='empty-cart-msg'>Your cart is completely empty. Time to find a new signature scent!</div>";
                     }
-
-                    foreach($_SESSION['cart'] as $id => $item): 
-                        $totalPrice = $item['price'] * $item['qty'];
-                        
-                        // Only add to the total if the item is selected!
-                        if ($item['selected']) {
+                    foreach($cartItems as $item): 
+                        $isSelected = in_array($item['cart_id'], $_SESSION['selected_items']);
+                        $totalPrice = $item['price'] * $item['quantity'];
+                        if ($isSelected) {
                             $subtotal += $totalPrice;
                             $selectedCount++;
                         }
+                        $imgSrc = $item['image_url'] ? '../assets/images/products/' . htmlspecialchars($item['image_url']) : '../assets/images/brand_images/nocturne.png';
                     ?>
-                    
-                    <div class="cart-item" style="<?php echo !$item['selected'] ? 'opacity: 0.4; border-color: rgba(255,255,255,0.02); background: rgba(10,10,10,0.5);' : ''; ?>">
-                        
+                    <div class="cart-item" style="<?php echo !$isSelected ? 'opacity: 0.4; filter: grayscale(50%);' : ''; ?>">
                         <form method="POST" style="margin-right: 35px; margin-top: 5px;">
-                            <input type="hidden" name="product_id" value="<?php echo $id; ?>">
+                            <input type="hidden" name="cart_id" value="<?php echo $item['cart_id']; ?>">
                             <input type="hidden" name="toggle_select" value="1">
                             <label class="custom-checkbox">
-                                <input type="checkbox" onChange="this.form.submit()" <?php echo $item['selected'] ? 'checked' : ''; ?>>
+                                <input type="checkbox" onChange="this.form.submit()" <?php echo $isSelected ? 'checked' : ''; ?>>
                                 <span class="checkmark"></span>
                             </label>
                         </form>
-
-                        <img src="<?php echo $item['img']; ?>" alt="Perfume" style="<?php echo !$item['selected'] ? 'filter: grayscale(100%);' : ''; ?>">
-
+                        <img src="<?php echo $imgSrc; ?>" alt="Perfume">
                         <div class="cart-info">
-                            <h4><?php echo $item['name']; ?></h4>
-                            <p><?php echo $item['desc']; ?></p>
-
+                            <h4><?php echo htmlspecialchars($item['product_name']); ?></h4>
                             <div class="cart-actions">
                                 <form method="POST" class="qty-form">
-                                    <input type="hidden" name="product_id" value="<?php echo $id; ?>">
+                                    <input type="hidden" name="cart_id" value="<?php echo $item['cart_id']; ?>">
                                     <button type="submit" name="decrease">-</button>
-                                    <span><?php echo $item['qty']; ?></span>
+                                    <span><?php echo $item['quantity']; ?></span>
                                     <button type="submit" name="increase">+</button>
                                 </form>
-
                                 <form method="POST" class="remove-form">
-                                    <input type="hidden" name="product_id" value="<?php echo $id; ?>">
+                                    <input type="hidden" name="cart_id" value="<?php echo $item['cart_id']; ?>">
                                     <button type="submit" name="remove" class="remove-item">Remove</button>
                                 </form>
                             </div>
                         </div>
-
-                        <div class="cart-price">
-                            ₱<?php echo number_format($totalPrice, 2); ?>
-                        </div>
+                        <div class="cart-price">₱<?php echo number_format($totalPrice, 2); ?></div>
                     </div>
                     <?php endforeach; ?>
                 </section>
-
                 <aside class="cart-summary">
                     <h3>Order Summary</h3>
-                    <div class="summary-row">
-                        <span>Subtotal (<?php echo $selectedCount; ?> items)</span>
-                        <span>₱<?php echo number_format($subtotal, 2); ?></span>
-                    </div>
-                    <div class="summary-row">
-                        <span>Shipping</span>
-                        <span>₱<?php echo $selectedCount > 0 ? '150.00' : '0.00'; ?></span>
-                    </div>
-                    <div class="summary-row total">
-                        <span>Total</span>
-                        <span>₱<?php echo $selectedCount > 0 ? number_format($subtotal + 150, 2) : '0.00'; ?></span>
-                    </div>
-                    
+                    <div class="summary-row"><span>Subtotal (<?php echo $selectedCount; ?> items)</span><span>₱<?php echo number_format($subtotal, 2); ?></span></div>
+                    <div class="summary-row"><span>Shipping</span><span>₱<?php echo $selectedCount > 0 ? '150.00' : '0.00'; ?></span></div>
+                    <div class="summary-row total"><span>Total</span><span>₱<?php echo $selectedCount > 0 ? number_format($subtotal + 150, 2) : '0.00'; ?></span></div>
                     <?php if ($selectedCount > 0): ?>
                         <a href="checkout.php" class="checkout-btn">Proceed to Checkout</a>
                     <?php else: ?>
-                        <a href="#" class="checkout-btn" style="opacity: 0.5; cursor: not-allowed; border-color: rgba(255,255,255,0.2); background: transparent; color: rgba(255,255,255,0.5);" onclick="return false;">Select Items to Checkout</a>
+                        <a href="#" class="checkout-btn" style="opacity: 0.5; cursor: not-allowed;" onclick="return false;">Select Items to Checkout</a>
                     <?php endif; ?>
                 </aside>
-
             </div>
             </section>
         </main>
-
         <?php include '../components/footer.php'; ?>
         <script src="../assets/js/cart.js"></script>
     </body>

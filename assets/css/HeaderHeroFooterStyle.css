@@ -424,9 +424,9 @@
     position: absolute;
     top: 100%;
     left: -250px;
-    background-color: white;
+    background-color: rgb(14, 16, 31);
     width: 280px;
-    box-shadow: 0 8px 16px rgba(51, 51, 51, 0.5);
+    border: 1px solid #c9a961;
     padding: 0;
     z-index: 1000;
     border-radius: 0;
@@ -437,19 +437,20 @@
 }
 
 .profile-header {
-    background-color: white;
+    background-color: #c9a961;
     padding: 15px 20px;
     font-weight: 600;
     font-size: 16px;
-    color: #000;
-    border-bottom: 1px solid #ccc;
+    color: rgb(14, 16, 31);
+    border-bottom: 1px solid #c9a961;
     text-align: center;
 }
+
 
 .profile-subtext {
     padding: 15px 20px;
     font-size: 12px;
-    color: #333;
+    color: whitesmoke;
     line-height: 1.5;
     margin: 0;
 }
@@ -464,33 +465,40 @@
     text-align: center;
     text-decoration: none;
     font-weight: 500;
-    transition: all 0.3s;
+}
+
+.profile-register-btn{
+    width:220px;
+    margin-left: 30px;
+    transition: all 0.3s !important;
 }
 
 .profile-login-btn {
     background-color: #c9a961;
-    border: 1px solid black;
-    color: black;
+    border: 1px solid #c9a961;
+    color: white !important;
+    transition: all 0.3s ease ;
 }
 
 .profile-login-btn:hover {
     background-color: rgb(3, 3, 84);
     border: 1px solid #c9a961;
-    color: #c9a961;
-    transform: scale(1.1);
+    color: #c9a961 !important;
+    transform: scale(1.1) !important;
 }
 
-.profile-dropdown .profile-register-btn {
-    background-color: #2A2D34;
-    color: #c9a961;
-    border: 1px solid #c9a961;
+.profile-register-btn {
+    background-color: transparent;
+    color: #c9a961 !important;
+    border: 1px solid #c9a961 !important;
+    transition: all 0.3s ease ;
 }
 
-.profile-dropdown .profile-register-btn:hover {
-    background-color: lightslategray;
-    color: black;
-    border: 1px solid black;
-    transform: scale(1.1);
+.profile-register-btn:hover {
+    background-color: rgb(3, 3, 84);
+    color: #c9a961 !important;
+    border: 1px solid #c9a961 !important;
+    transform: scale(1.1) !important;
 }
 
 /* HAMBURGER & MOBILE MENU*/

@@ -16,9 +16,13 @@
 /*--- Left Sidebar: Product Summary ---*/
 .reviews-sidebar {
     flex: 0 0 300px;
-    background-color: #0e101f;
+    background: rgba(8, 10, 22, 0.55);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6),
+        inset 0 1px 0 rgba(255, 255, 255, 0.05);
     border: 1px solid rgba(201, 169, 97, 0.3);
-    border-radius: 8px;
     padding: 30px;
     text-align: center;
     position: sticky;
@@ -102,9 +106,13 @@
 
 /*--- Individual Review Cards ---*/
 .full-review-card {
-    background-color: #0e101f; /* Changed to a solid dark color to block the background waves */
+    background: rgba(8, 10, 22, 0.55);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6),
+        inset 0 1px 0 rgba(255, 255, 255, 0.05);
     border: 1px solid rgba(201, 169, 97, 0.3); /* Matches the gold border of the sidebar */
-    border-radius: 8px;
     padding: 25px;
     margin-bottom: 20px;
     transition: transform 0.3s ease, background-color 0.3s ease, border-color 0.3s ease;

@@ -1,3 +1,19 @@
+<?php
+// ALWAYS start the session first
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+
+// THE BOUNCER: If the user_id is empty, they are a guest.
+if (empty($_SESSION['user_id'])) {
+    // Kick them back to the homepage and attach a secret message to the URL
+    header("Location: index.php?login_required=true");
+    exit; // Stop the page from loading
+}
+?>
+<!DOCTYPE html>
+<html>
+
 <!DOCTYPE html>
 <html lang="en">
 <head> 

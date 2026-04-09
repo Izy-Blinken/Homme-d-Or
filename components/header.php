@@ -8,19 +8,7 @@ if (isset($_GET['lang'])) {
 }
 $currentLang = isset($_SESSION['language']) ? $_SESSION['language'] : 'en';
 
-include '../backend/db_connect.php';
- 
-if (empty($_SESSION['user_id']) && isset($_COOKIE['remember_token'])) {
-    $token = mysqli_real_escape_string($conn, $_COOKIE['remember_token']);
-    $user = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM users WHERE remember_token = '$token' AND is_blocked = 0"));
-    
-    if ($user) {
-        $_SESSION['user_id'] = $user['user_id'];
-        $_SESSION['user_fname'] = $user['fname'];
-        $_SESSION['user_email'] = $user['email'];
-        $_SESSION['user_username'] = $user['username'];
-    }
-}
+include_once '../backend/db_connect.php';
 
 if (!empty($_SESSION['user_id'])) {
     $check = mysqli_fetch_assoc(mysqli_query($conn, "SELECT is_blocked FROM users WHERE user_id = '{$_SESSION['user_id']}'"));
@@ -32,8 +20,6 @@ if (!empty($_SESSION['user_id'])) {
     }
 }
 
-session_write_close();
-
 $currentPage = basename($_SERVER['PHP_SELF']);
 ?>
 
@@ -43,14 +29,12 @@ $currentPage = basename($_SERVER['PHP_SELF']);
             <img src="../assets/images/brand_images/prodLogo.png" class="logo" alt="Brand Logo">
         </a>
 
-        <!-- Hamburger: mobile only, sits on the LEFT replacing the logo -->
         <button class="hamburger" id="hamburgerBtn" aria-label="Toggle navigation" aria-expanded="false">
             <span></span>
             <span></span>
             <span></span>
         </button>
 
-        <!-- Mobile dropdown — anchored LEFT under the hamburger -->
         <ul class="mobile-menu" id="mobileMenu">
             <li>
                 <a class="<?php echo ($currentPage == 'index.php') ? 'active' : ''; ?>" href="index.php">Home</a>
@@ -79,8 +63,7 @@ $currentPage = basename($_SERVER['PHP_SELF']);
             </li>   
         </ul>
 
-        <!-- Horizontal Slide Menu -->
-       <ul class="logo-slide-menu" id="desktopMenu">
+        <ul class="logo-slide-menu" id="desktopMenu">
             <li>
                 <a class="<?php echo ($currentPage == 'index.php') ? 'active' : ''; ?>" href="index.php">Home</a>
             </li>
