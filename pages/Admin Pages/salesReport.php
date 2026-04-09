@@ -52,10 +52,11 @@ checkAdminAccess($conn, 'can_export_report');
                 <input type="hidden" name="active_tab" value="revenue">
 
                 <div class="filter-bar">
-                    <div class="filter-group"><label>FROM:</label><input type="date" name="rev_from" value="<?= $rev_from ?>"></div>
-                    <div class="filter-group"><label>TO:</label><input type="date" name="rev_to" value="<?= $rev_to ?>"></div>
-                    <button type="submit" class="reset-btn">Apply</button>
-                    <a href="?active_tab=revenue" class="reset-btn" style="text-decoration:none; color:black;">Reset</a>
+                    <div class="filter-group"><label>Report Period:</label></div>
+                    <div class="filter-group"><label>From:</label><input type="date" name="rev_from" value="<?= $rev_from ?>"></div>
+                    <div class="filter-group"><label>To:</label><input type="date" name="rev_to" value="<?= $rev_to ?>"></div>
+                    <button type="submit" class="reset-btn">Apply Filters</button>
+                    <a href="?active_tab=revenue" class="reset-btn" style="text-decoration:none; color:black;">Reset to Current Month</a>
                 </div>
 
             </form>
@@ -72,14 +73,17 @@ checkAdminAccess($conn, 'can_export_report');
                 </div>
 
                 <div class="stat-card">
-                    <small class="stat-label">REVENUE GROWTH</small>
-                    <h3 class="stat-value <?= ($rev_growth === 'New' || ($rev_growth !== null && $rev_growth >= 0)) ? 'positive' : 'negative' ?>">
-                        <?= $rev_growth !== null
-                            ? ($rev_growth === 'New' ? 'New' : ($rev_growth >= 0 ? '+' : '') . $rev_growth . '%')
-                            : 'N/A' ?>
+                    <small class="stat-label">REVENUE GROWTH vs PREVIOUS PERIOD</small>
+                    <h3 class="stat-value <?= ($rev_growth >= 0) ? 'positive' : 'negative' ?>">
+                        <?= ($rev_growth >= 0 ? '+' : '') . $rev_growth . '%' ?>
                     </h3>
                 </div>
 
+            </div>
+
+            <div style="padding: 10px; background: #f5f5f5; border-radius: 4px; margin-bottom: 20px; font-size: 0.9rem; color: #666;">
+                <strong>Period Comparison:</strong> Comparing <?= date('M d, Y', strtotime($rev_from)) ?> to <?= date('M d, Y', strtotime($rev_to)) ?> 
+                with previous equal period (<?= date('M d, Y', strtotime($prev_rev_from)) ?> to <?= date('M d, Y', strtotime($prev_rev_to)) ?>)
             </div>
 
             <div class="chart-container">
@@ -134,10 +138,11 @@ checkAdminAccess($conn, 'can_export_report');
             <form method="GET" action="">
                 <input type="hidden" name="active_tab" value="sales">
                 <div class="filter-bar">
-                    <div class="filter-group"><label>FROM:</label><input type="date" name="sal_from" value="<?= $sal_from ?>"></div>
-                    <div class="filter-group"><label>TO:</label><input type="date" name="sal_to" value="<?= $sal_to ?>"></div>
-                    <button type="submit" class="reset-btn">Apply</button>
-                    <a href="?active_tab=sales" class="reset-btn" style="text-decoration:none; color:black;">Reset</a>
+                    <div class="filter-group"><label>Report Period:</label></div>
+                    <div class="filter-group"><label>From:</label><input type="date" name="sal_from" value="<?= $sal_from ?>"></div>
+                    <div class="filter-group"><label>To:</label><input type="date" name="sal_to" value="<?= $sal_to ?>"></div>
+                    <button type="submit" class="reset-btn">Apply Filters</button>
+                    <a href="?active_tab=sales" class="reset-btn" style="text-decoration:none; color:black;">Reset to Current Month</a>
                 </div>
             </form>
 
@@ -197,10 +202,11 @@ checkAdminAccess($conn, 'can_export_report');
             <form method="GET" action="">
                 <input type="hidden" name="active_tab" value="orders">
                 <div class="filter-bar">
-                    <div class="filter-group"><label>FROM:</label><input type="date" name="ord_from" value="<?= $ord_from ?>"></div>
-                    <div class="filter-group"><label>TO:</label><input type="date" name="ord_to" value="<?= $ord_to ?>"></div>
-                    <button type="submit" class="reset-btn">Apply</button>
-                    <a href="?active_tab=orders" class="reset-btn" style="text-decoration:none; color:black;">Reset</a>
+                    <div class="filter-group"><label>Report Period:</label></div>
+                    <div class="filter-group"><label>From:</label><input type="date" name="ord_from" value="<?= $ord_from ?>"></div>
+                    <div class="filter-group"><label>To:</label><input type="date" name="ord_to" value="<?= $ord_to ?>"></div>
+                    <button type="submit" class="reset-btn">Apply Filters</button>
+                    <a href="?active_tab=orders" class="reset-btn" style="text-decoration:none; color:black;">Reset to Current Month</a>
                 </div>
             </form>
             <div class="stats-grid" id="orders-stats">
@@ -251,10 +257,11 @@ checkAdminAccess($conn, 'can_export_report');
             <form method="GET" action="">
                 <input type="hidden" name="active_tab" value="products">
                 <div class="filter-bar">
-                    <div class="filter-group"><label>FROM:</label><input type="date" name="prod_from" value="<?= $prod_from ?>"></div>
-                    <div class="filter-group"><label>TO:</label><input type="date" name="prod_to" value="<?= $prod_to ?>"></div>
-                    <button type="submit" class="reset-btn">Apply</button>
-                    <a href="?active_tab=products" class="reset-btn" style="text-decoration:none; color:black;">Reset</a>
+                    <div class="filter-group"><label>Report Period:</label></div>
+                    <div class="filter-group"><label>From:</label><input type="date" name="prod_from" value="<?= $prod_from ?>"></div>
+                    <div class="filter-group"><label>To:</label><input type="date" name="prod_to" value="<?= $prod_to ?>"></div>
+                    <button type="submit" class="reset-btn">Apply Filters</button>
+                    <a href="?active_tab=products" class="reset-btn" style="text-decoration:none; color:black;">Reset to Current Month</a>
                 </div>
             </form>
             <div class="stats-grid" id="products-stats">
@@ -305,10 +312,11 @@ checkAdminAccess($conn, 'can_export_report');
             <form method="GET" action="">
                 <input type="hidden" name="active_tab" value="customers">
                 <div class="filter-bar">
-                    <div class="filter-group"><label>FROM:</label><input type="date" name="cust_from" value="<?= $cust_from ?>"></div>
-                    <div class="filter-group"><label>TO:</label><input type="date" name="cust_to" value="<?= $cust_to ?>"></div>
-                    <button type="submit" class="reset-btn">Apply</button>
-                    <a href="?active_tab=customers" class="reset-btn" style="text-decoration:none; color:black;">Reset</a>
+                    <div class="filter-group"><label>Report Period:</label></div>
+                    <div class="filter-group"><label>From:</label><input type="date" name="cust_from" value="<?= $cust_from ?>"></div>
+                    <div class="filter-group"><label>To:</label><input type="date" name="cust_to" value="<?= $cust_to ?>"></div>
+                    <button type="submit" class="reset-btn">Apply Filters</button>
+                    <a href="?active_tab=customers" class="reset-btn" style="text-decoration:none; color:black;">Reset to Current Month</a>
                 </div>
             </form>
             <div class="stats-grid" id="customers-stats">
@@ -359,15 +367,23 @@ checkAdminAccess($conn, 'can_export_report');
 <script src="../../assets/js/script.js"></script>
 <script src="../../assets/js/salesReport.js"></script>
 <script>
+    // Date ranges for PDF
+    window.dateRanges = {
+        revenue: '<?= date('M d, Y', strtotime($rev_from)) ?> - <?= date('M d, Y', strtotime($rev_to)) ?>',
+        sales: '<?= date('M d, Y', strtotime($sal_from)) ?> - <?= date('M d, Y', strtotime($sal_to)) ?>',
+        orders: '<?= date('M d, Y', strtotime($ord_from)) ?> - <?= date('M d, Y', strtotime($ord_to)) ?>',
+        products: '<?= date('M d, Y', strtotime($prod_from)) ?> - <?= date('M d, Y', strtotime($prod_to)) ?>',
+        customers: '<?= date('M d, Y', strtotime($cust_from)) ?> - <?= date('M d, Y', strtotime($cust_to)) ?>'
+    };
 
     // Pass chart data to JS
-window.addEventListener('DOMContentLoaded', function () {
-    makeChart('chart-revenue', <?= json_encode($rev_labels) ?>, <?= json_encode($rev_values) ?>, 'Revenue', '#1a2433');
-    makeChart('chart-sales', <?= json_encode($sal_labels) ?>, <?= json_encode($sal_values) ?>, 'Sales', '#26a69a');
-    makeChart('chart-orders', <?= json_encode($ord_labels) ?>, <?= json_encode($ord_values) ?>, 'Orders', '#e65100');
-    makeChart('chart-products', <?= json_encode($prod_labels) ?>, <?= json_encode($prod_values) ?>, 'Units Sold', '#7b1fa2');
-    makeChart('chart-customers', <?= json_encode($cust_labels) ?>, <?= json_encode($cust_values) ?>, 'New Customers', '#2e7d32');
-});
+    window.addEventListener('DOMContentLoaded', function () {
+        makeChart('chart-revenue', <?= json_encode($rev_labels) ?>, <?= json_encode($rev_values) ?>, 'Revenue', '#1a2433');
+        makeChart('chart-sales', <?= json_encode($sal_labels) ?>, <?= json_encode($sal_values) ?>, 'Sales', '#26a69a');
+        makeChart('chart-orders', <?= json_encode($ord_labels) ?>, <?= json_encode($ord_values) ?>, 'Orders', '#e65100');
+        makeChart('chart-products', <?= json_encode($prod_labels) ?>, <?= json_encode($prod_values) ?>, 'Units Sold', '#7b1fa2');
+        makeChart('chart-customers', <?= json_encode($cust_labels) ?>, <?= json_encode($cust_values) ?>, 'New Customers', '#2e7d32');
+    });
 </script>
 
 </body>

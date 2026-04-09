@@ -1,13 +1,13 @@
 <?php
 include(__DIR__ . '/../../backend/db_connect.php');
 
-// Get date range from GET params, default: current month
+// Get date range from GET params, default: current week (last 7 days)
 function getDateRange($prefix) {
-    $from = $_GET["{$prefix}_from"] ?? date('Y-m-01');
-    $to = $_GET["{$prefix}_to"] ?? date('Y-m-t'); // Y-m-t = last day of current month
+    $from = $_GET["{$prefix}_from"] ?? date('Y-m-d', strtotime('-6 days'));
+    $to = $_GET["{$prefix}_to"] ?? date('Y-m-d');
     
-    $from = preg_match('/^\d{4}-\d{2}-\d{2}$/', $from) ? $from : date('Y-m-01');
-    $to = preg_match('/^\d{4}-\d{2}-\d{2}$/', $to) ? $to   : date('Y-m-t');
+    $from = preg_match('/^\d{4}-\d{2}-\d{2}$/', $from) ? $from : date('Y-m-d', strtotime('-6 days'));
+    $to = preg_match('/^\d{4}-\d{2}-\d{2}$/', $to) ? $to : date('Y-m-d');
     return [$from, $to];
 }
 
@@ -37,32 +37,37 @@ function groupBySQL($group, $dateCol = 'created_at') {
 
 [$rev_from, $rev_to] = getDateRange('rev');
 
-$rev_total = mysqli_fetch_assoc(mysqli_query($conn,
+$rev_total = (float) mysqli_fetch_assoc(mysqli_query($conn,
     "SELECT COALESCE(SUM(total_amount), 0) AS val
      FROM orders
      WHERE order_status = 'completed'
      AND DATE(created_at) BETWEEN '$rev_from' AND '$rev_to'"))['val'];
 
-$rev_avg = mysqli_fetch_assoc(mysqli_query($conn,
+$rev_avg = (float) mysqli_fetch_assoc(mysqli_query($conn,
     "SELECT COALESCE(AVG(total_amount), 0) AS val
      FROM orders
      WHERE order_status = 'completed'
      AND DATE(created_at) BETWEEN '$rev_from' AND '$rev_to'"))['val'];
 
-// Compare with previous period for growth
-$period_days = max(1, (strtotime($rev_to) - strtotime($rev_from)) / 86400);
-$prev_rev_from = date('Y-m-d', strtotime($rev_from) - $period_days * 86400);
+// Compare with previous week for growth (last 7 days before current period)
+$period_days = max(1, ceil((strtotime($rev_to) - strtotime($rev_from)) / 86400 + 1));
+$prev_rev_from = date('Y-m-d', strtotime($rev_from) - ($period_days * 86400));
 $prev_rev_to = date('Y-m-d', strtotime($rev_from) - 86400);
 
-$prev_rev = mysqli_fetch_assoc(mysqli_query($conn,
+$prev_rev = (float) mysqli_fetch_assoc(mysqli_query($conn,
     "SELECT COALESCE(SUM(total_amount), 0) AS val
      FROM orders
      WHERE order_status = 'completed'
      AND DATE(created_at) BETWEEN '$prev_rev_from' AND '$prev_rev_to'"))['val'];
 
-$rev_growth = $prev_rev > 0
-    ? round((($rev_total - $prev_rev) / $prev_rev) * 100, 1)
-    : ($rev_total > 0 ? 'New' : null);
+// Calculate growth: compare current period to previous period
+// Only calculate percentage if previous period has a baseline to compare against
+if ($prev_rev > 0) {
+    $rev_growth = round((($rev_total - $prev_rev) / $prev_rev) * 100, 1);
+} else {
+    // No previous data to compare, show 0% as baseline
+    $rev_growth = 0;
+}
 
 // Graph data
 $rev_group = getGraphGroup($rev_from, $rev_to);

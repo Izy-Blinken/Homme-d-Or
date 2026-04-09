@@ -26,19 +26,19 @@ $cancelledOrders = mysqli_fetch_assoc(mysqli_query($conn, "SELECT COUNT(*) AS va
 $successRate = $totalOrders > 0 ? round(($completedOrders / $totalOrders) * 100, 1) : 0;
 
 $totalRevenue = mysqli_fetch_assoc(mysqli_query($conn, "SELECT COALESCE(SUM(total_amount), 0) AS val FROM orders WHERE order_status = 'completed'"))['val'];
-$revenueThisMonth = mysqli_fetch_assoc(mysqli_query($conn, "SELECT COALESCE(SUM(total_amount), 0) AS val FROM orders WHERE order_status = 'completed' AND MONTH(created_at) = MONTH(CURRENT_DATE()) AND YEAR(created_at) = YEAR(CURRENT_DATE())"))['val'];
-$revenueLastMonth = mysqli_fetch_assoc(mysqli_query($conn, "SELECT COALESCE(SUM(total_amount), 0) AS val FROM orders WHERE order_status = 'completed' AND MONTH(created_at) = MONTH(CURRENT_DATE() - INTERVAL 1 MONTH) AND YEAR(created_at) = YEAR(CURRENT_DATE() - INTERVAL 1 MONTH)"))['val'];
-$revenueGrowth = $revenueLastMonth > 0 ? round((($revenueThisMonth - $revenueLastMonth) / $revenueLastMonth) * 100, 1) : 0;
+$revenueThisWeek = (float) mysqli_fetch_assoc(mysqli_query($conn, "SELECT COALESCE(SUM(total_amount), 0) AS val FROM orders WHERE order_status = 'completed' AND DATE(created_at) BETWEEN DATE_SUB(CURDATE(), INTERVAL 6 DAY) AND CURDATE()"))['val'];
+$revenueLastWeek = (float) mysqli_fetch_assoc(mysqli_query($conn, "SELECT COALESCE(SUM(total_amount), 0) AS val FROM orders WHERE order_status = 'completed' AND DATE(created_at) BETWEEN DATE_SUB(CURDATE(), INTERVAL 13 DAY) AND DATE_SUB(CURDATE(), INTERVAL 7 DAY)"))['val'];
+$revenueGrowth = ($revenueLastWeek > 0 && $revenueThisWeek >= 0) ? round((($revenueThisWeek - $revenueLastWeek) / $revenueLastWeek) * 100, 1) : (($revenueThisWeek > 0 && $revenueLastWeek == 0) ? 100 : 0);
 $avgOrderValue = $completedOrders > 0 ? round($totalRevenue / $completedOrders, 2) : 0;
 
 $totalCustomers = mysqli_fetch_assoc(mysqli_query($conn, "SELECT COUNT(*) AS val FROM users"))['val'];
 $returningCustomers = mysqli_fetch_assoc(mysqli_query($conn, "SELECT COUNT(*) AS val FROM (SELECT user_id FROM orders WHERE user_id IS NOT NULL GROUP BY user_id HAVING COUNT(*) > 1) AS ret"))['val'];
-$newThisMonth = mysqli_fetch_assoc(mysqli_query($conn, "SELECT COUNT(*) AS val FROM users WHERE MONTH(created_at) = MONTH(CURRENT_DATE()) AND YEAR(created_at) = YEAR(CURRENT_DATE())"))['val'];
-$newLastMonth = mysqli_fetch_assoc(mysqli_query($conn, "SELECT COUNT(*) AS val FROM users WHERE MONTH(created_at) = MONTH(CURRENT_DATE() - INTERVAL 1 MONTH) AND YEAR(created_at) = YEAR(CURRENT_DATE() - INTERVAL 1 MONTH)"))['val'];
-$customerGrowth = $newLastMonth > 0 ? round((($newThisMonth - $newLastMonth) / $newLastMonth) * 100, 1) : 0;
+$newThisWeek = mysqli_fetch_assoc(mysqli_query($conn, "SELECT COUNT(*) AS val FROM users WHERE DATE(created_at) BETWEEN DATE_SUB(CURDATE(), INTERVAL 6 DAY) AND CURDATE()"))['val'];
+$newLastWeek = mysqli_fetch_assoc(mysqli_query($conn, "SELECT COUNT(*) AS val FROM users WHERE DATE(created_at) BETWEEN DATE_SUB(CURDATE(), INTERVAL 13 DAY) AND DATE_SUB(CURDATE(), INTERVAL 7 DAY)"))['val'];
+$customerGrowth = ($newLastWeek > 0 && $newThisWeek >= 0) ? round((($newThisWeek - $newLastWeek) / $newLastWeek) * 100, 1) : (($newThisWeek > 0 && $newLastWeek == 0) ? 100 : 0);
 $clv = $totalCustomers > 0 ? round($totalRevenue / $totalCustomers, 2) : 0;
 $retentionRate = $totalCustomers > 0 ? round(($returningCustomers / $totalCustomers) * 100, 1) : 0;
-$newThisWeek = mysqli_fetch_assoc(mysqli_query($conn, "SELECT COUNT(*) AS val FROM users WHERE created_at >= DATE_SUB(CURRENT_DATE(), INTERVAL 7 DAY)"))['val'];
+$newThisWeekCount = $newThisWeek;
 
 $brandName = $store['brand_name'] ?? '';
 $logoFile = $store['logo'] ?? null;
@@ -173,12 +173,12 @@ if (empty($initials)) $initials = 'H';
                         <span class="info-row-value">₱<?= number_format($totalRevenue, 2) ?></span>
                     </div>
                     <div class="info-row">
-                        <span class="info-row-label">This Month:</span>
-                        <span class="info-row-value">₱<?= number_format($revenueThisMonth, 2) ?></span>
+                        <span class="info-row-label">This Week:</span>
+                        <span class="info-row-value">₱<?= number_format($revenueThisWeek, 2) ?></span>
                     </div>
                     <div class="info-row">
-                        <span class="info-row-label">Last Month:</span>
-                        <span class="info-row-value">₱<?= number_format($revenueLastMonth, 2) ?></span>
+                        <span class="info-row-label">Last Week:</span>
+                        <span class="info-row-value">₱<?= number_format($revenueLastWeek, 2) ?></span>
                     </div>
                     <div class="info-row">
                         <span class="info-row-label">Growth:</span>
@@ -209,7 +209,7 @@ if (empty($initials)) $initials = 'H';
                     </div>
                     <div>
                         <div class="cstat-label">NEW THIS MONTH</div>
-                        <div class="cstat-value"><?= number_format($newThisMonth) ?></div>
+                        <div class="cstat-value"><?= number_format($newThisWeek) ?></div>
                         <div class="cstat-change <?= $customerGrowth >= 0 ? 'positive' : 'negative' ?>">
                             <?= $customerGrowth >= 0 ? '+' : '' ?><?= $customerGrowth ?>% growth
                         </div>

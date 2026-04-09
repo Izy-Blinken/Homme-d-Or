@@ -78,11 +78,7 @@ checkAdminAccess($conn);
                         mysqli_query($conn, "SELECT COUNT(*) AS val FROM users WHERE MONTH(created_at) = MONTH(CURRENT_DATE() - INTERVAL 1 MONTH) AND YEAR(created_at) = YEAR(CURRENT_DATE() - INTERVAL 1 MONTH)")
                     )['val'];
 
-                    // PERCENTAGE COMPUTATION
-                    $RevPercent = $RevLastMonth > 0? round((($RevThisMonth - $RevLastMonth) / $RevLastMonth) * 100, 2)           : ($RevThisMonth > 0 ? null : null);
-                    $OrdersPercent = $OrdersLastMonth > 0 ? round((($OrdersThisMonth - $OrdersLastMonth) / $OrdersLastMonth) * 100, 2)  : null;
-                    $ProductsPercent = $ProductsLastMonth > 0 ? round((($ProductsThisMonth - $ProductsLastMonth) / $ProductsLastMonth) * 100, 2) : null;
-                    $CustomersPercent= $CustomersLastMonth > 0? round((($CustomersThisMonth - $CustomersLastMonth) / $CustomersLastMonth) * 100, 2) : null;
+                    // Show current month's performance (no comparison)
 
                     // Recent Orders
                     $RecentOrders = mysqli_query($conn, "SELECT order_id, fname, lname, total_amount, order_status, created_at
@@ -96,18 +92,8 @@ checkAdminAccess($conn);
                     <button onclick="window.location.href='salesReport.php?active_tab=revenue'">
                         <div class="stat-card">
                             <small class="stat-label">TOTAL REVENUE</small>
-                            <h3 class="stat-value">₱<?= number_format($TotalRevenue, 2) ?></h3>
-                            
-                            <?php if($RevPercent !== NULL): ?>
-                                <small class="stat-change <?= $RevPercent >= 0 ? 'positive' : 'negative' ?>">
-                                    <?= $RevPercent >= 0 ? '+' : '' ?><?= $RevPercent ?>% from last month
-                                </small>
-                            <?php elseif($RevThisMonth > 0): ?>
-                                <small class="stat-change positive">New this month</small>
-                            <?php else: ?>
-                                <small class="stat-change">No activity this month</small>
-                            <?php endif; ?>
-
+                            <h3 class="stat-value">₱<?= number_format($RevThisMonth, 2) ?></h3>
+                            <small class="stat-change">This month</small>
                         </div>
                     </button>
                     
@@ -115,18 +101,8 @@ checkAdminAccess($conn);
                         
                     <div class="stat-card">
                             <small class="stat-label">TOTAL ORDERS</small>
-                            <h3 class="stat-value"><?= number_format($TotalOrders) ?></h3>
-                            
-                            <?php if($OrdersPercent !== NULL): ?>
-                                <small class="stat-change <?= $OrdersPercent >= 0 ? 'positive' : 'negative' ?>">
-                                    <?= $OrdersPercent >= 0 ? '+' : '' ?><?= $OrdersPercent ?>% from last month
-                                </small>
-                            <?php elseif($OrdersPercent > 0): ?>
-                                <small class="stat-change positive">New this month</small>
-                            <?php else: ?>
-                                <small class="stat-change">No activity this month</small>
-                            <?php endif; ?>
-
+                            <h3 class="stat-value"><?= number_format($OrdersThisMonth) ?></h3>
+                            <small class="stat-change">This month</small>
                         </div>
 
                     </button>
@@ -135,17 +111,8 @@ checkAdminAccess($conn);
                         
                         <div class="stat-card">
                             <small class="stat-label">TOTAL PRODUCTS</small>
-                            <h3 class="stat-value"><?= number_format($TotalProducts) ?></h3>
-                            
-                            <?php if($ProductsPercent !== NULL): ?>
-                                <small class="stat-change <?= $ProductsPercent >= 0 ? 'positive' : 'negative' ?>">
-                                    <?= $ProductsPercent >= 0 ? '+' : '' ?><?= $ProductsPercent ?>% from last month
-                                </small>
-                            <?php elseif($ProductsPercent > 0): ?>
-                                <small class="stat-change positive">New this month</small>
-                            <?php else: ?>
-                                <small class="stat-change">No activity this month</small>
-                            <?php endif; ?>
+                            <h3 class="stat-value"><?= number_format($ProductsThisMonth) ?></h3>
+                            <small class="stat-change">This month</small>
                         </div>
 
                     </button>
@@ -155,17 +122,8 @@ checkAdminAccess($conn);
                         
                         <div class="stat-card">
                             <small class="stat-label">TOTAL CUSTOMERS</small>
-                            <h3 class="stat-value"><?= number_format($TotalCustomers) ?></h3>
-                            
-                            <?php if($CustomersPercent !== NULL): ?>
-                                <small class="stat-change <?= $CustomersPercent >= 0 ? 'positive' : 'negative' ?>">
-                                    <?= $CustomersPercent >= 0 ? '+' : '' ?><?= $CustomersPercent ?>% from last month
-                                </small>
-                            <?php elseif($CustomersPercent > 0): ?>
-                                <small class="stat-change positive">New this month</small>
-                            <?php else: ?>
-                                <small class="stat-change">No activity this month</small>
-                            <?php endif; ?>
+                            <h3 class="stat-value"><?= number_format($CustomersThisMonth) ?></h3>
+                            <small class="stat-change">This month</small>
                         </div>
 
                     </button>

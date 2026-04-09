@@ -114,19 +114,24 @@ function exportPDF(tab) {
         customers: 'Customers Report'
     };
 
+    // HEADER
     doc.setFontSize(16);
     doc.setFont('helvetica', 'bold');
     doc.text("Homme D'or", 14, 18);
     doc.setFontSize(12);
     doc.text(titles[tab], 14, 26);
+    
+    // Date range and generated date
     doc.setFontSize(9);
     doc.setFont('helvetica', 'normal');
+    const dateRange = window.dateRanges ? window.dateRanges[tab] : 'N/A';
+    doc.text('Report Period: ' + dateRange, 14, 32);
     doc.text('Generated: ' + new Date().toLocaleDateString('en-PH', {
-        year: 'numeric', month: 'long', day: 'numeric'
-    }), 14, 33);
-    doc.line(14, 36, 196, 36);
+        year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit'
+    }), 14, 37);
+    doc.line(14, 40, 196, 40);
 
-    let y = 44;
+    let y = 48;
     const statsEl = document.getElementById(tab + '-stats');
     if (statsEl) {
         statsEl.querySelectorAll('.stat-card').forEach(card => {
@@ -139,7 +144,7 @@ function exportPDF(tab) {
             doc.text(value, 80, y);
             y += 7;
         });
-        y += 4;
+        y += 6;
     }
 
     const tableEl = document.getElementById(tab + '-table');
