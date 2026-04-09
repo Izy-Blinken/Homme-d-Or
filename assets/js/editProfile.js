@@ -95,21 +95,29 @@ function loadProfile() {
     });
 }
 
+
 function openEditModal() {
     hasChanges = false;
-    document.getElementById('editProfileModal').style.display = 'flex';
+    const modal = document.getElementById('editProfileModal');
+    modal.classList.remove('closing');
+    modal.style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+    setTimeout(() => modal.classList.add('active'), 10);
 
-    // Clear password fields every time
-    document.getElementById('currentPassword').value = '';
-    document.getElementById('newPassword').value = '';
-    document.getElementById('confirmPassword').value = '';
 }
 
 function closeEditModal() {
     if (hasChanges) {
         document.getElementById('confirmationModal').style.display = 'flex';
     } else {
-        document.getElementById('editProfileModal').style.display = 'none';
+        const modal = document.getElementById('editProfileModal');
+        modal.classList.remove('active');
+        modal.classList.add('closing');
+        setTimeout(() => {
+            modal.style.display = 'none';
+            modal.classList.remove('closing');
+            document.body.style.overflow = 'auto';
+        }, 300);
     }
 }
 
@@ -117,11 +125,21 @@ function cancelDiscard() {
     document.getElementById('confirmationModal').style.display = 'none';
 }
 
+
 function confirmDiscard() {
     document.getElementById('confirmationModal').style.display = 'none';
-    document.getElementById('editProfileModal').style.display = 'none';
+    const modal = document.getElementById('editProfileModal');
+    modal.classList.remove('active');
+    modal.classList.add('closing');
+    setTimeout(() => {
+        modal.style.display = 'none';
+        modal.classList.remove('closing');
+        document.body.style.overflow = 'auto';
+    }, 300);
     hasChanges = false;
 }
+
+
 
 // Detect any changes inside the form
 document.addEventListener('input', function(e) {
@@ -138,9 +156,6 @@ function saveProfile(event) {
     const bday = document.getElementById('editBirthday').value;
     const phone = document.getElementById('editContact').value.trim();
     const email = document.getElementById('editEmail').value.trim();
-    const currentPassword = document.getElementById('currentPassword').value;
-    const newPassword = document.getElementById('newPassword').value;
-    const confirmPassword = document.getElementById('confirmPassword').value;
 
     if (!fname || !lname || !email) {
         showToast('First name, last name, and email are required.');
@@ -153,9 +168,6 @@ function saveProfile(event) {
     formData.append('bday', bday);
     formData.append('phone', phone);
     formData.append('email', email);
-    formData.append('current_password', currentPassword);
-    formData.append('new_password', newPassword);
-    formData.append('confirm_password', confirmPassword);
 
     fetch('../backend/user_profile/update_profile.php', {
         method: 'POST',
@@ -310,3 +322,244 @@ function confirmDeleteAccount() {
         showToast('Could not connect to the server.');
     });
 }
+
+// ── Change Password Modal ─────────────────────────────
+
+function openChangePasswordModal() {
+    const modal = document.getElementById('changePasswordModal');
+    document.getElementById('cpStep1').style.display = 'block';
+    document.getElementById('cpStep2').style.display = 'none';
+    document.getElementById('cpStep3').style.display = 'none';
+    document.getElementById('cpStep4').style.display = 'none';
+    document.getElementById('cpCurrentPassword').value = '';
+    document.getElementById('cpStep1Error').style.display = 'none';
+    modal.classList.remove('closing');
+    modal.style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+    setTimeout(() => modal.classList.add('active'), 10);
+}
+
+function closeChangePasswordModal() {
+    const modal = document.getElementById('changePasswordModal');
+    modal.classList.remove('active');
+    modal.classList.add('closing');
+    setTimeout(() => {
+        modal.style.display = 'none';
+        modal.classList.remove('closing');
+        document.body.style.overflow = 'auto';
+    }, 300);
+}
+
+function sendChangePasswordOtp(isResend = false) {
+    const currentPassword = document.getElementById('cpCurrentPassword').value.trim();
+    const errorEl = document.getElementById('cpStep1Error');
+
+    if (!isResend && !currentPassword) {
+        errorEl.textContent = 'Please enter your current password.';
+        errorEl.style.display = 'block';
+        return;
+    }
+
+    const resendBtn = document.getElementById('cpResendBtn');
+    if (isResend) {
+        resendBtn.disabled = true;
+        resendBtn.textContent = 'Sending...';
+    }
+
+    const formData = new FormData();
+    if (!isResend) formData.append('current_password', currentPassword);
+
+    fetch('../backend/user_profile/send_change_password_otp.php', {
+        method: 'POST',
+        body: formData
+    })
+    .then(res => res.json())
+    .then(data => {
+        if (data.success) {
+            document.getElementById('cpStep1').style.display = 'none';
+            document.getElementById('cpStep2').style.display = 'block';
+            document.querySelectorAll('.cpCodeInput').forEach(i => { i.value = ''; i.classList.remove('filled', 'error'); });
+            document.getElementById('cpOtpError').style.display = 'none';
+            showToast('Verification code sent to your email.');
+            startCpResendCooldown(60);
+        } else {
+            if (isResend) {
+                document.getElementById('cpOtpError').textContent = data.message || 'Failed to resend.';
+                document.getElementById('cpOtpError').style.display = 'block';
+                resendBtn.disabled = false;
+                resendBtn.textContent = 'Resend Code';
+            } else {
+                errorEl.textContent = data.message || 'Failed to send code.';
+                errorEl.style.display = 'block';
+            }
+        }
+    })
+    .catch(() => showToast('Could not connect to the server.'));
+}
+
+function startCpResendCooldown(seconds) {
+    const btn = document.getElementById('cpResendBtn');
+    let countdown = seconds;
+    btn.disabled = true;
+    btn.textContent = `Resend in ${countdown}s`;
+    const interval = setInterval(() => {
+        countdown--;
+        btn.textContent = `Resend in ${countdown}s`;
+        if (countdown <= 0) {
+            clearInterval(interval);
+            btn.textContent = 'Resend Code';
+            btn.disabled = false;
+        }
+    }, 1000);
+}
+
+function verifyCpOtp() {
+    const inputs = document.querySelectorAll('.cpCodeInput');
+    let code = '';
+    inputs.forEach(i => code += i.value);
+
+    const errorEl = document.getElementById('cpOtpError');
+
+    if (code.length !== 6) {
+        inputs.forEach(i => i.classList.add('error'));
+        setTimeout(() => inputs.forEach(i => i.classList.remove('error')), 500);
+        errorEl.textContent = 'Please enter all 6 digits.';
+        errorEl.style.display = 'block';
+        return;
+    }
+
+    const formData = new FormData();
+    formData.append('code', code);
+
+    fetch('../backend/user_profile/verify_change_password_otp.php', {
+        method: 'POST',
+        body: formData
+    })
+    .then(res => res.json())
+    .then(data => {
+        if (data.success) {
+            document.getElementById('cpStep2').style.display = 'none';
+            document.getElementById('cpStep3').style.display = 'block';
+            document.getElementById('cpNewPassword').value = '';
+            document.getElementById('cpConfirmPassword').value = '';
+        } else {
+            inputs.forEach(i => i.classList.add('error'));
+            setTimeout(() => inputs.forEach(i => i.classList.remove('error')), 500);
+            errorEl.textContent = data.message || 'Invalid code.';
+            errorEl.style.display = 'block';
+        }
+    })
+    .catch(() => showToast('Could not connect to the server.'));
+}
+
+function toggleCpVisibility(inputId, btn) {
+    const input = document.getElementById(inputId);
+    const icon = btn.querySelector('i');
+    if (input.type === 'password') {
+        input.type = 'text';
+        icon.classList.replace('fa-eye', 'fa-eye-slash');
+    } else {
+        input.type = 'password';
+        icon.classList.replace('fa-eye-slash', 'fa-eye');
+    }
+}
+
+function submitNewPassword() {
+    const newPassword = document.getElementById('cpNewPassword').value;
+    const confirmPassword = document.getElementById('cpConfirmPassword').value;
+    const errorEl = document.getElementById('cpResetError');
+
+    if (newPassword.length < 8 || !/[A-Z]/.test(newPassword) || !/[a-z]/.test(newPassword) || !/[0-9]/.test(newPassword)) {
+        errorEl.textContent = 'Password does not meet all requirements.';
+        errorEl.style.display = 'block';
+        return;
+    }
+
+    if (newPassword !== confirmPassword) {
+        errorEl.textContent = 'Passwords do not match.';
+        errorEl.style.display = 'block';
+        return;
+    }
+
+    const formData = new FormData();
+    formData.append('new_password', newPassword);
+    formData.append('confirm_password', confirmPassword);
+
+    fetch('../backend/user_profile/change_password.php', {
+        method: 'POST',
+        body: formData
+    })
+    .then(res => res.json())
+    .then(data => {
+        if (data.success) {
+            document.getElementById('cpStep3').style.display = 'none';
+            document.getElementById('cpStep4').style.display = 'block';
+        } else {
+            errorEl.textContent = data.message || 'Failed to change password.';
+            errorEl.style.display = 'block';
+        }
+    })
+    .catch(() => showToast('Could not connect to the server.'));
+}
+
+// Password strength for change password modal
+document.addEventListener('DOMContentLoaded', function() {
+    const cpNewPassword = document.getElementById('cpNewPassword');
+    const cpConfirmPassword = document.getElementById('cpConfirmPassword');
+    if (!cpNewPassword) return;
+
+    cpNewPassword.addEventListener('input', function() {
+        const pw = this.value;
+        const hasLength    = pw.length >= 8;
+        const hasUppercase = /[A-Z]/.test(pw);
+        const hasLowercase = /[a-z]/.test(pw);
+        const hasNumber    = /[0-9]/.test(pw);
+
+        document.getElementById('cp-req-length').classList.toggle('met', hasLength);
+        document.getElementById('cp-req-uppercase').classList.toggle('met', hasUppercase);
+        document.getElementById('cp-req-lowercase').classList.toggle('met', hasLowercase);
+        document.getElementById('cp-req-number').classList.toggle('met', hasNumber);
+
+        const strength = [hasLength, hasUppercase, hasLowercase, hasNumber].filter(Boolean).length;
+        const bar = document.getElementById('cpStrengthBarFill');
+        const text = document.getElementById('cpStrengthText');
+        bar.className = 'strengthBarFill';
+        text.className = 'strengthText';
+
+        if (strength <= 2) { bar.classList.add('weak'); text.classList.add('weak'); text.textContent = 'Weak'; }
+        else if (strength === 3) { bar.classList.add('medium'); text.classList.add('medium'); text.textContent = 'Medium'; }
+        else { bar.classList.add('strong'); text.classList.add('strong'); text.textContent = 'Strong'; }
+
+        checkCpPasswordMatch();
+    });
+
+    cpConfirmPassword.addEventListener('input', checkCpPasswordMatch);
+});
+
+function checkCpPasswordMatch() {
+    const pw  = document.getElementById('cpNewPassword').value;
+    const cpw = document.getElementById('cpConfirmPassword').value;
+    const el  = document.getElementById('cpPasswordMatch');
+    if (!cpw) { el.textContent = ''; el.className = 'passwordMatch'; return; }
+    if (pw === cpw) { el.textContent = 'Passwords match'; el.className = 'passwordMatch match'; }
+    else { el.textContent = 'Passwords do not match'; el.className = 'passwordMatch no-match'; }
+}
+
+// OTP input behavior for change password
+document.addEventListener('DOMContentLoaded', function() {
+    const inputs = document.querySelectorAll('.cpCodeInput');
+    inputs.forEach((input, index) => {
+        input.addEventListener('input', function() {
+            this.value = this.value.replace(/[^0-9]/g, '').slice(0, 1);
+            if (this.value.length === 1) {
+                this.classList.add('filled');
+                if (index < inputs.length - 1) inputs[index + 1].focus();
+            } else {
+                this.classList.remove('filled');
+            }
+        });
+        input.addEventListener('keydown', function(e) {
+            if (e.key === 'Backspace' && this.value === '' && index > 0) inputs[index - 1].focus();
+        });
+    });
+});
