@@ -8,7 +8,7 @@
     width: 175px;
 }
 
-# checkoutHeader{
+#checkoutHeader{
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -29,19 +29,19 @@
     justify-content: space-between;
 }
 
-# COnavbar{
+#COnavbar{
     display: flex;
     align-items: center;
     gap: 15px;
     color: whitesmoke;
 }
 
-# COnavbar li{
+#COnavbar li{
     list-style: none;
     padding: 0;
 }
 
-# COnavbar li a{
+#COnavbar li a{
     text-decoration: none;
     font-size: 17px;
     font-weight: 200;
@@ -51,24 +51,24 @@
     font-family:'Spartan', sans-serif;
 }
 
-# COnavbar li a:hover,
-# COnavbar li a.active {
+#COnavbar li a:hover,
+#COnavbar li a.active {
     color: #f8e189;
     transform: scale(1.1);
 }
 
-# COnavbar-right {
+#COnavbar-right {
     display: flex;
     align-items: center;
     gap: 10px;
 }
 
-# COnavbar-right li{
+#COnavbar-right li{
     list-style: none;
     padding: 0;
 }
 
-# COnavbar-right li a{
+#COnavbar-right li a{
     text-decoration: none;
     font-size: 17px;
     font-weight: 200;
@@ -78,21 +78,21 @@
     font-family:'Spartan', sans-serif;
 }
 
-# COnavbar-right li a:hover,
-# COnavbar-right li a.active {
+#COnavbar-right li a:hover,
+#COnavbar-right li a.active {
     color: #f8e189;
     transform: scale(1.1);
 }
 
 
 /* 1. The Dark Overlay Background */
-# orderSuccessModal {
+#orderSuccessModal {
     background: rgba(0, 0, 0, 0.8) !important; /* Makes the background behind the modal darker */
 }
 
 /* 2. The Actual Modal Popup Box (Glassmorphism) */
-# orderSuccessModal .modal-content, /* Assuming your inner box has this standard class */
-# orderSuccessModal > div {
+#orderSuccessModal .modal-content, /* Assuming your inner box has this standard class */
+#orderSuccessModal > div {
     background: rgba(0, 0, 0, 0.75) !important;
     backdrop-filter: blur(15px);
     -webkit-backdrop-filter: blur(15px);
@@ -103,7 +103,7 @@
 }
 
 /* 3. The Order Number Text */
-# orderNumberDisplay {
+#orderNumberDisplay {
     color: #c9a961 !important; /* Gold */
     font-weight: 700;
 }
@@ -111,7 +111,7 @@
 /* 4. Fix the Yellow "Waiting to ship" Box */
 /* (If your HTML uses a different class for this box, apply these properties to it) */
 .status-alert-box,
-# orderSuccessModal div[style*="background-color"] /* This catches it if you used inline HTML styles */ {
+#orderSuccessModal div[style*="background-color"] /* This catches it if you used inline HTML styles */ {
     background: rgba(201, 169, 97, 0.1) !important; /* Dark with slight gold tint */
     border: 1px solid rgba(212, 175, 55, 0.3) !important;
     color: #c9a961 !important; /* Gold text */
@@ -120,7 +120,7 @@
 }
 
 /* 5. The Modal Buttons */
-# orderSuccessModal button {
+#orderSuccessModal button {
     border-radius: 4px;
     font-family: 'Spartan', sans-serif;
     font-weight: 600;
@@ -128,27 +128,27 @@
 }
 
 /* "View My Order" Button (Ghost Gold) */
-# orderSuccessModal .view-order-btn, /* Update class if needed */
-# orderSuccessModal button:first-of-type {
+#orderSuccessModal .view-order-btn, /* Update class if needed */
+#orderSuccessModal button:first-of-type {
     background: transparent !important;
     border: 1px solid #c9a961 !important;
     color: #c9a961 !important;
 }
 
-# orderSuccessModal button:first-of-type:hover {
+#orderSuccessModal button:first-of-type:hover {
     background: #c9a961 !important;
     color: black !important;
 }
 
 /* "Order Again" Button (Solid Gold) */
-# orderSuccessModal .order-again-btn, /* Update class if needed */
-# orderSuccessModal button:last-of-type {
+#orderSuccessModal .order-again-btn, /* Update class if needed */
+#orderSuccessModal button:last-of-type {
     background: #c9a961 !important;
     border: 1px solid #c9a961 !important;
     color: black !important;
 }
 
-# orderSuccessModal button:last-of-type:hover {
+#orderSuccessModal button:last-of-type:hover {
     background: transparent !important;
     color: #c9a961 !important;
 }
@@ -233,7 +233,7 @@
 } */
 
 /* Main Container */
-# checkoutContainer {
+#checkoutContainer {
     display: grid;
     grid-template-columns: 1.5fr 1.2fr;
     gap: 40px;
@@ -668,7 +668,7 @@
 
 /* responsive */
 @media (max-width: 1024px) {
-    # checkoutContainer {
+    #checkoutContainer {
         grid-template-columns: 1fr;
     }
 

@@ -1,12 +1,12 @@
 /* Perfume Details */
-# details-section {
+#details-section {
     width: 500px;
     margin: 100px auto;
     padding-top: 20px;
     
 }
 
-# details-section h2 {
+#details-section h2 {
     margin-bottom: 30px;
 }
 .details-grid {
@@ -25,7 +25,7 @@
 }
 
 /* PERFUME HERO SECTION */
-# perfume-hero {
+#perfume-hero {
     position: relative;
     width: 100%;
     min-height: 100vh;
@@ -37,7 +37,7 @@
 }
 
 /* Video Background */
-# hero-video-bg {
+#hero-video-bg {
     position: absolute;
     top: 0;
     left: 0;
@@ -47,7 +47,7 @@
     z-index: 0;
 }
 
-# perfume-hero::before {
+#perfume-hero::before {
     content: '';
     position: absolute;
     top: 0;
@@ -59,7 +59,7 @@
 }
 
 /* Bottom fade */
-# perfume-hero::after {
+#perfume-hero::after {
     content: '';
     position: absolute;
     bottom: 0;
@@ -485,7 +485,7 @@
 }
 
 @media (max-width: 768px) {
-    # perfume-hero {
+    #perfume-hero {
         min-height: auto;
         padding: 60px 0;
     }
@@ -959,9 +959,9 @@
 .brands-section {
     background: linear-gradient(
         to bottom,
-        # 171b3a 0%,
+        171b3a 0%,
         rgba(245, 161, 4, 0.637) 50%,
-        # 171b3a 100%
+        171b3a 100%
     );
     padding: 43px 0;
     overflow: hidden;
@@ -1657,9 +1657,9 @@ background-color: #0B1A3A;
 .special-promo-section {
      background: linear-gradient(
         to bottom,
-        # 171b3a 0%,
+        171b3a 0%,
         rgba(245, 161, 4, 0.637) 50%,
-        # 171b3a 100%
+        171b3a 100%
     );
     padding: 70px 40px;
     text-align: center;
@@ -2082,15 +2082,15 @@ background-color: #0B1A3A;
 }
 
 
-# new-arrivals .shop-section-image {
+#new-arrivals .shop-section-image {
     background-image: url('../images/brand_images/greenperfs.jpg');
 }
 
-# sale .shop-section-image {
+#sale .shop-section-image {
     background-image: url('../images/brand_images/greenperfs.jpg');
 }
 
-# premium .shop-section-image {
+#premium .shop-section-image {
     background-image: url('../images/brand_images/greenperfs.jpg');
 }
 
@@ -2182,11 +2182,11 @@ background-color: #0B1A3A;
 }
 
 
-# top-picks .shop-section-image {
+#top-picks .shop-section-image {
     background-image: url('../images/brand_images/sampleproduct.png');
 }
 
-# daily-wear .shop-section-image {
+#daily-wear .shop-section-image {
     background-image: url('../images/brand_images/sampleproduct.png');
 
 }
@@ -2563,7 +2563,7 @@ background-color: #0B1A3A;
 
 /* Hero - mobile */
 @media (max-width: 768px) {
-    # perfume-hero       { min-height: auto; padding: 50px 0 40px; }
+    #perfume-hero { min-height: auto; padding: 50px 0 40px; }
     .hero-content { width: 94%; }
     .hero-title h1 { font-size: 2.5rem; }
 }
@@ -2871,7 +2871,7 @@ background-color: #0B1A3A;
     .details-list { max-width: 420px !important; margin: 0 auto !important; }
     .hero-btn { width: 100% !important; max-width: 280px !important; text-align: center !important; }
     .btn-primary { margin-right: 0 !important; }
-    # perfume-hero  { padding: 50px 0 40px !important; min-height: auto !important; }
+    #perfume-hero  { padding: 50px 0 40px !important; min-height: auto !important; }
 }
 
 @media (max-width: 480px) {
@@ -3087,7 +3087,7 @@ background-color: #0B1A3A;
 }
 
 @media (max-width: 600px) {
-    # details-section { width: 96% !important; margin: 30px auto !important; }
+    #details-section { width: 96% !important; margin: 30px auto !important; }
     .details-grid { flex-direction: column !important; gap: 16px !important; }
     .details-box { min-width: 100% !important; padding: 18px !important; }
 }
@@ -3095,7 +3095,7 @@ background-color: #0B1A3A;
 /* white space */
 
 @media (max-width: 768px) {
-    # perfume-hero {
+    #perfume-hero {
         min-height: unset !important;
         height: auto !important;
         padding-top: 80px !important;
@@ -3185,7 +3185,7 @@ background-color: #0B1A3A;
     .promo-cards-section-2,
     .special-promo-section,
     .testimonials-section,
-    # details-section {
+    #details-section {
         max-width: 100vw !important;
         overflow-x: hidden !important;
         box-sizing: border-box !important;

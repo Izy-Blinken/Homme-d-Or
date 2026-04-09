@@ -11,7 +11,7 @@
 }
 
 
-# blog-header {
+#blog-header {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -21,7 +21,7 @@
     margin: 0 auto;
 }
 
-# blog-header img {
+#blog-header img {
     flex-shrink: 0;
     width: 500px;
     height: 500px;
@@ -30,12 +30,12 @@
     border: 2px solid rgba(212,175,55,0.5);
 }
 
-# blog-header img:hover {
+#blog-header img:hover {
     transform: translateY(-5px);
     border: 2px solid rgba(212,175,55,0.5);
 }
 
-# blog-header div {
+#blog-header div {
     flex: 1;
     max-width: 800px;
     background: rgba(8, 10, 22, 0.55);
@@ -48,7 +48,7 @@
     border: 1px solid rgba(212,175,55,0.5);
 }
 
-# blog-header div h2 {
+#blog-header div h2 {
     margin-top: 0;
     margin-bottom: 30px;
     font-size: 3.5rem;
@@ -59,7 +59,7 @@
     text-align: left;
 }
 
-# blog-header div p {
+#blog-header div p {
     margin: 0;
     font-size: 1.1rem;
     color: #ffffff;
@@ -70,18 +70,18 @@
 }
 
 /*top comments*/
-# top-comments {
+#top-comments {
     max-width: 1600px;
     margin: 0 auto;
     padding: 100px 80px;
 }
 
-# top-comments > div:first-child {
+#top-comments > div:first-child {
     text-align: center;
     margin-bottom: 80px;
 }
 
-# top-comments h2 {
+#top-comments h2 {
     font-size: 3rem;
     margin-bottom: 0;
     font-family: 'Spartan', sans-serif;
@@ -154,18 +154,18 @@
 }
 
 /*highlights*/
-# highlights {
+#highlights {
     max-width: 1600px;
     margin: 0 auto;
     padding: 100px 80px;
 }
 
-# highlights > div:first-child {
+#highlights > div:first-child {
     text-align: center;
     margin-bottom: 80px;
 }
 
-# highlights h2 {
+#highlights h2 {
     font-size: 3rem;
     margin-bottom: 0;
     font-family: 'Spartan', sans-serif;
@@ -242,7 +242,7 @@
 }
 
 /*ads*/
-# ads-section {
+#ads-section {
     max-width: 1600px;
     margin: 0 auto;
     padding: 100px 80px;
@@ -341,34 +341,34 @@
 
 /* Tablet */
 @media (max-width: 1024px) {
-    # blog-header {
+    #blog-header {
         flex-direction: column;
         padding: 80px 40px;
         text-align: center;
     }
     
-    # blog-header img {
+    #blog-header img {
         width: 400px;
         height: 400px;
     }
     
-    # blog-header div {
+    #blog-header div {
         padding: 50px;
     }
     
-    # blog-header div h2 {
+    #blog-header div h2 {
         font-size: 3rem;
         text-align: center;
     }
     
-    # top-comments,
-    # highlights,
-    # ads-section {
+    #top-comments,
+    #highlights,
+    #ads-section {
         padding: 80px 40px;
     }
     
-    # top-comments h2,
-    # highlights h2 {
+    #top-comments h2,
+    #highlights h2 {
         font-size: 2.5rem;
         margin-bottom: 60px;
     }
@@ -399,35 +399,35 @@
 
 /* Mobile */
 @media (max-width: 768px) {
-    # blog-header {
+    #blog-header {
         padding: 60px 20px;
     }
     
-    # blog-header img {
+    #blog-header img {
         width: 300px;
         height: 300px;
     }
     
-    # blog-header div {
+    #blog-header div {
         padding: 40px 30px;
     }
     
-    # blog-header div h2 {
+    #blog-header div h2 {
         font-size: 2.5rem;
     }
     
-    # blog-header div p {
+    #blog-header div p {
         font-size: 1rem;
     }
     
-    # top-comments,
-    # highlights,
-    # ads-section {
+    #top-comments,
+    #highlights,
+    #ads-section {
         padding: 60px 20px;
     }
     
-    # top-comments h2,
-    # highlights h2 {
+    #top-comments h2,
+    #highlights h2 {
         font-size: 2rem;
         margin-bottom: 40px;
     }
@@ -472,35 +472,35 @@
 
 /* Small Mobile */
 @media (max-width: 480px) {
-    # blog-header {
+    #blog-header {
         padding: 40px 20px;
     }
     
-    # blog-header img {
+    #blog-header img {
         width: 250px;
         height: 250px;
     }
     
-    # blog-header div {
+    #blog-header div {
         padding: 30px 20px;
     }
     
-    # blog-header div h2 {
+    #blog-header div h2 {
         font-size: 2rem;
     }
     
-    # blog-header div p {
+    #blog-header div p {
         font-size: 0.95rem;
     }
     
-    # top-comments,
-    # highlights,
-    # ads-section {
+    #top-comments,
+    #highlights,
+    #ads-section {
         padding: 40px 20px;
     }
     
-    # top-comments h2,
-    # highlights h2 {
+    #top-comments h2,
+    #highlights h2 {
         font-size: 1.8rem;
     }
     

@@ -736,7 +736,7 @@ input[type="date"] {
     opacity: 0;
 }
 
-# unifiedModal .romcomModalContent {
+#unifiedModal .romcomModalContent {
     background: rgb(14, 16, 31);
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
@@ -749,7 +749,7 @@ input[type="date"] {
     overflow: hidden;
 }
 
-# unifiedModal .romcomDivider{
+#unifiedModal .romcomDivider{
     background: gray;
 }
 

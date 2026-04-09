@@ -244,7 +244,7 @@
 }
 
 /* Clean Circle Send Button */
-# chatSendBtn {
+#chatSendBtn {
     width: 45px;
     height: 45px;
     background: #C9A961;
@@ -259,7 +259,7 @@
     border-radius: 50%; /* Back to a clean circle */
 }
 
-# chatSendBtn:hover {
+#chatSendBtn:hover {
     background: #ffffff;
     transform: scale(1.05);
 }

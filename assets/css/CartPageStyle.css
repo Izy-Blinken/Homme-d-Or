@@ -1,5 +1,3 @@
-   CART PAGE LUXURY LAYOUT & STYLING (BALANCED & SCALABLE)
-   ========================================================================== */
 
 /* MAIN BACKGROUND */
 .mainBG {
@@ -261,8 +259,6 @@
     transform: translateY(-2px);
 }
 
-   RESPONSIVE
-   -------------------------------------------------------------------------- */
 @media (max-width: 1024px) {
     .cart-wrapper {
         grid-template-columns: 1fr;
@@ -304,9 +300,6 @@
     }
 }
 
-
-   CUSTOM CHECKBOX STYLING (SPARTAN LUXURY THEME)
-   ========================================================================== */
 .custom-checkbox {
     display: inline-block;
     position: relative;
