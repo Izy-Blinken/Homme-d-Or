@@ -50,7 +50,7 @@ while ($var = mysqli_fetch_assoc($var_result)) {
 }
 
 echo json_encode([
-    'product'  => $product,
-    'images'   => $images,
+    'product' => $product,
+    'images' => $images,
     'variants' => $variants,
 ]);

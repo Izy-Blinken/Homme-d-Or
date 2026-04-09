@@ -98,7 +98,7 @@
     transform: scale(1.1);
 }
 
-/*--- SHOP Dropdown (inside slide menu) ---*/
+/* SHOP Dropdown (inside slide menu) ---*/
 .logo-slide-menu .dropdown {
     position: relative;
 }
@@ -169,8 +169,8 @@
     transform: none;
 }
 
-/*--- Header Bar ---*/
-#header {
+/* Header Bar ---*/
+# header {
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -184,7 +184,7 @@
     left: 0;
 }
 
-/*--- Fix for Search Button Colors ---*/
+/* Fix for Search Button Colors ---*/
 .logo-slide-menu .search-link,
 .mobile-menu button[type="submit"] {
     color: whitesmoke;
@@ -197,7 +197,7 @@
     transform: scale(1.1);
 }
 
-/*--- Navbar Right ---*/
+/* Navbar Right ---*/
 .nav-wrapper {
     display: flex;
     align-items: center;
@@ -205,18 +205,18 @@
     margin-left: auto;
 }
 
-#navbar-right {
+# navbar-right {
     display: flex;
     align-items: center;
     gap: 12px;
 }
 
-#navbar-right li {
+# navbar-right li {
     list-style: none;
     padding: 0 12px;
 }
 
-#navbar-right li a {
+# navbar-right li a {
     text-decoration: none;
     font-size: 22px;
     font-weight: 500;
@@ -225,13 +225,13 @@
     display: inline-block;
 }
 
-#navbar-right li a:hover:not(.profile-login-btn):not(.profile-register-btn),
-#navbar-right li a.active:not(.profile-login-btn):not(.profile-register-btn) {
+# navbar-right li a:hover:not(.profile-login-btn):not(.profile-register-btn),
+# navbar-right li a.active:not(.profile-login-btn):not(.profile-register-btn) {
     color: #f8e189;
     transform: scale(1.1);
 }
 
-/*--- Country Dropdown ---*/
+/* Country Dropdown ---*/
 .country-dropdown {
     position: relative;
 }
@@ -269,7 +269,7 @@
     padding: 0;
 }
 
-#navbar-right .country-menu li a {
+# navbar-right .country-menu li a {
     display: flex;
     align-items: center;
     gap: 12px;
@@ -285,12 +285,12 @@
     font-size: 20px;
 }
 
-#navbar-right .country-menu li a:hover {
+# navbar-right .country-menu li a:hover {
     color: #d2b231;
     padding-left: 25px;
 }
 
-/*--- Expanding Search ---*/
+/* Expanding Search ---*/
 .logo-slide-menu .search-container {
     position: relative;
     display: flex;
@@ -353,7 +353,7 @@
     box-shadow: 0 0 15px rgba(248, 225, 137, 0.3);
 }
 
-/*--- General Dropdown ---*/
+/* General Dropdown ---*/
 .dropdown {
     position: relative;
 }
@@ -409,12 +409,12 @@
     transition: all 0.3s ease;
 }
 
-#navbar .dropdown-menu li a:hover {
+# navbar .dropdown-menu li a:hover {
     color: rgb(14, 16, 31);
     padding-left: 25px;
 }
 
-/*--- Profile Dropdown ---*/
+/* Profile Dropdown ---*/
 .profile-dropdown {
     position: relative;
 }
@@ -536,7 +536,7 @@
 
 /* HERO SECTION*/
 
-#hero {
+# hero {
     background-image: url('../images/brand_images/heroBG1.png');
     height: 90vh;
     width: 100%;
@@ -549,12 +549,12 @@
     justify-content: center;
 }
 
-#hero h1 { color: black; }
-#hero h2 { color: black; }
-#hero h4 { color: goldenrod; padding-bottom: 15px; }
-#hero p  { color: grey; }
+# hero h1 { color: black; }
+# hero h2 { color: black; }
+# hero h4 { color: goldenrod; padding-bottom: 15px; }
+# hero p  { color: grey; }
 
-#hero button {
+# hero button {
     color: rgb(252, 252, 252);
     background-color: rgb(3, 3, 84);
     padding: 16px 40px;
@@ -568,7 +568,7 @@
     overflow: hidden;
 }
 
-#hero button::before {
+# hero button::before {
     content: '';
     position: absolute;
     top: 0;
@@ -580,9 +580,9 @@
     z-index: -1;
 }
 
-#hero button:hover::before { left: 0; }
+# hero button:hover::before { left: 0; }
 
-#hero button:hover {
+# hero button:hover {
     color: goldenrod;
     border-color: gold;
     box-shadow: 0 0 20px rgb(99, 99, 99);
@@ -590,12 +590,12 @@
 
 /* FOOTER*/
 
-#footer {
+# footer {
     background-color: #0e101f;
     margin-top: 0;
 }
 
-/*--- Newsletter ---*/
+/* Newsletter ---*/
 .newsletter-section {
     padding: 30px 20px;
 }
@@ -666,7 +666,7 @@
     transform: scale(1.05);
 }
 
-/*--- Footer Links Grid ---*/
+/* Footer Links Grid ---*/
 .footer-links-section {
     background-color: #0e101f;
     padding: 10px 20px; /* Reduced further */
@@ -718,7 +718,7 @@
     transform: scale(1.1);
 }
 
-/*--- Contact List ---*/
+/* Contact List ---*/
 .contact-list {
     list-style: none;
     padding: 0;
@@ -742,7 +742,7 @@
     min-width: 20px;
 }
 
-/*--- Social Icons ---*/
+/* Social Icons ---*/
 .social-icons {
     display: flex;
     gap: 16px;
@@ -761,7 +761,7 @@
     transform: scale(1.1);
 }
 
-/*--- Footer Bottom ---*/
+/* Footer Bottom ---*/
 .footer-bottom-section {
     background-color: #0e101f;
     padding: 8px 20px; /* Reduced further */
@@ -850,7 +850,7 @@
 /* RESPONSIVE BREAKPOINTS*/
 
 @media (min-width: 1920px) {
-    #header {
+    # header {
         padding: 20px 50px;
         height: 150px;
     }
@@ -865,11 +865,11 @@
         padding: 14px 36px;
     }
 
-    #navbar-right li a {
+    # navbar-right li a {
         font-size: 26px;
     }
 
-    #hero {
+    # hero {
         padding: 0 140px;
     }
 
@@ -895,7 +895,7 @@
 }
 
 @media (min-width: 1440px) and (max-width: 1919px) {
-    #header {
+    # header {
         padding: 20px 70px;
     }
 
@@ -912,7 +912,7 @@
 }
 
 @media (max-width: 1199px) {
-    #header {
+    # header {
         padding: 15px 30px;
         height: 110px;
     }
@@ -931,11 +931,11 @@
         padding: 10px 18px;
     }
 
-    #navbar-right li a {
+    # navbar-right li a {
         font-size: 20px;
     }
 
-    #navbar-right li {
+    # navbar-right li {
         padding: 0 8px;
     }
 
@@ -950,7 +950,7 @@
 }
 
 @media (max-width: 991px) {
-    #header {
+    # header {
         height: 95px;
         padding: 12px 24px;
     }
@@ -969,15 +969,15 @@
         padding: 8px 14px;
     }
 
-    #navbar-right li a {
+    # navbar-right li a {
         font-size: 18px;
     }
 
-    #navbar-right li {
+    # navbar-right li {
         padding: 0 6px;
     }
 
-    #hero {
+    # hero {
         padding: 0 50px;
         height: 75vh;
     }
@@ -1011,7 +1011,7 @@
 @media (max-width: 767px) {
 
     /* Header */
-    #header {
+    # header {
         height: 65px;
         padding: 0 16px;
         overflow: visible;
@@ -1034,11 +1034,11 @@
         display: flex;
     }
 
-    #navbar-right li {
+    # navbar-right li {
         padding: 0 6px;
     }
 
-    #navbar-right li a {
+    # navbar-right li a {
         font-size: 18px;
     }
 
@@ -1071,7 +1071,7 @@
         z-index: 998;
     }
 
-    #header.mobile-menu-open .mobile-menu {
+    # header.mobile-menu-open .mobile-menu {
         max-height: 400px;
         opacity: 1;
         pointer-events: all;
@@ -1102,13 +1102,13 @@
     }
 
     /* Hero */
-    #hero {
+    # hero {
         padding: 0 30px;
         height: 65vh;
         background-position: top 20% center;
     }
 
-    #hero button {
+    # hero button {
         padding: 14px 30px;
         font-size: 14px;
     }
@@ -1184,20 +1184,20 @@
 }
 
 @media (max-width: 599px) {
-    #header {
+    # header {
         padding: 0 14px;
         height: 60px;
     }
 
-    #navbar-right li {
+    # navbar-right li {
         padding: 0 4px;
     }
 
-    #navbar-right li a {
+    # navbar-right li a {
         font-size: 17px;
     }
 
-    #hero {
+    # hero {
         padding: 0 20px;
         height: 60vh;
     }
@@ -1209,35 +1209,35 @@
 }
 
 @media (max-width: 479px) {
-    #header {
+    # header {
         padding: 0 12px;
         height: 56px;
     }
 
-    #navbar-right li {
+    # navbar-right li {
         padding: 0 3px;
     }
 
-    #navbar-right li a {
+    # navbar-right li a {
         font-size: 16px;
     }
 
-    #hero {
+    # hero {
         padding: 0 16px;
         height: 55vh;
         justify-content: flex-end;
         padding-bottom: 40px;
     }
 
-    #hero h1 {
+    # hero h1 {
         font-size: 1.6rem;
     }
 
-    #hero h2 {
+    # hero h2 {
         font-size: 1.2rem;
     }
 
-    #hero button {
+    # hero button {
         padding: 12px 24px;
         font-size: 13px;
     }
@@ -1296,12 +1296,12 @@
 }
 
 @media (max-width: 359px) {
-    #header {
+    # header {
         height: 52px;
         padding: 0 10px;
     }
 
-    #navbar-right li a {
+    # navbar-right li a {
         font-size: 15px;
     }
 
@@ -1309,16 +1309,16 @@
         width: 20px;
     }
 
-    #hero {
+    # hero {
         padding: 0 12px;
         height: 50vh;
     }
 
-    #hero h1 {
+    # hero h1 {
         font-size: 1.3rem;
     }
 
-    #hero button {
+    # hero button {
         padding: 10px 18px;
         font-size: 12px;
     }
@@ -1360,9 +1360,9 @@
     pointer-events: none;
 }
 
-/*=========================================*/
-/* PREMIUM NOTIFICATION PANEL              */
-/*=========================================*/
+/* /
+/* PREMIUM NOTIFICATION PANEL */
+/* /
 
 .notif-panel {
     position: absolute;
@@ -1381,14 +1381,14 @@
     overflow: hidden; /* Keeps the rounded corners clean */
 }
 
-/*--- Force the badge to anchor directly to the bell icon ---*/
-#notif-bell {
+/* Force the badge to anchor directly to the bell icon ---*/
+# notif-bell {
     position: relative !important;
     display: inline-flex !important;
     align-items: center;
 }
 
-/*--- Fine-tune the badge position ---*/
+/* Fine-tune the badge position ---*/
 .notif-count {
     position: absolute !important;
     top: -6px !important;
@@ -1449,14 +1449,14 @@
     width: 6px;
 }
 .notif-list::-webkit-scrollbar-track {
-    background: #f8f9fa; 
+    background: #f8f9fa;
 }
 .notif-list::-webkit-scrollbar-thumb {
-    background: #e0e0e0; 
+    background: #e0e0e0;
     border-radius: 10px;
 }
 .notif-list::-webkit-scrollbar-thumb:hover {
-    background: #c9a961; 
+    background: #c9a961;
 }
 
 /* Individual Item Layout */
@@ -1636,7 +1636,7 @@
     margin: 0.75rem 0;
 }
 
-/*--- Header Language Toggle ---*/
+/* Header Language Toggle ---*/
 .header-lang-toggle {
     display: flex;
     align-items: center;
@@ -1667,7 +1667,6 @@
 }
 
 
-/* ==========================================================================
    SEARCH SUGGESTIONS DROPDOWN
    ========================================================================== */
 
@@ -1675,7 +1674,7 @@
     position: absolute;
     top: 100%;
     left: 0;
-    width: 100%; 
+    width: 100%;
     background: rgba(14, 16, 31, 0.95);
     backdrop-filter: blur(15px);
     -webkit-backdrop-filter: blur(15px);

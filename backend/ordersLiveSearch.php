@@ -8,7 +8,7 @@ if (strlen($query) < 1) {
     exit;
 }
 
-$safe  = mysqli_real_escape_string($conn, $query);
+$safe = mysqli_real_escape_string($conn, $query);
 $result = mysqli_query($conn,
     "SELECT order_id, fname, lname, order_status
      FROM orders

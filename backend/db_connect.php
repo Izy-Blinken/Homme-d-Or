@@ -17,14 +17,14 @@ if (session_status() === PHP_SESSION_ACTIVE && empty($_SESSION['user_id']) && !e
     ));
 
     if ($remembered) {
-        $_SESSION['user_id']       = $remembered['user_id'];
-        $_SESSION['user_fname']    = $remembered['fname'];
-        $_SESSION['user_email']    = $remembered['email'];
+        $_SESSION['user_id'] = $remembered['user_id'];
+        $_SESSION['user_fname'] = $remembered['fname'];
+        $_SESSION['user_email'] = $remembered['email'];
         $_SESSION['user_username'] = $remembered['username'];
 
         // Rotate token for security ; old token is now invalid
         $new_token = bin2hex(random_bytes(32));
-        $safe_new  = mysqli_real_escape_string($conn, $new_token);
+        $safe_new = mysqli_real_escape_string($conn, $new_token);
         mysqli_query($conn, "UPDATE users SET remember_token = '$safe_new' WHERE user_id = '{$remembered['user_id']}'");
         setcookie('remember_token', $new_token, time() + (30 * 24 * 60 * 60), '/');
     } else {

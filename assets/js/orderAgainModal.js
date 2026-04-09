@@ -28,7 +28,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 
                 // Submit the form to orderConfirmation.php
                 this.submit();
-            }, 1500); 
+            }, 1500);
         });
     }
 });

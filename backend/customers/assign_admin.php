@@ -9,7 +9,7 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 }
 
 $user_id = intval($_POST['user_id'] ?? 0);
-$action  = $_POST['action'] ?? 'assign';
+$action = $_POST['action'] ?? 'assign';
 
 if (!$user_id) {
     $_SESSION['error'] = 'Invalid user.';

@@ -190,7 +190,7 @@
     color: #ffffff;
     padding: 0;
     white-space: nowrap;
-} 
+}
 
 .profileContainer .viewAllBtn:hover {
     color: #c9a961;
@@ -792,11 +792,11 @@
 }
 
 .forgotP a {
-    color: white; 
+    color: white;
 }
 
 .forgotP a:hover {
-    color: #c9a961; 
+    color: #c9a961;
     cursor: pointer;
 }
 

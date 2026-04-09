@@ -16,7 +16,7 @@ if (!isset($_SESSION['user_id'])) {
 }
 
 $user_id = $_SESSION['user_id'];
-$otp     = trim($_POST['code'] ?? '');
+$otp = trim($_POST['code'] ?? '');
 
 if (strlen($otp) !== 6) {
     echo json_encode(['success' => false, 'message' => 'Please enter the 6-digit code.']);

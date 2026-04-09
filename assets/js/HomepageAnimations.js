@@ -23,7 +23,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const dotsContainer = document.getElementById('carouselDots');
     const fade = document.querySelectorAll('.fade-in');
 
-    //carousel fade effect
+    // carousel fade effect
     const appearOptions= { threshold: 0.1, rootMargin: "0px -50px" };
     const appearOnScroll = new IntersectionObserver(function(entries, appearOnScroll) {
         entries.forEach(entry => {
@@ -39,7 +39,7 @@ document.addEventListener('DOMContentLoaded', function() {
         appearOnScroll.observe(fade);
     });
 
-    //create dots
+    // create dots
     if (slides.length > 0 && dotsContainer) {
         slides.forEach((_, index) => {
             const dot = document.createElement('div');
@@ -169,7 +169,7 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 
-//testimonials carousel
+// testimonials carousel
 document.addEventListener('DOMContentLoaded', function() {
     const testimonialsTrack = document.getElementById('testimonialsTrack');
     const prevBtn = document.getElementById('testimonialPrev');
@@ -178,7 +178,7 @@ document.addEventListener('DOMContentLoaded', function() {
     if (testimonialsTrack && prevBtn && nextBtn) {
         const cards = testimonialsTrack.querySelectorAll('.testimonial-card');
         let currentPosition = 0;
-        let cardsToShow = 3; 
+        let cardsToShow = 3;
         
         // Update cards to show based on screen width
         function updateCardsToShow() {
@@ -198,7 +198,7 @@ document.addEventListener('DOMContentLoaded', function() {
         // Update testimonials position
         function updateTestimonials() {
             const cardWidth = cards[0].offsetWidth;
-            const gap = 30; 
+            const gap = 30;
             const offset = -(currentPosition * (cardWidth + gap));
             testimonialsTrack.style.transform = `translateX(${offset}px)`;
             
@@ -282,7 +282,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-// --- AJAX ADD TO CART FUNCTION ---
+// AJAX ADD TO CART FUNCTION
 window.addToCart = function(productId) {
     // Package the data to send to the server
     const formData = new FormData();
@@ -299,7 +299,7 @@ window.addToCart = function(productId) {
             // It worked! Show the success toast
             showGeneralToast(data.message, 'success');
             
-            // Note: If you have a little cart icon with a number counter, 
+            // Note: If you have a little cart icon with a number counter,
             // you could trigger a function here to update that number!
             
         } else {

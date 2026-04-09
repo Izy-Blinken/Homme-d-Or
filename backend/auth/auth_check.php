@@ -57,7 +57,7 @@ function checkAdminAccess($conn, $required_permission = null) {
     }
 }
 
-//check perms in array, allow if has at least one
+// check perms in array, allow if has at least one
 function checkAnyPermission($conn, array $permissions) {
 
     if (!empty($_SESSION['superadmin_id'])) {

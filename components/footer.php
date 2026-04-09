@@ -86,7 +86,7 @@
                             <button onclick="validateCaptcha()">Verify</button>
                             <div id="captchaStatus" style="font-size:13px; min-height:18px;"></div>
                         </div>
-                    </div> 
+                    </div>
 
                     <div class="regBtn">
                         <p id="signupServerError" style="color:red; text-align:center;"></p>

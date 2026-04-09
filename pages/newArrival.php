@@ -3,7 +3,7 @@ if (session_status() === PHP_SESSION_NONE) { session_start(); }
 include_once '../backend/db_connect.php';
 $identity = getCurrentUserId();
 $isLoggedIn = ($identity['type'] === 'user_id');
-$isGuest    = ($identity['type'] === 'guest_id');
+$isGuest = ($identity['type'] === 'guest_id');
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -793,7 +793,7 @@ $isGuest    = ($identity['type'] === 'guest_id');
     <script>
     // ── User identity passed from PHP ─────────────────────────────
     const IS_LOGGED_IN = <?php echo $isLoggedIn ? 'true' : 'false'; ?>;
-    const IS_GUEST     = <?php echo $isGuest    ? 'true' : 'false'; ?>;
+    const IS_GUEST = <?php echo $isGuest ? 'true' : 'false'; ?>;
 
     document.addEventListener('DOMContentLoaded', function () {
 
@@ -803,7 +803,7 @@ $isGuest    = ($identity['type'] === 'guest_id');
             btn.removeAttribute('onclick');
 
             btn.addEventListener('click', function () {
-                const card      = btn.closest('.product-card');
+                const card = btn.closest('.product-card');
                 const productId = card ? card.dataset.productId : null;
 
                 if (!productId || productId === '0') {
@@ -812,8 +812,8 @@ $isGuest    = ($identity['type'] === 'guest_id');
                     return;
                 }
 
-                const original  = btn.textContent;
-                btn.disabled    = true;
+                const original = btn.textContent;
+                btn.disabled = true;
                 btn.textContent = 'Adding...';
 
                 fetch('../backend/add_to_cart.php', {
@@ -846,7 +846,7 @@ $isGuest    = ($identity['type'] === 'guest_id');
                 }
 
                 // Registered user: toggle wishlist
-                const card      = btn.closest('.product-card');
+                const card = btn.closest('.product-card');
                 const productId = card ? card.dataset.productId : null;
 
                 if (!productId || productId === '0') {
@@ -879,7 +879,7 @@ $isGuest    = ($identity['type'] === 'guest_id');
 
     // Toggle heart icon filled/empty
     function toggleHeartVisual(btn, forceState) {
-        const icon    = btn.querySelector('i');
+        const icon = btn.querySelector('i');
         const isFilled = icon.classList.contains('fa-solid');
         const makeFill = (forceState !== undefined) ? forceState : !isFilled;
 

@@ -20,7 +20,7 @@
     <body>
         <?php include '../components/header.php'; ?>
         <main class="mainBG">
-            <section id = "blog-header"> 
+            <section id = "blog-header">
                 <img src="../assets/images/brand_images/collab_image.png" alt="Blog Header Image" width = "500px" height = "500px" class="fade-in">
             <div class="fade-in">
                 <h2>Collaboration</h2>

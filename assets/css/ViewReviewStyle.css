@@ -1,5 +1,5 @@
-/*--- Main Container ---*/
-#all-reviews-section {
+/* Main Container ---*/
+# all-reviews-section {
     padding: 60px 5%;
     min-height: 80vh;
     color: whitesmoke;
@@ -13,7 +13,7 @@
     align-items: flex-start;
 }
 
-/*--- Left Sidebar: Product Summary ---*/
+/* Left Sidebar: Product Summary ---*/
 .reviews-sidebar {
     flex: 0 0 300px;
     background: rgba(8, 10, 22, 0.55);
@@ -69,7 +69,7 @@
     font-size: 14px;
 }
 
-/*--- Right Feed: The Reviews ---*/
+/* Right Feed: The Reviews ---*/
 .reviews-feed {
     flex: 1;
 }
@@ -104,7 +104,7 @@
     background-color: #0e101f;
 }
 
-/*--- Individual Review Cards ---*/
+/* Individual Review Cards ---*/
 .full-review-card {
     background: rgba(8, 10, 22, 0.55);
     backdrop-filter: blur(16px);
@@ -186,7 +186,7 @@
     font-size: 15px;
 }
 
-/*--- Responsive Design ---*/
+/* Responsive Design ---*/
 @media (max-width: 900px) {
     .all-reviews-container {
         flex-direction: column;

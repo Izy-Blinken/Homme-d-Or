@@ -8,7 +8,7 @@ if (strlen($query) < 1) {
     exit;
 }
 
-$safe  = mysqli_real_escape_string($conn, $query);
+$safe = mysqli_real_escape_string($conn, $query);
 $result = mysqli_query($conn,
     "SELECT product_id, product_name, price, discounted_price
      FROM products

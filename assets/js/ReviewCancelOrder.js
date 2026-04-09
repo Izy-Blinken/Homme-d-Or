@@ -71,13 +71,13 @@ function submitReview(event) {
     closeReviewModal();
 }
 
-//Cancel Order Modal
+// Cancel Order Modal
 function openCancelModal() {
     const modal = document.getElementById('cancelOrderModal');
     modal.classList.remove('closing');
     modal.classList.add('show');
     
-    //reset form
+    // reset form
     const radioButtons = document.querySelectorAll('input[name="cancelReason"]');
     radioButtons.forEach(radio => radio.checked = false);
     document.getElementById('otherReason').value = '';
@@ -151,7 +151,7 @@ function showGeneralToast(message, type='success') {
     
     setTimeout(() => {
         toast.classList.remove('show');
-    }, 3000); 
+    }, 3000);
 }
 
 function openViewModal(img, name, variant, qty,total, payment, date, status) {

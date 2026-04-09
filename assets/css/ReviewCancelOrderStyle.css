@@ -179,7 +179,7 @@ textarea::placeholder {
 .radio-option input[type="radio"] {
     width: 16px;
     height: 16px;
-    accent-color: black; 
+    accent-color: black;
     cursor: pointer;
 }
 
@@ -350,16 +350,16 @@ textarea::placeholder {
 }
 
 /* Overlay */
-#viewOrderModal.romcomOverlay {
+# viewOrderModal.romcomOverlay {
     background: rgba(0, 0, 0, 0.7);
 }
 
-/*  View Modal Content  eto yun*/
-#viewOrderModal .romcomModalContent {
+/* View Modal Content eto yun*/
+# viewOrderModal .romcomModalContent {
     background: rgb(14, 16, 31);
-    backdrop-filter: blur(12px);           
-    -webkit-backdrop-filter: blur(12px);  
-    border: 1px solid #c9a961;  
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid #c9a961;
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6);
     width: 100%;
     max-width: 32rem;
@@ -369,27 +369,27 @@ textarea::placeholder {
 }
 
 /* Header */
-#viewOrderModal .romcomHeader {
+# viewOrderModal .romcomHeader {
     padding: 2rem 2.5rem 1.5rem 2.5rem;
     text-align: center;
     position: relative;
 }
 
-#viewOrderModal .romcomHeader h2 {
+# viewOrderModal .romcomHeader h2 {
     font-size: 2rem;
     font-weight: 700;
     color: #c9a961;
 }
 
 /* Divider */
-#viewOrderModal .romcomDivider {
+# viewOrderModal .romcomDivider {
     height: 1px;
     background: gray !important;
     margin: 0 2rem;
 }
 
 /* Modal Body */
-#viewOrderModal .romcomBody {
+# viewOrderModal .romcomBody {
     padding: 2rem 2.5rem;
     display: flex;
     flex-direction: column;
@@ -397,13 +397,13 @@ textarea::placeholder {
 }
 
 /* Product Section */
-#viewOrderModal .view-section {
+# viewOrderModal .view-section {
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
 }
 
-#viewOrderModal .view-section h4 {
+# viewOrderModal .view-section h4 {
     font-size: 1.125rem;
     font-weight: 600;
     color: #c9a961;
@@ -411,33 +411,33 @@ textarea::placeholder {
 }
 
 /* Product Info */
-#viewOrderModal .view-product {
+# viewOrderModal .view-product {
     display: flex;
     align-items: center;
     gap: 1rem;
 }
 
-#viewOrderModal .view-product img {
+# viewOrderModal .view-product img {
     width: 70px;
     height: auto;
     object-fit: cover;
     border: 1px solid #c9a961;
 }
 
-#viewOrderModal #viewName {
+# viewOrderModal #viewName {
     font-size: 1rem;
     font-weight: 600;
     margin: 0;
 }
 
-#viewOrderModal #viewVariant {
+# viewOrderModal #viewVariant {
     font-size: 0.875rem;
     color: whitesmoke;
     margin: 0;
 }
 
 /* Order Info */
-#viewOrderModal .view-section p {
+# viewOrderModal .view-section p {
     font-size: 0.875rem;
     margin: 0.25rem 0;
     display: flex;
@@ -445,19 +445,19 @@ textarea::placeholder {
     color: #e0c27f;
 }
 
-#viewOrderModal .view-section p strong {
+# viewOrderModal .view-section p strong {
     color: white;
 }
 
 /* Button Group */
-#viewOrderModal .romcomButtonGroup {
+# viewOrderModal .romcomButtonGroup {
     margin-top: 1.5rem;
     display: flex;
     justify-content: center;
     gap: 1rem;
 }
 
-#viewOrderModal {
+# viewOrderModal {
     background: #c9a961;
     color: #080051;
     font-weight: 700;
@@ -467,45 +467,45 @@ textarea::placeholder {
     transition: all 0.2s;
 }
 
-#viewOrderModal {
+# viewOrderModal {
     background: #e0c27f;
 }
 
 /* Scrollbar */
-#viewOrderModal .romcomBody::-webkit-scrollbar {
+# viewOrderModal .romcomBody::-webkit-scrollbar {
     width: 6px;
 }
 
-#viewOrderModal .romcomBody::-webkit-scrollbar-thumb {
+# viewOrderModal .romcomBody::-webkit-scrollbar-thumb {
     background: #c9a961;
 }
 
-#viewOrderModal .romcomBody::-webkit-scrollbar-track {
+# viewOrderModal .romcomBody::-webkit-scrollbar-track {
     background: #2A2D34;
 }
 
 /* Responsive */
 @media (max-width: 640px) {
-    #viewOrderModal .romcomModalContent {
+    # viewOrderModal .romcomModalContent {
         max-width: 90%;
     }
 
-    #viewOrderModal .romcomBody {
+    # viewOrderModal .romcomBody {
         padding: 1.5rem;
     }
 
-    #viewOrderModal .view-product {
+    # viewOrderModal .view-product {
         gap: 0.75rem;
     }
 
-    #viewOrderModal .view-section p {
+    # viewOrderModal .view-section p {
         flex-direction: column;
         align-items: flex-start;
     }
 }
 
 /* Ensure description text wraps properly */
-#WDescription {
+# WDescription {
     display: block;
     margin-top: 5px;
     font-weight: 400;
@@ -560,11 +560,11 @@ textarea::placeholder {
     border: 1px solid lightslategray !important;
 }
 
-#viewWishlistModal .romcomModalContent {
+# viewWishlistModal .romcomModalContent {
     background: rgb(14, 16, 31);
-    backdrop-filter: blur(12px);           
-    -webkit-backdrop-filter: blur(12px);  
-    border: 1px solid #c9a961;  
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid #c9a961;
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6);
     width: 100%;
     max-width: 32rem;

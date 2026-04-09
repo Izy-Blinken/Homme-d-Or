@@ -359,10 +359,10 @@ checkAdminAccess($conn, 'can_export_report');
 <script>
 
     // Pass chart data to JS
-    makeChart('chart-revenue',   <?= json_encode($rev_labels) ?>,  <?= json_encode($rev_values) ?>,  'Revenue',       '#1a2433');
-    makeChart('chart-sales',     <?= json_encode($sal_labels) ?>,  <?= json_encode($sal_values) ?>,  'Sales',         '#26a69a');
-    makeChart('chart-orders',    <?= json_encode($ord_labels) ?>,  <?= json_encode($ord_values) ?>,  'Orders',        '#e65100');
-    makeChart('chart-products',  <?= json_encode($prod_labels) ?>, <?= json_encode($prod_values) ?>, 'Units Sold',    '#7b1fa2');
+    makeChart('chart-revenue', <?= json_encode($rev_labels) ?>, <?= json_encode($rev_values) ?>, 'Revenue', '#1a2433');
+    makeChart('chart-sales', <?= json_encode($sal_labels) ?>, <?= json_encode($sal_values) ?>, 'Sales', '#26a69a');
+    makeChart('chart-orders', <?= json_encode($ord_labels) ?>, <?= json_encode($ord_values) ?>, 'Orders', '#e65100');
+    makeChart('chart-products', <?= json_encode($prod_labels) ?>, <?= json_encode($prod_values) ?>, 'Units Sold', '#7b1fa2');
     makeChart('chart-customers', <?= json_encode($cust_labels) ?>, <?= json_encode($cust_values) ?>, 'New Customers', '#2e7d32');
 </script>
 

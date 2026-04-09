@@ -19,21 +19,21 @@ header('Content-Type: application/json');
 $superadmin_id = (int) $_SESSION['superadmin_id'];
 $errors = [];
 
-// store settings fields 
+// store settings fields
 $brand_name = trim($_POST['brand_name'] ?? '');
 $email = trim($_POST['email'] ?? '');
 $phone = trim($_POST['phone'] ?? '');
 $store_address = trim($_POST['store_address'] ?? '');
 $website = trim($_POST['website'] ?? '');
 $established_year = trim($_POST['established_year'] ?? '');
-$facebook  = trim($_POST['facebook'] ?? '');
+$facebook = trim($_POST['facebook'] ?? '');
 $instagram = trim($_POST['instagram'] ?? '');
 $twitter = trim($_POST['twitter'] ?? '');
 $youtube = trim($_POST['youtube'] ?? '');
 
 // pw fields
 $current_password = $_POST['current_password'] ?? '';
-$new_password = $_POST['new_password']     ?? '';
+$new_password = $_POST['new_password'] ?? '';
 
 // input validation
 if (empty($brand_name)) {
@@ -53,7 +53,7 @@ if (!empty($errors)) {
     exit;
 }
 
-// logo upload 
+// logo upload
 $logo_filename = null; // null means no change
 
 if (!empty($_FILES['logo']['name'])) {
@@ -63,7 +63,7 @@ if (!empty($_FILES['logo']['name'])) {
 
     $file_type = mime_content_type($_FILES['logo']['tmp_name']);
     $file_size = $_FILES['logo']['size'];
-    $file_ext  = strtolower(pathinfo($_FILES['logo']['name'], PATHINFO_EXTENSION));
+    $file_ext = strtolower(pathinfo($_FILES['logo']['name'], PATHINFO_EXTENSION));
 
     if (!in_array($file_type, $allowed_types)) {
         echo json_encode(['success' => false, 'message' => 'Logo must be a JPG, PNG, WEBP, or GIF image.']);

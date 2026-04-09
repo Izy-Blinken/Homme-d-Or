@@ -98,7 +98,7 @@ $admins = mysqli_query($conn,
 
                         <div class="filter-group search-group" style="position:relative;">
                             <label>SEARCH:</label>
-                            <input type="text" name="search" placeholder="Search orders..." 
+                            <input type="text" name="search" placeholder="Search orders..."
                                 id="search-input" value="<?= htmlspecialchars($filter_search) ?>">
                                 <div id="search-suggestions" class="suggestions-box" style="display:none;"></div>
                         </div>

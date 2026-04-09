@@ -516,10 +516,10 @@ document.addEventListener('DOMContentLoaded', function() {
 
     cpNewPassword.addEventListener('input', function() {
         const pw = this.value;
-        const hasLength    = pw.length >= 8;
+        const hasLength = pw.length >= 8;
         const hasUppercase = /[A-Z]/.test(pw);
         const hasLowercase = /[a-z]/.test(pw);
-        const hasNumber    = /[0-9]/.test(pw);
+        const hasNumber = /[0-9]/.test(pw);
 
         document.getElementById('cp-req-length').classList.toggle('met', hasLength);
         document.getElementById('cp-req-uppercase').classList.toggle('met', hasUppercase);
@@ -543,9 +543,9 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 function checkCpPasswordMatch() {
-    const pw  = document.getElementById('cpNewPassword').value;
+    const pw = document.getElementById('cpNewPassword').value;
     const cpw = document.getElementById('cpConfirmPassword').value;
-    const el  = document.getElementById('cpPasswordMatch');
+    const el = document.getElementById('cpPasswordMatch');
     if (!cpw) { el.textContent = ''; el.className = 'passwordMatch'; return; }
     if (pw === cpw) { el.textContent = 'Passwords match'; el.className = 'passwordMatch match'; }
     else { el.textContent = 'Passwords do not match'; el.className = 'passwordMatch no-match'; }

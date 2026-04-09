@@ -13,10 +13,10 @@
 .v-header {
     text-align: center;
     /* Increased top margin to push it further down from the navbar */
-    margin-top: clamp(3rem, 6vh, 4.5rem); 
+    margin-top: clamp(3rem, 6vh, 4.5rem);
     
     /* Reduced bottom margin to pull it closer to the filter and items */
-    margin-bottom: 0.3rem; 
+    margin-bottom: 0.3rem;
     
     color: white;
     font-size: clamp(1.5rem, 4vw, 2.5rem);
@@ -25,15 +25,15 @@
 /* wishlist */
 .v-tabs {
     display: flex;
-    flex-direction: column;    
-    align-items: center;      
-    gap: clamp(1rem, 3vh, 1.5rem);                 
+    flex-direction: column;
+    align-items: center;
+    gap: clamp(1rem, 3vh, 1.5rem);
     /* UPDATED: Increased max-width to allow more horizontal spread */
-    max-width: min(95vw, 80rem);         
-    margin: 0 auto clamp(1.5rem, 3vh, 2.5rem);      
+    max-width: min(95vw, 80rem);
+    margin: 0 auto clamp(1.5rem, 3vh, 2.5rem);
     padding: 0 clamp(1rem, 3vw, 2rem);
     width: 100%;
-} 
+}
 
 /* filter controls */
 .wishlist-controls {
@@ -44,7 +44,7 @@
 }
 
 .tab-content {
-    display: none;          
+    display: none;
     width: 100%;
     max-height: 65vh;
     overflow-y: auto;
@@ -56,7 +56,7 @@
     display: grid;
     /* Increased from 450px to 650px to make the cards significantly wider */
     grid-template-columns: repeat(auto-fit, minmax(min(100%, 650px), 1fr));
-    gap: 1.5rem; 
+    gap: 1.5rem;
     align-items: start;
     width: 100%;
 }
@@ -86,7 +86,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    width: 100%;        
+    width: 100%;
     padding: clamp(1.25rem, 3vw, 1.5rem); /* Slightly increased padding */
     /* REMOVED: margin-bottom (handled by grid gap now) */
     background: rgba(8, 10, 22, 0.55);
@@ -138,8 +138,8 @@
 .v-price {
     font-weight: 700;
     margin-bottom: clamp(0.5rem, 2vh, 0.625rem);
-    color: #c9a961; 
-    font-size: clamp(1rem, 2.5vw, 1.25rem); 
+    color: #c9a961;
+    font-size: clamp(1rem, 2.5vw, 1.25rem);
 }
 
 /* UPDATED: Unify button styling */
@@ -152,7 +152,7 @@
 .v-cancel, .v-rate, .v-again, .v-view {
     padding: clamp(0.375rem, 1.5vw, 0.375rem) clamp(0.75rem, 2vw, 0.875rem);
     font-size: clamp(0.75rem, 1.5vw, 0.8125rem);
-    font-weight: 600; 
+    font-weight: 600;
     cursor: pointer;
     transition: all 0.3s ease;
 }
@@ -306,12 +306,11 @@
     color: #c9a961;
 }
 
-/* =========================================
    PURCHASE HISTORY STYLES
    ========================================= */
 .h-tabs {
     display: flex;
-    flex-direction: column;    
+    flex-direction: column;
     align-items: center;
     width: 100%;
     padding: 0 clamp(1rem, 3vw, 2rem);
@@ -366,7 +365,6 @@
     color: #c9a961;
 }
 
-/* =========================================
    PURCHASE HISTORY - CARD STYLE TABLE
    ========================================= */
 
@@ -488,7 +486,7 @@
 .history-row span:nth-child(4), /* Unit Price */
 .history-row span:nth-child(5), /* Quantity */
 .history-row span:nth-child(6), /* Subtotal */
-.history-row span:nth-child(7)  { /* Actions */
+.history-row span:nth-child(7) { /* Actions */
     text-align: center;
     display: block;
 }
@@ -499,7 +497,6 @@
     font-weight: 700;
 }
 
-/* =========================================
    MY ORDERS - TAB NAVIGATION
    ========================================= */
 .order-tabs {
@@ -553,7 +550,7 @@
 
 /* Responsive */
 @media (max-width: 768px) {
-    /* At tablet sizes and below, the grid will naturally drop to 1 column. 
+    /* At tablet sizes and below, the grid will naturally drop to 1 column.
        We just need to adjust the internal elements of the card. */
     .v-orders {
         flex-direction: column;
@@ -597,7 +594,7 @@
     .v-cancel {
         grid-column: 1 / -1; /* Make remove button full width */
     }
-}   
+}
 
 /* OVERLAY */
 .modal {

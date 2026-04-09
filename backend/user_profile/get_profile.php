@@ -34,8 +34,8 @@ $stmt3->execute();
 $completed = $stmt3->get_result()->fetch_assoc();
 
 // To Review = delivered orders with no review yet
-$stmt4 = $conn->prepare("SELECT COUNT(*) as count FROM orders o 
-    WHERE o.user_id = ? 
+$stmt4 = $conn->prepare("SELECT COUNT(*) as count FROM orders o
+    WHERE o.user_id = ?
     AND o.order_status = 'delivered'
     AND NOT EXISTS (
         SELECT 1 FROM order_items oi

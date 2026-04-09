@@ -29,13 +29,13 @@ $mail = new PHPMailer(true);
 try {
     $mail->SMTPDebug = 2; // Enable verbose output for debugging
     $mail->isSMTP();
-    $mail->Host       = 'smtp.gmail.com';
-    $mail->SMTPAuth   = true;
-    $mail->Username   = 'hommedor2026@gmail.com';
-    $mail->Password   = 'esoczvhrdrmilpbn';
+    $mail->Host = 'smtp.gmail.com';
+    $mail->SMTPAuth = true;
+    $mail->Username = 'hommedor2026@gmail.com';
+    $mail->Password = 'esoczvhrdrmilpbn';
     $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
-    $mail->Port       = 587;
-    $mail->Timeout    = 20;
+    $mail->Port = 587;
+    $mail->Timeout = 20;
     $mail->SMTPOptions = ['ssl' => ['verify_peer' => false, 'verify_peer_name' => false, 'allow_self_signed' => true]];
 
     $mail->setFrom('hommedor2026@gmail.com', "Homme d'Or");

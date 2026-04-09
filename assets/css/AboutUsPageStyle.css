@@ -211,7 +211,7 @@
 }
 
 /*Highlights Section*/
-#highlights {
+# highlights {
     max-width: 1600px;
     margin: 0 auto;
     padding: 100px 80px;
@@ -334,7 +334,7 @@
     }
     
     .authors,
-    #highlights {
+    # highlights {
         padding: 80px 40px;
     }
     
@@ -388,7 +388,7 @@
     }
     
     .authors,
-    #highlights {
+    # highlights {
         padding: 60px 20px;
     }
     
@@ -460,7 +460,7 @@
     }
     
     .authors,
-    #highlights {
+    # highlights {
         padding: 40px 20px;
     }
     

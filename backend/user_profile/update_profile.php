@@ -8,14 +8,14 @@ if (!isset($_SESSION['user_id'])) {
     exit;
 }
 
-$user_id          = $_SESSION['user_id'];
-$fname            = trim($_POST['fname'] ?? '');
-$lname            = trim($_POST['lname'] ?? '');
-$bday             = trim($_POST['bday'] ?? '');
-$phone            = trim($_POST['phone'] ?? '');
-$email            = trim($_POST['email'] ?? '');
+$user_id = $_SESSION['user_id'];
+$fname = trim($_POST['fname'] ?? '');
+$lname = trim($_POST['lname'] ?? '');
+$bday = trim($_POST['bday'] ?? '');
+$phone = trim($_POST['phone'] ?? '');
+$email = trim($_POST['email'] ?? '');
 $current_password = $_POST['current_password'] ?? '';
-$new_password     = $_POST['new_password'] ?? '';
+$new_password = $_POST['new_password'] ?? '';
 $confirm_password = $_POST['confirm_password'] ?? '';
 
 if (empty($fname) || empty($lname) || empty($email)) {
@@ -67,7 +67,7 @@ if (!empty($current_password) || !empty($new_password) || !empty($confirm_passwo
     }
 
     $hashed_new = password_hash($new_password, PASSWORD_DEFAULT);
-    $bday_val   = empty($bday) ? null : $bday;
+    $bday_val = empty($bday) ? null : $bday;
 
     $stmt = $conn->prepare("UPDATE users SET fname=?, lname=?, bday=?, phone=?, email=?, user_password=? WHERE user_id=?");
     $stmt->bind_param("ssssssi", $fname, $lname, $bday_val, $phone, $email, $hashed_new, $user_id);
@@ -85,7 +85,7 @@ if ($stmt->execute()) {
     $_SESSION['fname'] = $fname;
     $_SESSION['lname'] = $lname;
 
-    // ── PASSWORD CHANGE NOTIFICATION ──────────────────────────────
+    // PASSWORD CHANGE NOTIFICATION
     if ($password_changed) {
         insertNotif($conn, $user_id, 'password_change',
             'Your password was successfully changed. If this wasn\'t you, contact support immediately.', null);

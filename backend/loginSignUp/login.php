@@ -36,14 +36,14 @@ if ($user['is_blocked']) {
 
 $user_id = $user['user_id'];
 
-$_SESSION['user_id']       = $user_id;
-$_SESSION['user_fname']    = $user['fname'];
-$_SESSION['user_email']    = $user['email'];
+$_SESSION['user_id'] = $user_id;
+$_SESSION['user_fname'] = $user['fname'];
+$_SESSION['user_email'] = $user['email'];
 $_SESSION['user_username'] = $user['username'];
 
 // Remember me
 if ($remember) {
-    $token      = bin2hex(random_bytes(32));
+    $token = bin2hex(random_bytes(32));
     $safe_token = mysqli_real_escape_string($conn, $token);
     mysqli_query($conn, "UPDATE users SET remember_token = '$safe_token' WHERE user_id = '$user_id'");
     setcookie('remember_token', $token, time() + (30 * 24 * 60 * 60), '/');

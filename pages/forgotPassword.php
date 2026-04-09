@@ -38,7 +38,7 @@
 
                         <p id="emailError" style="color:red; font-size:13px; display:none; margin-top:6px;"></p>
 
-                        <button type="submit" class="fpSendCode" id="sendVC"  onclick="verifyCode()">Send Verification Code</button>
+                        <button type="submit" class="fpSendCode" id="sendVC" onclick="verifyCode()">Send Verification Code</button>
 
                         <div class="fpFooter">
                             <a href="index.php" class="backToLogin">
@@ -62,7 +62,7 @@
                         <p class="modalSubtitle">We've sent a 6-digit code to <span id="userEmail"></span></p>
                     </div>
 
-                    <form id="verificationForm"  >
+                    <form id="verificationForm" >
                         <div class="codeInputContainer">
                             <input type="text" maxlength="1" class="codeInput" data-index="0" inputmode="numeric" />
                             <input type="text" maxlength="1" class="codeInput" data-index="1" inputmode="numeric" />
@@ -129,11 +129,11 @@
                         <div class="formGroup">
                             <label for="confirmPassword">Confirm Password</label>
                             <div class="passwordInputWrapper">
-                                <input 
-                                    type="password" 
-                                    id="confirmPassword" 
-                                    name="confirmPassword" 
-                                    placeholder="Confirm your password" 
+                                <input
+                                    type="password"
+                                    id="confirmPassword"
+                                    name="confirmPassword"
+                                    placeholder="Confirm your password"
                                     required>
                                 <button type="button" class="togglePassword" id="toggleConfirmPassword">
                                     <i class="fas fa-eye"></i>

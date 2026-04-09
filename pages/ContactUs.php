@@ -162,7 +162,7 @@
                     <div class="divider"></div>
                     <p class="dangerDesc">Once you delete your account, all your data will be permanently removed and cannot be recovered.</p>
                     <button class="deleteAccountBtn" onclick="openDeleteModal()">Delete Account</button>
-                </div> 
+                </div>
 
             <?php endif; ?>
 

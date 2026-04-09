@@ -3,8 +3,8 @@ session_start();
 include __DIR__ . '/../db_connect.php';
 require_once __DIR__ . '/../notifications/notify.php';
 
-$order_id   = $_POST['order_id']  ?? null;
-$new_status = $_POST['status']    ?? null;
+$order_id = $_POST['order_id'] ?? null;
+$new_status = $_POST['status'] ?? null;
 
 if (!$order_id || !$new_status) {
     $_SESSION['error'] = 'Invalid request.';
@@ -22,7 +22,7 @@ if (!$current) {
 }
 
 $current_status = $current['order_status'];
-$order_user_id  = $current['user_id'];
+$order_user_id = $current['user_id'];
 
 if ($current_status === 'cancelled') {
     $_SESSION['error'] = 'Cancelled orders cannot be updated.';
@@ -40,7 +40,7 @@ if (!isset($allowed[$current_status]) || !in_array($new_status, $allowed[$curren
     exit;
 }
 
-mysqli_query($conn, "UPDATE orders SET 
+mysqli_query($conn, "UPDATE orders SET
     order_status = '$new_status',
     status_updated_at = NOW()
     WHERE order_id = '$order_id'");

@@ -16,7 +16,7 @@ if (empty($_SESSION['user_id'])) {
 
 <!DOCTYPE html>
 <html lang="en">
-<head> 
+<head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -37,7 +37,7 @@ if (empty($_SESSION['user_id'])) {
         <link rel="stylesheet" href="../assets/css/ReviewCancelOrderStyle.css">
 </head>
 
-<body> 
+<body>
     <?php include '../components/header.php'; ?>
 
     <main class="mainBG">
@@ -47,7 +47,7 @@ if (empty($_SESSION['user_id'])) {
             <div class="order-tabs">
                 <button class="tab-btn active" data-tab="processing">Processing</button>
                 <button class="tab-btn" data-tab="review">To Review</button>
-                <button class="tab-btn" data-tab="completed">Completed</button> 
+                <button class="tab-btn" data-tab="completed">Completed</button>
                 <button class="tab-btn" data-tab="cancelled">Cancelled</button>
             </div>
 
@@ -63,7 +63,7 @@ if (empty($_SESSION['user_id'])) {
                     <div class="v-right">
                         <p class="v-price">₱3,500.00</p>
                         <div class="v-actions">
-                            <button class="v-view btn-open" 
+                            <button class="v-view btn-open"
                                     onclick="openViewModal(
                                         '../assets/images/products_images/nocturne.png',
                                         'Homme d’Or Mystique',
@@ -91,7 +91,7 @@ if (empty($_SESSION['user_id'])) {
                     <div class="v-right">
                         <p class="v-price">₱2,500.00</p>
                         <div class="v-actions">
-                            <button class="v-view btn-open" 
+                            <button class="v-view btn-open"
                                 onclick="openViewModal(
                                     '../assets/images/products_images/nocturne.png',
                                     'Homme d’Or Zenith',
@@ -118,7 +118,7 @@ if (empty($_SESSION['user_id'])) {
                     <div class="v-right">
                         <p class="v-price">₱1,800.00</p>
                         <div class="v-actions">
-                            <button class="v-view btn-open" 
+                            <button class="v-view btn-open"
                                 onclick="openViewModal(
                                     '../assets/images/products_images/nocturne.png',
                                     'Homme d’Or Sublime',
@@ -201,7 +201,7 @@ if (empty($_SESSION['user_id'])) {
                     <div class="v-right">
                         <p class="v-price">₱2,800.00</p>
                         <div class="v-actions">
-                           <button class="v-view btn-open" 
+                           <button class="v-view btn-open"
                                 onclick="openViewModal(
                                     '../assets/images/products_images/nocturne.png',
                                     'Homme d’Or Luminance',
@@ -228,7 +228,7 @@ if (empty($_SESSION['user_id'])) {
                     <div class="v-right">
                         <p class="v-price">₱3,200.00</p>
                         <div class="v-actions">
-                            <button class="v-view btn-open" 
+                            <button class="v-view btn-open"
                                 onclick="openViewModal(
                                     '../assets/images/products_images/nocturne.png',
                                     'Homme d’Or Prestige',
@@ -255,7 +255,7 @@ if (empty($_SESSION['user_id'])) {
                     <div class="v-right">
                         <p class="v-price">₱1,500.00</p>
                         <div class="v-actions">
-                            <button class="v-view btn-open" 
+                            <button class="v-view btn-open"
                                 onclick="openViewModal(
                                     '../assets/images/products_images/nocturne.png',
                                     'Homme d’Or Voyageur',
@@ -282,7 +282,7 @@ if (empty($_SESSION['user_id'])) {
                     <div class="v-right">
                         <p class="v-price">₱3,500.00</p>
                         <div class="v-actions">
-                            <button class="v-view btn-open" 
+                            <button class="v-view btn-open"
                                 onclick="openViewModal(
                                     '../assets/images/products_images/nocturne.png',
                                     'Homme d’Or Royale',
@@ -312,7 +312,7 @@ if (empty($_SESSION['user_id'])) {
                     <div class="v-right">
                         <p class="v-price">₱2,800.00</p>
                         <div class="v-actions">
-                            <button class="v-view btn-open" 
+                            <button class="v-view btn-open"
                                 onclick="openViewModal(
                                     '../assets/images/products_images/nocturne.png',
                                     'Homme d’Or Argent',
@@ -339,7 +339,7 @@ if (empty($_SESSION['user_id'])) {
                     <div class="v-right">
                         <p class="v-price">₱3,200.00</p>
                         <div class="v-actions">
-                            <button class="v-view btn-open" 
+                            <button class="v-view btn-open"
                                 onclick="openViewModal(
                                     '../assets/images/products_images/nocturne.png',
                                     'Homme d’Or Élixir',
@@ -366,7 +366,7 @@ if (empty($_SESSION['user_id'])) {
                     <div class="v-right">
                         <p class="v-price">₱1,500.00</p>
                         <div class="v-actions">
-                            <button class="v-view btn-open" 
+                            <button class="v-view btn-open"
                                 onclick="openViewModal(
                                     '../assets/images/products_images/nocturne.png',
                                     'Homme d’Or Voyage',
@@ -393,7 +393,7 @@ if (empty($_SESSION['user_id'])) {
                     <div class="v-right">
                         <p class="v-price">₱3,500.00</p>
                         <div class="v-actions">
-                            <button class="v-view btn-open" 
+                            <button class="v-view btn-open"
                                 onclick="openViewModal(
                                     '../assets/images/products_images/nocturne.png',
                                     'Homme d’Or Prestige',
@@ -436,7 +436,7 @@ if (empty($_SESSION['user_id'])) {
                         </label>
                         <label class="radio-option">
                             <input type="radio" name="cancelReason" value="Ordered by mistake" required>
-                            <span class="radio-label">Ordered by mistake</span>                                    </label>
+                            <span class="radio-label">Ordered by mistake</span> </label>
                         <label class="radio-option">
                             <input type="radio" name="cancelReason" value="Delivery taking too long" required>
                             <span class="radio-label">Delivery taking too long</span>
@@ -476,7 +476,7 @@ if (empty($_SESSION['user_id'])) {
                     <label>RATING</label>
                     <div class="starRating">
                         <span class="star" onclick="setRating(1)" onmouseover="hoverRating(1)" onmouseout="resetHover()"><i class="fa-solid fa-star"></i></span>
-                        <span class="star" onclick="setRating(2)" onmouseover="hoverRating(2)" onmouseout="resetHover()"><i class="fa-solid fa-star"></i></span>                                    <span class="star" onclick="setRating(3)" onmouseover="hoverRating(3)" onmouseout="resetHover()"><i class="fa-solid fa-star"></i></span>
+                        <span class="star" onclick="setRating(2)" onmouseover="hoverRating(2)" onmouseout="resetHover()"><i class="fa-solid fa-star"></i></span> <span class="star" onclick="setRating(3)" onmouseover="hoverRating(3)" onmouseout="resetHover()"><i class="fa-solid fa-star"></i></span>
                         <span class="star" onclick="setRating(4)" onmouseover="hoverRating(4)" onmouseout="resetHover()"><i class="fa-solid fa-star"></i></span>
                         <span class="star" onclick="setRating(5)" onmouseover="hoverRating(5)" onmouseout="resetHover()"><i class="fa-solid fa-star"></i></span>
                     </div>

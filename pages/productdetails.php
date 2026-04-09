@@ -13,7 +13,7 @@ $product_id = isset($_GET['id']) ? intval($_GET['id']) : 0;
 $product = null;
 if ($product_id > 0) {
     $stmt = $conn->prepare("
-        SELECT p.*, pi.image_url 
+        SELECT p.*, pi.image_url
         FROM products p
         LEFT JOIN product_images pi ON pi.product_id = p.product_id AND pi.is_primary = 1
         WHERE p.product_id = ?
@@ -39,13 +39,13 @@ if ($identity['type'] === 'user_id') {
     $wCheck->close();
 }
 
-$imgSrc = $product['image_url'] 
+$imgSrc = $product['image_url']
     ? '../assets/images/products/' . htmlspecialchars($product['image_url'])
     : '../assets/images/brand_images/nocturne.png';
 ?>
 <!DOCTYPE html>
 <html lang="en">
-    <head> 
+    <head>
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -88,20 +88,20 @@ $imgSrc = $product['image_url']
             }
         </style>
     </head>
-    <body> 
+    <body>
         <?php include '../components/header.php'; ?>
 
         <main class="mainBG">
             <a href="javascript:history.back()" class="back-button">
-                <i class="fa-solid fa-chevron-left"></i> 
+                <i class="fa-solid fa-chevron-left"></i>
             </a>
 
             <section id="product-details-section">
                 <div class="product-details-container">
                     
                     <div class="product-image-section">
-                        <img src="<?php echo $imgSrc; ?>" 
-                             alt="<?php echo htmlspecialchars($product['product_name']); ?>" 
+                        <img src="<?php echo $imgSrc; ?>"
+                             alt="<?php echo htmlspecialchars($product['product_name']); ?>"
                              class="product-image" id="main-product-image">
                         
                         <div class="product-thumbnails">
@@ -151,7 +151,7 @@ $imgSrc = $product['image_url']
 
                             <!-- ❤️ Wishlist Heart Button (registered users only) -->
                             <?php if ($identity['type'] === 'user_id'): ?>
-                                <button class="wishlist-btn <?php echo $isWishlisted ? 'wishlisted' : ''; ?>" 
+                                <button class="wishlist-btn <?php echo $isWishlisted ? 'wishlisted' : ''; ?>"
                                         id="wishlist-btn"
                                         onclick="toggleWishlist(<?php echo $product_id; ?>)">
                                     <i class="<?php echo $isWishlisted ? 'fa-solid' : 'fa-regular'; ?> fa-heart"></i>
@@ -263,7 +263,7 @@ $imgSrc = $product['image_url']
                                         <img src="../assets/images/brand_images/evrland.jpg" alt="New Arrival 3">
                                     </div>
                                     <button class="arrival-add-cart">ADD TO CART</button>
-                                </div> 
+                                </div>
                             </div>
                         </div>
                         <button class="scroll-next-btn" id="nextBtn"><i class="fas fa-chevron-right"></i></button>
@@ -311,11 +311,11 @@ $imgSrc = $product['image_url']
                     if (data.status === 'added') {
                         btn.classList.add('wishlisted');
                         icon.classList.remove('fa-regular');
-                        icon.classList.add('fa-solid');     // filled heart ❤️
+                        icon.classList.add('fa-solid'); // filled heart ❤️
                     } else if (data.status === 'removed') {
                         btn.classList.remove('wishlisted');
                         icon.classList.remove('fa-solid');
-                        icon.classList.add('fa-regular');   // empty heart 🤍
+                        icon.classList.add('fa-regular'); // empty heart 🤍
                     } else {
                         alert(data.message);
                     }

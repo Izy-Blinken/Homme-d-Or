@@ -9,11 +9,11 @@ $productsByCategory = getProductsByCategory($conn);
 $wishlistedIds = getWishlistedIds($conn); // ← must be after the include above
 
 $categoryConfig = [
-    'New Arrivals' => ['id' => 'new-arrivals', 'layout' => 'shop-layout-left',  'side' => 'left',  'tab' => 'newArrival.php'],
-    'Top Picks'    => ['id' => 'top-picks',    'layout' => 'shop-layout-right', 'side' => 'right', 'tab' => 'newArrival.php?tab=page2'],
-    'Sale'         => ['id' => 'sale',         'layout' => 'shop-layout-left',  'side' => 'left',  'tab' => 'newArrival.php?tab=page3'],
-    'Daily Wear'   => ['id' => 'daily-wear',   'layout' => 'shop-layout-right', 'side' => 'right', 'tab' => 'newArrival.php?tab=page4'],
-    'Premium'      => ['id' => 'premium',      'layout' => 'shop-layout-left',  'side' => 'left',  'tab' => 'newArrival.php?tab=page5'],
+    'New Arrivals' => ['id' => 'new-arrivals', 'layout' => 'shop-layout-left', 'side' => 'left', 'tab' => 'newArrival.php'],
+    'Top Picks' => ['id' => 'top-picks', 'layout' => 'shop-layout-right', 'side' => 'right', 'tab' => 'newArrival.php?tab=page2'],
+    'Sale' => ['id' => 'sale', 'layout' => 'shop-layout-left', 'side' => 'left', 'tab' => 'newArrival.php?tab=page3'],
+    'Daily Wear' => ['id' => 'daily-wear', 'layout' => 'shop-layout-right', 'side' => 'right', 'tab' => 'newArrival.php?tab=page4'],
+    'Premium' => ['id' => 'premium', 'layout' => 'shop-layout-left', 'side' => 'left', 'tab' => 'newArrival.php?tab=page5'],
 ];
 ?>
 
@@ -58,10 +58,10 @@ $categoryConfig = [
     <?php foreach ($categoryConfig as $catName => $config):
         if (empty($productsByCategory[$catName])) continue;
 
-        $products    = $productsByCategory[$catName];
-        $layout      = $config['layout'];
-        $side        = $config['side'];
-        $anchorId    = $config['id'];
+        $products = $productsByCategory[$catName];
+        $layout = $config['layout'];
+        $side = $config['side'];
+        $anchorId = $config['id'];
         $discoverUrl = $config['tab'];
     ?>
 

@@ -3,10 +3,10 @@ include __DIR__ . '/../db_connect.php';
 require_once __DIR__ . '/../notifications/notify.php';
 
 $sequence = [
-    'paid'      => 'shipped',
-    'shipped'   => 'delivered',
+    'paid' => 'shipped',
+    'shipped' => 'delivered',
     'delivered' => 'received',
-    'received'  => 'completed',
+    'received' => 'completed',
 ];
 
 $interval_sec = 10;
