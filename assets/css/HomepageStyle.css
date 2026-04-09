@@ -1,6 +1,7 @@
 /* Perfume Details */
 #details-section {
-    width: 500px;
+    width: 90%;
+    max-width: 1200px;
     margin: 100px auto;
     padding-top: 20px;
     
@@ -17,10 +18,10 @@
 }
 
 .details-box {
-    flex: 1;
+     flex: 1;
+    min-width: 0;
     background: lightgray;
     padding: 25px;
-    border-radius: 10px;
     text-align: center;
 }
 

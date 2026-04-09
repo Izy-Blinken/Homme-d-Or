@@ -73,18 +73,22 @@ main {
 }
 
 .generalToast {
-    position: fixed;
+     position: fixed;
     bottom: 20px;
     left: 50%;
     right: auto;
     top: auto;
-    transform: translateX(-50%) translateY(20px);
 
     z-index: 10000;
 
     min-width: 280px;
     max-width: 360px;
-    padding: 16px 18px 16px 50px;
+    padding: 16px 20px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
 
     border-radius: 12px;
 
@@ -98,10 +102,9 @@ main {
 
     opacity: 0;
     visibility: hidden;
-    transform: translateX(100%);
+    transform: translateX(-50%) translateY(20px);
     transition: all 0.4s ease;
 
-    /* default style */
     background: linear-gradient(135deg, rgba(0,150,255,0.2), rgba(0,80,150,0.15));
     border-left: 4px solid #2196f3;
 }
@@ -115,42 +118,45 @@ main {
 
 /* ICON (fake using ::before) */
 .generalToast::before {
-    content: "\f05a"; /* info icon */
+    content: "\f05a";
     font-family: "Font Awesome 6 Free";
     font-weight: 900;
-
-    position: absolute;
-    left: 16px;
-    top: 50%;
-    transform: translateY(-50%);
-
     font-size: 18px;
+    flex-shrink: 0;
 }
 
 /* SUCCESS */
 .generalToast.success {
     background: linear-gradient(135deg, rgba(0,255,150,0.15), rgba(0,150,255,0.1));
     border-left: 4px solid #00e676;
+    color: #00e676;
 }
 .generalToast.success::before {
-    content: "\f058"; /* check icon */
+    content: "\f058";
+    color: #00e676;
 }
 
 /* ERROR */
 .generalToast.error {
     background: linear-gradient(135deg, rgba(255,0,80,0.2), rgba(120,0,50,0.15));
     border-left: 4px solid #ff1744;
+    color: #ff1744;
 }
 .generalToast.error::before {
-    content: "\f057"; /* times icon */
+    content: "\f057";
+    color: #ff1744;
 }
 
 /* INFO */
 .generalToast.info {
     background: linear-gradient(135deg, rgba(0,150,255,0.2), rgba(0,80,150,0.15));
     border-left: 4px solid #2196f3;
+    color: #2196f3;
     animation: slideUp 0.4s,
                slideDown 0.4s 2.6s;
+}
+.generalToast.info::before {
+    color: #2196f3;
 }
 
 @keyframes slideUp {

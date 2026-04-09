@@ -201,16 +201,10 @@ $imgSrc = $product['image_url']
                             </a>
                             
                             <!-- Add to Cart -->
-                            <?php if ($identity['type'] === 'user_id'): ?>
-                                <button class="addtocart" onclick="addToCart(<?php echo $product_id; ?>)">
-                                    <i class="fa-solid fa-cart-shopping"></i> Add to Cart
-                                </button>
-                            <?php else: ?>
-                                <button class="addtocart" onclick="showCreateAccountModal()">
-                                    <i class="fa-solid fa-cart-shopping"></i> Add to Cart
-                                </button>
-                            <?php endif; ?>
-
+                            <button class="addtocart" onclick="addToCart(<?php echo $product_id; ?>)">
+                                <i class="fa-solid fa-cart-shopping"></i> Add to Cart
+                            </button>
+                            
                             <!-- ❤️ Wishlist Heart Button (registered users only) -->
                             <?php if ($identity['type'] === 'user_id'): ?>
                                 <button class="wishlist-btn <?php echo $isWishlisted ? 'wishlisted' : ''; ?>"
@@ -366,7 +360,7 @@ $imgSrc = $product['image_url']
         <script src="../assets/js/productDetails.js"></script>
 
         <script>
-            // ── Add to Cart ──────────────────────────────────────────
+           // ── Add to Cart ──────────────────────────────────────────
             function addToCart(productId) {
                 fetch('../backend/add_to_cart.php', {
                     method: 'POST',
@@ -375,7 +369,11 @@ $imgSrc = $product['image_url']
                 })
                 .then(res => res.json())
                 .then(data => {
-                    alert(data.message);
+                    if (data.status === 'success') {
+                        showGeneralToast(data.message, 'success');
+                    } else {
+                        showGeneralToast(data.message, 'error');
+                    }
                 })
                 .catch(err => console.error('Cart error:', err));
             }
@@ -394,14 +392,14 @@ $imgSrc = $product['image_url']
                 .then(data => {
                     if (data.status === 'added') {
                         btn.classList.add('wishlisted');
-                        icon.classList.remove('fa-regular');
-                        icon.classList.add('fa-solid'); // filled heart ❤️
+                        icon.classList.replace('fa-regular', 'fa-solid');
+                        showGeneralToast('Added to wishlist!', 'success');
                     } else if (data.status === 'removed') {
                         btn.classList.remove('wishlisted');
-                        icon.classList.remove('fa-solid');
-                        icon.classList.add('fa-regular'); // empty heart 🤍
+                        icon.classList.replace('fa-solid', 'fa-regular');
+                        showGeneralToast('Removed from wishlist.', 'info');
                     } else {
-                        alert(data.message);
+                        showGeneralToast(data.message, 'error');
                     }
                 })
                 .catch(err => console.error('Wishlist error:', err));
@@ -432,5 +430,7 @@ $imgSrc = $product['image_url']
         };
 
         </script>
+        <div id="generalToast" class="generalToast"></div>
+        <script src="../assets/js/script.js"></script>
     </body>
 </html>
