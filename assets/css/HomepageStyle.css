@@ -416,15 +416,15 @@
 }
 
 .btn-secondary {
-    background-color: #3A3F47;
+    background-color: transparent;
     color: #c9a961;
     border: 1px solid #c9a961;
 }
 
 .btn-secondary:hover {
-    background-color: lightslategray;
-    color: black;
-    border: 1px solid black;
+    background-color: rgb(3, 3, 84);
+    color: #c9a961;
+    border: 1px solid #c9a961;
     transform: translateY(-2px);
 }
 
@@ -844,7 +844,7 @@
 }
 
 .quick-view-btn:hover {
-    background-color: #0B1A3A;
+    background-color: rgb(3, 3, 84);
     border: 1px solid #c9a961;
     color: #c9a961;
 }
@@ -852,7 +852,7 @@
 .add-to-cart-btn {
     width: 100%;
     padding: 15px 20px;
-    background: rgba(14, 16, 31, 0.7);
+    background: rgb(14, 16, 31);
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
     color: #c9a961;
@@ -866,7 +866,7 @@
 }
 
 .add-to-cart-btn:hover {
-    background-color: #0B1A3A;
+    background-color: rgb(3, 3, 84);
     border: 1px solid #c9a961;
     color: #c9a961;
 }

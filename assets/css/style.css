@@ -72,30 +72,83 @@ main {
     
 }
 
-
 .generalToast {
-    visibility: hidden;
-    width: min(90%, 200px);
-    max-width: 600px;
-    background: whitesmoke;
-    color: #000000;
-    text-align: center;
-    padding: clamp(0.5rem, 1vw, 1rem);
     position: fixed;
-    z-index: 9999;
-    left: 50% !important;
-    bottom: 5vh;
-    font-size: clamp(0.9rem, 2vw, 1.1rem);
-    font-weight: 600;
-    letter-spacing: 0.5px;
-    border-bottom: 5px solid #0e7c00;
-    transform: translateX(-50%) !important;
+    bottom: 20px;
+    left: 50%;
+    right: auto;
+    top: auto;
+    transform: translateX(-50%) translateY(20px);
+
+    z-index: 10000;
+
+    min-width: 280px;
+    max-width: 360px;
+    padding: 16px 18px 16px 50px;
+
+    border-radius: 12px;
+
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+
+    font-size: 14px;
+    color: #fff;
+
+    box-shadow: 0 10px 25px rgba(0,0,0,0.25);
+
+    opacity: 0;
+    visibility: hidden;
+    transform: translateX(100%);
+    transition: all 0.4s ease;
+
+    /* default style */
+    background: linear-gradient(135deg, rgba(0,150,255,0.2), rgba(0,80,150,0.15));
+    border-left: 4px solid #2196f3;
 }
 
+/* SHOW */
 .generalToast.show {
+    opacity: 1;
     visibility: visible;
-    animation: slideUp 0.4s, 
-               slideDown 0.4s 2.6s;
+    transform: translateX(-50%) translateY(0);
+}
+
+/* ICON (fake using ::before) */
+.generalToast::before {
+    content: "\f05a"; /* info icon */
+    font-family: "Font Awesome 6 Free";
+    font-weight: 900;
+
+    position: absolute;
+    left: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+
+    font-size: 18px;
+}
+
+/* SUCCESS */
+.generalToast.success {
+    background: linear-gradient(135deg, rgba(0,255,150,0.15), rgba(0,150,255,0.1));
+    border-left: 4px solid #00e676;
+}
+.generalToast.success::before {
+    content: "\f058"; /* check icon */
+}
+
+/* ERROR */
+.generalToast.error {
+    background: linear-gradient(135deg, rgba(255,0,80,0.2), rgba(120,0,50,0.15));
+    border-left: 4px solid #ff1744;
+}
+.generalToast.error::before {
+    content: "\f057"; /* times icon */
+}
+
+/* INFO */
+.generalToast.info {
+    background: linear-gradient(135deg, rgba(0,150,255,0.2), rgba(0,80,150,0.15));
+    border-left: 4px solid #2196f3;
 }
 
 @keyframes slideUp {
