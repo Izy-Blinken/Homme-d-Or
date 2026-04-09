@@ -222,10 +222,13 @@ if (empty($initials)) $initials = 'H';
                 </div>
             </div>
 
-            <!-- Edit Info Button -->
-            <div style="margin-top:24px;">
+            <!-- Action Buttons -->
+            <div style="margin-top:24px; display:flex; gap:12px;">
                 <button id="edit-profile-btn" class="btn-save">
                     <i class="fa-solid fa-pen" style="margin-right:8px;"></i>Edit Info
+                </button>
+                <button id="change-password-btn" class="btn-save" style="background:transparent; border:1px solid rgba(212,175,55,0.5); color:#d4af37;">
+                    <i class="fa-solid fa-lock" style="margin-right:8px;"></i>Change Password
                 </button>
             </div>
 
@@ -247,7 +250,7 @@ if (empty($initials)) $initials = 'H';
         </div>
     </div>
 
-    <!-- Edit Profile Modal -->
+    <!-- Edit Profile Modal (no password fields) -->
     <div class="modal-overlay" id="edit-modal">
         <div class="modal" style="max-width:600px;">
             <div class="modal-header">
@@ -312,22 +315,132 @@ if (empty($initials)) $initials = 'H';
                         <input type="text" name="youtube" value="<?= htmlspecialchars($store['youtube'] ?? '') ?>">
                     </div>
                 </div>
-                <hr style="border-color:rgba(255,255,255,0.1);margin:1rem 0;">
-                <div class="form-row">
-                    <div class="form-group">
-                        <label>CURRENT PASSWORD</label>
-                        <input type="password" name="current_password" placeholder="Required to change password">
-                    </div>
-                    <div class="form-group">
-                        <label>NEW PASSWORD</label>
-                        <input type="password" name="new_password" placeholder="Leave blank to keep current">
-                    </div>
-                </div>
                 <div class="modal-footer">
                     <button type="button" class="btn-cancel" id="edit-modal-cancel">Cancel</button>
                     <button type="submit" class="btn-save">Save Changes</button>
                 </div>
             </form>
+        </div>
+    </div>
+
+    <!-- ── Change Password Modal ── -->
+    <div class="modal-overlay" id="admin-cp-modal">
+        <div class="modal" style="max-width:460px;">
+
+            <!-- Step 1: Enter current password -->
+            <div id="adminCpStep1">
+                <div class="modal-header">
+                    <span class="modal-title">Change Password</span>
+                    <button class="modal-close" id="admin-cp-close-1">&times;</button>
+                </div>
+                <div style="padding:1.25rem 1.5rem 0;">
+                    <p style="color:#aaa;font-size:0.875rem;margin:0 0 1rem;">Enter your current password to continue.</p>
+                    <div class="form-group" style="position:relative;">
+                        <label>CURRENT PASSWORD</label>
+                        <input type="password" id="adminCpCurrentPassword" placeholder="Enter current password" style="padding-right:2.5rem;">
+                        <button type="button" onclick="adminToggleCpVisibility('adminCpCurrentPassword', this)"
+                            style="position:absolute;right:10px;bottom:10px;background:none;border:none;color:#aaa;cursor:pointer;">
+                            <i class="fa-solid fa-eye"></i>
+                        </button>
+                    </div>
+                    <p class="modal-error" id="adminCpStep1Error" style="display:none;color:#e74c3c;font-size:0.8rem;margin-top:-0.5rem;"></p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn-cancel" id="admin-cp-cancel-1">Cancel</button>
+                    <button type="button" class="btn-save" onclick="adminSendChangePasswordOtp()">Continue</button>
+                </div>
+            </div>
+
+            <!-- Step 2: OTP verification -->
+            <div id="adminCpStep2" style="display:none;">
+                <div class="modal-header">
+                    <span class="modal-title">Enter Verification Code</span>
+                    <button class="modal-close" id="admin-cp-close-2">&times;</button>
+                </div>
+                <div style="padding:1.25rem 1.5rem 0;">
+                    <p style="color:#aaa;font-size:0.875rem;margin:0 0 1.25rem;">A 6-digit code was sent to your registered email address.</p>
+                    <div style="display:flex;gap:8px;justify-content:center;margin-bottom:1rem;">
+                        <input type="text" class="adminCpCodeInput" maxlength="1" inputmode="numeric"
+                            style="width:44px;height:52px;text-align:center;font-size:1.3rem;border:1px solid rgba(255,255,255,0.2);border-radius:6px;background:rgba(255,255,255,0.05);color:#fff;">
+                        <input type="text" class="adminCpCodeInput" maxlength="1" inputmode="numeric"
+                            style="width:44px;height:52px;text-align:center;font-size:1.3rem;border:1px solid rgba(255,255,255,0.2);border-radius:6px;background:rgba(255,255,255,0.05);color:#fff;">
+                        <input type="text" class="adminCpCodeInput" maxlength="1" inputmode="numeric"
+                            style="width:44px;height:52px;text-align:center;font-size:1.3rem;border:1px solid rgba(255,255,255,0.2);border-radius:6px;background:rgba(255,255,255,0.05);color:#fff;">
+                        <input type="text" class="adminCpCodeInput" maxlength="1" inputmode="numeric"
+                            style="width:44px;height:52px;text-align:center;font-size:1.3rem;border:1px solid rgba(255,255,255,0.2);border-radius:6px;background:rgba(255,255,255,0.05);color:#fff;">
+                        <input type="text" class="adminCpCodeInput" maxlength="1" inputmode="numeric"
+                            style="width:44px;height:52px;text-align:center;font-size:1.3rem;border:1px solid rgba(255,255,255,0.2);border-radius:6px;background:rgba(255,255,255,0.05);color:#fff;">
+                        <input type="text" class="adminCpCodeInput" maxlength="1" inputmode="numeric"
+                            style="width:44px;height:52px;text-align:center;font-size:1.3rem;border:1px solid rgba(255,255,255,0.2);border-radius:6px;background:rgba(255,255,255,0.05);color:#fff;">
+                    </div>
+                    <p class="modal-error" id="adminCpOtpError" style="display:none;color:#e74c3c;font-size:0.8rem;text-align:center;"></p>
+                    <p style="text-align:center;margin-top:0.5rem;">
+                        <button type="button" id="adminCpResendBtn" onclick="adminResendChangePasswordOtp()"
+                            style="background:none;border:none;color:#d4af37;cursor:pointer;font-size:0.85rem;text-decoration:underline;">
+                            Resend Code
+                        </button>
+                    </p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn-cancel" id="admin-cp-cancel-2">Back</button>
+                    <button type="button" class="btn-save" onclick="adminVerifyCpOtp()">Verify</button>
+                </div>
+            </div>
+
+            <!-- Step 3: Set new password -->
+            <div id="adminCpStep3" style="display:none;">
+                <div class="modal-header">
+                    <span class="modal-title">Set New Password</span>
+                    <button class="modal-close" id="admin-cp-close-3">&times;</button>
+                </div>
+                <div style="padding:1.25rem 1.5rem 0;">
+                    <div class="form-group" style="position:relative;">
+                        <label>NEW PASSWORD</label>
+                        <input type="password" id="adminCpNewPassword" placeholder="Enter new password" style="padding-right:2.5rem;">
+                        <button type="button" onclick="adminToggleCpVisibility('adminCpNewPassword', this)"
+                            style="position:absolute;right:10px;bottom:10px;background:none;border:none;color:#aaa;cursor:pointer;">
+                            <i class="fa-solid fa-eye"></i>
+                        </button>
+                    </div>
+                    <!-- Strength bar -->
+                    <div style="margin:-0.5rem 0 0.75rem;">
+                        <div style="height:4px;background:rgba(255,255,255,0.1);border-radius:2px;overflow:hidden;">
+                            <div id="adminCpStrengthBar" style="height:100%;width:0;transition:width 0.3s,background 0.3s;border-radius:2px;"></div>
+                        </div>
+                        <span id="adminCpStrengthText" style="font-size:0.75rem;color:#aaa;"></span>
+                    </div>
+                    <!-- Requirements -->
+                    <ul style="list-style:none;padding:0;margin:0 0 0.75rem;font-size:0.78rem;color:#aaa;display:flex;flex-wrap:wrap;gap:4px 16px;">
+                        <li id="admin-cp-req-length">✗ At least 8 characters</li>
+                        <li id="admin-cp-req-upper">✗ Uppercase letter</li>
+                        <li id="admin-cp-req-lower">✗ Lowercase letter</li>
+                        <li id="admin-cp-req-number">✗ Number</li>
+                    </ul>
+                    <div class="form-group" style="position:relative;">
+                        <label>CONFIRM NEW PASSWORD</label>
+                        <input type="password" id="adminCpConfirmPassword" placeholder="Confirm new password" style="padding-right:2.5rem;">
+                        <button type="button" onclick="adminToggleCpVisibility('adminCpConfirmPassword', this)"
+                            style="position:absolute;right:10px;bottom:10px;background:none;border:none;color:#aaa;cursor:pointer;">
+                            <i class="fa-solid fa-eye"></i>
+                        </button>
+                    </div>
+                    <p id="adminCpMatchText" style="font-size:0.8rem;margin-top:-0.5rem;margin-bottom:0.5rem;"></p>
+                    <p class="modal-error" id="adminCpStep3Error" style="display:none;color:#e74c3c;font-size:0.8rem;"></p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn-cancel" id="admin-cp-cancel-3">Cancel</button>
+                    <button type="button" class="btn-save" onclick="adminSubmitNewPassword()">Save Password</button>
+                </div>
+            </div>
+
+            <!-- Step 4: Success -->
+            <div id="adminCpStep4" style="display:none;text-align:center;padding:2.5rem 1.5rem;">
+                <div style="font-size:3rem;margin-bottom:1rem;">✅</div>
+                <div style="font-size:1.1rem;font-weight:600;color:#d4af37;margin-bottom:0.5rem;">Password Changed!</div>
+                <p style="color:#aaa;font-size:0.875rem;margin-bottom:1.5rem;">Your admin password has been updated successfully.</p>
+                <button type="button" class="btn-save" onclick="closeAdminCpModal()">Done</button>
+            </div>
+
         </div>
     </div>
 

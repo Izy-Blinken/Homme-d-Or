@@ -73,6 +73,25 @@ main {
     
 }
 
+/* Scrollbar - Overall */
+::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+
+::-webkit-scrollbar-track {
+    background: #1a1a1a;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #D4AF37;
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #f0c040;
+}
+
 .generalToast {
      position: fixed;
     bottom: 20px;

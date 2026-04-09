@@ -73,8 +73,10 @@ checkAdminAccess($conn, 'can_export_report');
 
                 <div class="stat-card">
                     <small class="stat-label">REVENUE GROWTH</small>
-                    <h3 class="stat-value <?= $rev_growth !== null && $rev_growth >= 0 ? 'positive' : 'negative' ?>">
-                        <?= $rev_growth !== null ? ($rev_growth >= 0 ? '+' : '') . $rev_growth . '%' : 'N/A' ?>
+                    <h3 class="stat-value <?= ($rev_growth === 'New' || ($rev_growth !== null && $rev_growth >= 0)) ? 'positive' : 'negative' ?>">
+                        <?= $rev_growth !== null
+                            ? ($rev_growth === 'New' ? 'New' : ($rev_growth >= 0 ? '+' : '') . $rev_growth . '%')
+                            : 'N/A' ?>
                     </h3>
                 </div>
 
@@ -311,7 +313,7 @@ checkAdminAccess($conn, 'can_export_report');
             </form>
             <div class="stats-grid" id="customers-stats">
                 <div class="stat-card"><small class="stat-label">TOTAL CUSTOMERS</small><h3 class="stat-value"><?= number_format($cust_total) ?></h3></div>
-                <div class="stat-card"><small class="stat-label">NEW THIS PERIOD</small><h3 class="stat-value positive"><?= number_format($cust_total) ?></h3></div>
+                <div class="stat-card"><small class="stat-label">NEW THIS PERIOD</small><h3 class="stat-value positive"><?= number_format($cust_new) ?></h3></div>
                 <div class="stat-card"><small class="stat-label">RETURNING</small><h3 class="stat-value"><?= number_format($cust_returning) ?></h3></div>
                 <div class="stat-card"><small class="stat-label">AVG LIFETIME VALUE</small><h3 class="stat-value">₱<?= number_format($cust_ltv, 2) ?></h3></div>
             </div>
@@ -359,11 +361,13 @@ checkAdminAccess($conn, 'can_export_report');
 <script>
 
     // Pass chart data to JS
+window.addEventListener('DOMContentLoaded', function () {
     makeChart('chart-revenue', <?= json_encode($rev_labels) ?>, <?= json_encode($rev_values) ?>, 'Revenue', '#1a2433');
     makeChart('chart-sales', <?= json_encode($sal_labels) ?>, <?= json_encode($sal_values) ?>, 'Sales', '#26a69a');
     makeChart('chart-orders', <?= json_encode($ord_labels) ?>, <?= json_encode($ord_values) ?>, 'Orders', '#e65100');
     makeChart('chart-products', <?= json_encode($prod_labels) ?>, <?= json_encode($prod_values) ?>, 'Units Sold', '#7b1fa2');
     makeChart('chart-customers', <?= json_encode($cust_labels) ?>, <?= json_encode($cust_values) ?>, 'New Customers', '#2e7d32');
+});
 </script>
 
 </body>

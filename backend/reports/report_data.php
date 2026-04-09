@@ -4,7 +4,10 @@ include(__DIR__ . '/../../backend/db_connect.php');
 // Get date range from GET params, default: current month
 function getDateRange($prefix) {
     $from = $_GET["{$prefix}_from"] ?? date('Y-m-01');
-    $to = $_GET["{$prefix}_to"] ?? date('Y-m-d');
+    $to = $_GET["{$prefix}_to"] ?? date('Y-m-t'); // Y-m-t = last day of current month
+    
+    $from = preg_match('/^\d{4}-\d{2}-\d{2}$/', $from) ? $from : date('Y-m-01');
+    $to = preg_match('/^\d{4}-\d{2}-\d{2}$/', $to) ? $to   : date('Y-m-t');
     return [$from, $to];
 }
 
@@ -59,7 +62,7 @@ $prev_rev = mysqli_fetch_assoc(mysqli_query($conn,
 
 $rev_growth = $prev_rev > 0
     ? round((($rev_total - $prev_rev) / $prev_rev) * 100, 1)
-    : null;
+    : ($rev_total > 0 ? 'New' : null);
 
 // Graph data
 $rev_group = getGraphGroup($rev_from, $rev_to);
@@ -95,18 +98,22 @@ $rev_table = mysqli_query($conn,
 
 $sal_total = mysqli_fetch_assoc(mysqli_query($conn,
     "SELECT COUNT(*) AS val FROM orders
-     WHERE DATE(created_at) BETWEEN '$sal_from' AND '$sal_to'"))['val'];
+     WHERE order_status = 'completed'
+     AND DATE(created_at) BETWEEN '$sal_from' AND '$sal_to'"))['val'];
 
 $sal_units = mysqli_fetch_assoc(mysqli_query($conn,
     "SELECT COALESCE(SUM(oi.quantity), 0) AS val
      FROM order_items oi
      JOIN orders o ON oi.order_id = o.order_id
-     WHERE DATE(o.created_at) BETWEEN '$sal_from' AND '$sal_to'"))['val'];
+     WHERE o.order_status = 'completed'
+     AND DATE(o.created_at) BETWEEN '$sal_from' AND '$sal_to'"))['val'];
 
 $sal_avg = mysqli_fetch_assoc(mysqli_query($conn,
     "SELECT COALESCE(AVG(total_amount), 0) AS val
      FROM orders
-     WHERE DATE(created_at) BETWEEN '$sal_from' AND '$sal_to'"))['val'];
+     WHERE order_status = 'completed'
+     AND DATE(created_at) BETWEEN '$sal_from' AND '$sal_to'"))['val'];
+
 
 $sal_top_cat = mysqli_fetch_assoc(mysqli_query($conn,
     "SELECT c.category_name, SUM(oi.quantity) AS total_sold
@@ -242,6 +249,10 @@ $cust_returning = mysqli_fetch_assoc(mysqli_query($conn,
         GROUP BY user_id
         HAVING COUNT(*) > 1
      ) AS t"))['val'];
+
+$cust_new = mysqli_fetch_assoc(mysqli_query($conn,
+    "SELECT COUNT(*) AS val FROM users
+     WHERE DATE(created_at) BETWEEN '$cust_from' AND '$cust_to'"))['val'];
 
 $cust_ltv = mysqli_fetch_assoc(mysqli_query($conn,
     "SELECT COALESCE(AVG(total_spent), 0) AS val FROM (
