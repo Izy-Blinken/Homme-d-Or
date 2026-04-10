@@ -40,6 +40,7 @@ define('SHOP_PREVIEW_LIMIT', 6);
     </head>
     <body>
     <?php include '../components/header.php'; ?>
+    <button class="back-btn" onclick="history.back()" title="Go back" style="position: absolute; top: 100px; left: 20px; z-index: 100;"><i class="fas fa-arrow-left"></i> Back</button>
 
     <section class="shop-welcome-section">
         <div class="shop-welcome-overlay"></div>

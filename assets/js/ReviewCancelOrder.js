@@ -1,8 +1,13 @@
 let currentRating = 0;
 let hoverValue = 0;
+let currentProductId = null;
+let currentOrderId = null;
 
 // Review Order Modal
-function openReviewModal() {
+function openReviewModal(orderId, productId) {
+    currentOrderId = orderId;
+    currentProductId = productId;
+    
     const modal = document.getElementById('reviewOrderModal');
     modal.classList.remove('closing');
     modal.classList.add('show');
@@ -63,12 +68,34 @@ function submitReview(event) {
     event.preventDefault();
     const reviewText = document.getElementById('reviewText').value;
     
-    console.log('Review Submitted:');
-    console.log('Rating:', currentRating);
-    console.log('Review:', reviewText);
+    if (!currentProductId) {
+        showGeneralToast('Error: Product ID missing', 'error');
+        return;
+    }
     
-    showGeneralToast('Review Submitted Successfully!', 'success');
-    closeReviewModal();
+    const formData = new FormData();
+    formData.append('product_id', currentProductId);
+    formData.append('rating', currentRating);
+    formData.append('comment', reviewText);
+    
+    fetch('../backend/products/submit_review.php', {
+        method: 'POST',
+        body: formData
+    })
+    .then(res => res.json())
+    .then(data => {
+        if (data.success) {
+            showGeneralToast('Review Submitted Successfully!', 'success');
+            closeReviewModal();
+            setTimeout(() => location.reload(), 1500);
+        } else {
+            showGeneralToast(data.message || 'Failed to submit review', 'error');
+        }
+    })
+    .catch(err => {
+        console.error('Error:', err);
+        showGeneralToast('Something went wrong', 'error');
+    });
 }
 
 // Cancel Order Modal

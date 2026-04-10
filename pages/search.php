@@ -53,6 +53,7 @@ if ($searchQuery !== '') {
         <?php include '../components/header.php'; ?>
         
         <main class="search-main">
+            <button class="back-btn" onclick="history.back()" title="Go back" style="margin-bottom: 1rem;"><i class="fas fa-arrow-left"></i> Back</button>
             <div class="search-header-container">
                 <h2 class="search-title">
                     Search Results for: "<span><?php echo htmlspecialchars($searchQuery); ?></span>"

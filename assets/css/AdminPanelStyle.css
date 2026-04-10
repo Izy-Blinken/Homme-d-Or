@@ -559,6 +559,30 @@ select option {
     border-color: #5c6bc0 !important;
 }
 
+.badge-paid {
+    background: rgba(0, 150, 136, 0.1) !important;
+    color: #00796b !important;
+    border-color: #00796b !important;
+}
+
+.badge-shipped {
+    background: rgba(103, 58, 183, 0.1) !important;
+    color: #7e57c2 !important;
+    border-color: #7e57c2 !important;
+}
+
+.badge-received {
+    background: rgba(33, 150, 243, 0.1) !important;
+    color: #1976d2 !important;
+    border-color: #1976d2 !important;
+}
+
+.badge-completed {
+    background: rgba(56, 142, 60, 0.1) !important;
+    color: #388e3c !important;
+    border-color: #388e3c !important;
+}
+
 .suggestions-box {
     background: #fff !important;
     border:1px solid #ddd !important;

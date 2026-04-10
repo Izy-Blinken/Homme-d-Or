@@ -39,6 +39,7 @@ $milestone_items = $milestones && $milestones['extra_data'] ? json_decode($miles
     <?php include '../components/header.php'; ?>
 
     <main style="background-image:url('../assets/images/brand_images/bg-image.jpg'); background-size:cover; background-position:center; background-attachment:fixed; background-color:#0e101f; min-height:100vh;">
+        <button class="back-btn" onclick="history.back()" title="Go back" style="position: relative; z-index: 10;"><i class="fas fa-arrow-left"></i> Back</button>
 
         <?php if ($hero): ?>
         <div class="about-hero fade-in">

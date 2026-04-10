@@ -21,8 +21,8 @@ if (!$user) {
     exit;
 }
 
-// Processing orders
-$stmt2 = $conn->prepare("SELECT COUNT(*) as count FROM orders WHERE user_id = ? AND order_status IN ('pending', 'paid', 'shipped')");
+// Processing orders (pending, paid, shipped, delivered)
+$stmt2 = $conn->prepare("SELECT COUNT(*) as count FROM orders WHERE user_id = ? AND order_status IN ('pending', 'paid', 'shipped', 'delivered')");
 $stmt2->bind_param("i", $user_id);
 $stmt2->execute();
 $processing = $stmt2->get_result()->fetch_assoc();
@@ -33,15 +33,8 @@ $stmt3->bind_param("i", $user_id);
 $stmt3->execute();
 $completed = $stmt3->get_result()->fetch_assoc();
 
-// To Review = delivered orders with no review yet
-$stmt4 = $conn->prepare("SELECT COUNT(*) as count FROM orders o
-    WHERE o.user_id = ?
-    AND o.order_status = 'delivered'
-    AND NOT EXISTS (
-        SELECT 1 FROM order_items oi
-        JOIN product_reviews pr ON pr.product_id = oi.product_id AND pr.user_id = o.user_id
-        WHERE oi.order_id = o.order_id
-    )");
+// To Review = received orders (ready for customer review/feedback)
+$stmt4 = $conn->prepare("SELECT COUNT(*) as count FROM orders WHERE user_id = ? AND order_status = 'received'");
 $stmt4->bind_param("i", $user_id);
 $stmt4->execute();
 $to_review = $stmt4->get_result()->fetch_assoc();

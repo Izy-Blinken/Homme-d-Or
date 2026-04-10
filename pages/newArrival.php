@@ -93,6 +93,7 @@ $activeTab = isset($_GET['tab']) && array_key_exists($_GET['tab'], $tabConfig)
     <body>
 
     <?php include '../components/header.php'; ?>
+    <button class="back-btn" onclick="history.back()" title="Go back" style="margin-left: 1rem; margin-top: 0.5rem;"><i class="fas fa-arrow-left"></i> Back</button>
 
     <!-- ── Tab Navigation ─────────────────────────────────────────────── -->
     <div class="tabs">

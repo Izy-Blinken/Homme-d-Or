@@ -97,11 +97,7 @@ $currentPage = basename($_SERVER['PHP_SELF']);
 
     <div class="nav-wrapper">
         <ul id="navbar-right">
-            <li class="header-lang-toggle">
-                <a href="?lang=en" class="lang-btn active">EN</a>
-                <span class="lang-divider">/</span>
-                <a href="?lang=fil" class="lang-btn">FIL</a>
-            </li>
+            
 
             <li class="notif-dropdown" id="notif-item" style="position:relative;">
                 <?php $userLoggedIn = !empty($_SESSION['user_id']) ? 'true' : 'false'; ?>

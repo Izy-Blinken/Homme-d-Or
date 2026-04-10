@@ -3,24 +3,28 @@ if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
-if (empty($_SESSION['user_id'])) {
+include_once '../backend/db_connect.php';
+
+$identity = getCurrentUserId();
+
+// Redirect strangers
+if ($identity['type'] === 'stranger') {
     header("Location: index.php?login_required=true");
     exit;
 }
 
-include_once '../backend/db_connect.php';
-
-$user_id = $_SESSION['user_id'];
+$id_column = ($identity['type'] === 'user_id') ? 'user_id' : 'guest_id';
+$id_value = $identity['id'];
 
 // Fetch all orders for this user with payment info
 $stmt = $conn->prepare("
     SELECT o.*, p.method, p.payment_status, p.paid_at
     FROM orders o
     LEFT JOIN payments p ON p.order_id = o.order_id
-    WHERE o.user_id = ?
+    WHERE o.$id_column = ?
     ORDER BY o.created_at DESC
 ");
-$stmt->bind_param("s", $user_id);
+$stmt->bind_param("s", $id_value);
 $stmt->execute();
 $ordersResult = $stmt->get_result();
 
@@ -50,14 +54,15 @@ $completed  = [];
 $cancelled  = [];
 
 foreach ($orders as $order) {
-    $status = strtolower($order['order_status']);
-    if (str_contains($status, 'cancel')) {
+    $status = strtolower($order['order_status'] ?? 'pending');
+    
+    if ($status === 'cancelled') {
         $cancelled[] = $order;
-    } elseif (str_contains($status, 'completed') || str_contains($status, 'delivered')) {
+    } elseif ($status === 'completed') {
         $completed[] = $order;
-    } elseif (str_contains($status, 'review') || str_contains($status, 'to review')) {
+    } elseif ($status === 'received') {
         $toReview[] = $order;
-    } else {
+    } elseif (in_array($status, ['pending', 'paid', 'shipped', 'delivered'])) {
         $processing[] = $order;
     }
 }
@@ -102,6 +107,11 @@ function renderOrders($conn, $orders, $tabType) {
                     <div class="v-ordersinfo">
                         <p class="v-name"><?= $productName ?></p>
                         <small class="v-desc">Order #<?= $orderNum ?> &bull; Qty: <?= $qty ?></small>
+                        <small style="display: block; margin-top: 5px; color: #c9a961;">
+                            <span class="badge badge-<?= strtolower($status) ?>" style="padding: 4px 8px; border-radius: 3px; font-size: 0.75rem;">
+                                <?= ucfirst($status) ?>
+                            </span>
+                        </small>
                     </div>
                 </div>
                 <div class="v-right">
@@ -119,7 +129,7 @@ function renderOrders($conn, $orders, $tabType) {
                                 '<?= $jsStatus ?>'
                             )">View</button>
 
-                        <?php if ($tabType === 'processing'): ?>
+                        <?php if ($tabType === 'processing' && strtolower($status) === 'pending'): ?>
                             <button class="v-cancel btn-open"
                                 onclick="openCancelModal(<?= $order['order_id'] ?>)">Cancel Order</button>
 
@@ -163,6 +173,7 @@ function renderOrders($conn, $orders, $tabType) {
     <?php include '../components/header.php'; ?>
 
     <main class="mainBG">
+        <button class="back-btn" onclick="history.back()" title="Go back"><i class="fas fa-arrow-left"></i> Back</button>
         <div class="v-tabs">
             <h1 class="v-header">My Orders</h1>
 
