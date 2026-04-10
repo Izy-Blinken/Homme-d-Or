@@ -83,16 +83,13 @@
                         </div>
                         <div class="captcha-right">
                             <input type="text" id="captchaInput" placeholder="Enter characters" maxlength="6" autocomplete="off" />
-                            <button onclick="validateCaptcha()">Verify</button>
-                            <div id="captchaStatus" style="font-size:13px; min-height:18px;"></div>
                         </div>
                     </div>
 
                     <div class="regBtn">
-                        <p id="signupServerError" style="color:red; text-align:center;"></p>
-                        <button type="submit">CREATE ACCOUNT</button>
+                        <p id="signupServerError" style="color:red; text-align:center; display:none;"></p>
+                        <button type="submit" id="createAccountBtn">CREATE ACCOUNT</button>
                     </div>
-
                     <div class="regLog">
                         <label>
                             <a href="#" onclick="event.preventDefault(); openLoginModal();">LOGIN</a> or
