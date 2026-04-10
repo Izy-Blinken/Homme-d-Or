@@ -5,7 +5,7 @@ if (session_status() === PHP_SESSION_NONE) {
 }
 
 // 2. Now connect to the database and check identity
-include_once '../backend/db_connect.php';
+include_once '../backend/db_connect.php'; 
 $identity = getCurrentUserId();
 
 // THE BOUNCER: Only kick out complete strangers!
@@ -44,7 +44,7 @@ if ($identity['type'] === 'stranger') {
 
                 <div id="checkoutContainer">
 
-                    <!--billing information-->
+                    <!--billing information--> 
                     <div class="billingInfo">
                         <div class="sectionHeader">
                             
@@ -188,7 +188,7 @@ if ($identity['type'] === 'stranger') {
                         </form>
                     </div>
 
-                    <!--order summary-->
+                    <!--order summary--> 
                     <div class="orderSummary">
                         <div class="sectionHeader">
 

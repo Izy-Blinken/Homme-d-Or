@@ -292,15 +292,9 @@ $imgSrc = $product['image_url']
                 .then(res => res.json())
                 .then(data => {
                     if (data.status === 'success') {
-<<<<<<< HEAD
                         showGeneralToast('Added to cart!', 'success');
                     } else {
                         showGeneralToast(data.message || 'Failed to add to cart.', 'error');
-=======
-                        showGeneralToast(data.message, 'success');
-                    } else {
-                        showGeneralToast(data.message, 'error');
->>>>>>> 5aabf5346cecce917521bddf278b287c4645bf8e
                     }
                 })
                 .catch(err => {
@@ -338,9 +332,5 @@ $imgSrc = $product['image_url']
 
         </script>
         <div id="generalToast" class="generalToast"></div>
-<<<<<<< HEAD
-=======
-        <script src="../assets/js/script.js"></script>
->>>>>>> 5aabf5346cecce917521bddf278b287c4645bf8e
     </body>
 </html>

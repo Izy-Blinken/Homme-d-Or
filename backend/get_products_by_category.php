@@ -32,7 +32,6 @@ function getProductsByCategory($conn) {
 }
 
 // Renders a single product card — same structure as your existing hardcoded cards
-<<<<<<< HEAD
 function renderProductCard($product, $imgBasePath = '../assets/images/products/', $wishlistedIds = []) {
     $id       = $product['product_id'];
     $name     = htmlspecialchars($product['product_name']);
@@ -41,16 +40,6 @@ function renderProductCard($product, $imgBasePath = '../assets/images/products/'
     $imgFile  = $product['image_url'];
     $imgSrc   = $imgFile 
                 ? $imgBasePath . htmlspecialchars($imgFile) 
-=======
-function renderProductCard($product, $imgBasePath = '../assets/images/products/') {
-    $id = $product['product_id'];
-    $name = htmlspecialchars($product['product_name']);
-    $price = number_format($product['price'], 2);
-    $status = $product['product_status'];
-    $imgFile = $product['image_url'];
-    $imgSrc = $imgFile
-                ? $imgBasePath . htmlspecialchars($imgFile)
->>>>>>> 5aabf5346cecce917521bddf278b287c4645bf8e
                 : '../assets/images/brand_images/nocturne.png'; // fallback image
 
     $isSoldOut = ($status === 'out-of-stock');
@@ -73,13 +62,8 @@ function renderProductCard($product, $imgBasePath = '../assets/images/products/'
         <?php if ($isSoldOut): ?>
             <button class="add-to-cart-btn" disabled>ADD TO CART</button>
         <?php else: ?>
-<<<<<<< HEAD
             <button class="add-to-cart-btn" 
                 onclick="addToCart(<?= $id ?>, this)">
-=======
-            <button class="add-to-cart-btn"
-                onclick="window.location.href='cart.php?product_id=<?= $id ?>'">
->>>>>>> 5aabf5346cecce917521bddf278b287c4645bf8e
                 ADD TO CART
             </button>
         <?php endif; ?>
