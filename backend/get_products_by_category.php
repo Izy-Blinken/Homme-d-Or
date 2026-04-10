@@ -32,7 +32,7 @@ function getProductsByCategory($conn) {
 }
 
 // Renders a single product card — same structure as your existing hardcoded cards
-function renderProductCard($product, $imgBasePath = '../assets/images/products/') {
+function renderProductCard($product, $imgBasePath = '../assets/images/products/', $wishlistedIds = []) {
     $id       = $product['product_id'];
     $name     = htmlspecialchars($product['product_name']);
     $price    = number_format($product['price'], 2);
@@ -63,7 +63,7 @@ function renderProductCard($product, $imgBasePath = '../assets/images/products/'
             <button class="add-to-cart-btn" disabled>ADD TO CART</button>
         <?php else: ?>
             <button class="add-to-cart-btn" 
-                onclick="window.location.href='cart.php?product_id=<?= $id ?>'">
+                onclick="addToCart(<?= $id ?>, this)">
                 ADD TO CART
             </button>
         <?php endif; ?>

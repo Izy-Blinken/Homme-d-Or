@@ -1,5 +1,5 @@
 const signupModal = document.getElementById('signupModal');
-const closeBtn = document.getElementsByClassName('close')[0];
+const closeBtn = document.querySelector('#signupModal .close');
 
 const regPasswordInput = document.getElementById('regPassword');
 const regConfirmPasswordInput = document.getElementById('regConfirmPassword');

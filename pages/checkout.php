@@ -57,18 +57,18 @@ if ($identity['type'] === 'stranger') {
                                 
                                 <div class="formGroup">
                                     <label for="fullName">Full Name <span class="required">*</span></label>
-                                    <input type="text" id="fullName" name="fullName" placeholder="ex. John Doe" >
+                                    <input type="text" id="fullName" name="fullName" placeholder="ex. John Doe" required>
                                 </div>
                                 
                                 <div class="formRow">
                                     <div class="formGroup">
                                         <label for="email">Email Address <span class="required">*</span></label>
-                                        <input type="email" id="email" name="email" placeholder="ex. johndoe@example.com" >
+                                        <input type="email" id="email" name="email" placeholder="ex. johndoe@example.com" required>
                                     </div>
                                     
                                     <div class="formGroup">
                                         <label for="phone">Phone Number <span class="required">*</span></label>
-                                        <input type="tel" id="phone" name="phone" placeholder="ex. +63 912 345 6789" >
+                                        <input type="tel" id="phone" name="phone" placeholder="ex. +63 912 345 6789" required>
                                     </div>
                                 </div>
                             </div>
@@ -78,25 +78,25 @@ if ($identity['type'] === 'stranger') {
                                 
                                 <div class="formGroup">
                                     <label for="address">Street Address <span class="required">*</span></label>
-                                    <input type="text" id="address" name="address" placeholder="ex. 123 Main Street">
+                                    <input type="text" id="address" name="address" placeholder="ex. 123 Main Street" required>
                                 </div>
                                 
                                 <div class="formRow">
                                     <div class="formGroup">
                                         <label for="city">City <span class="required">*</span></label>
-                                        <input type="text" id="city" name="city" placeholder="ex. Manila" >
+                                        <input type="text" id="city" name="city" placeholder="ex. Manila" required>
                                     </div>
                                     
                                     <div class="formGroup">
                                         <label for="province">Province <span class="required">*</span></label>
-                                        <input type="text" id="province" name="province" placeholder="ex. Metro Manila" >
+                                        <input type="text" id="province" name="province" placeholder="ex. Metro Manila" required>
                                     </div>
                                 </div>
                                 
                                 <div class="formRow">
                                     <div class="formGroup">
                                         <label for="zipCode">Zip Code <span class="required">*</span></label>
-                                        <input type="text" id="zipCode" name="zipCode" placeholder="ex. 1000" >
+                                        <input type="text" id="zipCode" name="zipCode" placeholder="ex. 1000" required>
                                     </div>
                                     
                                     <div class="formGroup">
@@ -127,7 +127,7 @@ if ($identity['type'] === 'stranger') {
                                     </div>
 
                                     <div class="paymentOption">
-                                        <input type="radio" name="paymentMethod" id="pay-gcash" value="gcash">
+                                        <input type="radio" name="paymentMethod" disabled id="pay-gcash" value="gcash">
                                         <label for="pay-gcash" class="paymentCard">
                                             <div class="paymentInfo">
                                                 <span class="paymentName">GCash</span>
@@ -144,7 +144,7 @@ if ($identity['type'] === 'stranger') {
                                     </div>
 
                                     <div class="paymentOption">
-                                        <input type="radio" name="paymentMethod" id="pay-card" value="card">
+                                        <input type="radio" name="paymentMethod" disabled id="pay-card" value="card">
                                         <label for="pay-card" class="paymentCard">
                                             <div class="paymentInfo">
                                                 <span class="paymentName">Credit/Debit Card</span>
@@ -194,35 +194,59 @@ if ($identity['type'] === 'stranger') {
 
                         <h2>Order Summary</h2>
                         </div>
-                        
-                        <div class="orderItems">
-                            <div class="orderItem">
-                                <img src="../assets/images/products_images/nocturne.png" alt="Product">
-                                <div class="itemDetails">
-                                    <h4>Nocturne Eau de Parfum</h4>
-                                    <p class="itemVariant">50ml | Premium Collection</p>
-                                    <div class="itemQuantity">
-                                        <span>Qty: 1</span>
-                                    </div>
-                                </div>
-                                <div class="itemPrice">
-                                    <p>₱1,299.00</p>
-                                </div>
-                            </div>
 
+                        <?php
+                        $id_column = ($identity['type'] === 'user_id') ? 'user_id' : 'guest_id';
+                        $id_value = $identity['id'];
+
+                        $cartStmt = $conn->prepare("
+                            SELECT c.cart_id, c.product_id, c.quantity, p.product_name, p.price, pi.image_url 
+                            FROM cart c 
+                            JOIN products p ON c.product_id = p.product_id
+                            LEFT JOIN product_images pi ON pi.product_id = p.product_id AND pi.is_primary = 1
+                            WHERE c.$id_column = ?
+                        ");
+                        $cartStmt->bind_param("s", $id_value);
+                        $cartStmt->execute();
+                        $cartResult = $cartStmt->get_result();
+
+                        $checkoutItems = [];
+                        $subtotal = 0;
+
+                        while ($row = $cartResult->fetch_assoc()) {
+                            if (!empty($_SESSION['selected_items']) && in_array($row['cart_id'], $_SESSION['selected_items'])) {
+                                $checkoutItems[] = $row;
+                                $subtotal += $row['price'] * $row['quantity'];
+                            }
+                        }
+
+                        $shipping_fee = ($subtotal > 0) ? 150.00 : 0.00;
+                        $total = $subtotal + $shipping_fee;
+                        ?>
+
+                        <div class="orderItems">
+                            <?php foreach ($checkoutItems as $item): 
+                                $imgSrc = $item['image_url'] 
+                                    ? '../assets/images/products/' . htmlspecialchars($item['image_url']) 
+                                    : '../assets/images/brand_images/nocturne.png';
+                            ?>
                             <div class="orderItem">
-                                <img src="../assets/images/products_images/nocturne.png" alt="Product">
+                                <img src="<?= $imgSrc ?>" alt="Product">
                                 <div class="itemDetails">
-                                    <h4>Classic Cologne</h4>
-                                    <p class="itemVariant">100ml | Signature Line</p>
+                                    <h4><?= htmlspecialchars($item['product_name']) ?></h4>
                                     <div class="itemQuantity">
-                                        <span>Qty: 2</span>
+                                        <span>Qty: <?= $item['quantity'] ?></span>
                                     </div>
                                 </div>
                                 <div class="itemPrice">
-                                    <p>₱2,400.00</p>
+                                    <p>₱<?= number_format($item['price'] * $item['quantity'], 2) ?></p>
                                 </div>
                             </div>
+                            <?php endforeach; ?>
+
+                            <?php if (empty($checkoutItems)): ?>
+                                <p style="color:#aaa; text-align:center;">No items selected.</p>
+                            <?php endif; ?>
                         </div>
 
                         <div class="promoSection">
@@ -230,14 +254,14 @@ if ($identity['type'] === 'stranger') {
                             <button class="applyPromoBtn">Apply</button>
                         </div>
                         
-                        <div class="orderTotal">
+                         <div class="orderTotal">
                             <div class="totalRow">
                                 <span>Subtotal:</span>
-                                <span>₱3,699.00</span>
+                                <span>₱<?= number_format($subtotal, 2) ?></span>
                             </div>
                             <div class="totalRow">
                                 <span>Shipping:</span>
-                                <span>₱150.00</span>
+                                <span>₱<?= number_format($shipping_fee, 2) ?></span>
                             </div>
                             <div class="totalRow discount">
                                 <span>Discount:</span>
@@ -246,7 +270,7 @@ if ($identity['type'] === 'stranger') {
                             <div class="totalDivider"></div>
                             <div class="totalRow totalFinal">
                                 <span>Total:</span>
-                                <span>₱3,849.00</span>
+                                <span>₱<?= number_format($total, 2) ?></span>
                             </div>
                         </div>
 
