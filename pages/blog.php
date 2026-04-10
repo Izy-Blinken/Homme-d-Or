@@ -56,6 +56,7 @@ while ($row = mysqli_fetch_assoc($reviews_result)) {
     <?php include '../components/header.php'; ?>
 
     <main style="background-image:url('../assets/images/brand_images/bg-image.jpg'); background-size:cover; background-position:center; background-attachment:fixed; background-color:#0e101f; min-height:100vh;">
+        <button class="back-btn" onclick="history.back()" title="Go back" style="margin-top: 2rem;"><i class="fas fa-arrow-left"></i> Back</button>
 
         <?php if ($featured): ?>
         <section class="blog-featured fade-in">

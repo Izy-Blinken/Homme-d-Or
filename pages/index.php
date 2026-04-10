@@ -25,6 +25,22 @@ if (!empty($_SESSION['user_id'])) {
     }
 }
 
+// Fetch reviews for testimonials
+$reviews_query = "
+    SELECT pr.rating, pr.comment, u.fname, u.lname, pr.created_at
+    FROM product_reviews pr
+    JOIN users u ON pr.user_id = u.user_id
+    ORDER BY pr.created_at DESC
+    LIMIT 6
+";
+$reviews_result = $conn->query($reviews_query);
+$testimonials = [];
+if ($reviews_result) {
+    while ($row = $reviews_result->fetch_assoc()) {
+        $testimonials[] = $row;
+    }
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -536,113 +552,33 @@ if (!empty($_SESSION['user_id'])) {
 
             <div class="testimonials-slider">
                 <div class="testimonials-track" id="testimonialsTrack">
-                    <!-- Testimonial Card 1 -->
-                    <div class="testimonial-card">
-                        <div class="testimonial-stars">
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
+                    <?php if (empty($testimonials)): ?>
+                        <div style="grid-column: 1 / -1; text-align: center; padding: 60px 20px; color: #aaa;">
+                            <p style="font-size: 1.2rem; margin-bottom: 10px;">Nothing to review yet</p>
+                            <p style="font-size: 0.9rem;">Be the first to share your experience with us!</p>
                         </div>
-                        <p class="testimonial-text">"Amazing fragrance! Lasts all day and I get compliments everywhere I go. Highly recommend this perfume to anyone looking for a signature scent."</p>
-                        <div class="testimonial-author">
-                            <div class="author-avatar">
-                                <i class="fas fa-user"></i>
+                    <?php else: ?>
+                        <?php foreach ($testimonials as $review): ?>
+                        <div class="testimonial-card">
+                            <div class="testimonial-stars">
+                                <?php for ($i = 0; $i < 5; $i++): ?>
+                                    <?php if ($i < $review['rating']): ?>
+                                        <i class="fas fa-star"></i>
+                                    <?php else: ?>
+                                        <i class="fas fa-star" style="color: #ddd;"></i>
+                                    <?php endif; ?>
+                                <?php endfor; ?>
                             </div>
-                            <span class="author-name">Sarah Johnson</span>
-                        </div>
-                    </div>
-
-                    <!-- Testimonial Card 2 -->
-                    <div class="testimonial-card">
-                        <div class="testimonial-stars">
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                        </div>
-                        <p class="testimonial-text">"Best purchase ever! The quality is outstanding and the scent is absolutely divine. Will definitely be ordering more products from this brand."</p>
-                        <div class="testimonial-author">
-                            <div class="author-avatar">
-                                <i class="fas fa-user"></i>
+                            <p class="testimonial-text"><?= htmlspecialchars($review['comment']); ?></p>
+                            <div class="testimonial-author">
+                                <div class="author-avatar">
+                                    <?= strtoupper(substr($review['fname'], 0, 1)); ?>
+                                </div>
+                                <span class="author-name"><?= htmlspecialchars($review['fname'] . ' ' . $review['lname']); ?></span>
                             </div>
-                            <span class="author-name">Michael Chen</span>
                         </div>
-                    </div>
-
-                    <!-- Testimonial Card 3 -->
-                    <div class="testimonial-card">
-                        <div class="testimonial-stars">
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                        </div>
-                        <p class="testimonial-text">"Luxurious and elegant! The packaging is beautiful and the fragrance is even better. This has become my go-to perfume for special occasions."</p>
-                        <div class="testimonial-author">
-                            <div class="author-avatar">
-                                <i class="fas fa-user"></i>
-                            </div>
-                            <span class="author-name">Emma Davis</span>
-                        </div>
-                    </div>
-
-                    <!-- Testimonial Card 4 -->
-                    <div class="testimonial-card">
-                        <div class="testimonial-stars">
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                        </div>
-                        <p class="testimonial-text">"Incredible value for money! The scent is long-lasting and sophisticated. I've already recommended it to all my friends and family."</p>
-                        <div class="testimonial-author">
-                            <div class="author-avatar">
-                                <i class="fas fa-user"></i>
-                            </div>
-                            <span class="author-name">David Martinez</span>
-                        </div>
-                    </div>
-
-                    <!-- Testimonial Card 5 -->
-                    <div class="testimonial-card">
-                        <div class="testimonial-stars">
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                        </div>
-                        <p class="testimonial-text">"Perfect gift! Bought this for my partner and they absolutely love it. The fragrance is unique and memorable. Five stars!"</p>
-                        <div class="testimonial-author">
-                            <div class="author-avatar">
-                                <i class="fas fa-user"></i>
-                            </div>
-                            <span class="author-name">Jessica Brown</span>
-                        </div>
-                    </div>
-
-                    <!-- Testimonial Card 6 -->
-                    <div class="testimonial-card">
-                        <div class="testimonial-stars">
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                        </div>
-                        <p class="testimonial-text">"Outstanding quality and service! Fast shipping and the product exceeded my expectations. This is now my favorite perfume brand."</p>
-                        <div class="testimonial-author">
-                            <div class="author-avatar">
-                                <i class="fas fa-user"></i>
-                            </div>
-                            <span class="author-name">Robert Wilson</span>
-                        </div>
-                    </div>
+                        <?php endforeach; ?>
+                    <?php endif; ?>
                 </div>
             </div>
         </div>

@@ -140,8 +140,8 @@
                                         <td>₱<?= number_format($order['total_amount'], 2) ?></td>
                                         <td><?= ucfirst(str_replace('_', ' ', $order['payment_method'] ?? 'N/A')) ?></td>
                                         <td>
-                                            <span class="badge badge-<?= $order['order_status'] ?>">
-                                                <?= ucfirst($order['order_status']) ?>
+                                            <span class="badge badge-<?= strtolower($order['order_status'] ?? 'pending') ?>">
+                                                <?= ucfirst($order['order_status'] ?? 'pending') ?>
                                             </span>
                                         </td>
 

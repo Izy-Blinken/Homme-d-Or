@@ -158,7 +158,7 @@
                 </div>
 
                 <div class="dangerZone">
-                    <h3>Danger Zone</h3>
+                    <h3 style="margin-bottom: 20px;">Danger Zone</h3>
                     <div class="divider"></div>
                     <p class="dangerDesc">Once you delete your account, all your data will be permanently removed and cannot be recovered.</p>
                     <button class="deleteAccountBtn" onclick="openDeleteModal()">Delete Account</button>
@@ -232,7 +232,7 @@
                         <!-- Password -->
                         <div class="editModalFormSection">
                             <h3>Password</h3>
-                            <button type="button" class="editModalSaveBtn" style="width:100%;" onclick="closeEditModal(); openChangePasswordModal();">
+                            <button type="button" class="editModalSaveBtn" style="width:100%; margin-bottom:20px;" onclick="closeEditModal(); openChangePasswordModal();">
                                 Change Password
                             </button>
 
@@ -372,7 +372,7 @@
         <!-- Delete Account Modal -->
         <div id="deleteAccountModal" class="editProfileModal" style="display:none;">
             <div class="editModalOverlay" onclick="closeDeleteModal()"></div>
-            <div class="editModalContent" style="max-width:420px;">
+            <div class="editModalContent" style="max-width:420px; height:40vh;" >
         
                 <!-- Step 1: Confirm intent -->
                 <div id="deleteStep1">

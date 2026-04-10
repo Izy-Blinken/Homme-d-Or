@@ -97,11 +97,7 @@ $currentPage = basename($_SERVER['PHP_SELF']);
 
     <div class="nav-wrapper">
         <ul id="navbar-right">
-            <li class="header-lang-toggle">
-                <a href="?lang=en" class="lang-btn active">EN</a>
-                <span class="lang-divider">/</span>
-                <a href="?lang=fil" class="lang-btn">FIL</a>
-            </li>
+            
 
             <li class="notif-dropdown" id="notif-item" style="position:relative;">
                 <?php $userLoggedIn = !empty($_SESSION['user_id']) ? 'true' : 'false'; ?>
@@ -113,7 +109,7 @@ $currentPage = basename($_SERVER['PHP_SELF']);
                 <div class="notif-panel" id="notif-panel">
                     <div class="notif-panel-header">
                         <span>Notifications</span>
-                        <button id="mark-all-read" style="background:none; border:none; color:#c9a961; font-size:0.8rem; cursor:pointer; font-weight:600;">Mark all read</button>
+                        <button id="mark-all-read" style="background:none; border:none; color:white; font-size:0.8rem; cursor:pointer; font-weight:600;">Mark all read</button>
                     </div>
             
                     <div class="notif-list" id="notif-list">
