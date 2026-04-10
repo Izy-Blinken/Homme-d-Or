@@ -925,6 +925,148 @@ body {
     font-style: italic;
 }
 
+/* ── renderProductCard() output styles ───────────────────────────────────
+   These match .card-image / .card-body but for the dynamic card structure  */
+
+.shop-product-image {
+  position: relative;
+  aspect-ratio: 1 / 1;
+  background: linear-gradient(145deg, var(--navy-mid), var(--navy));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.shop-product-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.5s;
+}
+
+.product-card:hover .shop-product-image img {
+  transform: scale(1.07) translateY(-4px);
+}
+
+.quick-view-btn {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  font-size: clamp(0.5rem, 0.8vw, 0.62rem);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  background: rgba(4, 13, 26, 0.82);
+  border: none;
+  border-top: 1px solid rgba(201, 168, 76, 0.3);
+  color: var(--gold);
+  cursor: pointer;
+  padding: clamp(9px, 1.3vw, 13px);
+  opacity: 0;
+  transform: translateY(6px);
+  transition: opacity 0.3s, transform 0.3s;
+  z-index: 4;
+}
+
+.product-card:hover .quick-view-btn {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.sold-out-label {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  text-align: center;
+  font-size: clamp(0.5rem, 0.8vw, 0.62rem);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  background: rgba(139, 26, 26, 0.85);
+  color: var(--cream);
+  padding: clamp(9px, 1.3vw, 13px);
+  z-index: 4;
+}
+
+.add-to-cart-btn {
+  width: 100%;
+  font-size: clamp(0.5rem, 0.8vw, 0.62rem);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  background: transparent;
+  border: none;
+  border-top: 1px solid rgba(201, 168, 76, 0.15);
+  border-bottom: 1px solid rgba(201, 168, 76, 0.15);
+  color: var(--gold);
+  cursor: pointer;
+  padding: clamp(9px, 1.3vw, 13px);
+  transition: all 0.3s;
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.add-to-cart-btn::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--gold);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.35s;
+  z-index: -1;
+}
+
+.add-to-cart-btn:hover {
+  color: var(--navy-deep);
+}
+
+.add-to-cart-btn:hover::before {
+  transform: scaleX(1);
+}
+
+.add-to-cart-btn:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+.add-to-cart-btn:disabled::before {
+  display: none;
+}
+
+.shop-product-info {
+  padding: clamp(12px, 1.8vw, 18px);
+  text-align: left; 
+}
+
+.shop-product-title {
+  font-size: clamp(0.78rem, 1.2vw, 1rem);
+  font-weight: 600;
+  color: var(--cream);
+  letter-spacing: 0.04em;
+  margin-bottom: clamp(5px, 0.8vw, 8px);
+}
+
+.shop-product-price {
+  font-size: clamp(0.9rem, 1.4vw, 1.15rem);
+  font-weight: 700;
+  color: var(--gold);
+}
+
+.no-products-msg {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 60px 20px;
+  color: rgba(240, 232, 213, 0.35);
+  font-size: 0.9rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+/* ── End renderProductCard() styles ─────────────────────────────────── */
+
 .card-btn {
   z-index: 1;
 }
@@ -936,4 +1078,52 @@ body {
 
 .rank-featured:hover .card-btn {
   color: var(--navy-deep);
+}
+
+/* Sort controls */
+.sort-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-left: auto;
+}
+
+.sort-label {
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(240, 232, 213, 0.75);
+}
+
+.sort-select {
+  background: rgba(7, 21, 37, 0.9);
+  border: 1px solid rgba(201, 168, 76, 0.25);
+  color: var(--cream);
+  padding: 10px 12px;
+  font-size: 0.82rem;
+  min-width: 220px;
+}
+
+.sort-select:focus {
+  outline: none;
+  border-color: var(--gold);
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+  .shop-controls {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .sort-container {
+    margin-left: 0;
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .sort-select {
+    width: 100%;
+    min-width: 0;
+  }
 }

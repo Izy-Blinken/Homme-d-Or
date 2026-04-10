@@ -42,6 +42,27 @@ if ($identity['type'] === 'user_id') {
 $imgSrc = $product['image_url']
     ? '../assets/images/products/' . htmlspecialchars($product['image_url'])
     : '../assets/images/brand_images/nocturne.png';
+
+// Fetch ALL images for this product (for the thumbnail gallery)
+$allImages = [];
+$imgStmt = $conn->prepare("
+    SELECT image_url, is_primary
+    FROM product_images
+    WHERE product_id = ?
+    ORDER BY is_primary DESC, image_id ASC
+");
+$imgStmt->bind_param("i", $product_id);
+$imgStmt->execute();
+$imgResult = $imgStmt->get_result();
+while ($imgRow = $imgResult->fetch_assoc()) {
+    $allImages[] = $imgRow;
+}
+$imgStmt->close();
+
+// Fallback: if no rows in product_images, use the primary from the main query
+if (empty($allImages)) {
+    $allImages[] = ['image_url' => $product['image_url'], 'is_primary' => 1];
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -105,7 +126,16 @@ $imgSrc = $product['image_url']
                              class="product-image" id="main-product-image">
                         
                         <div class="product-thumbnails">
-                            <img src="<?php echo $imgSrc; ?>" alt="Front View" class="thumbnail active-thumb" onclick="changeImage(this)">
+                            <?php foreach ($allImages as $index => $img):
+                                $thumbSrc = $img['image_url']
+                                    ? '../assets/images/products/' . htmlspecialchars($img['image_url'])
+                                    : '../assets/images/brand_images/nocturne.png';
+                            ?>
+                                <img src="<?= $thumbSrc ?>"
+                                     alt="Product image <?= $index + 1 ?>"
+                                     class="thumbnail <?= $index === 0 ? 'active-thumb' : '' ?>"
+                                     onclick="changeImage(this)">
+                            <?php endforeach; ?>
                         </div>
                     </div>
 
