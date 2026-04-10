@@ -193,8 +193,12 @@ elseif ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         file_put_contents(sys_get_temp_dir() . '/pending_' . $token . '.json', json_encode($pendingData));
 
-        $success_url = 'http://localhost/Homme-d-Or/pages/orderConfirmation.php?gcash=success&token=' . $token;
-        $cancel_url  = 'http://localhost/Homme-d-Or/pages/checkout.php?gcash=cancelled';
+        $base_url = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? 'https' : 'http') 
+                    . '://' . $_SERVER['HTTP_HOST'] 
+                    . '/Homme-d-Or';
+
+        $success_url = $base_url . '/pages/orderConfirmation.php?gcash=success&token=' . $token;
+        $cancel_url  = $base_url . '/pages/checkout.php?gcash=cancelled';
 
         $checkoutUrl = createPayMongoCheckout(
             $total_amount,
