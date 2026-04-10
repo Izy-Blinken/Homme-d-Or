@@ -247,6 +247,8 @@ if (document.getElementById('signupModal')) {
             const hasUppercase = /[A-Z]/.test(password);
             const hasLowercase = /[a-z]/.test(password);
             const hasNumber = /[0-9]/.test(password);
+
+            const userCaptcha = captchaInput.value.trim().toUpperCase();
             
             if (!hasLength || !hasUppercase || !hasLowercase || !hasNumber) {
                 e.preventDefault();
@@ -257,6 +259,12 @@ if (document.getElementById('signupModal')) {
             if (password !== confirmPassword) {
                 e.preventDefault();
                 alert('Passwords do not match!');
+                return false;
+            }
+
+            if (userCaptcha !== captchaCode) {
+                showSignupError('Incorrect captcha. Please try again.');
+                generateCaptcha();
                 return false;
             }
 

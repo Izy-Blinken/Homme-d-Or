@@ -1,5 +1,4 @@
 <?php
-// WAKE UP THE SESSION
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
@@ -61,69 +60,126 @@ function sendOrderEmail($to_email, $to_name, $order_id, $items, $total_amount, $
     }
 }
 
+// ─────────────────────────────────────────────
+// Shared variables (populated by each branch)
+// ─────────────────────────────────────────────
+$fname          = '';
+$lname          = '';
+$email          = '';
+$phone          = '';
+$street         = '';
+$city           = '';
+$province       = '';
+$zipCode        = '';
+$country        = '';
+$paymentMethod  = '';
+$paymentTitle   = '';
+$paymentDetail  = '';
+$order_status   = '';
+$purchasedItems = [];
+$subtotal       = 0;
+$shipping_fee   = 0;
+$total_amount   = 0;
+$order_id       = 0;
+$orderFormatted = '';
+$skipDbInserts  = false;
+
 $identity  = getCurrentUserId();
 $id_column = ($identity['type'] === 'user_id') ? 'user_id' : 'guest_id';
 $id_value  = $identity['id'];
 
-// GCASH RETURN: Coming back from PayMongo after payment
+// BRANCH 1: GCash return from PayMongo
 if (isset($_GET['gcash']) && $_GET['gcash'] === 'success' && isset($_GET['token'])) {
 
-    $token    = preg_replace('/[^a-f0-9]/', '', $_GET['token']); // sanitize
-    $filePath = sys_get_temp_dir() . '/pending_' . $token . '.json';
+    $token = preg_replace('/[^a-f0-9]/', '', $_GET['token']);
 
-    if (!file_exists($filePath)) {
-        header("Location: cart.php");
-        exit;
-    }
+    // ── REFRESH GUARD: order already processed, load from session ──
+    if (isset($_SESSION['completed_order_' . $token])) {
+        $c = $_SESSION['completed_order_' . $token];
 
-    $pending = json_decode(file_get_contents($filePath), true);
-    unlink($filePath); // clean up
+        $fullName      = $c['fullName'];
+        $nameParts     = explode(' ', $fullName, 2);
+        $fname         = $nameParts[0];
+        $lname         = $nameParts[1] ?? '';
+        $email         = $c['email'];
+        $phone         = $c['phone'];
+        $street        = $c['address'];
+        $city          = $c['city'];
+        $province      = $c['province'];
+        $zipCode       = $c['zipCode'];
+        $country       = $c['country'];
+        $paymentMethod = 'gcash';
+        $paymentTitle  = 'GCash';
+        $paymentDetail = 'Paid via GCash';
+        $order_status  = 'Processing';
+        $purchasedItems = $c['purchasedItems'];
+        $subtotal       = $c['subtotal'];
+        $shipping_fee   = $c['shipping_fee'];
+        $total_amount   = $c['total_amount'];
+        $order_id       = $c['order_id'];
+        $orderFormatted = $c['orderFormatted'];
+        $skipDbInserts  = true; // skip inserts, jump to render
 
-    $_SESSION['selected_items'] = $pending['selected_items'];
+    } else {
+        // ── FIRST VISIT: read token file ──
+        $filePath = sys_get_temp_dir() . '/pending_' . $token . '.json';
 
-    $fullName      = $pending['fullName'];
-    $nameParts     = explode(' ', $fullName, 2);
-    $fname         = $nameParts[0];
-    $lname         = $nameParts[1] ?? '';
-    $email         = $pending['email'];
-    $phone         = $pending['phone'];
-    $street        = $pending['address'];
-    $city          = $pending['city'];
-    $province      = $pending['province'];
-    $zipCode       = $pending['zipCode'];
-    $country       = $pending['country'];
-    $paymentMethod = 'gcash';
-    $paymentTitle  = 'GCash';
-    $paymentDetail = 'Paid via GCash';
-    $order_status  = 'Processing';
-
-    // Re-fetch cart items
-    $stmt = $conn->prepare("
-        SELECT c.cart_id, c.product_id, c.quantity, p.product_name, p.price, pi.image_url
-        FROM cart c JOIN products p ON c.product_id = p.product_id
-        LEFT JOIN product_images pi ON pi.product_id = p.product_id AND pi.is_primary = 1
-        WHERE c.$id_column = ?
-    ");
-    $stmt->bind_param("s", $id_value);
-    $stmt->execute();
-    $result = $stmt->get_result();
-
-    $purchasedItems = [];
-    $subtotal = 0;
-    while ($row = $result->fetch_assoc()) {
-        if (in_array($row['cart_id'], $_SESSION['selected_items'])) {
-            $purchasedItems[] = $row;
-            $subtotal += ($row['price'] * $row['quantity']);
+        if (!file_exists($filePath)) {
+            header("Location: cart.php?error=session_expired");
+            exit;
         }
+
+        $pending = json_decode(file_get_contents($filePath), true);
+        unlink($filePath);
+
+        $_SESSION['selected_items'] = $pending['selected_items'];
+
+        $fullName      = $pending['fullName'];
+        $nameParts     = explode(' ', $fullName, 2);
+        $fname         = $nameParts[0];
+        $lname         = $nameParts[1] ?? '';
+        $email         = $pending['email'];
+        $phone         = $pending['phone'];
+        $street        = $pending['address'];
+        $city          = $pending['city'];
+        $province      = $pending['province'];
+        $zipCode       = $pending['zipCode'];
+        $country       = $pending['country'];
+        $paymentMethod = 'gcash';
+        $paymentTitle  = 'GCash';
+        $paymentDetail = 'Paid via GCash';
+        $order_status  = 'Processing';
+
+        // Fetch cart items
+        $stmt = $conn->prepare("
+            SELECT c.cart_id, c.product_id, c.quantity, p.product_name, p.price, pi.image_url
+            FROM cart c
+            JOIN products p ON c.product_id = p.product_id
+            LEFT JOIN product_images pi ON pi.product_id = p.product_id AND pi.is_primary = 1
+            WHERE c.$id_column = ?
+        ");
+        $stmt->bind_param("s", $id_value);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        $purchasedItems = [];
+        $subtotal = 0;
+        while ($row = $result->fetch_assoc()) {
+            if (in_array($row['cart_id'], $_SESSION['selected_items'])) {
+                $purchasedItems[] = $row;
+                $subtotal += ($row['price'] * $row['quantity']);
+            }
+        }
+
+        $shipping_fee = ($subtotal > 0) ? 150.00 : 0.00;
+        $total_amount = $subtotal + $shipping_fee;
     }
 
-    $shipping_fee = ($subtotal > 0) ? 150.00 : 0.00;
-    $total_amount = $subtotal + $shipping_fee;
-}
+// ─────────────────────────────────────────────
+// BRANCH 2: COD via POST
+// ─────────────────────────────────────────────
+} elseif ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-elseif ($_SERVER['REQUEST_METHOD'] === 'POST') {
-
-    // Bouncer
     if ($identity['type'] === 'stranger' || empty($_SESSION['selected_items'])) {
         header("Location: cart.php");
         exit;
@@ -154,7 +210,8 @@ elseif ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Fetch cart items
     $stmt = $conn->prepare("
         SELECT c.cart_id, c.product_id, c.quantity, p.product_name, p.price, pi.image_url
-        FROM cart c JOIN products p ON c.product_id = p.product_id
+        FROM cart c
+        JOIN products p ON c.product_id = p.product_id
         LEFT JOIN product_images pi ON pi.product_id = p.product_id AND pi.is_primary = 1
         WHERE c.$id_column = ?
     ");
@@ -174,7 +231,7 @@ elseif ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $shipping_fee = ($subtotal > 0) ? 150.00 : 0.00;
     $total_amount = $subtotal + $shipping_fee;
 
-    // ---- GCASH: Save to session and redirect to PayMongo ----
+    // ── GCash redirect (POST method selected gcash) ──
     if ($paymentMethod === 'gcash') {
         $token = bin2hex(random_bytes(16));
 
@@ -193,8 +250,12 @@ elseif ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         file_put_contents(sys_get_temp_dir() . '/pending_' . $token . '.json', json_encode($pendingData));
 
-        $success_url = 'http://localhost/Homme-d-Or/pages/orderConfirmation.php?gcash=success&token=' . $token;
-        $cancel_url  = 'http://localhost/Homme-d-Or/pages/checkout.php?gcash=cancelled';
+        $base_url = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? 'https' : 'http')
+                    . '://' . $_SERVER['HTTP_HOST']
+                    . '/Homme-d-Or';
+
+        $success_url = $base_url . '/pages/orderConfirmation.php?gcash=success&token=' . $token;
+        $cancel_url  = $base_url . '/pages/checkout.php?gcash=cancelled';
 
         $checkoutUrl = createPayMongoCheckout(
             $total_amount,
@@ -212,9 +273,10 @@ elseif ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     }
 
-    // ---- COD: Set payment details ----
+    // ── COD payment details ──
     $paymentTitle  = 'Cash on Delivery';
     $paymentDetail = 'Pay when you receive';
+    $order_status  = 'Pending Payment (COD)';
 
 } else {
     // Direct access — no POST and no gcash return
@@ -222,67 +284,92 @@ elseif ($_SERVER['REQUEST_METHOD'] === 'POST') {
     exit;
 }
 
-$db_user_id  = ($identity['type'] === 'user_id')  ? $id_value : null;
-$db_guest_id = ($identity['type'] === 'guest_id') ? $id_value : null;
+// DB INSERTS (skipped on refresh)
+if (!$skipDbInserts) {
 
-$insertOrder = $conn->prepare("
-    INSERT INTO orders (
-        user_id, guest_id, fname, lname, email, phone,
-        street, city, province, country, zip_code,
-        subtotal, shipping_fee, total_amount, order_status
-    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-");
-$insertOrder->bind_param("ssssssssssdddss",
-    $db_user_id, $db_guest_id, $fname, $lname, $email, $phone,
-    $street, $city, $province, $country, $zipCode,
-    $subtotal, $shipping_fee, $total_amount, $order_status
-);
-if (!$insertOrder->execute()) {
-    die("Order failed.");
-}
-$order_id       = $conn->insert_id;
-$orderFormatted = str_pad($order_id, 6, '0', STR_PAD_LEFT);
+    $db_user_id  = ($identity['type'] === 'user_id')  ? $id_value : null;
+    $db_guest_id = ($identity['type'] === 'guest_id') ? $id_value : null;
 
-$db_method         = ($paymentMethod === 'gcash') ? 'gcash' : 'cod';
-$db_payment_status = ($paymentMethod === 'cod') ? 'pending' : 'paid';
-$db_paid_at        = ($paymentMethod !== 'cod') ? date('Y-m-d H:i:s') : null;
+    $insertOrder = $conn->prepare("
+        INSERT INTO orders (
+            user_id, guest_id, fname, lname, email, phone,
+            street, city, province, country, zip_code,
+            subtotal, shipping_fee, total_amount, order_status
+        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+    ");
+    $insertOrder->bind_param("ssssssssssdddss",
+        $db_user_id, $db_guest_id, $fname, $lname, $email, $phone,
+        $street, $city, $province, $country, $zipCode,
+        $subtotal, $shipping_fee, $total_amount, $order_status
+    );
+    if (!$insertOrder->execute()) {
+        die("Order insert failed.");
+    }
 
-$insertPayment = $conn->prepare("
-    INSERT INTO payments (order_id, method, payment_status, paid_at)
-    VALUES (?, ?, ?, ?)
-");
-$insertPayment->bind_param("isss", $order_id, $db_method, $db_payment_status, $db_paid_at);
-$insertPayment->execute();
+    $order_id       = $conn->insert_id;
+    $orderFormatted = str_pad($order_id, 6, '0', STR_PAD_LEFT);
 
-foreach ($purchasedItems as $item) {
-    $stmtItem = $conn->prepare("
-        INSERT INTO order_items (order_id, product_id, quantity, price_at_purchase)
+    $db_method         = ($paymentMethod === 'gcash') ? 'gcash' : 'cod';
+    $db_payment_status = ($paymentMethod === 'cod') ? 'pending' : 'paid';
+    $db_paid_at        = ($paymentMethod !== 'cod') ? date('Y-m-d H:i:s') : null;
+
+    $insertPayment = $conn->prepare("
+        INSERT INTO payments (order_id, method, payment_status, paid_at)
         VALUES (?, ?, ?, ?)
     ");
-    $stmtItem->bind_param("iiid", $order_id, $item['product_id'], $item['quantity'], $item['price']);
-    $stmtItem->execute();
-}
+    $insertPayment->bind_param("isss", $order_id, $db_method, $db_payment_status, $db_paid_at);
+    $insertPayment->execute();
 
-unset($_SESSION['selected_items']);
+    foreach ($purchasedItems as $item) {
+        $stmtItem = $conn->prepare("
+            INSERT INTO order_items (order_id, product_id, quantity, price_at_purchase)
+            VALUES (?, ?, ?, ?)
+        ");
+        $stmtItem->bind_param("iiid", $order_id, $item['product_id'], $item['quantity'], $item['price']);
+        $stmtItem->execute();
+    }
 
-if (!empty($purchasedItems)) {
-    $deletePlaceholders = implode(',', array_fill(0, count($purchasedItems), '?'));
-    $deleteCart = $conn->prepare("DELETE FROM cart WHERE cart_id IN ($deletePlaceholders)");
-    $types   = str_repeat('i', count($purchasedItems));
-    $cartIds = array_column($purchasedItems, 'cart_id');
-    $deleteCart->bind_param($types, ...$cartIds);
-    $deleteCart->execute();
-}
+    unset($_SESSION['selected_items']);
 
-$updateStock = $conn->prepare("UPDATE products SET stock_qty = stock_qty - ? WHERE product_id = ?");
-foreach ($purchasedItems as $item) {
-    $updateStock->bind_param("ii", $item['quantity'], $item['product_id']);
-    $updateStock->execute();
-}
+    if (!empty($purchasedItems)) {
+        $deletePlaceholders = implode(',', array_fill(0, count($purchasedItems), '?'));
+        $deleteCart = $conn->prepare("DELETE FROM cart WHERE cart_id IN ($deletePlaceholders)");
+        $types   = str_repeat('i', count($purchasedItems));
+        $cartIds = array_column($purchasedItems, 'cart_id');
+        $deleteCart->bind_param($types, ...$cartIds);
+        $deleteCart->execute();
+    }
 
-$emailSent = sendOrderEmail($email, $fname, $orderFormatted, $purchasedItems, $total_amount, $paymentMethod);
-if (!$emailSent) {
-    error_log("Order email failed for order ID: $order_id");
+    $updateStock = $conn->prepare("UPDATE products SET stock_qty = stock_qty - ? WHERE product_id = ?");
+    foreach ($purchasedItems as $item) {
+        $updateStock->bind_param("ii", $item['quantity'], $item['product_id']);
+        $updateStock->execute();
+    }
+
+    $emailSent = sendOrderEmail($email, $fname, $orderFormatted, $purchasedItems, $total_amount, $paymentMethod);
+    if (!$emailSent) {
+        error_log("Order email failed for order ID: $order_id");
+    }
+
+    // ── Save to session for refresh safety (GCash only) ──
+    if ($paymentMethod === 'gcash' && isset($token)) {
+        $_SESSION['completed_order_' . $token] = [
+            'fullName'       => $fullName,
+            'email'          => $email,
+            'phone'          => $phone,
+            'address'        => $street,
+            'city'           => $city,
+            'province'       => $province,
+            'zipCode'        => $zipCode,
+            'country'        => $country,
+            'purchasedItems' => $purchasedItems,
+            'subtotal'       => $subtotal,
+            'shipping_fee'   => $shipping_fee,
+            'total_amount'   => $total_amount,
+            'order_id'       => $order_id,
+            'orderFormatted' => $orderFormatted,
+        ];
+    }
 }
 ?>
 <!DOCTYPE html>
