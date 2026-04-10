@@ -217,3 +217,36 @@ function selectSuggestion(inputId, value, suggestionsId, autoSubmit = false) {
         initLiveSearch('mobile-search', 'mobile-suggestions', '../backend/productLiveSearch.php');
     }
 })();
+
+function addToCart(productId, btn) {
+    const original = btn.innerText;
+    btn.innerText = 'Adding...';
+    btn.disabled = true;
+
+    fetch('../backend/add_to_cart.php', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: `product_id=${productId}&quantity=1`
+    })
+    .then(res => res.json())
+    .then(data => {
+        if (data.status === 'success') {
+            btn.innerText = 'Added!';
+            setTimeout(() => {
+                btn.innerText = original;
+                btn.disabled = false;
+            }, 1500);
+        } else if (data.redirect) {
+            window.location.href = data.redirect;
+        } else {
+            btn.innerText = original;
+            btn.disabled = false;
+            alert(data.message || 'Failed to add to cart.');
+        }
+    })
+    .catch(() => {
+        btn.innerText = original;
+        btn.disabled = false;
+        alert('Something went wrong. Please try again.');
+    });
+}

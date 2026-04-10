@@ -1,43 +1,45 @@
-const loginModal = document.getElementById('loginModal');
-const loginCloseBtn = document.getElementsByClassName('close')[1];
+if (document.getElementById('loginModal')) {    
+    const loginModal = document.getElementById('loginModal');
+    const loginCloseBtn = document.querySelector('#loginModal .close');
 
-function openLoginModal() {
-    if (loginModal) {
-        loginModal.classList.remove('closing');
-        loginModal.style.display = 'flex';
-        document.body.style.overflow = 'hidden';
-        
-        setTimeout(() => {
-            loginModal.classList.add('show');
-        }, 10);
-    }
-}
-
-function closeLoginModal() {
-    if (loginModal) {
-        loginModal.classList.remove('show');
-        loginModal.classList.add('closing');
-
-        setTimeout(() => {
-            loginModal.style.display = 'none';
+    function openLoginModal() {
+        if (loginModal) {
             loginModal.classList.remove('closing');
-            document.body.style.overflow = 'auto';
-        }, 1000);
+            loginModal.style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+            
+            setTimeout(() => {
+                loginModal.classList.add('show');
+            }, 10);
+        }
     }
-}
 
-if(loginCloseBtn) {
-    loginCloseBtn.onclick = closeLoginModal;
-}
+    function closeLoginModal() {
+        if (loginModal) {
+            loginModal.classList.remove('show');
+            loginModal.classList.add('closing');
 
-window.onclick = function(event) {
-    if (event.target == loginModal) {
-        closeLoginModal();
+            setTimeout(() => {
+                loginModal.style.display = 'none';
+                loginModal.classList.remove('closing');
+                document.body.style.overflow = 'auto';
+            }, 1000);
+        }
     }
-}
 
-document.addEventListener('keydown', function(event) {
-    if (event.key === 'Escape') {
-        closeLoginModal();
+    if(loginCloseBtn) {
+        loginCloseBtn.onclick = closeLoginModal;
     }
-});
+
+    window.onclick = function(event) {
+        if (event.target == loginModal) {
+            closeLoginModal();
+        }
+    }
+
+    document.addEventListener('keydown', function(event) {
+        if (event.key === 'Escape') {
+            closeLoginModal();
+        }
+    });
+}

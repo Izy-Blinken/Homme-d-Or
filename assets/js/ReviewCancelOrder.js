@@ -71,6 +71,17 @@ function submitReview(event) {
     closeReviewModal();
 }
 
+<<<<<<< HEAD
+//Cancel Order Modal
+function openCancelModal(orderId) {
+    document.getElementById('cancelOrderId').value = orderId;
+    const modal = document.getElementById('cancelOrderModal');
+    modal.classList.remove('closing');
+    modal.classList.add('show');
+
+    // reset form
+    document.querySelectorAll('input[name="cancelReason"]').forEach(r => r.checked = false);
+=======
 // Cancel Order Modal
 function openCancelModal() {
     const modal = document.getElementById('cancelOrderModal');
@@ -80,6 +91,7 @@ function openCancelModal() {
     // reset form
     const radioButtons = document.querySelectorAll('input[name="cancelReason"]');
     radioButtons.forEach(radio => radio.checked = false);
+>>>>>>> 5aabf5346cecce917521bddf278b287c4645bf8e
     document.getElementById('otherReason').value = '';
     document.getElementById('otherReasonGroup').style.display = 'none';
 }
@@ -97,22 +109,30 @@ function closeCancelModal() {
 
 function submitCancellation(event) {
     event.preventDefault();
+    
     const selectedReason = document.querySelector('input[name="cancelReason"]:checked').value;
     const otherReason = document.getElementById('otherReason').value;
-    
-    console.log('Order Cancelled:');
-    console.log('Reason:', selectedReason);
-    if (selectedReason === 'Other' && otherReason) {
-        console.log('Additional Details:', otherReason);
-    }
-    
-    let message = `Order cancelled!\nReason: ${selectedReason}`;
-    if (selectedReason === 'Other' && otherReason) {
-        message += `\nDetails: ${otherReason}`;
-    }
-    
-    showGeneralToast('Order Cancelled Successfully!', 'success');
-    closeCancelModal();
+    const orderId = document.getElementById('cancelOrderId').value;
+    const finalReason = (selectedReason === 'Other' && otherReason) 
+        ? otherReason 
+        : selectedReason;
+
+    fetch('../backend/cancelOrder.php', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: `order_id=${orderId}&reason=${encodeURIComponent(finalReason)}`
+    })
+    .then(res => res.json())
+    .then(data => {
+        if (data.success) {
+            showGeneralToast('Order Cancelled Successfully!', 'success');
+            closeCancelModal();
+            setTimeout(() => location.reload(), 1500);
+        } else {
+            showGeneralToast(data.message || 'Cancellation failed.', 'error');
+        }
+    })
+    .catch(() => showGeneralToast('Something went wrong.', 'error'));
 }
 
 

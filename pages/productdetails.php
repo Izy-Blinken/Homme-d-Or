@@ -278,6 +278,7 @@ $imgSrc = $product['image_url']
 
         <?php include '../components/footer.php'; ?>
         <script src="../assets/js/HomepageAnimations.js"></script>
+        <script src="../assets/js/script.js"></script>
         <script src="../assets/js/productDetails.js"></script>
 
         <script>
@@ -291,12 +292,15 @@ $imgSrc = $product['image_url']
                 .then(res => res.json())
                 .then(data => {
                     if (data.status === 'success') {
-                        showGeneralToast(data.message, 'success');
+                        showGeneralToast('Added to cart!', 'success');
                     } else {
-                        showGeneralToast(data.message, 'error');
+                        showGeneralToast(data.message || 'Failed to add to cart.', 'error');
                     }
                 })
-                .catch(err => console.error('Cart error:', err));
+                .catch(err => {
+                    console.error('Cart error:', err);
+                    showGeneralToast('Something went wrong.', 'error');
+                });
             }
 
             // ── Toggle Wishlist Heart ─────────────────────────────────
@@ -328,6 +332,5 @@ $imgSrc = $product['image_url']
 
         </script>
         <div id="generalToast" class="generalToast"></div>
-        <script src="../assets/js/script.js"></script>
     </body>
 </html>

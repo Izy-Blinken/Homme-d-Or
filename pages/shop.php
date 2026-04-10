@@ -105,5 +105,6 @@ $categoryConfig = [
     <script src="../assets/js/shopAnimations.js"></script>
     <script src="../assets/js/script.js"></script>
     <script src="../assets/js/HomepageAnimations.js"></script>
+    <div id="generalToast" class="generalToast"></div>
     </body>
 </html>
