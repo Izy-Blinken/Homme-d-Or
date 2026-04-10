@@ -1,8 +1,8 @@
 
 (function () {
-    const btn    = document.getElementById('hamburgerBtn');
+    const btn = document.getElementById('hamburgerBtn');
     const header = document.getElementById('header');
-    const menu   = document.getElementById('mobileMenu');
+    const menu = document.getElementById('mobileMenu');
     if (!btn || !header || !menu) return;
 
     btn.addEventListener('click', function (e) {

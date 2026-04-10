@@ -15,7 +15,7 @@ if ($identity['type'] !== 'user_id') {
 $user_id = $identity['id'];
 
 // Fetch wishlist items from DB
-$sql = "SELECT w.wishlist_id, w.product_id, p.product_name, p.price, p.product_desc AS description, 
+$sql = "SELECT w.wishlist_id, w.product_id, p.product_name, p.price, p.product_desc AS description,
                pi.image_url
         FROM wishlist w
         JOIN products p ON w.product_id = p.product_id
@@ -36,7 +36,7 @@ $stmt->close();
 ?>
 <!DOCTYPE html>
 <html lang="en">
-<head> 
+<head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -55,7 +55,7 @@ $stmt->close();
     <link rel="stylesheet" href="../assets/css/viewTabs.css">
     <link rel="stylesheet" href="../assets/css/ReviewCancelOrderStyle.css">
 </head>
-<body> 
+<body>
     <?php include '../components/header.php'; ?>
 
     <main class="mainBG">
@@ -87,12 +87,12 @@ $stmt->close();
 
                 <?php else: ?>
                     <!-- Wishlist Items -->
-                    <?php foreach ($wishlistItems as $item): 
-                        $imgSrc = $item['image_url'] 
-                            ? '../assets/images/products/' . htmlspecialchars($item['image_url']) 
+                    <?php foreach ($wishlistItems as $item):
+                        $imgSrc = $item['image_url']
+                            ? '../assets/images/products/' . htmlspecialchars($item['image_url'])
                             : '../assets/images/brand_images/nocturne.png';
                     ?>
-                    <div class="v-orders" data-wishlist-id="<?php echo $item['wishlist_id']; ?>" 
+                    <div class="v-orders" data-wishlist-id="<?php echo $item['wishlist_id']; ?>"
                          data-product-id="<?php echo $item['product_id']; ?>"
                          data-name="<?php echo htmlspecialchars($item['product_name']); ?>"
                          data-price="<?php echo $item['price']; ?>">
@@ -109,11 +109,11 @@ $stmt->close();
                             <p class="v-price">₱<?php echo number_format($item['price'], 2); ?></p>
                             <div class="v-actions">
                                 <a href="productDetails.php?id=<?php echo $item['product_id']; ?>" class="v-view">View</a>
-                                <button class="v-again" 
+                                <button class="v-again"
                                         onclick="addToCartFromWishlist(<?php echo $item['product_id']; ?>)">
                                     Add to Cart
                                 </button>
-                                <button class="v-cancel" 
+                                <button class="v-cancel"
                                         onclick="removeFromWishlist(<?php echo $item['product_id']; ?>, this)">
                                     Remove
                                 </button>

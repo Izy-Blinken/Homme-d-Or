@@ -1,4 +1,4 @@
-// --- Auto-Load Tab from URL ---
+// Auto-Load Tab from URL
 document.addEventListener('DOMContentLoaded', () => {
   const urlParams = new URLSearchParams(window.location.search);
   const tabId = urlParams.get('tab');
@@ -11,7 +11,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 });
 
-// --- Tab switching (Upgraded) ---
+// Tab switching (Upgraded)
 function showPage(pageId) {
   const pages = document.querySelectorAll('.page');
   pages.forEach(page => page.classList.remove('active'));
@@ -67,7 +67,7 @@ function updateCountdown() {
 }
 
 setInterval(updateCountdown, 1000);
-updateCountdown(); 
+updateCountdown();
 
 function animateCardsOnScroll() {
   const cards = document.querySelectorAll('.product-card');
@@ -88,7 +88,7 @@ function animateCardsOnScroll() {
 window.addEventListener('scroll', animateCardsOnScroll);
 window.addEventListener('DOMContentLoaded', animateCardsOnScroll);
 
-// --- Search & Filter Logic (Applied to ALL pages) ---
+// Search & Filter Logic (Applied to ALL pages)
 document.addEventListener("DOMContentLoaded", () => {
     // Find all shop pages
     const pages = document.querySelectorAll('.page');
@@ -102,11 +102,11 @@ document.addEventListener("DOMContentLoaded", () => {
         const filterableItems = page.querySelectorAll('.product-card, .rank-item, .rank-featured');
 
         // Skip if this page doesn't have a search bar setup yet
-        if (!searchInput || filterableItems.length === 0) return; 
+        if (!searchInput || filterableItems.length === 0) return;
 
         let currentFilter = 'all';
 
-        // --- 1. Category Filtering ---
+        // 1. Category Filtering
         filterChips.forEach(chip => {
             chip.addEventListener('click', () => {
                 filterChips.forEach(c => c.classList.remove('active'));
@@ -116,7 +116,7 @@ document.addEventListener("DOMContentLoaded", () => {
             });
         });
 
-        // --- 2. Search & Live Suggestions ---
+        // 2. Search & Live Suggestions
         searchInput.addEventListener('input', (e) => {
             const searchTerm = e.target.value.toLowerCase().trim();
             
@@ -135,7 +135,7 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         });
 
-        // --- Core Filtering Logic ---
+        // Core Filtering Logic
         function applyFilters() {
             const searchTerm = searchInput.value.toLowerCase().trim();
 
@@ -154,9 +154,9 @@ document.addEventListener("DOMContentLoaded", () => {
             });
         }
 
-        // --- Build Live Suggestions Dropdown ---
+        // Build Live Suggestions Dropdown
         function updateSuggestions(searchTerm) {
-            suggestionsBox.innerHTML = ''; 
+            suggestionsBox.innerHTML = '';
             let hasMatches = false;
 
             filterableItems.forEach(item => {

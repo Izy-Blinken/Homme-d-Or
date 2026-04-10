@@ -18,12 +18,12 @@ function sendOTPEmail($to_email, $to_name, $otp) {
  
     try {
         $mail->isSMTP();
-        $mail->Host       = 'smtp.gmail.com';
-        $mail->SMTPAuth   = true;
-        $mail->Username   = 'hommedor2026@gmail.com';   // Supposed to be Email account ng "Homme d'Or"
-        $mail->Password   = 'esoczvhrdrmilpbn';    // Generated 16 code from google account
+        $mail->Host = 'smtp.gmail.com';
+        $mail->SMTPAuth = true;
+        $mail->Username = 'hommedor2026@gmail.com'; // Supposed to be Email account ng "Homme d'Or"
+        $mail->Password = 'esoczvhrdrmilpbn'; // Generated 16 code from google account
         $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
-        $mail->Port       = 587;
+        $mail->Port = 587;
         $mail->SMTPOptions = array(
             'ssl' => array(
                 'verify_peer' => true,
@@ -37,13 +37,13 @@ function sendOTPEmail($to_email, $to_name, $otp) {
  
         $mail->isHTML(true);
         $mail->Subject = 'Your Homme d\'Or OTP Verification Code';
-        $mail->Body    = "
+        $mail->Body = "
             <div style='font-family: Arial, sans-serif; max-width: 500px; margin: auto;'>
                 <h2 style='color: #333;'>Email Verification</h2>
                 <p>Hi <strong>{$to_name}</strong>,</p>
                 <p>Thank you for signing up! Use the 6 digits OTP below to verify your email:</p>
-                <div style='font-size: 36px; font-weight: bold; letter-spacing: 10px; 
-                            text-align: center; padding: 20px; background: #f4f4f4; 
+                <div style='font-size: 36px; font-weight: bold; letter-spacing: 10px;
+                            text-align: center; padding: 20px; background: #f4f4f4;
                             border-radius: 8px; margin: 20px 0;'>
                     {$otp}
                 </div>
@@ -145,9 +145,9 @@ if (mysqli_affected_rows($conn) === 0) {
 $user_id = mysqli_insert_id($conn);
 
 // Random 6 digit OTP
-$otp        = str_pad(random_int(0, 999999), 6, '0', STR_PAD_LEFT);
+$otp = str_pad(random_int(0, 999999), 6, '0', STR_PAD_LEFT);
 $expires_at = date('Y-m-d H:i:s', strtotime('+5 minutes'));
-$safe_otp   = mysqli_real_escape_string($conn, $otp);
+$safe_otp = mysqli_real_escape_string($conn, $otp);
 
 mysqli_query($conn,
     "DELETE FROM email_verifications WHERE user_id = '$user_id'"

@@ -190,7 +190,7 @@
     color: #ffffff;
     padding: 0;
     white-space: nowrap;
-} 
+}
 
 .profileContainer .viewAllBtn:hover {
     color: #c9a961;
@@ -792,11 +792,11 @@
 }
 
 .forgotP a {
-    color: white; 
+    color: white;
 }
 
 .forgotP a:hover {
-    color: #c9a961; 
+    color: #c9a961;
     cursor: pointer;
 }
 
@@ -1022,7 +1022,7 @@
     max-width: 500px;
     width: 100%;
     text-align: center;
-   background: rgba(8, 10, 22, 0.55);
+    background: rgba(8, 10, 22, 0.55);
     backdrop-filter: blur(16px);
     -webkit-backdrop-filter: blur(16px);
     border: 1px solid #c9a961;
@@ -1095,3 +1095,299 @@
     opacity: 0.8;
     transform: translateY(-1px);
 }
+
+/* Verification Modal */
+.verificationModal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(4px);
+    z-index: 9999;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.3s ease;
+}
+
+.verificationModal.active {
+    display: flex;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.verificationModal.closing {
+    background-color: rgba(0, 0, 0, 0);
+}
+
+.verificationModalContent {
+    background-color: #2A2D34;
+    max-width: 480px;
+    width: 90%;
+    padding: 2.5rem;
+    position: relative;
+    max-height: 90vh;
+    overflow-y: auto;
+    transform: translateY(30px);
+    opacity: 0;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.verificationModal.active .verificationModalContent {
+    transform: translateY(0);
+    opacity: 1;
+}
+
+.verificationModal.closing .verificationModalContent {
+    transform: translateY(30px);
+    opacity: 0;
+}
+
+.closeModal {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: none;
+    border: none;
+    font-size: 1.25rem;
+    color: #666666;
+    cursor: pointer;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.closeModal:hover {
+    color: #c9a961;
+}
+
+.modalHeader {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.modalHeader h2 {
+    color: white;
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin: 0 0 0.5rem 0;
+}
+
+.modalSubtitle {
+    color: whitesmoke;
+    font-size: 0.9rem;
+    line-height: 1.5;
+    margin: 0;
+}
+
+/* Code inputs */
+.codeInputContainer {
+    display: flex;
+    gap: 0.75rem;
+    justify-content: center;
+    margin-bottom: 1.5rem;
+}
+
+.cpCodeInput {
+    width: 50px;
+    height: 56px;
+    text-align: center;
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #000000;
+    border: 2px solid #d0d0d0;
+    outline: none;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    background-color: #ffffff;
+}
+
+.cpCodeInput:focus {
+    border-color: #1a1a4d;
+    box-shadow: 0 0 0 3px rgba(26, 26, 77, 0.1);
+}
+
+.cpCodeInput.filled {
+    border-color: #1a1a4d;
+    background-color: #f9f9ff;
+}
+
+.cpCodeInput.error {
+    border-color: #dc3545;
+    animation: shake 0.3s ease;
+}
+
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-5px); }
+    75% { transform: translateX(5px); }
+}
+
+/* Resend */
+.resendSection {
+    text-align: center;
+    margin-top: 1.5rem;
+}
+
+.resendSection p {
+    color: whitesmoke;
+    font-size: 0.9rem;
+    margin: 0 0 0.5rem 0;
+}
+
+.resendButton {
+    background: none;
+    border: none;
+    color: lightslategray;
+    font-size: 0.9rem;
+    font-weight: 500;
+    cursor: pointer;
+    text-decoration: underline;
+    transition: color 0.2s ease;
+    padding: 0;
+}
+
+.resendButton:hover { color: #c9a961; }
+.resendButton:disabled { color: #cccccc; cursor: not-allowed; text-decoration: none; }
+
+/* Verify button */
+.verifyButton {
+    width: 100%;
+    padding: 0.875rem 1.5rem;
+    background-color: #c9a961;
+    color: black;
+    border: 1px solid black;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.2s ease, transform 0.1s ease;
+    margin-top: 0.5rem;
+}
+
+.verifyButton:hover {
+    background-color: rgb(3, 3, 84);
+    border: 1px solid #c9a961;
+    color: #c9a961;
+}
+
+.verifyButton:active { transform: scale(0.98); }
+
+/* Password input wrapper */
+.passwordInputWrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.passwordInputWrapper input[type="password"],
+.passwordInputWrapper input[type="text"] {
+    width: 100%;
+    padding: 0.75rem 2.75rem 0.75rem 1rem;
+    font-size: 0.95rem;
+    color: #000000;
+    border: 1px solid #d0d0d0;
+    outline: none;
+    transition: border-color 0.2s ease;
+    box-sizing: border-box;
+    background-color: #ffffff;
+}
+
+.passwordInputWrapper input:focus {
+    border-color: #1a1a4d;
+    box-shadow: 0 0 0 3px rgba(26, 26, 77, 0.1);
+}
+
+.togglePassword {
+    position: absolute;
+    right: 0.75rem;
+    background: none;
+    border: none;
+    color: #666666;
+    cursor: pointer;
+    padding: 0.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: color 0.2s ease;
+}
+
+.togglePassword:hover { color: #1a1a4d; }
+
+/* Password strength */
+.passwordStrength { margin-top: 0.5rem; }
+
+.strengthBar {
+    height: 4px;
+    background-color: #e0e0e0;
+    overflow: hidden;
+    margin-bottom: 0.25rem;
+}
+
+.strengthBarFill {
+    height: 100%;
+    width: 0%;
+    transition: width 0.3s ease, background-color 0.3s ease;
+}
+
+.strengthBarFill.weak { width: 33%; background-color: #dc3545; }
+.strengthBarFill.medium { width: 66%; background-color: #ffc107; }
+.strengthBarFill.strong { width: 100%; background-color: #28a745; }
+
+.strengthText { font-size: 0.8rem; font-weight: 500; }
+.strengthText.weak { color: #dc3545; }
+.strengthText.medium { color: #ffc107; }
+.strengthText.strong { color: #28a745; }
+
+/* Password match */
+.passwordMatch { display: block; font-size: 0.8rem; margin-top: 0.5rem; font-weight: 500; }
+.passwordMatch.match { color: #28a745; }
+.passwordMatch.no-match { color: #dc3545; }
+
+/* Password requirements */
+.passwordRequirements {
+    background-color: #2A2D34;
+    padding: 1rem;
+    margin-bottom: 1.5rem;
+    border-left: 3px solid rgb(255, 221, 30);
+}
+
+.requirementsTitle {
+    color: #c9a961;
+    font-size: 0.85rem;
+    font-weight: 600;
+    margin: 0 0 0.5rem 0;
+}
+
+.passwordRequirements ul { list-style: none; padding: 0; margin: 0; }
+
+.passwordRequirements li {
+    color: whitesmoke;
+    font-size: 0.8rem;
+    margin-bottom: 0.4rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: color 0.2s ease;
+}
+
+.passwordRequirements li i { font-size: 0.5rem; transition: color 0.2s ease; }
+.passwordRequirements li.met { color: #28a745; }
+.passwordRequirements li.met i { color: #28a745; }
+.passwordRequirements li.met i::before { content: "\f058"; font-weight: 900; font-size: 0.9rem; }
+
+/* Form group inside modal */
+.formGroup { margin-bottom: 1.5rem; }
+
+.formGroup label {
+    display: block;
+    color: whitesmoke;
+    font-size: 0.9rem;
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+}
+
+/* Success modal */
+.successModalContent { text-align: center; }

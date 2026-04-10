@@ -159,6 +159,10 @@ function renderOrders($conn, $orders, $tabType) {
     <link rel="stylesheet" href="../assets/css/viewTabs.css">
     <link rel="stylesheet" href="../assets/css/ReviewCancelOrderStyle.css">
 </head>
+<<<<<<< HEAD
+=======
+
+>>>>>>> 5aabf5346cecce917521bddf278b287c4645bf8e
 <body>
     <?php include '../components/header.php'; ?>
 
@@ -174,7 +178,91 @@ function renderOrders($conn, $orders, $tabType) {
             </div>
 
             <div class="tab-content active" id="processing">
+<<<<<<< HEAD
                 <?php renderOrders($conn, $processing, 'processing'); ?>
+=======
+                <div class="v-orders">
+                    <div class="v-left">
+                        <img src="../assets/images/products_images/nocturne.png" alt="" width="60">
+                        <div class="v-ordersinfo">
+                            <p class="v-name">Homme d’Or Mystique</p>
+                            <small class="v-desc">50ml • Vetiver Éclipse</small>
+                        </div>
+                    </div>
+                    <div class="v-right">
+                        <p class="v-price">₱3,500.00</p>
+                        <div class="v-actions">
+                            <button class="v-view btn-open"
+                                    onclick="openViewModal(
+                                        '../assets/images/products_images/nocturne.png',
+                                        'Homme d’Or Mystique',
+                                        '50ml • Vetiver Éclipse',
+                                        2,
+                                        '₱3,500.00',
+                                        'GCash',
+                                        'April 20, 2026',
+                                        'Pending'
+                                    )">View</button>
+                            <button class="v-cancel btn-open" onclick="openCancelModal()">Cancel Order</button>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="v-orders">
+                    <div class="v-left">
+                        <img src="../assets/images/products_images/nocturne.png" alt="" width="60">
+                        <div class="v-ordersinfo">
+                            <p class="v-name">Homme d’Or Zenith</p>
+                            <small class="v-desc">50ml • Santal Imperial</small>
+                        </div>
+                    </div>
+                    <div class="v-right">
+                        <p class="v-price">₱2,500.00</p>
+                        <div class="v-actions">
+                            <button class="v-view btn-open"
+                                onclick="openViewModal(
+                                    '../assets/images/products_images/nocturne.png',
+                                    'Homme d’Or Zenith',
+                                    '50ml • Santal Imperial',
+                                    2,
+                                    '₱2,500.00',
+                                    'GCash',
+                                    'April 28, 2026',
+                                    'Pending'
+                                )">View</button>
+                            <button class="v-cancel btn-open" onclick="openCancelModal()">Cancel Order</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="v-orders">
+                    <div class="v-left">
+                        <img src="../assets/images/products_images/nocturne.png" alt="" width="60">
+                        <div class="v-ordersinfo">
+                            <p class="v-name">Homme d’Or Sublime</p>
+                            <small class="v-desc">50ml • Ambre Royal</small>
+                        </div>
+                    </div>
+                    <div class="v-right">
+                        <p class="v-price">₱1,800.00</p>
+                        <div class="v-actions">
+                            <button class="v-view btn-open"
+                                onclick="openViewModal(
+                                    '../assets/images/products_images/nocturne.png',
+                                    'Homme d’Or Sublime',
+                                    '50ml • Ambre Royal',
+                                    1,
+                                    '₱1,800.00',
+                                    'Cash on delivery',
+                                    'June 4, 2026',
+                                    'Pending'
+                                )">View</button>
+                            <button class="v-cancel btn-open" onclick="openCancelModal()">Cancel Order</button>
+                        </div>
+                    </div>
+                </div>
+>>>>>>> 5aabf5346cecce917521bddf278b287c4645bf8e
             </div>
 
             <div class="tab-content" id="review">
@@ -182,11 +270,234 @@ function renderOrders($conn, $orders, $tabType) {
             </div>
 
             <div class="tab-content" id="completed">
+<<<<<<< HEAD
                 <?php renderOrders($conn, $completed, 'completed'); ?>
             </div>
 
             <div class="tab-content" id="cancelled">
                 <?php renderOrders($conn, $cancelled, 'cancelled'); ?>
+=======
+                <div class="v-orders">
+                    <div class="v-left">
+                        <img src="../assets/images/products_images/nocturne.png" alt="" width="60">
+                        <div class="v-ordersinfo">
+                            <p class="v-name">Homme d’Or Luminance</p>
+                            <small class="v-desc">50ml • Bergamot Doré</small>
+                        </div>
+                    </div>
+                    <div class="v-right">
+                        <p class="v-price">₱2,800.00</p>
+                        <div class="v-actions">
+                           <button class="v-view btn-open"
+                                onclick="openViewModal(
+                                    '../assets/images/products_images/nocturne.png',
+                                    'Homme d’Or Luminance',
+                                    '50ml • Bergamot Doré',
+                                    2,
+                                    '₱2,800.00',
+                                    'GCash',
+                                    'February 4, 2026',
+                                    'Completed'
+                                )">View</button>
+                            <button class="v-again" onclick="window.location.href='shop.php'">Order Again</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="v-orders">
+                    <div class="v-left">
+                        <img src="../assets/images/products_images/nocturne.png" alt="" width="60">
+                        <div class="v-ordersinfo">
+                            <p class="v-name">Homme d’Or Prestige</p>
+                            <small class="v-desc">50ml • Fève Tonka</small>
+                        </div>
+                    </div>
+                    <div class="v-right">
+                        <p class="v-price">₱3,200.00</p>
+                        <div class="v-actions">
+                            <button class="v-view btn-open"
+                                onclick="openViewModal(
+                                    '../assets/images/products_images/nocturne.png',
+                                    'Homme d’Or Prestige',
+                                    '50ml • Fève Tonka',
+                                    3,
+                                    '₱3,200.00',
+                                    'Cash on Delivery',
+                                    'January 11, 2026',
+                                    'Completed'
+                                )">View</button>
+                            <button class="v-again" onclick="window.location.href='shop.php'">Order Again</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="v-orders">
+                    <div class="v-left">
+                        <img src="../assets/images/products_images/nocturne.png" alt="" width="60">
+                        <div class="v-ordersinfo">
+                            <p class="v-name">Homme d’Or Voyageur</p>
+                            <small class="v-desc">50ml • Patchouli Mystère</small>
+                        </div>
+                    </div>
+                    <div class="v-right">
+                        <p class="v-price">₱1,500.00</p>
+                        <div class="v-actions">
+                            <button class="v-view btn-open"
+                                onclick="openViewModal(
+                                    '../assets/images/products_images/nocturne.png',
+                                    'Homme d’Or Voyageur',
+                                    '50ml • Patchouli Mystère',
+                                    1,
+                                    '₱1,500.00',
+                                    'GCash',
+                                    'February 9, 2026',
+                                    'Completed'
+                                )">View</button>
+                            <button class="v-again" onclick="window.location.href='shop.php'">Order Again</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="v-orders">
+                    <div class="v-left">
+                        <img src="../assets/images/products_images/nocturne.png" alt="" width="60">
+                        <div class="v-ordersinfo">
+                            <p class="v-name">Homme d’Or Royale</p>
+                            <small class="v-desc">50ml • Iris Noble</small>
+                        </div>
+                    </div>
+                    <div class="v-right">
+                        <p class="v-price">₱3,500.00</p>
+                        <div class="v-actions">
+                            <button class="v-view btn-open"
+                                onclick="openViewModal(
+                                    '../assets/images/products_images/nocturne.png',
+                                    'Homme d’Or Royale',
+                                    '50ml • Iris Noble',
+                                    2,
+                                    '₱3,500.00',
+                                    'GCash',
+                                    'January 5, 2026',
+                                    'Cash on Delivery'
+                                )">View</button>
+                            <button class="v-again" onclick="window.location.href='shop.php'">Order Again</button>
+                        </div>
+                    </div>
+                </div>
+               
+            </div>
+
+            <div class="tab-content" id="cancelled">
+                <div class="v-orders">
+                    <div class="v-left">
+                        <img src="../assets/images/products_images/nocturne.png" alt="" width="60">
+                        <div class="v-ordersinfo">
+                            <p class="v-name">Homme d’Or Argent</p>
+                            <small class="v-desc">50ml • Musc Sauvage</small>
+                        </div>
+                    </div>
+                    <div class="v-right">
+                        <p class="v-price">₱2,800.00</p>
+                        <div class="v-actions">
+                            <button class="v-view btn-open"
+                                onclick="openViewModal(
+                                    '../assets/images/products_images/nocturne.png',
+                                    'Homme d’Or Argent',
+                                    '50ml • Musc Sauvage',
+                                    1,
+                                    '₱2,800.00',
+                                    'GCash',
+                                    'February 2, 2026',
+                                    'Cancelled'
+                                )">View</button>
+                            <button class="v-again" onclick="window.location.href='shop.php'">Order Again</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="v-orders">
+                    <div class="v-left">
+                        <img src="../assets/images/products_images/nocturne.png" alt="" width="60">
+                        <div class="v-ordersinfo">
+                            <p class="v-name">Homme d’Or Élixir</p>
+                            <small class="v-desc">50ml • Cuir Sublime</small>
+                        </div>
+                    </div>
+                    <div class="v-right">
+                        <p class="v-price">₱3,200.00</p>
+                        <div class="v-actions">
+                            <button class="v-view btn-open"
+                                onclick="openViewModal(
+                                    '../assets/images/products_images/nocturne.png',
+                                    'Homme d’Or Élixir',
+                                    '50ml • Cuir Sublime',
+                                    2,
+                                    '₱3,200.00',
+                                    'GCash',
+                                    'February 11, 2026',
+                                    'Cancelled'
+                                )">View</button>
+                            <button class="v-again" onclick="window.location.href='shop.php'">Order Again</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="v-orders">
+                    <div class="v-left">
+                        <img src="../assets/images/products_images/nocturne.png" alt="" width="60">
+                        <div class="v-ordersinfo">
+                            <p class="v-name">Homme d’Or Voyage</p>
+                            <small class="v-desc">50ml • Ambre Nomade</small>
+                        </div>
+                    </div>
+                    <div class="v-right">
+                        <p class="v-price">₱1,500.00</p>
+                        <div class="v-actions">
+                            <button class="v-view btn-open"
+                                onclick="openViewModal(
+                                    '../assets/images/products_images/nocturne.png',
+                                    'Homme d’Or Voyage',
+                                    '50ml • Ambre Nomade',
+                                    1,
+                                    '₱1,500.00',
+                                    'GCash',
+                                    'January 9, 2026',
+                                    'Cancelled'
+                                )">View</button>
+                            <button class="v-again" onclick="window.location.href='shop.php'">Order Again</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="v-orders">
+                    <div class="v-left">
+                        <img src="../assets/images/products_images/nocturne.png" alt="" width="60">
+                        <div class="v-ordersinfo">
+                            <p class="v-name">Homme d’Or Prestige</p>
+                            <small class="v-desc">50ml • Bleu Royal</small>
+                        </div>
+                    </div>
+                    <div class="v-right">
+                        <p class="v-price">₱3,500.00</p>
+                        <div class="v-actions">
+                            <button class="v-view btn-open"
+                                onclick="openViewModal(
+                                    '../assets/images/products_images/nocturne.png',
+                                    'Homme d’Or Prestige',
+                                    '50ml • Bleu Royal',
+                                    2,
+                                    '₱3,500.00',
+                                    'Cash on Delivery',
+                                    'January 7, 2026',
+                                    'Cancelled'
+                                )">View</button>
+                            <button class="v-again" onclick="window.location.href='shop.php'">Order Again</button>
+                        </div>
+                    </div>
+                </div>
+
+               
+>>>>>>> 5aabf5346cecce917521bddf278b287c4645bf8e
             </div>
 
         </div>
@@ -214,8 +525,12 @@ function renderOrders($conn, $orders, $tabType) {
                         </label>
                         <label class="radio-option">
                             <input type="radio" name="cancelReason" value="Ordered by mistake" required>
+<<<<<<< HEAD
                             <span class="radio-label">Ordered by mistake</span>
                         </label>
+=======
+                            <span class="radio-label">Ordered by mistake</span> </label>
+>>>>>>> 5aabf5346cecce917521bddf278b287c4645bf8e
                         <label class="radio-option">
                             <input type="radio" name="cancelReason" value="Delivery taking too long" required>
                             <span class="radio-label">Delivery taking too long</span>
@@ -256,8 +571,12 @@ function renderOrders($conn, $orders, $tabType) {
                     <label>RATING</label>
                     <div class="starRating">
                         <span class="star" onclick="setRating(1)" onmouseover="hoverRating(1)" onmouseout="resetHover()"><i class="fa-solid fa-star"></i></span>
+<<<<<<< HEAD
                         <span class="star" onclick="setRating(2)" onmouseover="hoverRating(2)" onmouseout="resetHover()"><i class="fa-solid fa-star"></i></span>
                         <span class="star" onclick="setRating(3)" onmouseover="hoverRating(3)" onmouseout="resetHover()"><i class="fa-solid fa-star"></i></span>
+=======
+                        <span class="star" onclick="setRating(2)" onmouseover="hoverRating(2)" onmouseout="resetHover()"><i class="fa-solid fa-star"></i></span> <span class="star" onclick="setRating(3)" onmouseover="hoverRating(3)" onmouseout="resetHover()"><i class="fa-solid fa-star"></i></span>
+>>>>>>> 5aabf5346cecce917521bddf278b287c4645bf8e
                         <span class="star" onclick="setRating(4)" onmouseover="hoverRating(4)" onmouseout="resetHover()"><i class="fa-solid fa-star"></i></span>
                         <span class="star" onclick="setRating(5)" onmouseover="hoverRating(5)" onmouseout="resetHover()"><i class="fa-solid fa-star"></i></span>
                     </div>

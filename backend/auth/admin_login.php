@@ -17,7 +17,7 @@ if (!$username || !$password) {
     exit;
 }
 
-//check muna si superadmin kapag may naglogin sa admin login page
+// check muna si superadmin kapag may naglogin sa admin login page
 $result = mysqli_query($conn, "SELECT * FROM superadmins WHERE username = '$username'");
 $superadmin = mysqli_fetch_assoc($result);
 
@@ -31,7 +31,7 @@ if ($superadmin && password_verify($password, $superadmin['sadmin_password'])) {
     exit;
 }
 
-//reg admin naman
+// reg admin naman
 $result = mysqli_query($conn, "SELECT u.*, a.admin_id FROM users u
         JOIN admins a ON u.user_id = a.user_id
         WHERE u.username = '$username'");
@@ -49,7 +49,7 @@ if ($admin && password_verify($password, $admin['user_password'])) {
     exit;
 }
 
-//admin login not found
+// admin login not found
 $_SESSION['error'] = 'Invalid username or password.';
 header('Location: ../../pages/Admin Pages/adminLogin.php');
 exit;

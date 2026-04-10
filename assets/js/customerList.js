@@ -261,7 +261,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 });
 
-//Confirm Modal 
+// Confirm Modal
 function openConfirmModal(userId, name, action, button) {
     const modal = document.getElementById('confirm-action-modal');
     const body = document.getElementById('confirm-body');
@@ -290,7 +290,7 @@ function openConfirmModal(userId, name, action, button) {
     document.getElementById('confirm-close').onclick = () => { modal.style.display = 'none'; };
 }
 
-//close modal when clicking outside
+// close modal when clicking outside
 document.getElementById('confirm-action-modal').addEventListener('click', function(e) {
     if (e.target === this) this.style.display = 'none';
 });

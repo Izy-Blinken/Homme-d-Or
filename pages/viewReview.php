@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head> 
+    <head>
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -18,14 +18,14 @@
         <link rel="stylesheet" href="../assets/css/RegLoginModalStyle.css">
         <link rel="stylesheet" href="../assets/css/ProfilePageStyle.css">
         <link rel="stylesheet" href="../assets/css/HomepageStyle.css">
-        <link rel="stylesheet" href="../assets/css/ViewReviewStyle.css"> 
+        <link rel="stylesheet" href="../assets/css/ViewReviewStyle.css">
     </head>
-    <body> 
+    <body>
         <?php include '../components/header.php'; ?>
 
         <main class="mainBG">
             <a href="javascript:history.back()" class="back-button">
-                <i class="fa-solid fa-chevron-left"></i> 
+                <i class="fa-solid fa-chevron-left"></i>
             </a>
 
             <section id="all-reviews-section">

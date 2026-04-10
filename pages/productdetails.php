@@ -13,7 +13,7 @@ $product_id = isset($_GET['id']) ? intval($_GET['id']) : 0;
 $product = null;
 if ($product_id > 0) {
     $stmt = $conn->prepare("
-        SELECT p.*, pi.image_url 
+        SELECT p.*, pi.image_url
         FROM products p
         LEFT JOIN product_images pi ON pi.product_id = p.product_id AND pi.is_primary = 1
         WHERE p.product_id = ?
@@ -39,13 +39,13 @@ if ($identity['type'] === 'user_id') {
     $wCheck->close();
 }
 
-$imgSrc = $product['image_url'] 
+$imgSrc = $product['image_url']
     ? '../assets/images/products/' . htmlspecialchars($product['image_url'])
     : '../assets/images/brand_images/nocturne.png';
 ?>
 <!DOCTYPE html>
 <html lang="en">
-    <head> 
+    <head>
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -88,20 +88,20 @@ $imgSrc = $product['image_url']
             }
         </style>
     </head>
-    <body> 
+    <body>
         <?php include '../components/header.php'; ?>
 
         <main class="mainBG">
             <a href="javascript:history.back()" class="back-button">
-                <i class="fa-solid fa-chevron-left"></i> 
+                <i class="fa-solid fa-chevron-left"></i>
             </a>
 
             <section id="product-details-section">
                 <div class="product-details-container">
                     
                     <div class="product-image-section">
-                        <img src="<?php echo $imgSrc; ?>" 
-                             alt="<?php echo htmlspecialchars($product['product_name']); ?>" 
+                        <img src="<?php echo $imgSrc; ?>"
+                             alt="<?php echo htmlspecialchars($product['product_name']); ?>"
                              class="product-image" id="main-product-image">
                         
                         <div class="product-thumbnails">
@@ -148,17 +148,16 @@ $imgSrc = $product['image_url']
                             <button class="addtocart" onclick="addToCart(<?php echo $product_id; ?>)">
                                 <i class="fa-solid fa-cart-shopping"></i> Add to Cart
                             </button>
-
+                            
                             <!-- ❤️ Wishlist Heart Button (registered users only) -->
                             <?php if ($identity['type'] === 'user_id'): ?>
-                                <button class="wishlist-btn <?php echo $isWishlisted ? 'wishlisted' : ''; ?>" 
+                                <button class="wishlist-btn <?php echo $isWishlisted ? 'wishlisted' : ''; ?>"
                                         id="wishlist-btn"
                                         onclick="toggleWishlist(<?php echo $product_id; ?>)">
                                     <i class="<?php echo $isWishlisted ? 'fa-solid' : 'fa-regular'; ?> fa-heart"></i>
                                 </button>
                             <?php elseif ($identity['type'] === 'guest_id'): ?>
-                                <!-- Guest sees heart but gets a prompt -->
-                                <button class="wishlist-btn" onclick="alert('Please create an account to save items to your wishlist!')">
+                                <button class="wishlist-btn" onclick="openLoginModal(); showGeneralToast('Please log in to save to your Wishlist!', 'info')">
                                     <i class="fa-regular fa-heart"></i>
                                 </button>
                             <?php endif; ?>
@@ -263,7 +262,7 @@ $imgSrc = $product['image_url']
                                         <img src="../assets/images/brand_images/evrland.jpg" alt="New Arrival 3">
                                     </div>
                                     <button class="arrival-add-cart">ADD TO CART</button>
-                                </div> 
+                                </div>
                             </div>
                         </div>
                         <button class="scroll-next-btn" id="nextBtn"><i class="fas fa-chevron-right"></i></button>
@@ -283,7 +282,7 @@ $imgSrc = $product['image_url']
         <script src="../assets/js/productDetails.js"></script>
 
         <script>
-            // ── Add to Cart ──────────────────────────────────────────
+           // ── Add to Cart ──────────────────────────────────────────
             function addToCart(productId) {
                 fetch('../backend/add_to_cart.php', {
                     method: 'POST',
@@ -293,9 +292,15 @@ $imgSrc = $product['image_url']
                 .then(res => res.json())
                 .then(data => {
                     if (data.status === 'success') {
+<<<<<<< HEAD
                         showGeneralToast('Added to cart!', 'success');
                     } else {
                         showGeneralToast(data.message || 'Failed to add to cart.', 'error');
+=======
+                        showGeneralToast(data.message, 'success');
+                    } else {
+                        showGeneralToast(data.message, 'error');
+>>>>>>> 5aabf5346cecce917521bddf278b287c4645bf8e
                     }
                 })
                 .catch(err => {
@@ -318,19 +323,24 @@ $imgSrc = $product['image_url']
                 .then(data => {
                     if (data.status === 'added') {
                         btn.classList.add('wishlisted');
-                        icon.classList.remove('fa-regular');
-                        icon.classList.add('fa-solid');     // filled heart ❤️
+                        icon.classList.replace('fa-regular', 'fa-solid');
+                        showGeneralToast('Added to wishlist!', 'success');
                     } else if (data.status === 'removed') {
                         btn.classList.remove('wishlisted');
-                        icon.classList.remove('fa-solid');
-                        icon.classList.add('fa-regular');   // empty heart 🤍
+                        icon.classList.replace('fa-solid', 'fa-regular');
+                        showGeneralToast('Removed from wishlist.', 'info');
                     } else {
-                        alert(data.message);
+                        showGeneralToast(data.message, 'error');
                     }
                 })
                 .catch(err => console.error('Wishlist error:', err));
             }
+
         </script>
         <div id="generalToast" class="generalToast"></div>
+<<<<<<< HEAD
+=======
+        <script src="../assets/js/script.js"></script>
+>>>>>>> 5aabf5346cecce917521bddf278b287c4645bf8e
     </body>
 </html>

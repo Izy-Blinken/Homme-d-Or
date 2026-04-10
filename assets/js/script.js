@@ -6,7 +6,7 @@ function showGeneralToast(message, type='success') {
     
     setTimeout(() => {
         toast.classList.remove('show');
-    }, 3000); 
+    }, 3000);
 }
 
 function ucfirst(str) {
@@ -16,7 +16,7 @@ function ucfirst(str) {
 
 function initLiveSearch(inputId, suggestionsId, backendPath) {
     const input = document.getElementById(inputId);
-    const box   = document.getElementById(suggestionsId);
+    const box = document.getElementById(suggestionsId);
 
     if (!input || !box) return;
 
@@ -29,7 +29,7 @@ function initLiveSearch(inputId, suggestionsId, backendPath) {
             return;
         }
 
-        const res  = await fetch(`${backendPath}?q=${encodeURIComponent(query)}`);
+        const res = await fetch(`${backendPath}?q=${encodeURIComponent(query)}`);
         const data = await res.json();
 
         if (data.length === 0) {
@@ -38,8 +38,8 @@ function initLiveSearch(inputId, suggestionsId, backendPath) {
             box.innerHTML = data.map(p => {
                 // Products
                 if (p.product_name) {
-                    const sub = p.discounted_price 
-                        ? `₱${parseFloat(p.discounted_price).toLocaleString()}` 
+                    const sub = p.discounted_price
+                        ? `₱${parseFloat(p.discounted_price).toLocaleString()}`
                         : `₱${parseFloat(p.price).toLocaleString()}`;
                     return `
                         <div class="suggestion-item" onclick="selectSuggestion('${inputId}', '${p.product_name.replace(/'/g, "\\'")}', '${suggestionsId}', true)">
@@ -50,7 +50,7 @@ function initLiveSearch(inputId, suggestionsId, backendPath) {
                 }
                 // Orders
                 const label = `${p.fname} ${p.lname}`;
-                const sub   = ucfirst(p.order_status ?? '');
+                const sub = ucfirst(p.order_status ?? '');
                 return `
                     <div class="suggestion-item" onclick="selectSuggestion('${inputId}', '${label.replace(/'/g, "\\'")}', '${suggestionsId}', true)">
                         <span class="suggestion-name">Order #${p.order_id} — ${label}</span>
@@ -85,7 +85,7 @@ function selectSuggestion(inputId, value, suggestionsId, autoSubmit = false) {
     const results = document.getElementById('navbar-search-results');
     let debounceTimer;
 
-    const SEARCH_URL = '../../backend/navbarLiveSearch.php'; 
+    const SEARCH_URL = '../../backend/navbarLiveSearch.php';
 
     input.addEventListener('input', function () {
         clearTimeout(debounceTimer);
@@ -118,7 +118,7 @@ function selectSuggestion(inputId, value, suggestionsId, autoSubmit = false) {
 
     function renderResults(data, q) {
         const customers = data.customers || [];
-        const products  = data.products  || [];
+        const products = data.products || [];
 
         if (customers.length === 0 && products.length === 0) {
             results.innerHTML = '<div class="search-no-results">No results found for "<strong>' +
@@ -149,8 +149,8 @@ function selectSuggestion(inputId, value, suggestionsId, autoSubmit = false) {
         if (products.length > 0) {
             html += '<div class="search-section-label">Products</div>';
             products.forEach(p => {
-                const name   = escapeHtml(p.product_name);
-                const price  = p.discounted_price
+                const name = escapeHtml(p.product_name);
+                const price = p.discounted_price
                     ? '₱' + parseFloat(p.discounted_price).toFixed(2)
                     : '₱' + parseFloat(p.price).toFixed(2);
                 const status = escapeHtml(p.product_status);

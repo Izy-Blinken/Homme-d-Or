@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const sidebar = document.getElementById('admin-sidebar');
     const overlay = document.getElementById('sidebar-overlay');
 
-    function openSidebar()  {
+    function openSidebar() {
         sidebar.classList.add('active');
         overlay.classList.add('show');
     }
@@ -23,23 +23,23 @@ document.addEventListener('DOMContentLoaded', () => {
         closeBtn.addEventListener('click', closeSidebar);
     }
 
-    if (overlay)  {
+    if (overlay) {
         overlay.addEventListener('click', closeSidebar);
     }
 
 
-    //  PRODUCT MANAGEMENT PAGE
+    // PRODUCT MANAGEMENT PAGE
     const productModal = document.getElementById('product-modal');
     const addProductBtn = document.getElementById('add-product-btn');
     const modalCloseBtn = document.getElementById('modal-close-btn');
     const modalCancelBtn = document.getElementById('modal-cancel-btn');
 
     if (productModal) {
-        if (addProductBtn)  {
+        if (addProductBtn) {
             addProductBtn.addEventListener('click', () => productModal.classList.add('show'));
         }
 
-        if (modalCloseBtn)  {
+        if (modalCloseBtn) {
             modalCloseBtn.addEventListener('click', () => productModal.classList.remove('show'));
         }
 
@@ -66,14 +66,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
     // Edit Product Modal
-    const editProductModal  = document.getElementById('edit-product-modal');
+    const editProductModal = document.getElementById('edit-product-modal');
     const editModalCloseBtn = document.getElementById('edit-modal-close-btn');
     const editModalCancelBtn = document.getElementById('edit-modal-cancel-btn');
 
     if (editProductModal) {
 
-        if (editModalCloseBtn)  {
-            editModalCloseBtn.addEventListener('click',  () => editProductModal.classList.remove('show'));
+        if (editModalCloseBtn) {
+            editModalCloseBtn.addEventListener('click', () => editProductModal.classList.remove('show'));
         }
 
         if (editModalCancelBtn) {
@@ -84,7 +84,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             btn.addEventListener('click', () => {
 
-                document.getElementById('edit-product-id').value  = btn.dataset.id;
+                document.getElementById('edit-product-id').value = btn.dataset.id;
                 document.getElementById('edit-product-name').value = btn.dataset.name;
                 document.getElementById('edit-category-id').value = btn.dataset.categoryId;
                 document.getElementById('edit-price').value = btn.dataset.price;
@@ -113,7 +113,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
     
-    //Delete Product
+    // Delete Product
     const deleteModal = document.getElementById('delete-modal');
     const deleteModalClose = document.getElementById('delete-modal-close');
     const deleteModalCancel = document.getElementById('delete-modal-cancel');
@@ -136,7 +136,7 @@ document.addEventListener('DOMContentLoaded', () => {
         deleteModalCancel.addEventListener('click', () => deleteModal.classList.remove('show'));
     }
 
-    //  ORDER MANAGEMENT PAGE
+    // ORDER MANAGEMENT PAGE
 
     const orderModal = document.getElementById('order-modal');
     const orderCloseBtn = document.getElementById('order-modal-close');
@@ -172,7 +172,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
 
-    //  SALES REPORT PAGE
+    // SALES REPORT PAGE
     const reportBtns = document.querySelectorAll('.schedule-btn');
 
     if (reportBtns.length > 0) {
@@ -181,11 +181,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
             daily: {
                 sales: '$8,425', orders: '127', avg: '$66.34',
-                sc: '+15.3% from previous period', oc: '+10 orders',  ac: '+5.2% increase'
+                sc: '+15.3% from previous period', oc: '+10 orders', ac: '+5.2% increase'
             },
 
             weekly: {
-                sales: '$52,180',  orders: '834', avg: '$62.57',
+                sales: '$52,180', orders: '834', avg: '$62.57',
                 sc: '+9.1% from previous period', oc: '+44 orders', ac: '+3.8% increase'
             },
 
@@ -215,7 +215,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    //  PROFILE PAGE
+    // PROFILE PAGE
     const editModal = document.getElementById('edit-modal');
     const editProfileBtn = document.getElementById('edit-profile-btn');
     const editModalClose = document.getElementById('edit-modal-close');
@@ -225,11 +225,11 @@ document.addEventListener('DOMContentLoaded', () => {
     if (editModal) {
 
         if (editProfileBtn) {
-            editProfileBtn.addEventListener('click',  () => editModal.classList.add('show'));
+            editProfileBtn.addEventListener('click', () => editModal.classList.add('show'));
         }
 
         if (editModalClose) {
-            editModalClose.addEventListener('click',  () => editModal.classList.remove('show'));
+            editModalClose.addEventListener('click', () => editModal.classList.remove('show'));
         }
 
         if (editModalCancel) {
@@ -247,7 +247,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    //  FILTER RESET
+    // FILTER RESET
     const resetBtn = document.getElementById('reset-link');
 
     if (resetBtn) {
@@ -345,8 +345,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
             catDeleteClose.addEventListener(
 
-                'click', () => { 
-                    deleteCatModal.classList.remove('show'); document.getElementById('category-modal').classList.add('show'); 
+                'click', () => {
+                    deleteCatModal.classList.remove('show'); document.getElementById('category-modal').classList.add('show');
                 }
             );
         }
@@ -355,8 +355,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
             catDeleteCancel.addEventListener(
 
-                'click', () => { 
-                    deleteCatModal.classList.remove('show'); document.getElementById('category-modal').classList.add('show'); 
+                'click', () => {
+                    deleteCatModal.classList.remove('show'); document.getElementById('category-modal').classList.add('show');
                 }
             );
         }
@@ -474,8 +474,8 @@ document.addEventListener('DOMContentLoaded', () => {
                             variantsSection.style.display = 'none';
                         }
 
-                        document.getElementById('view-loading').style.display  = 'none';
-                        document.getElementById('view-content').style.display  = 'block';
+                        document.getElementById('view-loading').style.display = 'none';
+                        document.getElementById('view-content').style.display = 'block';
                     })
 
                     .catch(() => {
@@ -506,7 +506,7 @@ document.addEventListener('DOMContentLoaded', () => {
         addImagesInput.addEventListener('change', () => {
 
             addImagePreview.innerHTML = '';
-            addPrimaryIndex.value     = '0';
+            addPrimaryIndex.value = '0';
 
             const files = Array.from(addImagesInput.files).slice(0, 5);
 
@@ -546,7 +546,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
                         addPrimaryIndex.value = index;
                         addImagePreview.querySelectorAll('img').forEach(i => i.style.borderColor = '#ddd');
-                        addImagePreview.querySelectorAll('span').forEach(s => s.style.display    = 'none');
+                        addImagePreview.querySelectorAll('span').forEach(s => s.style.display = 'none');
                         img.style.borderColor = '#8B6914';
                         badge.style.display = 'block';
 
@@ -799,7 +799,7 @@ function loadEditImages(productId) {
                 el.addEventListener('click', () => {
 
                     const fd = new FormData();
-                    fd.append('image_id',   img.image_id);
+                    fd.append('image_id', img.image_id);
                     fd.append('product_id', productId);
                     fetch('../../backend/products/set_primary_image.php', { method:'POST', body:fd })
                         .then(r => r.json())

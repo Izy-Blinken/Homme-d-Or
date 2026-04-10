@@ -187,7 +187,7 @@
 }
 /* Force the text inside to be pure white */
 .chatMessageLeft .chatMessageBubble p {
-    color: #ffffff !important; 
+    color: #ffffff !important;
     margin: 0;
 }
 

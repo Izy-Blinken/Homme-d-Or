@@ -5,6 +5,7 @@ if (session_status() === PHP_SESSION_NONE) {
 }
 
 include_once '../backend/db_connect.php';
+<<<<<<< HEAD
 
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
@@ -69,6 +70,8 @@ function sendOrderEmail($to_email, $to_name, $order_id, $items, $total_amount, $
     }
 }
 
+=======
+>>>>>>> 5aabf5346cecce917521bddf278b287c4645bf8e
 $identity = getCurrentUserId();
 
 // THE BOUNCER: Prevent direct access
@@ -83,11 +86,11 @@ $id_value = $identity['id'];
 $fullName = trim($_POST['fullName'] ?? 'Guest User');
 $nameParts = explode(' ', $fullName, 2);
 $fname = $nameParts[0];
-$lname = $nameParts[1] ?? ''; 
+$lname = $nameParts[1] ?? '';
 
 $email = trim($_POST['email'] ?? '');
 $phone = trim($_POST['phone'] ?? '');
-$street = trim($_POST['address'] ?? ''); 
+$street = trim($_POST['address'] ?? '');
 $city = trim($_POST['city'] ?? '');
 $province = trim($_POST['province'] ?? '');
 $zipCode = trim($_POST['zipCode'] ?? '');
@@ -119,7 +122,7 @@ if ($paymentMethod === 'gcash') {
 }
 
 $stmt = $conn->prepare("
-    SELECT c.cart_id, c.product_id, c.quantity, p.product_name, p.price, pi.image_url 
+    SELECT c.cart_id, c.product_id, c.quantity, p.product_name, p.price, pi.image_url
     FROM cart c JOIN products p ON c.product_id = p.product_id
     LEFT JOIN product_images pi ON pi.product_id = p.product_id AND pi.is_primary = 1
     WHERE c.$id_column = ?
@@ -149,6 +152,7 @@ $db_user_id = ($identity['type'] === 'user_id') ? $id_value : null;
 $db_guest_id = ($identity['type'] === 'guest_id') ? $id_value : null;
 
 $insertOrder = $conn->prepare("
+<<<<<<< HEAD
     INSERT INTO orders (
         user_id, guest_id, fname, lname, email, phone,
         street, city, province, country, zip_code,
@@ -162,6 +166,15 @@ $insertOrder->bind_param("ssssssssssdddss",
     $street, $city, $province, $country, $zipCode, 
     $subtotal, $shipping_fee, $total_amount,
     $order_status
+=======
+    INSERT INTO orders (user_id, guest_id, fname, lname, email, phone, street, city, province, country, zip_code, subtotal, shipping_fee, total_amount, order_status)
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+");
+$insertOrder->bind_param("ssssssssssdddds",
+    $db_user_id, $db_guest_id, $fname, $lname, $email, $phone,
+    $street, $city, $province, $country, $zipCode,
+    $subtotal, $shipping_fee, $total_amount, $order_status
+>>>>>>> 5aabf5346cecce917521bddf278b287c4645bf8e
 );
 if (!$insertOrder->execute()) {
     die("Order failed.");
@@ -342,10 +355,15 @@ if (!$emailSent) {
                 <div class="confirm-receipt">
                     <h3>Order Summary</h3>
                     <div class="receipt-items">
+<<<<<<< HEAD
                         <?php foreach($purchasedItems as $item): 
                             $imgSrc = $item['image_url'] 
                                 ? '../assets/images/products/' . htmlspecialchars($item['image_url']) 
                                 : '../assets/images/brand_images/nocturne.png';
+=======
+                        <?php foreach($purchasedItems as $item):
+                            $imgSrc = $item['image_url'] ? '../assets/images/products/' . htmlspecialchars($item['image_url']) : '../assets/images/brand_images/nocturne.png';
+>>>>>>> 5aabf5346cecce917521bddf278b287c4645bf8e
                         ?>
                         <div class="receipt-item">
                             <img src="<?= $imgSrc ?>" alt="Product">

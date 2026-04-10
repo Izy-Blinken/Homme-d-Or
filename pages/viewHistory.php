@@ -1,6 +1,6 @@
     <!DOCTYPE html>
     <html lang="en">
-    <head> 
+    <head>
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -63,7 +63,7 @@
             }
 
             #statusFilter option {
-                color: white; 
+                color: white;
                 background-color: #222;
                 border: 1px solid #c9a961;
             }
@@ -75,7 +75,7 @@
         </style>
     </head>
 
-    <body> 
+    <body>
     <?php include '../components/header.php'; ?>
 
     <main class="mainBG">
@@ -94,7 +94,7 @@
                     <div class="filter-menu">
                         <button class="filter-option" onclick="sortByDate()">Purchase Date</button>
                         <button class="filter-option" onclick="sortAZ()">Alphabetical</button>
-                        <button class="filter-option"  onclick="sortByPrice()">By Price</button>
+                        <button class="filter-option" onclick="sortByPrice()">By Price</button>
 
                         <!-- STATUS DROPDOWN -->
                         <select id="statusFilter" class="filter-option" onchange="filterStatus()">
@@ -134,7 +134,7 @@
                         <span>1</span>
                         <span>₱1,250.00</span>
                         <span>
-                            <button class="view-link" 
+                            <button class="view-link"
                                 onclick="viewTransaction(this)"
                                 data-title="Transaction Details"
                                 data-img="../assets/images/products_images/nocturne.png"
@@ -162,7 +162,7 @@
                         <span>2</span>
                         <span>₱7,000.00</span>
                         <span>
-                            <button class="view-link" 
+                            <button class="view-link"
                                 onclick="viewTransaction(this)"
                                 data-title="Transaction Details"
                                 data-img="../assets/images/products_images/nocturne.png"
@@ -190,7 +190,7 @@
                         <span>1</span>
                         <span>₱2,800.00</span>
                         <span>
-                            <button class="view-link" 
+                            <button class="view-link"
                                 onclick="viewTransaction(this)"
                                 data-title="Transaction Details"
                                 data-img="../assets/images/products_images/nocturne.png"
@@ -218,7 +218,7 @@
                         <span>3</span>
                         <span>₱4,500.00</span>
                         <span>
-                            <button class="view-link" 
+                            <button class="view-link"
                                 onclick="viewTransaction(this)"
                                 data-title="Transaction Details"
                                 data-img="../assets/images/products_images/nocturne.png"
@@ -246,7 +246,7 @@
                         <span>1</span>
                         <span>₱2,200.00</span>
                         <span>
-                            <button class="view-link" 
+                            <button class="view-link"
                                 onclick="viewTransaction(this)"
                                 data-title="Transaction Details"
                                 data-img="../assets/images/products_images/nocturne.png"
@@ -274,7 +274,7 @@
                         <span>2</span>
                         <span>₱6,000.00</span>
                         <span>
-                            <button class="view-link" 
+                            <button class="view-link"
                                 onclick="viewTransaction(this)"
                                 data-title="Transaction Details"
                                 data-img="../assets/images/products_images/nocturne.png"

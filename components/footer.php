@@ -86,7 +86,7 @@
                             <button onclick="validateCaptcha()">Verify</button>
                             <div id="captchaStatus" style="font-size:13px; min-height:18px;"></div>
                         </div>
-                    </div> 
+                    </div>
 
                     <div class="regBtn">
                         <p id="signupServerError" style="color:red; text-align:center;"></p>
@@ -396,9 +396,52 @@
         </script>
         
         
-        <!-- Final JS Inclusions (CLEANED - Duplicates Removed) -->
         <script src="../assets/js/regModal.js"></script>
         <script src="../assets/js/logModal.js"></script>
         <script src="../assets/js/ChatBubble.js"></script>
         <script src="../assets/js/forgotPassword.js"></script>
         <script src="../assets/js/MobileMenu.js"></script>
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                const newsletterForm = document.getElementById('newsletterForm');
+                if (!newsletterForm) return;
+
+                newsletterForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+
+                    const emailInput = newsletterForm.querySelector('input[type="email"]');
+                    const btn = newsletterForm.querySelector('button[type="submit"]');
+                    const email = emailInput.value.trim();
+
+                    if (!email) return;
+
+                    btn.disabled = true;
+                    btn.textContent = 'Subscribing...';
+
+                    const formData = new FormData();
+                    formData.append('email', email);
+
+                    fetch('../backend/blog/subscribe.php', { method: 'POST', body: formData })
+                        .then(res => res.json())
+                        .then(data => {
+                            if (typeof showGeneralToast === 'function') {
+                                showGeneralToast(data.message, data.success ? 'success' : 'error');
+                            } else {
+                                alert(data.message);
+                            }
+                            if (data.success) {
+                                emailInput.value = '';
+                            }
+                        })
+                        .catch(() => {
+                            if (typeof showGeneralToast === 'function') {
+                                showGeneralToast('Could not connect. Please try again.', 'error');
+                            }
+                        })
+                        .finally(() => {
+                            btn.disabled = false;
+                            btn.textContent = 'Subscribe';
+                        });
+                });
+            });
+        </script>

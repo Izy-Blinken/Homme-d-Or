@@ -71,6 +71,7 @@ function submitReview(event) {
     closeReviewModal();
 }
 
+<<<<<<< HEAD
 //Cancel Order Modal
 function openCancelModal(orderId) {
     document.getElementById('cancelOrderId').value = orderId;
@@ -80,6 +81,17 @@ function openCancelModal(orderId) {
 
     // reset form
     document.querySelectorAll('input[name="cancelReason"]').forEach(r => r.checked = false);
+=======
+// Cancel Order Modal
+function openCancelModal() {
+    const modal = document.getElementById('cancelOrderModal');
+    modal.classList.remove('closing');
+    modal.classList.add('show');
+    
+    // reset form
+    const radioButtons = document.querySelectorAll('input[name="cancelReason"]');
+    radioButtons.forEach(radio => radio.checked = false);
+>>>>>>> 5aabf5346cecce917521bddf278b287c4645bf8e
     document.getElementById('otherReason').value = '';
     document.getElementById('otherReasonGroup').style.display = 'none';
 }
@@ -159,7 +171,7 @@ function showGeneralToast(message, type='success') {
     
     setTimeout(() => {
         toast.classList.remove('show');
-    }, 3000); 
+    }, 3000);
 }
 
 function openViewModal(img, name, variant, qty,total, payment, date, status) {

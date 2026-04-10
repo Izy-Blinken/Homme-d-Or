@@ -164,7 +164,7 @@ if (document.getElementById('signupModal')) {
             regPasswordMatch.className = 'passwordMatchReg no-match';
         }
         
-    }    
+    }
 
     function updateRequirement(element, met) {
         if (met) {
@@ -255,7 +255,7 @@ if (document.getElementById('signupModal')) {
             }
             
             if (password !== confirmPassword) {
-                e.preventDefault(); 
+                e.preventDefault();
                 alert('Passwords do not match!');
                 return false;
             }
@@ -267,7 +267,7 @@ if (document.getElementById('signupModal')) {
             .then(res => res.json())
             .then(data => {
                 if (data.success) {
-                    window.location.href = 'verifyCodeSignUp.php';    
+                    window.location.href = 'verifyCodeSignUp.php';
                 } else {
                     showSignupError(data.message || 'Email is already registered.');
                 }
