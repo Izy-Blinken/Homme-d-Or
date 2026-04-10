@@ -7,6 +7,13 @@ if (empty($_SESSION['pending_user_id'])) {
 }
 
 $pending_email = htmlspecialchars($_SESSION['pending_user_email'] ?? '');
+
+if (!empty($_SESSION['signup_email_failed'])) {
+    unset($_SESSION['signup_email_failed'], $_SESSION['pending_user_id']);
+    // redirect back with error
+    header("Location: index.php?signup_error=email_failed");
+    exit;
+}
 ?>
 <!DOCTYPE html>
 <html>

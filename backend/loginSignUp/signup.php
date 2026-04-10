@@ -159,27 +159,26 @@ mysqli_query($conn,
      VALUES ('$user_id', '$safe_otp', '$expires_at')"
 );
 
-// Email sent
+
+$_SESSION['pending_user_id']        = $user_id;
+$_SESSION['pending_user_fname']     = $fname;
+$_SESSION['pending_user_email']     = $email;
+$_SESSION['pending_signup_success'] = true;
+
+// Send email synchronously — fast enough with reduced timeout
 $sent = sendOTPEmail($email, $fname, $otp);
 
 if (!$sent) {
-    // Email failed — clean up and let user retry
+    // Clean up and tell user to retry
     mysqli_query($conn, "DELETE FROM users WHERE user_id = '$user_id'");
     mysqli_query($conn, "DELETE FROM email_verifications WHERE user_id = '$user_id'");
     echo json_encode([
         "success" => false,
-        "message" => "Failed to send verification email."
+        "message" => "Failed to send verification email. Please try again."
     ]);
     exit;
 }
 
+echo json_encode(["success" => true]);
 
-$_SESSION['pending_user_id'] = $user_id;
-$_SESSION['pending_user_fname'] = $fname;
-$_SESSION['pending_user_email'] = $email;
-$_SESSION['pending_signup_success'] = true;
-
-echo json_encode([
-    "success" => true
-]);
 exit;
