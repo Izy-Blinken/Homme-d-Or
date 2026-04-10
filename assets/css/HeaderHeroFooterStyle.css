@@ -1490,15 +1490,15 @@
 }
 
 .notif-item:hover {
-    background: #fafafa;
+    background: beige;
 }
 
 .notif-item.unread {
-    background: #fffdf5; /* Very subtle gold tint */
+    background: linear-gradient(145deg, #030c18 0%, #071525 50%, #0a1e36 100%);
 }
 
 .notif-item.unread:hover {
-    background: #fffbf0;
+    background: linear-gradient(145deg, #01050a 0%, #030a14 50%, #051020 100%);
 }
 
 /* Internal Layout Flexbox */
@@ -1567,7 +1567,7 @@
 
 .notif-item {
     padding: 0.85rem 1rem;
-    border-bottom: 1px solid #f5f5f5;
+    border-bottom: 1px solid #c9a961;
     cursor: pointer;
     transition: background 0.15s;
     font-size: 0.85rem;
@@ -1580,16 +1580,16 @@
 }
 
 .notif-item:hover {
-    background: #fafafa;
+    background: beige;
 }
 
 .notif-item.unread {
-    background: #fffbf0;
+    background: linear-gradient(145deg, #030c18 0%, #071525 50%, #0a1e36 100%);;
     border-left: 3px solid #c9a961;
 }
 
 .notif-item.unread:hover {
-    background: #fff8e6;
+    background: beige;
 }
 
 .notif-time {
