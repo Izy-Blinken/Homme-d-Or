@@ -161,6 +161,7 @@
     background-color: transparent;
     border: 1px solid #c9a961;
     color: #c9a961;
+    text-decoration: none;
 }
 
 .v-view:hover,

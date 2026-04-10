@@ -160,7 +160,7 @@ $stmt->close();
                         }
                     }, 300);
                 } else {
-                    alert(data.message);
+                    showGeneralToast(data.message, 'error');
                 }
             })
             .catch(err => console.error('Error:', err));
@@ -176,13 +176,15 @@ $stmt->close();
             .then(res => res.json())
             .then(data => {
                 if (data.status === 'success') {
-                    alert('Added to cart!');
+                    showGeneralToast('Added to cart!', 'success');
                 } else {
-                    alert(data.message);
+                   showGeneralToast(data.message, 'error');
                 }
             })
             .catch(err => console.error('Error:', err));
         }
     </script>
+    <div id="generalToast" class="generalToast"></div>
+    <script src="../assets/js/script.js"></script>
 </body>
 </html>
