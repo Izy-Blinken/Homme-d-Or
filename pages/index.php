@@ -9,7 +9,7 @@ $newArrivals = $productsByCategory['New Arrivals'] ?? [];
 $sql = "SELECT p.product_id, p.product_name, p.price, p.discounted_price,
                p.product_status, pi.image_url
         FROM products p
-        LEFT JOIN product_images pi
+        LEFT JOIN product_images pi 
             ON pi.product_id = p.product_id AND pi.is_primary = 1
         ORDER BY p.created_at DESC";
 $allProducts = [];
@@ -53,11 +53,11 @@ if (!empty($_SESSION['user_id'])) {
 
     <body>
 
-        <!--Steps from starting to saving:
+        <!--Steps from starting to saving: 
         terminal -> git pull -> then work na -> (if save na:) git add . -> git commit -m "describe what you changed here pero mas better kung i-comment din like this" -> git pull -> then git push
         
         
-        done:
+        done: 
         1. review and cancel order modal
         2. profile "view all" content scrollable
         3. Product links
@@ -92,9 +92,6 @@ if (!empty($_SESSION['user_id'])) {
 
             <div class="hero-content">
                 
-                <div class="hero-title">
-                    <h1>Homme<br>d'Or</h1>
-                </div>
                 
                 <div class="hero-center-image">
                     <div class="center-image-wrapper">
@@ -186,7 +183,7 @@ if (!empty($_SESSION['user_id'])) {
                                 SELECT p.product_id, p.product_name, p.price, p.discounted_price,
                                     p.product_status, pi.image_url
                                 FROM products p
-                                LEFT JOIN product_images pi
+                                LEFT JOIN product_images pi 
                                     ON pi.product_id = p.product_id AND pi.is_primary = 1
                                 ORDER BY p.created_at DESC
                             ";
@@ -197,9 +194,9 @@ if (!empty($_SESSION['user_id'])) {
                                 $name = htmlspecialchars($product['product_name']);
                                 $price = number_format($product['price'], 2);
                                 $status = $product['product_status'];
-                                $imgSrc = $product['image_url']
+                                $imgSrc = $product['image_url'] 
                                         ? '../assets/images/products/' . htmlspecialchars($product['image_url'])
-                                        : '../assets/images/product_images/image_unavailable.png';
+                                        : '../assets/images/brand_images/nocturne.png';
                                 $soldOut = ($status === 'out-of-stock');
                             ?>
                             
@@ -209,7 +206,7 @@ if (!empty($_SESSION['user_id'])) {
                                     <?php if ($soldOut): ?>
                                         <div class="sold-out-label">SOLD OUT</div>
                                     <?php else: ?>
-                                        <?php if (!empty($_SESSION['user_id'])):
+                                        <?php if (!empty($_SESSION['user_id'])): 
                                             $isWishlisted = in_array($id, $wishlistedIds);
                                         ?>
                                             <button class="wishlist-btn <?= $isWishlisted ? 'wishlisted' : '' ?>"
@@ -325,7 +322,7 @@ if (!empty($_SESSION['user_id'])) {
                         <img src="../assets/images/brand_images/elegperf.jpg" alt="Exclusive Offers">
                     </div>
                     <div class="promo-content">
-                        <h3>Xclusive offers</h3>
+                        <h3>Exclusive offers</h3>
                         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. In commodo porta mi, ut vestibulum urna eros. Nam in lacinia est, vestibulum urna eros, sagittis et mollis gravida, tincidunt a lorem.</p>
                         <a href="shop.php" class="promo-link">DISCOVER</a>
                     </div>
@@ -349,7 +346,7 @@ if (!empty($_SESSION['user_id'])) {
                         <?php if (empty($newArrivals)): ?>
                             <p style="color:#ccc; padding: 1rem;">No new arrivals yet.</p>
                         <?php else: ?>
-                            <?php
+                            <?php 
                                 foreach ($newArrivals as $product):
                                 $id = $product['product_id'];
                                 $name = htmlspecialchars($product['product_name']);
@@ -366,7 +363,7 @@ if (!empty($_SESSION['user_id'])) {
                                     <?php if ($soldOut): ?>
                                         <div class="sold-out-label">SOLD OUT</div>
                                     <?php else: ?>
-                                        <?php if (!empty($_SESSION['user_id'])):
+                                        <?php if (!empty($_SESSION['user_id'])): 
                                                 $isWishlisted = in_array($id, $wishlistedIds); ?>
                                             <button class="wishlist-btn <?= $isWishlisted ? 'wishlisted' : '' ?>"
                                                     id="wishlist-card-<?= $id ?>"
@@ -454,7 +451,7 @@ if (!empty($_SESSION['user_id'])) {
                         <?php if (empty($allProducts)): ?>
                             <p style="color:#ccc; padding: 1rem;">No products yet.</p>
                         <?php else: ?>
-                            <?php
+                            <?php 
                             $count2 = 0;
                             foreach ($allProducts as $product):
                                 if ($count2 >= 8) break; // Limits to 8 items
@@ -474,7 +471,7 @@ if (!empty($_SESSION['user_id'])) {
                                     <?php if ($soldOut): ?>
                                         <div class="sold-out-label">SOLD OUT</div>
                                     <?php else: ?>
-                                        <?php if (!empty($_SESSION['user_id'])):
+                                        <?php if (!empty($_SESSION['user_id'])): 
                                                 $isWishlisted = in_array($id, $wishlistedIds); ?>
                                             <button class="wishlist-btn <?= $isWishlisted ? 'wishlisted' : '' ?>"
                                                     id="wishlist-card-<?= $id ?>"
