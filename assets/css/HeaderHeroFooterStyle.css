@@ -1468,11 +1468,10 @@
     width: 6px;
 }
 .notif-list::-webkit-scrollbar-track {
-    background: #f8f9fa;
+    background: rgb(14, 16, 31);
 }
 .notif-list::-webkit-scrollbar-thumb {
     background: #e0e0e0;
-    border-radius: 10px;
 }
 .notif-list::-webkit-scrollbar-thumb:hover {
     background: #c9a961;
