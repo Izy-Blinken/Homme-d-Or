@@ -113,7 +113,7 @@ $currentPage = basename($_SERVER['PHP_SELF']);
                 <div class="notif-panel" id="notif-panel">
                     <div class="notif-panel-header">
                         <span>Notifications</span>
-                        <button id="mark-all-read" style="background:none; border:none; color:#c9a961; font-size:0.8rem; cursor:pointer; font-weight:600;">Mark all read</button>
+                        <button id="mark-all-read" style="background:none; border:none; color:white; font-size:0.8rem; cursor:pointer; font-weight:600;">Mark all read</button>
                     </div>
             
                     <div class="notif-list" id="notif-list">

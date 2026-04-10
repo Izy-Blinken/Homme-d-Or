@@ -717,11 +717,8 @@
     /* Precisely splits the container for 4 items while accounting for the 105px gaps */
     flex: 0 0 calc(25% - 78.75px);
     scroll-snap-align: start;
-    background: rgba(255, 255, 255, 0.08);
-    backdrop-filter: blur(4px);
-    -webkit-backdrop-filter: blur(4px);
-    border: 1px solid rgba(255, 255, 255, 0.15);
-    border-radius: 2px;
+    background: linear-gradient(145deg, #01050a 0%, #030a14 50%, #051020 100%);
+   border: 1px solid #c9a961;
     overflow: hidden;
     position: relative;
     transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1),
@@ -731,7 +728,7 @@
 .product-card:hover {
     transform: translateY(-4px); /* Smoother, smaller lift */
     box-shadow: 0 12px 30px rgba(0, 0, 0, 0.25), 0 0 0 1px rgba(201, 168, 76, 0.3);
-    background: rgba(255, 255, 255, 0.12);
+    background: linear-gradient(145deg, #030c18 0%, #071525 50%, #0a1e36 100%);
 }
 
 /* Nav Buttons for new Carousel */

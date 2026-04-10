@@ -1433,7 +1433,7 @@
     align-items: center;
     padding: 18px 20px;
     border-bottom: 1px solid #f0f0f0;
-    background-color: #fafafa;
+    background-color: #c9a961;
 }
 
 .notif-panel-header span {
@@ -1461,7 +1461,7 @@
 .notif-list {
     overflow-y: auto;
     flex: 1;
-    background: #ffffff;
+    background: rgb(14, 16, 31);
 }
 
 /* Custom Scrollbar for Luxury Feel */
