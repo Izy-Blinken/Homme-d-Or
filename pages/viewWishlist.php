@@ -59,6 +59,7 @@ $stmt->close();
     <?php include '../components/header.php'; ?>
 
     <main class="mainBG">
+        <button class="back-btn" onclick="history.back()" title="Go back"><i class="fas fa-arrow-left"></i> Back</button>
         <div class="v-tabs">
             <h1 class="v-header">My Wishlist</h1>
 

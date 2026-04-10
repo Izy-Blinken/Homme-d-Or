@@ -35,6 +35,7 @@ if ($identity['type'] === 'stranger') {
     <body>
         <?php include '../components/header.php'; ?>
         <main class="mainBG">
+            <button class="back-btn" onclick="history.back()" title="Go back"><i class="fas fa-arrow-left"></i> Back</button>
 
             <div class="checkoutWrapper">
                 <div class="checkoutHeader">

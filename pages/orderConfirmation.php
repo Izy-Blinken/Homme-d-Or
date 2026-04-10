@@ -149,7 +149,7 @@ elseif ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $paymentMethod = $_POST['paymentMethod'] ?? 'cod';
     $paymentTitle  = 'Cash on Delivery';
     $paymentDetail = 'Pay when you receive';
-    $order_status  = 'Pending Payment (COD)';
+    $order_status  = 'pending';
 
     // Fetch cart items
     $stmt = $conn->prepare("
@@ -299,6 +299,7 @@ if (!$emailSent) {
 <body>
     <?php include '../components/header.php'; ?>
     <main class="mainBG confirm-bg">
+        <button class="back-btn" onclick="history.back()" title="Go back" style="margin-top: 1rem;"><i class="fas fa-arrow-left"></i> Back</button>
         <div class="confirm-wrapper">
             <div class="confirm-header">
                 <div class="success-icon"><i class="fa-solid fa-check"></i></div>
@@ -422,6 +423,16 @@ if (!$emailSent) {
                 </div>
 
             </div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="confirmation-actions" style="text-align: center; padding: 2rem; margin-top: 1rem;">
+            <a href="index.php" class="btn-shop-again" style="display: inline-block; padding: 0.8rem 2rem; margin: 0.5rem; background: #c9a961; color: #fff; text-decoration: none; border-radius: 4px; font-weight: 600; transition: all 0.3s ease;">
+                <i class="fas fa-shopping-bag"></i> Shop Again
+            </a>
+            <a href="viewAllTabs.php" class="btn-view-order" style="display: inline-block; padding: 0.8rem 2rem; margin: 0.5rem; background: transparent; border: 1px solid #c9a961; color: #c9a961; text-decoration: none; border-radius: 4px; font-weight: 600; transition: all 0.3s ease;">
+                <i class="fas fa-eye"></i> View Order
+            </a>
         </div>
     </main>
     <?php include '../components/footer.php'; ?>

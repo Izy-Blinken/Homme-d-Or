@@ -76,9 +76,59 @@
     </head>
 
     <body>
+    <?php 
+    session_start();
+    include '../backend/db_connect.php';
+
+    $identity = getCurrentUserId();
+
+    // Redirect strangers
+    if ($identity['type'] === 'stranger') {
+        header("Location: index.php?login_required=true");
+        exit;
+    }
+
+    $id_column = ($identity['type'] === 'user_id') ? 'user_id' : 'guest_id';
+    $id_value = $identity['id'];
+
+    // Fetch all order items for this user
+    $query = "
+        SELECT oi.*, o.order_id, o.order_status, o.created_at, o.total_amount,
+               p.product_name, p.product_id,
+               pi.image_url,
+               py.method as payment_method
+        FROM order_items oi
+        JOIN orders o ON o.order_id = oi.order_id
+        JOIN products p ON p.product_id = oi.product_id
+        LEFT JOIN product_images pi ON pi.product_id = p.product_id AND pi.is_primary = 1
+        LEFT JOIN payments py ON py.order_id = o.order_id
+        WHERE o.$id_column = ?
+        ORDER BY o.created_at DESC
+    ";
+
+    $stmt = $conn->prepare($query);
+    if (!$stmt) {
+        die("Query preparation failed: " . $conn->error);
+    }
+
+    $stmt->bind_param("s", $id_value);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    if (!$result) {
+        die("Query execution failed: " . $conn->error);
+    }
+
+    $order_items = [];
+    while ($row = $result->fetch_assoc()) {
+        $order_items[] = $row;
+    }
+    $stmt->close();
+    ?>
     <?php include '../components/header.php'; ?>
 
     <main class="mainBG">
+        <button class="back-btn" onclick="history.back()" title="Go back"><i class="fas fa-arrow-left"></i> Back</button>
         <div class="h-tabs">
             <h1 class="v-header">Purchase History</h1>
 
@@ -119,177 +169,68 @@
                         <span>Unit Price</span>
                         <span>Quantity</span>
                         <span>Subtotal</span>
-                        <span>Actions</span>
+                        <span>Status</span>
+                        <span></span>Actions</span>
                     </div>
 
                     <!-- ROWS -->
-                    <div class="history-row" data-name="Homme d’Or Éternel" data-date="2026-03-10" data-status="Delivered">
-                        <span>1</span>
-                        <span>03-10-2026<br><small>14:31</small></span>
+                    <?php 
+                    if (empty($order_items)) {
+                        echo '<div style="grid-column: 1 / -1; text-align: center; padding: 40px 0; color: #aaa;">No order history found.</div>';
+                    } else {
+                        $index = 1;
+                        foreach ($order_items as $item): 
+                            $order_status = $item['order_status'] ?? 'pending';
+                            $order_date = date('m-d-Y', strtotime($item['created_at']));
+                            $order_time = date('H:i', strtotime($item['created_at']));
+                            $product_name = htmlspecialchars($item['product_name']);
+                            $price_at_purchase = $item['price_at_purchase'];
+                            $quantity = $item['quantity'];
+                            $subtotal = $price_at_purchase * $quantity;
+                            
+                            $img_url = $item['image_url'] 
+                                ? '../assets/images/products/' . htmlspecialchars($item['image_url'])
+                                : '../assets/images/brand_images/nocturne.png';
+                            
+                            $payment_method = ucfirst($item['payment_method'] ?? 'N/A');
+                    ?>
+                    <div class="history-row" data-name="<?= $product_name ?>" data-date="<?= $item['created_at'] ?>" data-status="<?= ucfirst($order_status) ?>">
+                        <span><?= $index ?></span>
+                        <span><?= $order_date ?><br><small><?= $order_time ?></small></span>
                         <span class="product-col">
-                            <img src="../assets/images/products_images/nocturne.png">
-                            Homme d’Or Éternel
+                            <img src="<?= $img_url ?>" alt="<?= $product_name ?>">
+                            <?= $product_name ?>
                         </span>
-                        <span>₱1,250.00</span>
-                        <span>1</span>
-                        <span>₱1,250.00</span>
+                        <span>₱<?= number_format($price_at_purchase, 2) ?></span>
+                        <span><?= $quantity ?></span>
+                        <span>₱<?= number_format($subtotal, 2) ?></span>
+                        <span style="text-align: center;">
+                            <span class="badge badge-<?= strtolower($order_status) ?>" style="padding: 6px 12px; border-radius: 4px; font-size: 0.85rem; display: inline-block;">
+                                <?= ucfirst($order_status) ?>
+                            </span>
+                        </span>
                         <span>
                             <button class="view-link"
                                 onclick="viewTransaction(this)"
                                 data-title="Transaction Details"
-                                data-img="../assets/images/products_images/nocturne.png"
-                                data-product="Homme d’Or Éternel"
-                                data-variant="50ml • Oud Majestueux"
-                                data-qty="1"
-                                data-price='₱1,250.00'
-                                data-subtotal='₱1,250.00'
-                                data-payment="Credit Card"
-                                data-date="2026-03-10"
-                                data-status="Delivered">
+                                data-img="<?= htmlspecialchars($img_url) ?>"
+                                data-product="<?= $product_name ?>"
+                                data-variant="<?= htmlspecialchars($item['variant'] ?? 'Variant Info') ?>"
+                                data-qty="<?= $quantity ?>"
+                                data-price="₱<?= number_format($price_at_purchase, 2) ?>"
+                                data-subtotal="₱<?= number_format($subtotal, 2) ?>"
+                                data-payment="<?= $payment_method ?>"
+                                data-date="<?= $order_date ?>"
+                                data-status="<?= ucfirst($order_status) ?>">
                                 View
                             </button>
                         </span>
                     </div>
-
-                    <div class="history-row" data-name="Homme d’Or Voyage" data-date="2026-02-11" data-status="Delivered">
-                        <span>2</span>
-                        <span>02-11-2026<br><small>14:15</small></span>
-                        <span class="product-col">
-                            <img src="../assets/images/products_images/nocturne.png">
-                            Homme d’Or Voyage
-                        </span>
-                        <span>₱3,500.00</span>
-                        <span>2</span>
-                        <span>₱7,000.00</span>
-                        <span>
-                            <button class="view-link"
-                                onclick="viewTransaction(this)"
-                                data-title="Transaction Details"
-                                data-img="../assets/images/products_images/nocturne.png"
-                                data-product="Homme d’Or Voyage"
-                                data-variant="100ml • Ambre Nomade"
-                                data-qty="2"
-                                data-price='₱3,500.00'
-                                data-subtotal='₱7,000.00'
-                                data-payment="Cash on Delivery"
-                                data-date="2026-02-11"
-                                data-status="Delivered">
-                                View
-                            </button>
-                        </span>
-                    </div>
-
-                    <div class="history-row" data-name="Homme d’Or Élixir" data-date="2026-04-10" data-status="Cancelled">
-                        <span>3</span>
-                        <span>04-10-2026<br><small>14:15</small></span>
-                        <span class="product-col">
-                            <img src="../assets/images/products_images/nocturne.png">
-                            Homme d’Or Élixir
-                        </span>
-                        <span>₱2,800.00</span>
-                        <span>1</span>
-                        <span>₱2,800.00</span>
-                        <span>
-                            <button class="view-link"
-                                onclick="viewTransaction(this)"
-                                data-title="Transaction Details"
-                                data-img="../assets/images/products_images/nocturne.png"
-                                data-product="Homme d’Or Élixir"
-                                data-variant="100ml • Cuir Sublime"
-                                data-qty="1"
-                                data-price='₱2,800.00'
-                                data-subtotal='₱2,800.00'
-                                data-payment="GCash"
-                                data-date="2026-04-10"
-                                data-status="Cancelled">
-                                View
-                            </button>
-                        </span>
-                    </div>
-
-                    <div class="history-row" data-name="Homme d’Or Zenith" data-date="2026-02-14" data-status="Delivered">
-                        <span>4</span>
-                        <span>02-14-2026<br><small>10:20</small></span>
-                        <span class="product-col">
-                            <img src="../assets/images/products_images/nocturne.png">
-                            Homme d’Or Zenith
-                        </span>
-                        <span>₱1,500.00</span>
-                        <span>3</span>
-                        <span>₱4,500.00</span>
-                        <span>
-                            <button class="view-link"
-                                onclick="viewTransaction(this)"
-                                data-title="Transaction Details"
-                                data-img="../assets/images/products_images/nocturne.png"
-                                data-product="Homme d’Or Zenith"
-                                data-variant="100ml • Santal Imperial"
-                                data-qty="3"
-                                data-price='₱1,500.00'
-                                data-subtotal='₱4,500.00'
-                                data-payment="Credit Card"
-                                data-date="2026-02-14"
-                                data-status="Delivered">
-                                View
-                            </button>
-                        </span>
-                    </div>
-
-                    <div class="history-row" data-name="Homme d’Or Mystique" data-date="2026-04-12" data-status="Pending">
-                        <span>5</span>
-                        <span>04-12-2026<br><small>16:45</small></span>
-                        <span class="product-col">
-                            <img src="../assets/images/products_images/nocturne.png">
-                            Homme d’Or Mystique
-                        </span>
-                        <span>₱2,200.00</span>
-                        <span>1</span>
-                        <span>₱2,200.00</span>
-                        <span>
-                            <button class="view-link"
-                                onclick="viewTransaction(this)"
-                                data-title="Transaction Details"
-                                data-img="../assets/images/products_images/nocturne.png"
-                                data-product="Homme d’Or Mystique"
-                                data-variant="50ml • Vetiver Éclipse"
-                                data-qty="1"
-                                data-price='₱2,200.00'
-                                data-subtotal='₱2,200.00'
-                                data-payment="Cash on Delivery"
-                                data-date="2026-04-12"
-                                data-status="Pending">
-                                View
-                            </button>
-                        </span>
-                    </div>
-
-                    <div class="history-row" data-name="Homme d’Or Voyageur" data-date="2026-03-07" data-status="Delivered">
-                        <span>6</span>
-                        <span>03-07-2026<br><small>11:30</small></span>
-                        <span class="product-col">
-                            <img src="../assets/images/products_images/nocturne.png">
-                            Homme d’Or Voyageur
-                        </span>
-                        <span>₱3,000.00</span>
-                        <span>2</span>
-                        <span>₱6,000.00</span>
-                        <span>
-                            <button class="view-link"
-                                onclick="viewTransaction(this)"
-                                data-title="Transaction Details"
-                                data-img="../assets/images/products_images/nocturne.png"
-                                data-product="Homme d’Or Voyageur"
-                                data-variant="100ml • Patchouli Mystère"
-                                data-qty="2"
-                                data-price='₱3,000.00'
-                                data-subtotal='₱6,000.00'
-                                data-payment="Cash on Delivery"
-                                data-date="2026-03-07"
-                                data-status="Delivered">
-                                View
-                            </button>
-                        </span>
-                    </div>
+                    <?php 
+                        $index++;
+                        endforeach; 
+                    } 
+                    ?>
 
                 </div>
             </div>
