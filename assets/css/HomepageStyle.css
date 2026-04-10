@@ -3229,3 +3229,12 @@ background-color: #0B1A3A;
     .products-scroll-area { gap: 10px; }
     .product-card { flex: 0 0 85%; }
 }
+
+.shop-product-info {
+    text-align: left !important;
+}
+
+.shop-product-title,
+.shop-product-price {
+    text-align: left !important;
+}

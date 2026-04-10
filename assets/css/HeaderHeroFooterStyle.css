@@ -603,25 +603,35 @@
 .newsletter-container {
     max-width: 650px;
     margin: 0 auto;
+    /* ADD FLEXBOX TO THE CONTAINER */
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* This forces all children to the absolute dead center */
     text-align: center;
 }
 
 .newsletter-container h2 {
-    font-size: 28px; /* Slightly smaller */
+    font-size: 28px;
     font-weight: 700;
     color: #f8e189;
-    margin-bottom: 8px;
+    width: 100%; /* Ensures it respects the flex container */
+    text-align: center;
 }
 
 .newsletter-container p {
     font-size: 16px;
     color: whitesmoke;
     margin-bottom: 15px;
+    width: 100%; /* Ensures it respects the flex container */
+    text-align: center; 
 }
 
 .newsletter-form {
     display: flex;
+    justify-content: center; /* Centers the input and button inside the form wrapper */
+    align-items: center;
     gap: 0;
+    width: 100%; /* Allows it to scale properly */
     max-width: 500px;
     margin: 0 auto;
 }
@@ -681,11 +691,19 @@
     gap: 20px;
 }
 
+.footer-column {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Centers all child blocks */
+    text-align: center;  /* Centers the text inside them */
+}
+
 .footer-column h3 {
     font-size: 20px;
     font-weight: 600;
     color: #f8e189;
     margin-bottom: 20px;
+    text-align: center;
 }
 
 .footer-column p {
@@ -693,12 +711,14 @@
     font-size: 15px;
     line-height: 1.6;
     margin: 10px 0;
+    text-align: center;
 }
 
 .footer-column ul {
     list-style: none;
     padding: 0;
     margin: 0;
+    text-align: center;
 }
 
 .footer-column ul li {
@@ -727,7 +747,8 @@
 
 .contact-list li {
     display: flex;
-    align-items: flex-start;
+    justify-content: center; /* ADD THIS: Centers the icon and text together */
+    align-items: center;     /* UPDATE THIS: Keeps the icon vertically centered with the text */
     gap: 13px;
     margin-bottom: 15px;
     color: whitesmoke;
@@ -745,6 +766,7 @@
 /* Social Icons ---*/
 .social-icons {
     display: flex;
+    justify-content: center; /* ADD THIS: Centers the flex items */
     gap: 16px;
     margin-top: 14px;
 }
