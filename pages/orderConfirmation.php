@@ -5,15 +5,16 @@ if (session_status() === PHP_SESSION_NONE) {
 }
 
 include_once '../backend/db_connect.php';
+require_once '../backend/gcash.php';
 
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\Exception;
 
-require __DIR__ . '/../vendor/autoload.php'; 
+require __DIR__ . '/../vendor/autoload.php';
+
 function sendOrderEmail($to_email, $to_name, $order_id, $items, $total_amount, $paymentMethod) {
     $mail = new PHPMailer(true);
-
     try {
         $mail->isSMTP();
         $mail->Host       = 'smtp.gmail.com';
@@ -25,171 +26,232 @@ function sendOrderEmail($to_email, $to_name, $order_id, $items, $total_amount, $
 
         $mail->setFrom('hommedor2026@gmail.com', "Homme d'Or");
         $mail->addAddress($to_email, $to_name);
-
         $mail->isHTML(true);
         $mail->Subject = "Order Confirmation - #$order_id";
 
-        // Build item list
         $itemList = "";
         foreach ($items as $item) {
             $itemList .= "<li>{$item['product_name']} (Qty: {$item['quantity']})</li>";
         }
 
-        $paymentText = ($paymentMethod === 'cod') 
-            ? "Cash on Delivery (Pay upon arrival)" 
-            : "Paid Online";
+        $paymentText = ($paymentMethod === 'cod')
+            ? "Cash on Delivery (Pay upon arrival)"
+            : "Paid Online via GCash";
 
         $mail->Body = "
             <div style='font-family: Arial; max-width: 500px; margin:auto;'>
                 <h2>Order Confirmation</h2>
                 <p>Hi <strong>$to_name</strong>,</p>
-
                 <p>Your order has been successfully placed.</p>
-
                 <p><strong>Order #:</strong> $order_id</p>
-
                 <h3>Items:</h3>
                 <ul>$itemList</ul>
-
                 <p><strong>Total:</strong> ₱" . number_format($total_amount, 2) . "</p>
                 <p><strong>Payment Method:</strong> $paymentText</p>
-
                 <p>We will process your order shortly.</p>
-
                 <p style='font-size:12px; color:#aaa;'>Homme d'Or © 2026</p>
             </div>
         ";
 
         $mail->send();
         return true;
-
     } catch (Exception $e) {
         error_log('Mail Error: ' . $mail->ErrorInfo);
         return false;
     }
 }
 
-$identity = getCurrentUserId();
+$identity  = getCurrentUserId();
+$id_column = ($identity['type'] === 'user_id') ? 'user_id' : 'guest_id';
+$id_value  = $identity['id'];
 
-// THE BOUNCER: Prevent direct access
-if ($identity['type'] === 'stranger' || empty($_SESSION['selected_items']) || $_SERVER['REQUEST_METHOD'] !== 'POST') {
+// GCASH RETURN: Coming back from PayMongo after payment
+if (isset($_GET['gcash']) && $_GET['gcash'] === 'success' && isset($_GET['token'])) {
+
+    $token    = preg_replace('/[^a-f0-9]/', '', $_GET['token']); // sanitize
+    $filePath = sys_get_temp_dir() . '/pending_' . $token . '.json';
+
+    if (!file_exists($filePath)) {
+        header("Location: cart.php");
+        exit;
+    }
+
+    $pending = json_decode(file_get_contents($filePath), true);
+    unlink($filePath); // clean up
+
+    $_SESSION['selected_items'] = $pending['selected_items'];
+
+    $fullName      = $pending['fullName'];
+    $nameParts     = explode(' ', $fullName, 2);
+    $fname         = $nameParts[0];
+    $lname         = $nameParts[1] ?? '';
+    $email         = $pending['email'];
+    $phone         = $pending['phone'];
+    $street        = $pending['address'];
+    $city          = $pending['city'];
+    $province      = $pending['province'];
+    $zipCode       = $pending['zipCode'];
+    $country       = $pending['country'];
+    $paymentMethod = 'gcash';
+    $paymentTitle  = 'GCash';
+    $paymentDetail = 'Paid via GCash';
+    $order_status  = 'Processing';
+
+    // Re-fetch cart items
+    $stmt = $conn->prepare("
+        SELECT c.cart_id, c.product_id, c.quantity, p.product_name, p.price, pi.image_url
+        FROM cart c JOIN products p ON c.product_id = p.product_id
+        LEFT JOIN product_images pi ON pi.product_id = p.product_id AND pi.is_primary = 1
+        WHERE c.$id_column = ?
+    ");
+    $stmt->bind_param("s", $id_value);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    $purchasedItems = [];
+    $subtotal = 0;
+    while ($row = $result->fetch_assoc()) {
+        if (in_array($row['cart_id'], $_SESSION['selected_items'])) {
+            $purchasedItems[] = $row;
+            $subtotal += ($row['price'] * $row['quantity']);
+        }
+    }
+
+    $shipping_fee = ($subtotal > 0) ? 150.00 : 0.00;
+    $total_amount = $subtotal + $shipping_fee;
+}
+
+elseif ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
+    // Bouncer
+    if ($identity['type'] === 'stranger' || empty($_SESSION['selected_items'])) {
+        header("Location: cart.php");
+        exit;
+    }
+
+    $fullName  = trim($_POST['fullName'] ?? '');
+    $nameParts = explode(' ', $fullName, 2);
+    $fname     = $nameParts[0];
+    $lname     = $nameParts[1] ?? '';
+    $email     = trim($_POST['email']    ?? '');
+    $phone     = trim($_POST['phone']    ?? '');
+    $street    = trim($_POST['address']  ?? '');
+    $city      = trim($_POST['city']     ?? '');
+    $province  = trim($_POST['province'] ?? '');
+    $zipCode   = trim($_POST['zipCode']  ?? '');
+    $country   = trim($_POST['country']  ?? '');
+
+    if (empty($fullName) || empty($email) || empty($phone) || empty($street) || empty($city)) {
+        header("Location: checkout.php?error=missing_fields");
+        exit;
+    }
+
+    $paymentMethod = $_POST['paymentMethod'] ?? 'cod';
+    $paymentTitle  = 'Cash on Delivery';
+    $paymentDetail = 'Pay when you receive';
+    $order_status  = 'Pending Payment (COD)';
+
+    // Fetch cart items
+    $stmt = $conn->prepare("
+        SELECT c.cart_id, c.product_id, c.quantity, p.product_name, p.price, pi.image_url
+        FROM cart c JOIN products p ON c.product_id = p.product_id
+        LEFT JOIN product_images pi ON pi.product_id = p.product_id AND pi.is_primary = 1
+        WHERE c.$id_column = ?
+    ");
+    $stmt->bind_param("s", $id_value);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    $purchasedItems = [];
+    $subtotal = 0;
+    while ($row = $result->fetch_assoc()) {
+        if (in_array($row['cart_id'], $_SESSION['selected_items'])) {
+            $purchasedItems[] = $row;
+            $subtotal += ($row['price'] * $row['quantity']);
+        }
+    }
+
+    $shipping_fee = ($subtotal > 0) ? 150.00 : 0.00;
+    $total_amount = $subtotal + $shipping_fee;
+
+    // ---- GCASH: Save to session and redirect to PayMongo ----
+    if ($paymentMethod === 'gcash') {
+        $token = bin2hex(random_bytes(16));
+
+        $pendingData = [
+            'fullName'       => $fullName,
+            'email'          => $email,
+            'phone'          => $phone,
+            'address'        => $street,
+            'city'           => $city,
+            'province'       => $province,
+            'zipCode'        => $zipCode,
+            'country'        => $country,
+            'paymentMethod'  => 'gcash',
+            'selected_items' => $_SESSION['selected_items'],
+        ];
+
+        file_put_contents(sys_get_temp_dir() . '/pending_' . $token . '.json', json_encode($pendingData));
+
+        $success_url = 'http://localhost/Homme-d-Or/pages/orderConfirmation.php?gcash=success&token=' . $token;
+        $cancel_url  = 'http://localhost/Homme-d-Or/pages/checkout.php?gcash=cancelled';
+
+        $checkoutUrl = createPayMongoCheckout(
+            $total_amount,
+            "Homme d'Or Order",
+            $success_url,
+            $cancel_url
+        );
+
+        if ($checkoutUrl) {
+            header("Location: $checkoutUrl");
+            exit;
+        } else {
+            header("Location: checkout.php?error=paymongo_failed");
+            exit;
+        }
+    }
+
+    // ---- COD: Set payment details ----
+    $paymentTitle  = 'Cash on Delivery';
+    $paymentDetail = 'Pay when you receive';
+
+} else {
+    // Direct access — no POST and no gcash return
     header("Location: cart.php");
     exit;
 }
 
-$id_column = ($identity['type'] === 'user_id') ? 'user_id' : 'guest_id';
-$id_value = $identity['id'];
-
-$fullName = trim($_POST['fullName'] ?? 'Guest User');
-$nameParts = explode(' ', $fullName, 2);
-$fname = $nameParts[0];
-$lname = $nameParts[1] ?? '';
-
-$email = trim($_POST['email'] ?? '');
-$phone = trim($_POST['phone'] ?? '');
-$street = trim($_POST['address'] ?? '');
-$city = trim($_POST['city'] ?? '');
-$province = trim($_POST['province'] ?? '');
-$zipCode = trim($_POST['zipCode'] ?? '');
-$country = trim($_POST['country'] ?? '');
-
-if (
-    empty($fullName) ||
-    empty($email) ||
-    empty($phone) ||
-    empty($street) ||
-    empty($city)
-) {
-    header("Location: checkout.php?error=missing_fields");
-    exit;
-}
-
-$paymentMethod = $_POST['paymentMethod'] ?? 'cod';
-$paymentTitle = 'Cash on Delivery';
-$paymentDetail = 'Pay when you receive';
-
-if ($paymentMethod === 'gcash') {
-    $paymentTitle = 'GCash';
-    $paymentDetail = 'Number: ' . htmlspecialchars($_POST['gcashNumber'] ?? '');
-} elseif ($paymentMethod === 'card') {
-    $paymentTitle = 'Credit/Debit Card';
-    $cardNum = str_replace(' ', '', $_POST['cardNumber'] ?? '');
-    $last4 = substr($cardNum, -4);
-    $paymentDetail = 'Ending in **** ' . ($last4 ? $last4 : 'XXXX');
-}
-
-$stmt = $conn->prepare("
-    SELECT c.cart_id, c.product_id, c.quantity, p.product_name, p.price, pi.image_url
-    FROM cart c JOIN products p ON c.product_id = p.product_id
-    LEFT JOIN product_images pi ON pi.product_id = p.product_id AND pi.is_primary = 1
-    WHERE c.$id_column = ?
-");
-$stmt->bind_param("s", $id_value);
-$stmt->execute();
-$result = $stmt->get_result();
-
-$purchasedItems = [];
-$subtotal = 0;
-while ($row = $result->fetch_assoc()) {
-    if (in_array($row['cart_id'], $_SESSION['selected_items'])) {
-        $purchasedItems[] = $row;
-        $subtotal += ($row['price'] * $row['quantity']);
-    }
-}
-
-$shipping_fee = ($subtotal > 0) ? 150.00 : 0.00;
-$total_amount = $subtotal + $shipping_fee;
-$order_status = 'Pending';
-
-if ($paymentMethod === 'cod') {
-    $order_status = 'Pending Payment (COD)';
-}
-
-$db_user_id = ($identity['type'] === 'user_id') ? $id_value : null;
+$db_user_id  = ($identity['type'] === 'user_id')  ? $id_value : null;
 $db_guest_id = ($identity['type'] === 'guest_id') ? $id_value : null;
 
 $insertOrder = $conn->prepare("
     INSERT INTO orders (
         user_id, guest_id, fname, lname, email, phone,
         street, city, province, country, zip_code,
-        subtotal, shipping_fee, total_amount,
-        order_status
-    ) 
-    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        subtotal, shipping_fee, total_amount, order_status
+    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
 ");
-$insertOrder->bind_param("ssssssssssdddss", 
-    $db_user_id, $db_guest_id, $fname, $lname, $email, $phone, 
-    $street, $city, $province, $country, $zipCode, 
-    $subtotal, $shipping_fee, $total_amount,
-    $order_status
+$insertOrder->bind_param("ssssssssssdddss",
+    $db_user_id, $db_guest_id, $fname, $lname, $email, $phone,
+    $street, $city, $province, $country, $zipCode,
+    $subtotal, $shipping_fee, $total_amount, $order_status
 );
 if (!$insertOrder->execute()) {
     die("Order failed.");
 }
-$order_id = $conn->insert_id;
+$order_id       = $conn->insert_id;
 $orderFormatted = str_pad($order_id, 6, '0', STR_PAD_LEFT);
 
-$db_method = 'cod'; // default
-if ($paymentMethod === 'gcash') {
-    $db_method = 'gcash';
-} elseif ($paymentMethod === 'card') {
-    $db_method = 'credit_debit_card';
-}
-
-// Payment status: COD stays pending, online = paid
+$db_method         = ($paymentMethod === 'gcash') ? 'gcash' : 'cod';
 $db_payment_status = ($paymentMethod === 'cod') ? 'pending' : 'paid';
-$db_paid_at = ($paymentMethod !== 'cod') ? date('Y-m-d H:i:s') : null;
+$db_paid_at        = ($paymentMethod !== 'cod') ? date('Y-m-d H:i:s') : null;
 
 $insertPayment = $conn->prepare("
     INSERT INTO payments (order_id, method, payment_status, paid_at)
     VALUES (?, ?, ?, ?)
 ");
-$insertPayment->bind_param("isss",
-    $order_id,
-    $db_method,
-    $db_payment_status,
-    $db_paid_at
-);
+$insertPayment->bind_param("isss", $order_id, $db_method, $db_payment_status, $db_paid_at);
 $insertPayment->execute();
 
 foreach ($purchasedItems as $item) {
@@ -197,42 +259,32 @@ foreach ($purchasedItems as $item) {
         INSERT INTO order_items (order_id, product_id, quantity, price_at_purchase)
         VALUES (?, ?, ?, ?)
     ");
-    $stmtItem->bind_param("iiid",
-        $order_id,
-        $item['product_id'],
-        $item['quantity'],
-        $item['price']
-    );
+    $stmtItem->bind_param("iiid", $order_id, $item['product_id'], $item['quantity'], $item['price']);
     $stmtItem->execute();
 }
+
 unset($_SESSION['selected_items']);
 
-$updateStock = $conn->prepare("
-    UPDATE products SET stock_qty = stock_qty - ? WHERE product_id = ?
-");
+if (!empty($purchasedItems)) {
+    $deletePlaceholders = implode(',', array_fill(0, count($purchasedItems), '?'));
+    $deleteCart = $conn->prepare("DELETE FROM cart WHERE cart_id IN ($deletePlaceholders)");
+    $types   = str_repeat('i', count($purchasedItems));
+    $cartIds = array_column($purchasedItems, 'cart_id');
+    $deleteCart->bind_param($types, ...$cartIds);
+    $deleteCart->execute();
+}
 
-// Delete purchased items from cart
-$deletePlaceholders = implode(',', array_fill(0, count($purchasedItems), '?'));
-$deleteCart = $conn->prepare("
-    DELETE FROM cart WHERE cart_id IN ($deletePlaceholders)
-");
-$types = str_repeat('i', count($purchasedItems));
-$cartIds = array_column($purchasedItems, 'cart_id');
-$deleteCart->bind_param($types, ...$cartIds);
-$deleteCart->execute();
-
+$updateStock = $conn->prepare("UPDATE products SET stock_qty = stock_qty - ? WHERE product_id = ?");
 foreach ($purchasedItems as $item) {
     $updateStock->bind_param("ii", $item['quantity'], $item['product_id']);
     $updateStock->execute();
 }
 
 $emailSent = sendOrderEmail($email, $fname, $orderFormatted, $purchasedItems, $total_amount, $paymentMethod);
-
 if (!$emailSent) {
     error_log("Order email failed for order ID: $order_id");
 }
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -255,6 +307,7 @@ if (!$emailSent) {
                 <p class="email-notice">We've sent a confirmation email to <?= htmlspecialchars($email) ?>.</p>
             </div>
             <div class="confirm-container">
+
                 <!-- LEFT: Delivery & Payment Details -->
                 <div class="confirm-details">
 
@@ -342,9 +395,9 @@ if (!$emailSent) {
                 <div class="confirm-receipt">
                     <h3>Order Summary</h3>
                     <div class="receipt-items">
-                        <?php foreach($purchasedItems as $item): 
-                            $imgSrc = $item['image_url'] 
-                                ? '../assets/images/products/' . htmlspecialchars($item['image_url']) 
+                        <?php foreach ($purchasedItems as $item):
+                            $imgSrc = $item['image_url']
+                                ? '../assets/images/products/' . htmlspecialchars($item['image_url'])
                                 : '../assets/images/brand_images/nocturne.png';
                         ?>
                         <div class="receipt-item">
@@ -369,11 +422,11 @@ if (!$emailSent) {
                 </div>
 
             </div>
+        </div>
     </main>
     <?php include '../components/footer.php'; ?>
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-            // Force close all modals on confirmation page
             document.querySelectorAll('.modal').forEach(function(modal) {
                 modal.style.display = 'none';
                 modal.classList.remove('show', 'closing');
@@ -382,7 +435,6 @@ if (!$emailSent) {
     </script>
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-            // Reset body overflow in case modal JS locked it
             document.body.style.overflow = 'auto';
             document.body.style.overflowX = 'hidden';
         });

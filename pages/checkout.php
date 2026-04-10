@@ -127,7 +127,7 @@ if ($identity['type'] === 'stranger') {
                                     </div>
 
                                     <div class="paymentOption">
-                                        <input type="radio" name="paymentMethod" disabled id="pay-gcash" value="gcash">
+                                        <input type="radio" name="paymentMethod" id="pay-gcash" value="gcash">
                                         <label for="pay-gcash" class="paymentCard">
                                             <div class="paymentInfo">
                                                 <span class="paymentName">GCash</span>
@@ -136,14 +136,14 @@ if ($identity['type'] === 'stranger') {
                                         </label>
                                         
                                         <div class="paymentDetails">
-                                            <div class="formGroup" style="margin-bottom: 0;">
-                                                <label>GCash Mobile Number <span class="required">*</span></label>
-                                                <input type="tel" name="gcashNumber" placeholder="ex. 0912 345 6789">
-                                            </div>
+                                            <p style="font-size: 13px; color: #aaa; margin: 0;">
+                                                <i class="fas fa-info-circle"></i>
+                                                You'll be redirected to GCash to complete your payment securely.
+                                            </p>
                                         </div>
                                     </div>
 
-                                    <div class="paymentOption">
+                                    <!-- <div class="paymentOption">
                                         <input type="radio" name="paymentMethod" disabled id="pay-card" value="card">
                                         <label for="pay-card" class="paymentCard">
                                             <div class="paymentInfo">
@@ -172,7 +172,7 @@ if ($identity['type'] === 'stranger') {
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
+                                    </div> -->
                                     
                                 </div>
                             </div>
