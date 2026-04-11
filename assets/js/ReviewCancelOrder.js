@@ -73,7 +73,7 @@ function submitReview(event) {
     formData.append('rating', currentRating);
     formData.append('comment', reviewText);
 
-    fetch('../backend/products/submit_review.php', {
+    fetch('/Homme-d-Or/backend/products/submit_review.php', {
         method: 'POST',
         body: formData
     })
@@ -122,22 +122,30 @@ function submitCancellation(event) {
         ? otherReason
         : selectedReason;
 
-    fetch('../backend/cancelOrder.php', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body: `order_id=${orderId}&reason=${encodeURIComponent(finalReason)}`
-    })
-    .then(res => res.json())
-    .then(data => {
-        if (data.success) {
-            showGeneralToast('Order Cancelled Successfully!', 'success');
-            closeCancelModal();
-            setTimeout(() => location.reload(), 1500);
-        } else {
-            showGeneralToast(data.message || 'Cancellation failed.', 'error');
-        }
-    })
-    .catch(() => showGeneralToast('Something went wrong.', 'error'));
+    fetch('/Homme-d-Or/backend/cancelOrder.php', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+    body: `order_id=${orderId}&reason=${encodeURIComponent(finalReason)}`
+})
+.then(res => {
+    console.log('Status:', res.status);
+    return res.text();
+})
+.then(text => {
+    console.log('Raw response:', text);
+    const data = JSON.parse(text);
+    if (data.success) {
+        showGeneralToast('Order Cancelled Successfully!', 'success');
+        closeCancelModal();
+        setTimeout(() => location.reload(), 1500);
+    } else {
+        showGeneralToast(data.message || 'Cancellation failed.', 'error');
+    }
+})
+.catch(err => {
+    console.error('Cancel error:', err);
+    showGeneralToast('Something went wrong.', 'error');
+});
 }
 
 function openViewModal(img, name, variant, qty, total, payment, date, status) {
