@@ -156,7 +156,7 @@ if (isset($_GET['gcash']) && $_GET['gcash'] === 'success' && isset($_GET['token'
             LEFT JOIN product_images pi ON pi.product_id = p.product_id AND pi.is_primary = 1
             WHERE c.$id_column = ?
         ");
-        $stmt->bind_param("s", $id_value);
+        $stmt->bind_param("i", $id_value);
         $stmt->execute();
         $result = $stmt->get_result();
 
@@ -211,7 +211,7 @@ if (isset($_GET['gcash']) && $_GET['gcash'] === 'success' && isset($_GET['token'
         LEFT JOIN product_images pi ON pi.product_id = p.product_id AND pi.is_primary = 1
         WHERE c.$id_column = ?
     ");
-    $stmt->bind_param("s", $id_value);
+    $stmt->bind_param("i", $id_value);
     $stmt->execute();
     $result = $stmt->get_result();
 
@@ -284,7 +284,7 @@ if (isset($_GET['gcash']) && $_GET['gcash'] === 'success' && isset($_GET['token'
 if (!$skipDbInserts) {
 
     $db_user_id = ($identity['type'] === 'user_id') ? $id_value : null;
-    $db_guest_id = ($identity['type'] === 'guest_id') ? $id_value : null;
+    $db_guest_id = ($identity['type'] === 'guest') ? $id_value : null;
 
     $insertOrder = $conn->prepare("
         INSERT INTO orders (
@@ -293,7 +293,7 @@ if (!$skipDbInserts) {
             subtotal, shipping_fee, total_amount, order_status
         ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
     ");
-    $insertOrder->bind_param("ssssssssssdddss",
+    $insertOrder->bind_param("iissssssssdddss",
         $db_user_id, $db_guest_id, $fname, $lname, $email, $phone,
         $street, $city, $province, $country, $zipCode,
         $subtotal, $shipping_fee, $total_amount, $order_status
