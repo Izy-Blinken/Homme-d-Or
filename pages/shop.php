@@ -35,12 +35,12 @@ define('SHOP_PREVIEW_LIMIT', 6);
         <link rel="stylesheet" href="../assets/css/CartPageStyle.css">
         <link rel="stylesheet" href="../assets/css/RegLoginModalStyle.css">
         <link rel="stylesheet" href="../assets/css/ProfilePageStyle.css">
-        <link rel="stylesheet" href="../assets/css/HomepageStyle.css">
-       
+         <link rel="stylesheet" href="../assets/css/HomepageStyle.css">
+
     </head>
     <body>
     <?php include '../components/header.php'; ?>
-    <button class="back-btn" onclick="history.back()" title="Go back" style="position: absolute; top: 100px; left: 20px; z-index: 100;"><i class="fas fa-arrow-left"></i> Back</button>
+    <button class="back-btn" onclick="history.back()" title="Go back" style="position: absolute; top: 150px; left: 20px; z-index: 100;"><i class="fas fa-arrow-left"></i> Back</button>
 
     <section class="shop-welcome-section">
         <div class="shop-welcome-overlay"></div>

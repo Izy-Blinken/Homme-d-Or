@@ -168,11 +168,13 @@ if (empty($allImages)) {
 
                         <div class="product-actions">
                             <!-- Buy Now -->
-                            <a href="checkout.php?product_id=<?php echo $product_id; ?>">
-                                <button class="buynow">
+                            <form method="POST" action="../backend/buy_now.php">
+                                <input type="hidden" name="product_id" value="<?php echo $product_id; ?>">
+                                <input type="hidden" name="quantity" value="1">
+                                <button type="submit" class="buynow">
                                     <i class="fa-solid fa-bolt"></i> Buy Now
                                 </button>
-                            </a>
+                            </form>
                             
                             <!-- Add to Cart -->
                             <button class="addtocart" onclick="addToCart(<?php echo $product_id; ?>)">

@@ -14,7 +14,24 @@ if ($identity['type'] === 'stranger') {
 }
 
 $id_column = ($identity['type'] === 'user_id') ? 'user_id' : 'guest_id';
-$id_value = $identity['id'];
+$id_value  = $identity['id'];
+$bind_type = 's';
+
+// Guests: resolve session string → real integer guest_id
+if ($id_column === 'guest_id') {
+    $g = $conn->prepare("SELECT guest_id FROM guests WHERE session_id = ?");
+    $g->bind_param("s", $id_value);
+    $g->execute();
+    $g_result = $g->get_result();
+    $g->close();
+    if ($g_result->num_rows === 0) {
+        $id_value  = 0;
+        $bind_type = 'i';
+    } else {
+        $id_value  = $g_result->fetch_assoc()['guest_id'];
+        $bind_type = 'i';
+    }
+}
 
 // Initialize selection session if it doesn't exist
 if (!isset($_SESSION['selected_items'])) {
@@ -27,17 +44,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if (isset($_POST['increase'])) {
         $stmt = $conn->prepare("UPDATE cart SET quantity = quantity + 1 WHERE cart_id = ? AND $id_column = ?");
-        $stmt->bind_param("is", $cart_id, $id_value);
+        $stmt->bind_param("i{$bind_type}", $cart_id, $id_value);
         $stmt->execute();
     }
     if (isset($_POST['decrease'])) {
         $stmt = $conn->prepare("UPDATE cart SET quantity = GREATEST(quantity - 1, 1) WHERE cart_id = ? AND $id_column = ?");
-        $stmt->bind_param("is", $cart_id, $id_value);
+        $stmt->bind_param("i{$bind_type}", $cart_id, $id_value);
         $stmt->execute();
     }
     if (isset($_POST['remove'])) {
         $stmt = $conn->prepare("DELETE FROM cart WHERE cart_id = ? AND $id_column = ?");
-        $stmt->bind_param("is", $cart_id, $id_value);
+        $stmt->bind_param("i{$bind_type}", $cart_id, $id_value);
         $stmt->execute();
         if (($key = array_search($cart_id, $_SESSION['selected_items'])) !== false) {
             unset($_SESSION['selected_items'][$key]);
@@ -63,7 +80,7 @@ $sql = "SELECT c.cart_id, c.quantity, p.product_name, p.price, pi.image_url
         WHERE c.$id_column = ?";
 
 $stmt = $conn->prepare($sql);
-$stmt->bind_param("s", $id_value);
+$stmt->bind_param($bind_type, $id_value);
 $stmt->execute();
 $result = $stmt->get_result();
 

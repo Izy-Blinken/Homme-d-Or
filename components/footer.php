@@ -1,4 +1,4 @@
-        <div id="signupModal" class="modal">
+<div id="signupModal" class="modal">
             <div class="modal-content">
                 <span class="close">&times;</span>
                 <div class="signupTitle">
@@ -73,7 +73,7 @@
 
                     <div class="inputGroupCheckbox">
                         <input type="checkbox" id="terms" name="terms" required>
-                        <label for="terms">I have read and agreed on <a href="terms.php" target="_blank">Terms and Conditions</a></label>
+                        <label for="terms">I have read and agreed on <a href="#" onclick="event.preventDefault(); openTermsModal();">Terms and Conditions</a></label>
                     </div>
 
                     <div class="captchaContainer">
@@ -344,20 +344,14 @@
             </div>
 
             <div class="footer-bottom-section">
-                <div class="footer-bottom-container">
+                <div class="footer-bottom-container" style="justify-content: center; gap: 2rem;">
                     <p class="copyright">&copy; 2026 Homme d'Or. All rights reserved.</p>
                     <div class="footer-logo">
                         <a href="index.php">
                             <img src="../assets/images/brand_images/prodLogo.png" alt="Logo">
                         </a>
                     </div>
-                    <div class="language-selector">
-                        <i class="fas fa-globe"></i>
-                        <select id="languageSelect">
-                            <option value="en">ENG</option>
-                            <option value="fil">FIL</option>
-                        </select>
-                    </div>
+
                 </div>
             </div>
 
@@ -381,6 +375,126 @@
             });
         </script>
         </footer>
+
+        <!-- TERMS AND CONDITIONS MODAL -->
+        <div id="termsModal" class="modal">
+            <div class="modal-content" style="max-width:700px;">
+                <span class="close" id="termsModalClose">&times;</span>
+                <div class="signupTitle">
+                    <h2><b>TERMS AND CONDITIONS</b></h2>
+                </div>
+                <div class="terms-body">
+                    <p class="terms-effective">Effective Date: January 1, 2026</p>
+                    <p>Welcome to <strong>Homme d'Or</strong>. By accessing or using our website and services, you agree to be bound by the following Terms and Conditions. Please read them carefully.</p>
+
+                    <h4>1. Acceptance of Terms</h4>
+                    <p>By creating an account or placing an order on our platform, you confirm that you have read, understood, and agreed to these Terms and Conditions. If you do not agree, please discontinue use of our services.</p>
+
+                    <h4>2. Account Registration</h4>
+                    <p>You must provide accurate and complete information when registering. You are responsible for maintaining the confidentiality of your account credentials. Homme d'Or reserves the right to suspend or terminate accounts found to be in violation of these terms.</p>
+
+                    <h4>3. Orders and Payments</h4>
+                    <p>All orders are subject to availability and confirmation. Prices are listed in Philippine Peso (₱) and may change without prior notice. We reserve the right to cancel any order due to pricing errors or stock unavailability.</p>
+
+                    <h4>4. Shipping and Delivery</h4>
+                    <p>Delivery times are estimates and not guaranteed. Homme d'Or is not liable for delays caused by third-party couriers or circumstances beyond our control. Risk of loss transfers to the buyer upon delivery.</p>
+
+                    <h4>5. Returns and Refunds</h4>
+                    <p>Due to the nature of our products, returns are only accepted for items that are damaged or defective upon arrival. Requests must be made within 7 days of receipt with valid proof. Refunds, if approved, will be processed within 5–10 business days.</p>
+
+                    <h4>6. Intellectual Property</h4>
+                    <p>All content on this site — including logos, images, and text — is the exclusive property of Homme d'Or. Unauthorized reproduction or distribution is strictly prohibited.</p>
+
+                    <h4>7. Privacy</h4>
+                    <p>Your personal information is collected and used in accordance with our Privacy Policy. We do not sell or share your data with third parties without your consent.</p>
+
+                    <h4>8. Limitation of Liability</h4>
+                    <p>Homme d'Or shall not be held liable for any indirect, incidental, or consequential damages arising from the use of our products or services beyond the amount paid for the transaction in question.</p>
+
+                    <h4>9. Changes to Terms</h4>
+                    <p>We reserve the right to update these Terms at any time. Continued use of our services after changes are posted constitutes your acceptance of the revised Terms.</p>
+
+                    <h4>10. Contact Us</h4>
+                    <p>For questions regarding these Terms, please reach out to us at <strong>info@hommedor.com</strong> or visit us at BulSU - Hagonoy Campus.</p>
+                </div>
+                <div class="regBtn" style="margin-top:30px;">
+                    <button type="button" id="termsModalCloseBtn">CLOSE</button>
+                </div>
+            </div>
+        </div>
+
+        <style>
+            .terms-body {
+                color: white;
+                font-family: 'Spartan', sans-serif;
+                font-size: 13px;
+                line-height: 1.9;
+            }
+            .terms-body h4 {
+                color: #c9a961;
+                font-size: 11px;
+                font-weight: 600;
+                letter-spacing: 1.5px;
+                font-family: 'Spartan', sans-serif;
+                margin: 1.4rem 0 0.4rem 0;
+                border-left: 3px solid goldenrod;
+                padding-left: 10px;
+                text-transform: uppercase;
+            }
+            .terms-body p {
+                margin: 0 0 0.5rem 0;
+                color: #ccc;
+                font-size: 12px;
+                font-family: 'Spartan', sans-serif;
+                line-height: 1.9;
+            }
+            .terms-body strong {
+                color: #c9a961;
+                font-family: 'Spartan', sans-serif;
+            }
+            .terms-effective {
+                color: #c9a961 !important;
+                font-weight: 600;
+                font-size: 11px !important;
+                letter-spacing: 1.5px;
+                margin-bottom: 1rem !important;
+                font-family: 'Spartan', sans-serif;
+            }
+        </style>
+
+        <script>
+            (function () {
+                const modal     = document.getElementById('termsModal');
+                const closeX    = document.getElementById('termsModalClose');
+                const closeBtn  = document.getElementById('termsModalCloseBtn');
+
+                function openTerms() {
+                    modal.style.display = 'block';
+                    setTimeout(() => modal.classList.add('show'), 10);
+                }
+
+                function closeTerms() {
+                    modal.classList.add('closing');
+                    modal.classList.remove('show');
+                    setTimeout(() => {
+                        modal.style.display = 'none';
+                        modal.classList.remove('closing');
+                    }, 400);
+                }
+
+                document.querySelectorAll('a[data-open-terms]').forEach(function(el) {
+                    el.addEventListener('click', function(e) { e.preventDefault(); openTerms(); });
+                });
+
+                closeX.addEventListener('click', closeTerms);
+                closeBtn.addEventListener('click', closeTerms);
+                modal.addEventListener('click', function(e) {
+                    if (e.target === modal) closeTerms();
+                });
+
+                window.openTermsModal = openTerms;
+            })();
+        </script>
 
         <!-- CSS Inclusions -->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">

@@ -198,7 +198,21 @@ if ($identity['type'] === 'stranger') {
 
                         <?php
                         $id_column = ($identity['type'] === 'user_id') ? 'user_id' : 'guest_id';
-                        $id_value = $identity['id'];
+                        $id_value  = $identity['id'];
+                        $bind_type = 's';
+
+                        // Guests: resolve session string → real integer guest_id
+                        if ($id_column === 'guest_id') {
+                            $g = $conn->prepare("SELECT guest_id FROM guests WHERE session_id = ?");
+                            $g->bind_param("s", $id_value);
+                            $g->execute();
+                            $g_result = $g->get_result();
+                            $g->close();
+                            if ($g_result->num_rows > 0) {
+                                $id_value  = $g_result->fetch_assoc()['guest_id'];
+                                $bind_type = 'i';
+                            }
+                        }
 
                         $cartStmt = $conn->prepare("
                             SELECT c.cart_id, c.product_id, c.quantity, p.product_name, p.price, pi.image_url 
@@ -207,7 +221,7 @@ if ($identity['type'] === 'stranger') {
                             LEFT JOIN product_images pi ON pi.product_id = p.product_id AND pi.is_primary = 1
                             WHERE c.$id_column = ?
                         ");
-                        $cartStmt->bind_param("s", $id_value);
+                        $cartStmt->bind_param($bind_type, $id_value);
                         $cartStmt->execute();
                         $cartResult = $cartStmt->get_result();
 
