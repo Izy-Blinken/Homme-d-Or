@@ -585,7 +585,6 @@ if ($reviews_result) {
     </section>
 
     
-
     <div id="generalToast" class="generalToast"></div>
 
     <script src="../assets/js/script.js"></script>
@@ -641,6 +640,7 @@ if ($reviews_result) {
         });
     }
     </script>
+
 
     <?php include '../components/footer.php'; ?>
 

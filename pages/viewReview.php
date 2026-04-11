@@ -1,97 +1,391 @@
+<?php
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+include_once '../backend/db_connect.php';
+
+$product_id = isset($_GET['product_id']) ? intval($_GET['product_id']) : 0;
+
+if (!$product_id) {
+    header("Location: index.php");
+    exit;
+}
+
+// Fetch product info
+$stmt = $conn->prepare("
+    SELECT p.product_id, p.product_name, p.product_desc,
+           pi.image_url
+    FROM products p
+    LEFT JOIN product_images pi ON pi.product_id = p.product_id AND pi.is_primary = 1
+    WHERE p.product_id = ?
+");
+$stmt->bind_param("i", $product_id);
+$stmt->execute();
+$product = $stmt->get_result()->fetch_assoc();
+$stmt->close();
+
+if (!$product) {
+    header("Location: index.php");
+    exit;
+}
+
+$identity = getCurrentUserId();
+$is_logged_in = ($identity['type'] === 'user_id');
+$user_id = $is_logged_in ? intval($identity['id']) : 0;
+
+// Check if user already has a review for this product
+$existing_review = null;
+if ($is_logged_in) {
+    $chk = $conn->prepare("SELECT rating, comment FROM product_reviews WHERE user_id = ? AND product_id = ?");
+    $chk->bind_param("ii", $user_id, $product_id);
+    $chk->execute();
+    $existing_review = $chk->get_result()->fetch_assoc();
+    $chk->close();
+}
+
+$product_image = $product['image_url']
+    ? '../assets/images/products/' . htmlspecialchars($product['image_url'])
+    : '../assets/images/brand_images/nocturne.png';
+?>
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Customer Reviews - Homme d'Or</title>
-        
-        <link rel="stylesheet" href="../assets/icons/fontawesome/css/all.min.css">
-        <link rel="stylesheet" href="../assets/css/style.css">
-        <link rel="stylesheet" href="../assets/css/HeaderHeroFooterStyle.css">
-        <link rel="stylesheet" href="../assets/css/CheckoutPageStyle.css">
-        <link rel="stylesheet" href="../assets/css/OrderAgainStyle.css">
-        <link rel="stylesheet" href="../assets/css/BlogPageStyle.css">
-        <link rel="stylesheet" href="../assets/css/AboutUsPageStyle.css">
-        <link rel="stylesheet" href="../assets/css/ProductDetailsStyle.css">
-        <link rel="stylesheet" href="../assets/css/CartPageStyle.css">
-        <link rel="stylesheet" href="../assets/css/RegLoginModalStyle.css">
-        <link rel="stylesheet" href="../assets/css/ProfilePageStyle.css">
-        <link rel="stylesheet" href="../assets/css/HomepageStyle.css">
-        <link rel="stylesheet" href="../assets/css/ViewReviewStyle.css">
-    </head>
-    <body>
-        <?php include '../components/header.php'; ?>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reviews - <?= htmlspecialchars($product['product_name']) ?> | Homme d'Or</title>
+    <link rel="stylesheet" href="../assets/icons/fontawesome/css/all.min.css">
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="../assets/css/HeaderHeroFooterStyle.css">
+    <link rel="stylesheet" href="../assets/css/ReviewCancelOrderStyle.css">
+    <link rel="stylesheet" href="../assets/css/RegLoginModalStyle.css">
+</head>
+<body>
+    <?php include '../components/header.php'; ?>
 
-        <main class="mainBG">
-            <a href="javascript:history.back()" class="back-button">
-                <i class="fa-solid fa-chevron-left"></i>
-            </a>
+    <main class="mainBG">
+        <a href="javascript:history.back()" class="vr-back-btn">
+            <i class="fa-solid fa-chevron-left"></i> Back
+        </a>
 
-            <section id="all-reviews-section">
-                <div class="all-reviews-container">
-                    
-                    <div class="reviews-sidebar">
-                        <img src="../assets/images/products_images/nocturne.png" alt="Nocturne Perfume" class="sidebar-img">
-                        <h2>Nocturne</h2>
-                        <div class="sidebar-rating">
-                            <span class="score">4.8</span>
-                            <div class="stars">
-                                <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star-half-stroke"></i>
+        <section class="vr-section">
+            <div class="vr-wrapper">
+
+                <!-- Sidebar -->
+                <aside class="vr-sidebar">
+                    <img src="<?= $product_image ?>" alt="<?= htmlspecialchars($product['product_name']) ?>" class="vr-sidebar-img">
+                    <h2 class="vr-product-name"><?= htmlspecialchars($product['product_name']) ?></h2>
+                    <div class="vr-score-wrap">
+                        <span class="vr-avg-score" id="vrAvgScore">—</span>
+                        <div class="vr-stars" id="vrStarDisplay"></div>
+                    </div>
+                    <p class="vr-review-count" id="vrReviewCount">Loading reviews...</p>
+
+                    <div class="vr-breakdown" id="vrBreakdown">
+                        <?php for ($i = 5; $i >= 1; $i--): ?>
+                        <div class="vr-bar-row">
+                            <span class="vr-bar-label"><?= $i ?> <i class="fa-solid fa-star"></i></span>
+                            <div class="vr-bar-track">
+                                <div class="vr-bar-fill" id="vrBar<?= $i ?>" style="width:0%"></div>
                             </div>
+                            <span class="vr-bar-count" id="vrBarCount<?= $i ?>">0</span>
                         </div>
-                        <p class="review-count">Based on 24 reviews</p>
+                        <?php endfor; ?>
                     </div>
 
-                    <div class="reviews-feed">
-                        <div class="feed-header">
-                            <h3>What our clients are saying</h3>
-                            <select class="review-filter">
-                                <option value="newest">Newest First</option>
-                                <option value="highest">Highest Rated</option>
-                                <option value="lowest">Lowest Rated</option>
-                            </select>
-                        </div>
+                    <?php if ($is_logged_in): ?>
+                    <button class="vr-write-btn" id="openReviewModal">
+                        <i class="fa-solid fa-pen"></i>
+                        <?= $existing_review ? 'Edit Your Review' : 'Write a Review' ?>
+                    </button>
+                    <?php else: ?>
+                    <p class="vr-login-prompt">
+                        <a href="#" id="triggerLogin">Log in</a> to leave a review.
+                    </p>
+                    <?php endif; ?>
+                </aside>
 
-                        <div class="full-review-card">
-                            <div class="card-header">
-                                <div class="user-info">
-                                    <div class="avatar">W</div>
-                                    <div class="name-date">
-                                        <h4>Wally B. <i class="fa-solid fa-circle-check verified-badge" title="Verified Buyer"></i></h4>
-                                        <span>October 12, 2025</span>
-                                    </div>
-                                </div>
-                                <div class="card-stars">
-                                    <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
-                                </div>
-                            </div>
-                            <h5 class="review-title">A true masterpiece.</h5>
-                            <p class="review-body">Long lasting smell. Worth the price. I wore this to a gala and received compliments all night. The amber base notes really linger on the skin well into the next morning.</p>
-                        </div>
+                <!-- Feed -->
+                <div class="vr-feed">
+                    <div class="vr-feed-header">
+                        <h3>What our clients are saying</h3>
+                        <select class="vr-filter" id="vrFilter">
+                            <option value="newest">Newest First</option>
+                            <option value="highest">Highest Rated</option>
+                            <option value="lowest">Lowest Rated</option>
+                        </select>
+                    </div>
 
-                        <div class="full-review-card">
-                            <div class="card-header">
-                                <div class="user-info">
-                                    <div class="avatar">B</div>
-                                    <div class="name-date">
-                                        <h4>Bayola W. <i class="fa-solid fa-circle-check verified-badge" title="Verified Buyer"></i></h4>
-                                        <span>September 28, 2025</span>
-                                    </div>
-                                </div>
-                                <div class="card-stars">
-                                    <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-regular fa-star"></i>
-                                </div>
-                            </div>
-                            <h5 class="review-title">Great everyday scent.</h5>
-                            <p class="review-body">Yiz galing. Highly recommended for evening wear, though it might be a bit strong for the office. Packaging feels incredibly premium.</p>
+                    <div id="vrReviewList" class="vr-review-list">
+                        <div class="vr-loading">
+                            <i class="fa-solid fa-spinner fa-spin"></i> Loading reviews...
                         </div>
-                        
-                        </div>
+                    </div>
                 </div>
-            </section>
-        </main>
 
-        <?php include '../components/footer.php'; ?>
-    </body>
+            </div>
+        </section>
+    </main>
+
+    <!-- Review Modal -->
+    <div class="romcomOverlay" id="reviewModal" role="dialog" aria-modal="true">
+        <div class="romcomModalContent">
+            <div class="romcomHeader">
+                <h2><?= $existing_review ? 'Edit Review' : 'Write a Review' ?></h2>
+            </div>
+            <div class="romcomDivider"></div>
+            <div class="romcomBody">
+                <p class="modal-description">
+                    Reviewing: <strong><?= htmlspecialchars($product['product_name']) ?></strong>
+                </p>
+
+                <div class="romcomFormGroup">
+                    <label>Your Rating</label>
+                    <div class="star-rating" id="starRating">
+                        <?php for ($i = 1; $i <= 5; $i++): ?>
+                        <span class="star <?= ($existing_review && $existing_review['rating'] >= $i) ? 'active' : '' ?>"
+                              data-value="<?= $i ?>">
+                            <i class="fa-solid fa-star"></i>
+                        </span>
+                        <?php endfor; ?>
+                    </div>
+                    <p class="rating-Text" id="ratingText">
+                        <?php
+                        $labels = ['', 'Poor', 'Fair', 'Good', 'Very Good', 'Excellent'];
+                        echo $existing_review ? $labels[$existing_review['rating']] : 'Select a rating';
+                        ?>
+                    </p>
+                    <input type="hidden" id="selectedRating" value="<?= $existing_review ? $existing_review['rating'] : 0 ?>">
+                </div>
+
+                <div class="romcomFormGroup">
+                    <label>Your Review <span style="font-weight:400; color:#94a3b8;">(optional)</span></label>
+                    <textarea id="reviewComment" placeholder="Share your experience with this product..."><?= $existing_review ? htmlspecialchars($existing_review['comment']) : '' ?></textarea>
+                </div>
+
+                <div class="romcomButtonGroup">
+                    <button class="romcomBtnClose" id="closeReviewModal">Cancel</button>
+                    <button class="romcomBtnSubmit" id="submitReviewBtn"
+                        <?= (!$existing_review) ? 'disabled' : '' ?>>
+                        <?= $existing_review ? 'Update Review' : 'Submit Review' ?>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <?php include '../components/footer.php'; ?>
+
+    <script>
+    const PRODUCT_ID = <?= $product_id ?>;
+    const RATING_LABELS = ['', 'Poor', 'Fair', 'Good', 'Very Good', 'Excellent'];
+    let allReviews = [];
+
+    //  Fetch & render reviews 
+    function fetchReviews() {
+        fetch(`../backend/products/get_reviews.php?product_id=${PRODUCT_ID}`)
+            .then(r => r.json())
+            .then(data => {
+                if (!data.success) return;
+                allReviews = data.reviews;
+                renderStats(data.stats);
+                renderReviews(allReviews);
+            })
+            .catch(() => {
+                document.getElementById('vrReviewList').innerHTML =
+                    '<p class="vr-empty">Failed to load reviews.</p>';
+            });
+    }
+
+    function renderStats(stats) {
+        document.getElementById('vrAvgScore').textContent = stats.total > 0 ? stats.average : '—';
+        document.getElementById('vrReviewCount').textContent =
+            stats.total > 0 ? `Based on ${stats.total} review${stats.total !== 1 ? 's' : ''}` : 'No reviews yet';
+
+        renderStars('vrStarDisplay', stats.average);
+
+        for (let i = 1; i <= 5; i++) {
+            const count = stats.breakdown[i] || 0;
+            const pct = stats.total > 0 ? Math.round((count / stats.total) * 100) : 0;
+            document.getElementById(`vrBar${i}`).style.width = pct + '%';
+            document.getElementById(`vrBarCount${i}`).textContent = count;
+        }
+    }
+
+    function renderStars(containerId, rating) {
+        const el = document.getElementById(containerId);
+        if (!el) return;
+        let html = '';
+        for (let i = 1; i <= 5; i++) {
+            if (rating >= i) {
+                html += '<i class="fa-solid fa-star"></i>';
+            } else if (rating >= i - 0.5) {
+                html += '<i class="fa-solid fa-star-half-stroke"></i>';
+            } else {
+                html += '<i class="fa-regular fa-star"></i>';
+            }
+        }
+        el.innerHTML = html;
+    }
+
+    function renderReviews(reviews) {
+        const list = document.getElementById('vrReviewList');
+        if (!reviews.length) {
+            list.innerHTML = '<p class="vr-empty">No reviews yet. Be the first to review this product!</p>';
+            return;
+        }
+
+        list.innerHTML = reviews.map(r => {
+            const initials = (r.fname[0] || '') + (r.lname ? r.lname[0] : '');
+            const date = new Date(r.created_at).toLocaleDateString('en-US', {
+                year: 'numeric', month: 'long', day: 'numeric'
+            });
+            let starsHtml = '';
+            for (let i = 1; i <= 5; i++) {
+                starsHtml += `<i class="fa-${i <= r.rating ? 'solid' : 'regular'} fa-star"></i>`;
+            }
+            return `
+                <div class="vr-card">
+                    <div class="vr-card-header">
+                        <div class="vr-user-info">
+                            <div class="vr-avatar">${initials.toUpperCase()}</div>
+                            <div class="vr-name-date">
+                                <h4>${escHtml(r.fname)} ${escHtml(r.lname)}
+                                    <i class="fa-solid fa-circle-check vr-verified" title="Verified Buyer"></i>
+                                </h4>
+                                <span>${date}</span>
+                            </div>
+                        </div>
+                        <div class="vr-card-stars">${starsHtml}</div>
+                    </div>
+                    ${r.comment ? `<p class="vr-card-body">${escHtml(r.comment)}</p>` : ''}
+                </div>
+            `;
+        }).join('');
+    }
+
+    function escHtml(str) {
+        return String(str)
+            .replace(/&/g, '&amp;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;')
+            .replace(/"/g, '&quot;');
+    }
+
+    //  Sort filter 
+    document.getElementById('vrFilter').addEventListener('change', function () {
+        let sorted = [...allReviews];
+        if (this.value === 'highest') sorted.sort((a, b) => b.rating - a.rating);
+        else if (this.value === 'lowest') sorted.sort((a, b) => a.rating - b.rating);
+        else sorted.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+        renderReviews(sorted);
+    });
+
+    //  Modal open/close 
+    const modal = document.getElementById('reviewModal');
+    const openBtn = document.getElementById('openReviewModal');
+    const closeBtn = document.getElementById('closeReviewModal');
+
+    function openModal() {
+        modal.style.display = 'flex';
+        // Force reflow then add class so animation runs
+        modal.offsetHeight;
+        modal.classList.add('show');
+        modal.classList.remove('closing');
+    }
+
+    function closeModal() {
+        modal.classList.add('closing');
+        modal.classList.remove('show');
+        modal.addEventListener('animationend', function handler() {
+            modal.style.display = 'none';
+            modal.classList.remove('closing');
+            modal.removeEventListener('animationend', handler);
+        });
+    }
+
+    if (openBtn) openBtn.addEventListener('click', openModal);
+    if (closeBtn) closeBtn.addEventListener('click', closeModal);
+
+    // Close on overlay click (not on modal content)
+    modal.addEventListener('click', function (e) {
+        if (e.target === modal) closeModal();
+    });
+
+    // Close on Escape key
+    document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape' && modal.classList.contains('show')) closeModal();
+    });
+
+    //  Star rating interaction 
+    const stars = document.querySelectorAll('#starRating .star');
+    const selectedRatingInput = document.getElementById('selectedRating');
+    const ratingText = document.getElementById('ratingText');
+    const submitBtn = document.getElementById('submitReviewBtn');
+
+    stars.forEach(star => {
+        star.addEventListener('mouseenter', function () {
+            const val = parseInt(this.dataset.value);
+            stars.forEach(s => s.classList.toggle('active', parseInt(s.dataset.value) <= val));
+        });
+
+        star.addEventListener('mouseleave', function () {
+            const current = parseInt(selectedRatingInput.value);
+            stars.forEach(s => s.classList.toggle('active', parseInt(s.dataset.value) <= current));
+        });
+
+        star.addEventListener('click', function () {
+            const val = parseInt(this.dataset.value);
+            selectedRatingInput.value = val;
+            ratingText.textContent = RATING_LABELS[val];
+            stars.forEach(s => s.classList.toggle('active', parseInt(s.dataset.value) <= val));
+            submitBtn.disabled = false;
+        });
+    });
+
+    // Submit review
+    submitBtn && submitBtn.addEventListener('click', function () {
+        const rating = parseInt(selectedRatingInput.value);
+        const comment = document.getElementById('reviewComment').value.trim();
+
+        if (!rating) {
+            ratingText.textContent = 'Please select a rating.';
+            ratingText.style.color = '#e74c3c';
+            return;
+        }
+
+        submitBtn.disabled = true;
+        submitBtn.textContent = 'Submitting...';
+
+        const formData = new FormData();
+        formData.append('product_id', PRODUCT_ID);
+        formData.append('rating', rating);
+        formData.append('comment', comment);
+
+        fetch('../backend/products/submit_review.php', {
+            method: 'POST',
+            body: formData
+        })
+        .then(r => r.json())
+        .then(data => {
+            if (data.success) {
+                closeModal();
+                fetchReviews();
+                if (openBtn) openBtn.textContent = 'Edit Your Review';
+            } else {
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'Submit Review';
+                alert(data.message || 'Failed to submit review.');
+            }
+        })
+        .catch(() => {
+            submitBtn.disabled = false;
+            submitBtn.textContent = 'Submit Review';
+            alert('Network error. Please try again.');
+        });
+    });
+
+    fetchReviews();
+    </script>
+</body>
 </html>

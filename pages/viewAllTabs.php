@@ -323,22 +323,5 @@ function renderOrders($conn, $orders, $tabType) {
 
     <script src="../assets/js/viewAllTabs.js"></script>
     <script src="../assets/js/ReviewCancelOrder.js"></script>
-
-    <script>
-        // Pass order_id into cancel modal
-        function openCancelModal(orderId) {
-            document.getElementById('cancelOrderId').value = orderId;
-            const modal = document.getElementById('cancelOrderModal');
-            modal.style.display = 'flex';
-        }
-
-        // Pass order_id and product_id into review modal
-        function openReviewModal(orderId, productId) {
-            document.getElementById('reviewOrderId').value = orderId;
-            document.getElementById('reviewProductId').value = productId;
-            const modal = document.getElementById('reviewOrderModal');
-            modal.style.display = 'flex';
-        }
-    </script>
 </body>
 </html>

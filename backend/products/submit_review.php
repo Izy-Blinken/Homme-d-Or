@@ -2,53 +2,53 @@
 session_start();
 include '../db_connect.php';
 
-// Check authentication
+header('Content-Type: application/json');
+
 $identity = getCurrentUserId();
-if ($identity['type'] === 'stranger') {
-    echo json_encode(['success' => false, 'message' => 'Not logged in']);
+if ($identity['type'] !== 'user_id') {
+    echo json_encode(['success' => false, 'message' => 'You must be logged in to submit a review.']);
     exit;
 }
 
-$user_id = ($identity['type'] === 'user_id') ? $identity['id'] : null;
-
-if (!$user_id || empty($_POST['product_id']) || empty($_POST['rating'])) {
-    echo json_encode(['success' => false, 'message' => 'Missing required fields']);
-    exit;
-}
-
-$product_id = intval($_POST['product_id']);
-$rating = intval($_POST['rating']);
+$user_id = intval($identity['id']);
+$product_id = intval($_POST['product_id'] ?? 0);
+$rating = intval($_POST['rating'] ?? 0);
 $comment = trim($_POST['comment'] ?? '');
 
-// Validate rating
-if ($rating < 1 || $rating > 5) {
-    echo json_encode(['success' => false, 'message' => 'Invalid rating']);
+if (!$product_id || $rating < 1 || $rating > 5) {
+    echo json_encode(['success' => false, 'message' => 'Missing or invalid fields.']);
     exit;
 }
 
-// Check if user already reviewed this product
-$checkStmt = $conn->prepare("SELECT review_id FROM product_reviews WHERE user_id = ? AND product_id = ?");
-$checkStmt->bind_param("ii", $user_id, $product_id);
-$checkStmt->execute();
-$existingReview = $checkStmt->get_result()->fetch_assoc();
-$checkStmt->close();
+// Check if product exists
+$chkProduct = $conn->prepare("SELECT product_id FROM products WHERE product_id = ?");
+$chkProduct->bind_param("i", $product_id);
+$chkProduct->execute();
+if (!$chkProduct->get_result()->fetch_assoc()) {
+    echo json_encode(['success' => false, 'message' => 'Product not found.']);
+    exit;
+}
+$chkProduct->close();
 
-// Update or insert review
-if ($existingReview) {
-    $updateStmt = $conn->prepare("UPDATE product_reviews SET rating = ?, comment = ?, created_at = NOW() WHERE review_id = ?");
-    $updateStmt->bind_param("isi", $rating, $comment, $existingReview['review_id']);
-    $success = $updateStmt->execute();
-    $updateStmt->close();
+// Check if already reviewed
+$chkStmt = $conn->prepare("SELECT review_id FROM product_reviews WHERE user_id = ? AND product_id = ?");
+$chkStmt->bind_param("ii", $user_id, $product_id);
+$chkStmt->execute();
+$existing = $chkStmt->get_result()->fetch_assoc();
+$chkStmt->close();
+
+if ($existing) {
+    $stmt = $conn->prepare("UPDATE product_reviews SET rating = ?, comment = ?, created_at = NOW() WHERE review_id = ?");
+    $stmt->bind_param("isi", $rating, $comment, $existing['review_id']);
 } else {
-    $insertStmt = $conn->prepare("INSERT INTO product_reviews (user_id, product_id, rating, comment, created_at) VALUES (?, ?, ?, ?, NOW())");
-    $insertStmt->bind_param("iiis", $user_id, $product_id, $rating, $comment);
-    $success = $insertStmt->execute();
-    $insertStmt->close();
+    $stmt = $conn->prepare("INSERT INTO product_reviews (user_id, product_id, rating, comment, created_at) VALUES (?, ?, ?, ?, NOW())");
+    $stmt->bind_param("iiis", $user_id, $product_id, $rating, $comment);
 }
 
-if ($success) {
-    echo json_encode(['success' => true, 'message' => 'Review submitted successfully']);
+if ($stmt->execute()) {
+    echo json_encode(['success' => true, 'message' => 'Review submitted successfully.']);
 } else {
-    echo json_encode(['success' => false, 'message' => 'Failed to save review']);
+    echo json_encode(['success' => false, 'message' => 'Failed to save review.']);
 }
+$stmt->close();
 ?>

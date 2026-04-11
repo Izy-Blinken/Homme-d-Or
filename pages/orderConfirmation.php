@@ -16,12 +16,12 @@ function sendOrderEmail($to_email, $to_name, $order_id, $items, $total_amount, $
     $mail = new PHPMailer(true);
     try {
         $mail->isSMTP();
-        $mail->Host       = 'smtp.gmail.com';
-        $mail->SMTPAuth   = true;
-        $mail->Username   = 'hommedor2026@gmail.com';
-        $mail->Password   = 'esoczvhrdrmilpbn';
+        $mail->Host = 'smtp.gmail.com';
+        $mail->SMTPAuth = true;
+        $mail->Username = 'hommedor2026@gmail.com';
+        $mail->Password = 'esoczvhrdrmilpbn';
         $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
-        $mail->Port       = 587;
+        $mail->Port = 587;
 
         $mail->setFrom('hommedor2026@gmail.com', "Homme d'Or");
         $mail->addAddress($to_email, $to_name);
@@ -60,68 +60,66 @@ function sendOrderEmail($to_email, $to_name, $order_id, $items, $total_amount, $
     }
 }
 
-// ─────────────────────────────────────────────
 // Shared variables (populated by each branch)
-// ─────────────────────────────────────────────
-$fname          = '';
-$lname          = '';
-$email          = '';
-$phone          = '';
-$street         = '';
-$city           = '';
-$province       = '';
-$zipCode        = '';
-$country        = '';
-$paymentMethod  = '';
-$paymentTitle   = '';
-$paymentDetail  = '';
-$order_status   = '';
+$fname = '';
+$lname = '';
+$email = '';
+$phone = '';
+$street = '';
+$city = '';
+$province = '';
+$zipCode = '';
+$country = '';
+$paymentMethod = '';
+$paymentTitle = '';
+$paymentDetail = '';
+$order_status = '';
 $purchasedItems = [];
-$subtotal       = 0;
-$shipping_fee   = 0;
-$total_amount   = 0;
-$order_id       = 0;
+$subtotal = 0;
+$shipping_fee = 0;
+$total_amount = 0;
+$order_id = 0;
 $orderFormatted = '';
-$skipDbInserts  = false;
+$skipDbInserts = false;
 
-$identity  = getCurrentUserId();
+$identity = getCurrentUserId();
 $id_column = ($identity['type'] === 'user_id') ? 'user_id' : 'guest_id';
-$id_value  = $identity['id'];
+$id_value = $identity['id'];
 
 // BRANCH 1: GCash return from PayMongo
 if (isset($_GET['gcash']) && $_GET['gcash'] === 'success' && isset($_GET['token'])) {
 
     $token = preg_replace('/[^a-f0-9]/', '', $_GET['token']);
 
-    // ── REFRESH GUARD: order already processed, load from session ──
+    // REFRESH GUARD: order already processed, load from session
     if (isset($_SESSION['completed_order_' . $token])) {
         $c = $_SESSION['completed_order_' . $token];
 
-        $fullName      = $c['fullName'];
-        $nameParts     = explode(' ', $fullName, 2);
-        $fname         = $nameParts[0];
-        $lname         = $nameParts[1] ?? '';
-        $email         = $c['email'];
-        $phone         = $c['phone'];
-        $street        = $c['address'];
-        $city          = $c['city'];
-        $province      = $c['province'];
-        $zipCode       = $c['zipCode'];
-        $country       = $c['country'];
+        $fullName = $c['fullName'];
+        $nameParts = explode(' ', $fullName, 2);
+        $fname = $nameParts[0];
+        $lname = $nameParts[1] ?? '';
+        $email = $c['email'];
+        $phone = $c['phone'];
+        $street = $c['address'];
+        $city = $c['city'];
+        $province = $c['province'];
+        $zipCode = $c['zipCode'];
+        $country = $c['country'];
         $paymentMethod = 'gcash';
-        $paymentTitle  = 'GCash';
+        $paymentTitle = 'GCash';
         $paymentDetail = 'Paid via GCash';
-        $order_status  = 'Processing';
+        $order_status = 'Processing';
         $purchasedItems = $c['purchasedItems'];
-        $subtotal       = $c['subtotal'];
-        $shipping_fee   = $c['shipping_fee'];
-        $total_amount   = $c['total_amount'];
-        $order_id       = $c['order_id'];
+        $subtotal = $c['subtotal'];
+        $shipping_fee = $c['shipping_fee'];
+        $total_amount = $c['total_amount'];
+        $order_id = $c['order_id'];
         $orderFormatted = $c['orderFormatted'];
-        $skipDbInserts  = true; // skip inserts, jump to render
+        $skipDbInserts = true;
 
     } else {
-        // ── FIRST VISIT: read token file ──
+        // FIRST VISIT: read token file
         $filePath = sys_get_temp_dir() . '/pending_' . $token . '.json';
 
         if (!file_exists($filePath)) {
@@ -134,21 +132,21 @@ if (isset($_GET['gcash']) && $_GET['gcash'] === 'success' && isset($_GET['token'
 
         $_SESSION['selected_items'] = $pending['selected_items'];
 
-        $fullName      = $pending['fullName'];
-        $nameParts     = explode(' ', $fullName, 2);
-        $fname         = $nameParts[0];
-        $lname         = $nameParts[1] ?? '';
-        $email         = $pending['email'];
-        $phone         = $pending['phone'];
-        $street        = $pending['address'];
-        $city          = $pending['city'];
-        $province      = $pending['province'];
-        $zipCode       = $pending['zipCode'];
-        $country       = $pending['country'];
+        $fullName = $pending['fullName'];
+        $nameParts = explode(' ', $fullName, 2);
+        $fname = $nameParts[0];
+        $lname = $nameParts[1] ?? '';
+        $email = $pending['email'];
+        $phone = $pending['phone'];
+        $street = $pending['address'];
+        $city = $pending['city'];
+        $province = $pending['province'];
+        $zipCode = $pending['zipCode'];
+        $country = $pending['country'];
         $paymentMethod = 'gcash';
-        $paymentTitle  = 'GCash';
+        $paymentTitle = 'GCash';
         $paymentDetail = 'Paid via GCash';
-        $order_status  = 'Processing';
+        $order_status = 'pending'; // FIX: was 'paid' which is not a valid ENUM value in orders table
 
         // Fetch cart items
         $stmt = $conn->prepare("
@@ -175,9 +173,7 @@ if (isset($_GET['gcash']) && $_GET['gcash'] === 'success' && isset($_GET['token'
         $total_amount = $subtotal + $shipping_fee;
     }
 
-// ─────────────────────────────────────────────
 // BRANCH 2: COD via POST
-// ─────────────────────────────────────────────
 } elseif ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if ($identity['type'] === 'stranger' || empty($_SESSION['selected_items'])) {
@@ -185,17 +181,17 @@ if (isset($_GET['gcash']) && $_GET['gcash'] === 'success' && isset($_GET['token'
         exit;
     }
 
-    $fullName  = trim($_POST['fullName'] ?? '');
+    $fullName = trim($_POST['fullName'] ?? '');
     $nameParts = explode(' ', $fullName, 2);
-    $fname     = $nameParts[0];
-    $lname     = $nameParts[1] ?? '';
-    $email     = trim($_POST['email']    ?? '');
-    $phone     = trim($_POST['phone']    ?? '');
-    $street    = trim($_POST['address']  ?? '');
-    $city      = trim($_POST['city']     ?? '');
-    $province  = trim($_POST['province'] ?? '');
-    $zipCode   = trim($_POST['zipCode']  ?? '');
-    $country   = trim($_POST['country']  ?? '');
+    $fname = $nameParts[0];
+    $lname = $nameParts[1] ?? '';
+    $email = trim($_POST['email'] ?? '');
+    $phone = trim($_POST['phone'] ?? '');
+    $street = trim($_POST['address'] ?? '');
+    $city = trim($_POST['city'] ?? '');
+    $province = trim($_POST['province'] ?? '');
+    $zipCode = trim($_POST['zipCode'] ?? '');
+    $country = trim($_POST['country'] ?? '');
 
     if (empty($fullName) || empty($email) || empty($phone) || empty($street) || empty($city)) {
         header("Location: checkout.php?error=missing_fields");
@@ -203,9 +199,9 @@ if (isset($_GET['gcash']) && $_GET['gcash'] === 'success' && isset($_GET['token'
     }
 
     $paymentMethod = $_POST['paymentMethod'] ?? 'cod';
-    $paymentTitle  = 'Cash on Delivery';
+    $paymentTitle = 'Cash on Delivery';
     $paymentDetail = 'Pay when you receive';
-    $order_status  = 'pending';
+    $order_status = 'pending';
 
     // Fetch cart items
     $stmt = $conn->prepare("
@@ -231,31 +227,31 @@ if (isset($_GET['gcash']) && $_GET['gcash'] === 'success' && isset($_GET['token'
     $shipping_fee = ($subtotal > 0) ? 150.00 : 0.00;
     $total_amount = $subtotal + $shipping_fee;
 
-    // ── GCash redirect (POST method selected gcash) ──
+    // GCash redirect (POST method selected gcash)
     if ($paymentMethod === 'gcash') {
         $token = bin2hex(random_bytes(16));
 
         $pendingData = [
-            'fullName'       => $fullName,
-            'email'          => $email,
-            'phone'          => $phone,
-            'address'        => $street,
-            'city'           => $city,
-            'province'       => $province,
-            'zipCode'        => $zipCode,
-            'country'        => $country,
-            'paymentMethod'  => 'gcash',
+            'fullName' => $fullName,
+            'email' => $email,
+            'phone' => $phone,
+            'address' => $street,
+            'city' => $city,
+            'province' => $province,
+            'zipCode' => $zipCode,
+            'country' => $country,
+            'paymentMethod' => 'gcash',
             'selected_items' => $_SESSION['selected_items'],
         ];
 
         file_put_contents(sys_get_temp_dir() . '/pending_' . $token . '.json', json_encode($pendingData));
 
         $base_url = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? 'https' : 'http')
-                    . '://' . $_SERVER['HTTP_HOST']
-                    . '/Homme-d-Or';
+            . '://' . $_SERVER['HTTP_HOST']
+            . '/Homme-d-Or';
 
         $success_url = $base_url . '/pages/orderConfirmation.php?gcash=success&token=' . $token;
-        $cancel_url  = $base_url . '/pages/checkout.php?gcash=cancelled';
+        $cancel_url = $base_url . '/pages/checkout.php?gcash=cancelled';
 
         $checkoutUrl = createPayMongoCheckout(
             $total_amount,
@@ -273,10 +269,10 @@ if (isset($_GET['gcash']) && $_GET['gcash'] === 'success' && isset($_GET['token'
         }
     }
 
-    // ── COD payment details ──
-    $paymentTitle  = 'Cash on Delivery';
+    // COD payment details
+    $paymentTitle = 'Cash on Delivery';
     $paymentDetail = 'Pay when you receive';
-    $order_status  = 'Pending Payment (COD)';
+    $order_status = 'pending';
 
 } else {
     // Direct access — no POST and no gcash return
@@ -287,7 +283,7 @@ if (isset($_GET['gcash']) && $_GET['gcash'] === 'success' && isset($_GET['token'
 // DB INSERTS (skipped on refresh)
 if (!$skipDbInserts) {
 
-    $db_user_id  = ($identity['type'] === 'user_id')  ? $id_value : null;
+    $db_user_id = ($identity['type'] === 'user_id') ? $id_value : null;
     $db_guest_id = ($identity['type'] === 'guest_id') ? $id_value : null;
 
     $insertOrder = $conn->prepare("
@@ -306,12 +302,12 @@ if (!$skipDbInserts) {
         die("Order insert failed.");
     }
 
-    $order_id       = $conn->insert_id;
+    $order_id = $conn->insert_id;
     $orderFormatted = str_pad($order_id, 6, '0', STR_PAD_LEFT);
 
-    $db_method         = ($paymentMethod === 'gcash') ? 'gcash' : 'cod';
+    $db_method = ($paymentMethod === 'gcash') ? 'gcash' : 'cod';
     $db_payment_status = ($paymentMethod === 'cod') ? 'pending' : 'paid';
-    $db_paid_at        = ($paymentMethod !== 'cod') ? date('Y-m-d H:i:s') : null;
+    $db_paid_at = ($paymentMethod !== 'cod') ? date('Y-m-d H:i:s') : null;
 
     $insertPayment = $conn->prepare("
         INSERT INTO payments (order_id, method, payment_status, paid_at)
@@ -334,7 +330,7 @@ if (!$skipDbInserts) {
     if (!empty($purchasedItems)) {
         $deletePlaceholders = implode(',', array_fill(0, count($purchasedItems), '?'));
         $deleteCart = $conn->prepare("DELETE FROM cart WHERE cart_id IN ($deletePlaceholders)");
-        $types   = str_repeat('i', count($purchasedItems));
+        $types = str_repeat('i', count($purchasedItems));
         $cartIds = array_column($purchasedItems, 'cart_id');
         $deleteCart->bind_param($types, ...$cartIds);
         $deleteCart->execute();
@@ -351,22 +347,22 @@ if (!$skipDbInserts) {
         error_log("Order email failed for order ID: $order_id");
     }
 
-    // ── Save to session for refresh safety (GCash only) ──
+    // Save to session for refresh safety (GCash only)
     if ($paymentMethod === 'gcash' && isset($token)) {
         $_SESSION['completed_order_' . $token] = [
-            'fullName'       => $fullName,
-            'email'          => $email,
-            'phone'          => $phone,
-            'address'        => $street,
-            'city'           => $city,
-            'province'       => $province,
-            'zipCode'        => $zipCode,
-            'country'        => $country,
+            'fullName' => $fullName,
+            'email' => $email,
+            'phone' => $phone,
+            'address' => $street,
+            'city' => $city,
+            'province' => $province,
+            'zipCode' => $zipCode,
+            'country' => $country,
             'purchasedItems' => $purchasedItems,
-            'subtotal'       => $subtotal,
-            'shipping_fee'   => $shipping_fee,
-            'total_amount'   => $total_amount,
-            'order_id'       => $order_id,
+            'subtotal' => $subtotal,
+            'shipping_fee' => $shipping_fee,
+            'total_amount' => $total_amount,
+            'order_id' => $order_id,
             'orderFormatted' => $orderFormatted,
         ];
     }
@@ -386,7 +382,6 @@ if (!$skipDbInserts) {
 <body>
     <?php include '../components/header.php'; ?>
     <main class="mainBG confirm-bg">
-        <button class="back-btn" onclick="history.back()" title="Go back" style="margin-top: 1rem;"><i class="fas fa-arrow-left"></i> Back</button>
         <div class="confirm-wrapper">
             <div class="confirm-header">
                 <div class="success-icon"><i class="fa-solid fa-check"></i></div>
@@ -394,6 +389,16 @@ if (!$skipDbInserts) {
                 <p class="order-number">Order #<?= $orderFormatted ?></p>
                 <p class="email-notice">We've sent a confirmation email to <?= htmlspecialchars($email) ?>.</p>
             </div>
+
+            <div class="confirmation-actions" style="text-align: center; padding: 2rem; margin-top: 1rem;">
+                <a href="index.php" class="btn-shop-again" style="display: inline-block; padding: 0.8rem 2rem; margin: 0.5rem; background: #c9a961; color: #fff; text-decoration: none; border-radius: 4px; font-weight: 600; transition: all 0.3s ease;">
+                    <i class="fas fa-shopping-bag"></i> Shop Again
+                </a>
+                <a href="viewAllTabs.php" class="btn-view-order" style="display: inline-block; padding: 0.8rem 2rem; margin: 0.5rem; background: transparent; border: 1px solid #c9a961; color: #c9a961; text-decoration: none; border-radius: 4px; font-weight: 600; transition: all 0.3s ease;">
+                    <i class="fas fa-eye"></i> View Order
+                </a>
+            </div>
+
             <div class="confirm-container">
 
                 <!-- LEFT: Delivery & Payment Details -->
@@ -510,16 +515,6 @@ if (!$skipDbInserts) {
                 </div>
 
             </div>
-        </div>
-
-        <!-- Action Buttons -->
-        <div class="confirmation-actions" style="text-align: center; padding: 2rem; margin-top: 1rem;">
-            <a href="index.php" class="btn-shop-again" style="display: inline-block; padding: 0.8rem 2rem; margin: 0.5rem; background: #c9a961; color: #fff; text-decoration: none; border-radius: 4px; font-weight: 600; transition: all 0.3s ease;">
-                <i class="fas fa-shopping-bag"></i> Shop Again
-            </a>
-            <a href="viewAllTabs.php" class="btn-view-order" style="display: inline-block; padding: 0.8rem 2rem; margin: 0.5rem; background: transparent; border: 1px solid #c9a961; color: #c9a961; text-decoration: none; border-radius: 4px; font-weight: 600; transition: all 0.3s ease;">
-                <i class="fas fa-eye"></i> View Order
-            </a>
         </div>
     </main>
     <?php include '../components/footer.php'; ?>

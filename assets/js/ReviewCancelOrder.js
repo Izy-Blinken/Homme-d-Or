@@ -3,18 +3,16 @@ let hoverValue = 0;
 let currentProductId = null;
 let currentOrderId = null;
 
-// Review Order Modal
 function openReviewModal(orderId, productId) {
     currentOrderId = orderId;
     currentProductId = productId;
-    
     const modal = document.getElementById('reviewOrderModal');
     modal.classList.remove('closing');
     modal.classList.add('show');
-    
     currentRating = 0;
     updateStars();
     document.getElementById('reviewText').value = '';
+    document.getElementById('ratingText').textContent = '';
     updateSubmitButton();
 }
 
@@ -25,8 +23,6 @@ function closeReviewModal() {
         modal.classList.remove('show');
         modal.classList.remove('closing');
     }, 200);
-
-    
 }
 
 function setRating(rating) {
@@ -49,7 +45,6 @@ function resetHover() {
 function updateStars() {
     const stars = document.querySelectorAll('.star');
     const activeValue = hoverValue || currentRating;
-    
     stars.forEach((star, index) => {
         if (index < activeValue) {
             star.classList.add('active');
@@ -61,23 +56,23 @@ function updateStars() {
 
 function updateSubmitButton() {
     const submitBtn = document.getElementById('submitReviewBtn');
-    submitBtn.disabled = currentRating === 0;
+    if (submitBtn) submitBtn.disabled = currentRating === 0;
 }
 
 function submitReview(event) {
     event.preventDefault();
     const reviewText = document.getElementById('reviewText').value;
-    
+
     if (!currentProductId) {
         showGeneralToast('Error: Product ID missing', 'error');
         return;
     }
-    
+
     const formData = new FormData();
     formData.append('product_id', currentProductId);
     formData.append('rating', currentRating);
     formData.append('comment', reviewText);
-    
+
     fetch('../backend/products/submit_review.php', {
         method: 'POST',
         body: formData
@@ -98,13 +93,11 @@ function submitReview(event) {
     });
 }
 
-// Cancel Order Modal
-function openCancelModal() {
+function openCancelModal(orderId) {
+    document.getElementById('cancelOrderId').value = orderId;
     const modal = document.getElementById('cancelOrderModal');
     modal.classList.remove('closing');
     modal.classList.add('show');
-    
-    // reset form
     const radioButtons = document.querySelectorAll('input[name="cancelReason"]');
     radioButtons.forEach(radio => radio.checked = false);
     document.getElementById('otherReason').value = '';
@@ -118,18 +111,15 @@ function closeCancelModal() {
         modal.classList.remove('show');
         modal.classList.remove('closing');
     }, 200);
-
-
 }
 
 function submitCancellation(event) {
     event.preventDefault();
-    
     const selectedReason = document.querySelector('input[name="cancelReason"]:checked').value;
     const otherReason = document.getElementById('otherReason').value;
     const orderId = document.getElementById('cancelOrderId').value;
-    const finalReason = (selectedReason === 'Other' && otherReason) 
-        ? otherReason 
+    const finalReason = (selectedReason === 'Other' && otherReason)
+        ? otherReason
         : selectedReason;
 
     fetch('../backend/cancelOrder.php', {
@@ -150,61 +140,20 @@ function submitCancellation(event) {
     .catch(() => showGeneralToast('Something went wrong.', 'error'));
 }
 
-
-document.addEventListener('DOMContentLoaded', function() {
-    document.getElementById('reviewOrderModal').addEventListener('click', function(e) {
-        if (e.target === this) {
-            closeReviewModal();
-        }
-    });
-    
-    document.getElementById('cancelOrderModal').addEventListener('click', function(e) {
-        if (e.target === this) {
-            closeCancelModal();
-        }
-    });
-    
-    // other reason text area
-    const radioButtons = document.querySelectorAll('input[name="cancelReason"]');
-    radioButtons.forEach(radio => {
-        radio.addEventListener('change', function() {
-            const otherGroup = document.getElementById('otherReasonGroup');
-            if (this.value === 'Other') {
-                otherGroup.style.display = 'block';
-            } else {
-                otherGroup.style.display = 'none';
-            }
-        });
-    });
-});
-
-function showGeneralToast(message, type='success') {
-    const toast = document.getElementById('generalToast');
-    toast.textContent = message;
-    toast.className = `generalToast ${type}`;
-    toast.classList.add('show');
-    
-    setTimeout(() => {
-        toast.classList.remove('show');
-    }, 3000);
-}
-
-function openViewModal(img, name, variant, qty,total, payment, date, status) {
+function openViewModal(img, name, variant, qty, total, payment, date, status) {
     document.getElementById("viewImage").src = img;
     document.getElementById("viewName").textContent = name;
     document.getElementById("viewVariant").textContent = variant;
     document.getElementById("viewQty").textContent = qty;
-    document.getElementById("viewTotal").textContent = total
+    document.getElementById("viewTotal").textContent = total;
     document.getElementById("viewPayment").textContent = payment;
     document.getElementById("viewDate").textContent = date;
     document.getElementById("viewStatus").textContent = status;
-
     const modal = document.getElementById("viewOrderModal");
     modal.classList.remove("closing");
     modal.classList.add("show");
 }
 
-// Close modal function
 function closeViewModal() {
     const modal = document.getElementById("viewOrderModal");
     modal.classList.add("closing");
@@ -213,14 +162,43 @@ function closeViewModal() {
     }, 200);
 }
 
-// Close modal on clicking outside
-    document.addEventListener('DOMContentLoaded', function() {
-    const modal = document.getElementById('viewOrderModal');
-    modal.addEventListener('click', function(e) {
-        if (e.target === modal) {
-            closeViewModal();
-        }
+function showGeneralToast(message, type = 'success') {
+    const toast = document.getElementById('generalToast');
+    toast.textContent = message;
+    toast.className = `generalToast ${type}`;
+    toast.classList.add('show');
+    setTimeout(() => {
+        toast.classList.remove('show');
+    }, 3000);
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    const reviewModal = document.getElementById('reviewOrderModal');
+    if (reviewModal) {
+        reviewModal.addEventListener('click', function(e) {
+            if (e.target === this) closeReviewModal();
+        });
+    }
+
+    const cancelModal = document.getElementById('cancelOrderModal');
+    if (cancelModal) {
+        cancelModal.addEventListener('click', function(e) {
+            if (e.target === this) closeCancelModal();
+        });
+    }
+
+    const viewModal = document.getElementById('viewOrderModal');
+    if (viewModal) {
+        viewModal.addEventListener('click', function(e) {
+            if (e.target === this) closeViewModal();
+        });
+    }
+
+    const radioButtons = document.querySelectorAll('input[name="cancelReason"]');
+    radioButtons.forEach(radio => {
+        radio.addEventListener('change', function() {
+            const otherGroup = document.getElementById('otherReasonGroup');
+            otherGroup.style.display = this.value === 'Other' ? 'block' : 'none';
+        });
     });
 });
-
-
