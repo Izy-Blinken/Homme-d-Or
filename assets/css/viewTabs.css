@@ -402,9 +402,10 @@
 /* The Grid Layout for all rows */
 .history-row {
     display: grid;
-    grid-template-columns: 2.5rem 7.5rem 2fr 6rem 5rem 7rem 5rem;
+    grid-template-columns: 2.5rem 7.5rem 2fr 6rem 4rem 7rem 7rem 6rem;
     align-items: center;
     padding: 1rem 1.25rem;
+    gap: 10px;
 }
 
 /* The Header Card - Solid and Sticky */

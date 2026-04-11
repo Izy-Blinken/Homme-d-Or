@@ -223,26 +223,26 @@ textarea::placeholder {
 }
 
 .romcomBtnSubmit {
-    border: 1px solid #c9a961 !important;
-    background: #080051;
-    color: #c9a961;
+    border: 1px solid #c9a961;
+    background: #c9a961;
+    color: rgb(14, 16, 31);
 }
 
 .romcomBtnSubmit:hover {
-    background: #c9a961;
-    border: 1px solid #c9a961;
-    color: white;
+    background: rgb(3,3,84) !important;
+    border: 1px solid #c9a961 !important;
+    color: #c9a961 !important;
 }
 
 .romcomBtnClose {
-    border: 1px solid white;
-    background: #64748b;
-    color: white;
+    border: 1px solid #c9a961 !important;
+    background: transparent;
+    color: #c9a961;
 }
 
 .romcomBtnClose:hover {
-    background: transparent;
-    border:1px solid #c9a961;
+    background: rgb(3,3,84);
+    border:1px solid #c9a961 !important;
     color: #c9a961;
 }
 
@@ -356,6 +356,19 @@ textarea::placeholder {
 
 /* View Modal Content eto yun*/
 #viewOrderModal .romcomModalContent {
+    background: rgb(14, 16, 31);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid #c9a961;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6);
+    width: 100%;
+    max-width: 32rem;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+#cancelOrderModal .romcomModalContent {
     background: rgb(14, 16, 31);
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
@@ -555,9 +568,9 @@ textarea::placeholder {
 }
 
 .WishlistBtnClose:hover {
-    background: lightslategray;
-    color: rgb(14, 16, 31);
-    border: 1px solid lightslategray !important;
+    background: rgb(3,3,84);
+    color: #c9a961;
+    border: 1px solid #c9a961 !important;
 }
 
 #viewWishlistModal .romcomModalContent {
