@@ -40,11 +40,7 @@ define('SHOP_PREVIEW_LIMIT', 6);
     </head>
     <body>
     <?php include '../components/header.php'; ?>
-<<<<<<< HEAD
-    <button class="back-btn" onclick="history.back()" title="Go back" style="position: absolute; top: 150px; left: 1px; z-index: 100;"><i class="fas fa-arrow-left"></i> Back</button>
-=======
     <button class="back-btn" onclick="history.back()" title="Go back" style="position: absolute; top: 150px; left: 20px; z-index: 100;"><i class="fas fa-arrow-left"></i> Back</button>
->>>>>>> some-fix
 
     <section class="shop-welcome-section">
         <div class="shop-welcome-overlay"></div>
