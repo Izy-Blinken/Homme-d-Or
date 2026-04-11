@@ -161,7 +161,6 @@
             <!-- TABLE -->
             <div class="history-table-container">
                 <div class="history-table">
-                    <!-- HEADER -->
                     <div class="history-row history-head">
                         <span>No</span>
                         <span>Purchase Date</span>
@@ -169,8 +168,8 @@
                         <span>Unit Price</span>
                         <span>Quantity</span>
                         <span>Subtotal</span>
-                        <span>Status</span>
-                        <span></span>Actions</span>
+                        <span style="text-align: center;">Status</span>
+                        <span style="text-align: center;">Actions</span>
                     </div>
 
                     <!-- ROWS -->
@@ -180,7 +179,7 @@
                     } else {
                         $index = 1;
                         foreach ($order_items as $item): 
-                            $order_status = $item['order_status'] ?? 'pending';
+                            $order_status = (!empty($item['order_status'])) ? $item['order_status'] : 'Pending';
                             $order_date = date('m-d-Y', strtotime($item['created_at']));
                             $order_time = date('H:i', strtotime($item['created_at']));
                             $product_name = htmlspecialchars($item['product_name']);
