@@ -337,8 +337,8 @@
     grid-column: 3 / 4;
     grid-row: 2 / 3;
     align-self: start;
-    margin-top: 70px;
-    margin-right: 70px;
+    margin-top: 90px;
+    margin-right: 180px;
 }
 
 .details-list {
@@ -383,8 +383,8 @@
     grid-column: 3 / 4;
     grid-row: 2 / 3;
     align-self: end; /* Aligns to bottom */
-    margin-bottom: 180px; /* Adjusted to match your design */
-    margin-right: 110px;
+    margin-bottom: 200px; /* Adjusted to match your design */
+    margin-right: 187px;
     display: flex;
     gap: 20px; /* Space between buttons */
     justify-content: flex-end; /* Aligns them to the right edge */
