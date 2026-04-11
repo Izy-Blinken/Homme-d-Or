@@ -19,10 +19,13 @@ if (document.getElementById('loginModal')) {
             loginModal.classList.remove('show');
             loginModal.classList.add('closing');
 
+            // Restore scroll immediately so the sticky header re-evaluates correctly
+            document.body.style.overflow = '';
+            window.dispatchEvent(new Event('scroll'));
+
             setTimeout(() => {
                 loginModal.style.display = 'none';
                 loginModal.classList.remove('closing');
-                document.body.style.overflow = 'auto';
             }, 1000);
         }
     }
