@@ -1377,7 +1377,6 @@
     font-size: 0.7rem;
     font-weight: 800;
     padding: 2px 6px;
-    border-radius: 10px;
     line-height: 1.2;
     pointer-events: none;
 }
@@ -1392,13 +1391,13 @@
     max-width: 90vw;
     background: #ffffff;
     box-shadow: 0 12px 35px rgba(14, 16, 31, 0.15); /* Softer, deeper shadow */
-    border-radius: 10px;
     border: 1px solid rgba(0,0,0,0.05);
     z-index: 2000;
     display: none;
     flex-direction: column;
     max-height: 450px;
-    overflow: hidden; /* Keeps the rounded corners clean */
+    overflow: hidden; 
+    border: 1px solid #c9a961;
 }
 
 /* Force the badge to anchor directly to the bell icon ---*/
@@ -1432,8 +1431,8 @@
     justify-content: space-between;
     align-items: center;
     padding: 18px 20px;
-    border-bottom: 1px solid #f0f0f0;
-    background-color: #fafafa;
+    border-bottom: 1px solid #c9a961;
+    background-color: #c9a961;
 }
 
 .notif-panel-header span {
@@ -1461,7 +1460,7 @@
 .notif-list {
     overflow-y: auto;
     flex: 1;
-    background: #ffffff;
+    background: rgb(14, 16, 31);
 }
 
 /* Custom Scrollbar for Luxury Feel */
@@ -1469,11 +1468,10 @@
     width: 6px;
 }
 .notif-list::-webkit-scrollbar-track {
-    background: #f8f9fa;
+    background: rgb(14, 16, 31);
 }
 .notif-list::-webkit-scrollbar-thumb {
     background: #e0e0e0;
-    border-radius: 10px;
 }
 .notif-list::-webkit-scrollbar-thumb:hover {
     background: #c9a961;
@@ -1492,15 +1490,15 @@
 }
 
 .notif-item:hover {
-    background: #fafafa;
+    background: beige;
 }
 
 .notif-item.unread {
-    background: #fffdf5; /* Very subtle gold tint */
+    background: linear-gradient(145deg, #030c18 0%, #071525 50%, #0a1e36 100%);
 }
 
 .notif-item.unread:hover {
-    background: #fffbf0;
+    background: linear-gradient(145deg, #01050a 0%, #030a14 50%, #051020 100%);
 }
 
 /* Internal Layout Flexbox */
@@ -1569,7 +1567,7 @@
 
 .notif-item {
     padding: 0.85rem 1rem;
-    border-bottom: 1px solid #f5f5f5;
+    border-bottom: 1px solid #c9a961;
     cursor: pointer;
     transition: background 0.15s;
     font-size: 0.85rem;
@@ -1582,16 +1580,16 @@
 }
 
 .notif-item:hover {
-    background: #fafafa;
+    background: beige;
 }
 
 .notif-item.unread {
-    background: #fffbf0;
+    background: linear-gradient(145deg, #030c18 0%, #071525 50%, #0a1e36 100%);;
     border-left: 3px solid #c9a961;
 }
 
 .notif-item.unread:hover {
-    background: #fff8e6;
+    background: beige;
 }
 
 .notif-time {
