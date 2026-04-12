@@ -109,6 +109,11 @@ if ($chat_type) {
             height: 100vh;
             overflow: hidden;
         }
+        .msg-time {
+            font-size: 0.80rem;
+            color: #999;         
+            margin-top: 11px;
+        }
 
         
         </style>
