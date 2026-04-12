@@ -368,6 +368,19 @@ textarea::placeholder {
     overflow: hidden;
 }
 
+#reviewOrderModal .romcomModalContent {
+    background: rgb(14, 16, 31);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid #c9a961;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6);
+    width: 100%;
+    max-width: 32rem;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
 #cancelOrderModal .romcomModalContent {
     background: rgb(14, 16, 31);
     backdrop-filter: blur(12px);
