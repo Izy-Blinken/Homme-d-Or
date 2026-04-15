@@ -14,7 +14,19 @@ if ($identity['type'] === 'stranger') {
 }
 
 $id_column = ($identity['type'] === 'user_id') ? 'user_id' : 'guest_id';
-$id_value = $identity['id'];
+$id_value  = $identity['id'];
+$bind_type = 'i'; // user_id is always integer
+
+// For guests, resolve session string → real integer guest_id
+if ($id_column === 'guest_id') {
+    $g = $conn->prepare("SELECT guest_id FROM guests WHERE session_id = ?");
+    $g->bind_param("s", $id_value);
+    $g->execute();
+    $g_row = $g->get_result()->fetch_assoc();
+    $g->close();
+    $id_value  = $g_row ? intval($g_row['guest_id']) : 0;
+    $bind_type = 'i';
+}
 
 // Fetch all orders for this user with payment info
 $stmt = $conn->prepare("
@@ -24,7 +36,8 @@ $stmt = $conn->prepare("
     WHERE o.$id_column = ?
     ORDER BY o.created_at DESC
 ");
-$stmt->bind_param("s", $id_value);
+$stmt->bind_param($bind_type, $id_value);
+
 $stmt->execute();
 $ordersResult = $stmt->get_result();
 
@@ -154,6 +167,7 @@ function renderOrders($conn, $orders, $tabType) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="<?= htmlspecialchars(generateCsrfToken()) ?>">
     <title>Homme d'Or - My Orders</title>
     <link rel="stylesheet" href="../assets/css/style.css">
     <link rel="stylesheet" href="../assets/icons/fontawesome/css/all.min.css">

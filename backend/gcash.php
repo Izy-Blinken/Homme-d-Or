@@ -1,6 +1,11 @@
 <?php
 function createPayMongoCheckout($amount_in_pesos, $description, $success_url, $cancel_url) {
-    $secret_key = 'sk_test_orPszWHfvEiD6SXS1xwVUCjj';
+    // Key is defined in backend/config.php — include it if not already loaded
+    if (!defined('PAYMONGO_SECRET_KEY')) {
+        require_once __DIR__ . '/config.php';
+    }
+
+    $secret_key = PAYMONGO_SECRET_KEY;
     $amount_in_centavos = intval($amount_in_pesos * 100);
 
     $payload = json_encode([
@@ -41,10 +46,10 @@ function createPayMongoCheckout($amount_in_pesos, $description, $success_url, $c
     curl_close($ch);
 
     // TEMP DEBUG
-    file_put_contents(sys_get_temp_dir() . '/paymongo_debug.txt',
-        "HTTP: $http_code\nResponse: $response"
-    );
-
+    if ($http_code !== 201) {
+        error_log("PayMongo error — HTTP $http_code: $response");
+    }
+    
     $data = json_decode($response, true);
     return $data['data']['attributes']['checkout_url'] ?? null;
 }

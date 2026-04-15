@@ -4,13 +4,20 @@ if (session_status() === PHP_SESSION_NONE) {
 }
 
 include_once '../backend/db_connect.php';
+require_once '../backend/config.php';
 require_once '../backend/gcash.php';
 
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\Exception;
 
-require __DIR__ . '/../vendor/autoload.php';
+$vendorPath = __DIR__ . '/../vendor/autoload.php';
+if (!file_exists($vendorPath)) {
+    error_log('PHPMailer vendor directory missing. Run: composer require phpmailer/phpmailer');
+    // Email will be skipped silently; orders still process correctly
+} else {
+    require $vendorPath;
+}
 
 function sendOrderEmail($to_email, $to_name, $order_id, $items, $total_amount, $paymentMethod) {
     $mail = new PHPMailer(true);
@@ -18,12 +25,14 @@ function sendOrderEmail($to_email, $to_name, $order_id, $items, $total_amount, $
         $mail->isSMTP();
         $mail->Host = 'smtp.gmail.com';
         $mail->SMTPAuth = true;
-        $mail->Username = 'hommedor2026@gmail.com';
-        $mail->Password = 'esoczvhrdrmilpbn';
+        
+        $mail->Username = SMTP_USERNAME;
+        $mail->Password = SMTP_PASSWORD;
         $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
-        $mail->Port = 587;
+        $mail->Port = SMTP_PORT;
 
-        $mail->setFrom('hommedor2026@gmail.com', "Homme d'Or");
+        $mail->setFrom(SMTP_FROM, SMTP_FROM_NAME);
+
         $mail->addAddress($to_email, $to_name);
         $mail->isHTML(true);
         $mail->Subject = "Order Confirmation - #$order_id";
@@ -149,14 +158,29 @@ if (isset($_GET['gcash']) && $_GET['gcash'] === 'success' && isset($_GET['token'
         $order_status = 'pending'; // FIX: was 'paid' which is not a valid ENUM value in orders table
 
         // Fetch cart items
+        // Resolve guest session string → real integer guest_id before cart query
+        $gc_id_column = $id_column;
+        $gc_id_value  = $id_value;
+        $gc_bind_type = 'i';
+
+        if ($gc_id_column === 'guest_id') {
+            $g = $conn->prepare("SELECT guest_id FROM guests WHERE session_id = ?");
+            $g->bind_param("s", $gc_id_value);
+            $g->execute();
+            $g_row = $g->get_result()->fetch_assoc();
+            $g->close();
+            $gc_id_value = $g_row ? intval($g_row['guest_id']) : 0;
+        }
+
+        // Fetch cart items
         $stmt = $conn->prepare("
             SELECT c.cart_id, c.product_id, c.quantity, p.product_name, p.price, pi.image_url
             FROM cart c
             JOIN products p ON c.product_id = p.product_id
             LEFT JOIN product_images pi ON pi.product_id = p.product_id AND pi.is_primary = 1
-            WHERE c.$id_column = ?
+            WHERE c.$gc_id_column = ?
         ");
-        $stmt->bind_param("i", $id_value);
+        $stmt->bind_param($gc_bind_type, $gc_id_value);
         $stmt->execute();
         $result = $stmt->get_result();
 
@@ -176,6 +200,8 @@ if (isset($_GET['gcash']) && $_GET['gcash'] === 'success' && isset($_GET['token'
 // BRANCH 2: COD via POST
 } elseif ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
+    requireCsrf();
+
     if ($identity['type'] === 'stranger' || empty($_SESSION['selected_items'])) {
         header("Location: cart.php");
         exit;
@@ -193,8 +219,17 @@ if (isset($_GET['gcash']) && $_GET['gcash'] === 'success' && isset($_GET['token'
     $zipCode = trim($_POST['zipCode'] ?? '');
     $country = trim($_POST['country'] ?? '');
 
-    if (empty($fullName) || empty($email) || empty($phone) || empty($street) || empty($city)) {
-        header("Location: checkout.php?error=missing_fields");
+    $validationErrors = [];
+    if (empty($fullName))  $validationErrors[] = 'Full name is required.';
+    if (empty($email) || !filter_var($email, FILTER_VALIDATE_EMAIL)) $validationErrors[] = 'A valid email is required.';
+    if (empty($phone) || !preg_match('/^\+?[\d\s\-]{7,15}$/', $phone)) $validationErrors[] = 'A valid phone number is required (7-15 digits).';
+    if (empty($street))    $validationErrors[] = 'Street address is required.';
+    if (empty($city))      $validationErrors[] = 'City is required.';
+    if (!empty($zipCode) && !preg_match('/^\d{4,10}$/', $zipCode)) $validationErrors[] = 'Zip code must be numeric (4-10 digits).';
+
+    if (!empty($validationErrors)) {
+        $_SESSION['checkout_errors'] = $validationErrors;
+        header("Location: checkout.php?error=validation_failed");
         exit;
     }
 
@@ -246,10 +281,13 @@ if (isset($_GET['gcash']) && $_GET['gcash'] === 'success' && isset($_GET['token'
 
         file_put_contents(sys_get_temp_dir() . '/pending_' . $token . '.json', json_encode($pendingData));
 
-        $base_url = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? 'https' : 'http')
+        // Derive base URL dynamically from the current script path
+        // This works regardless of whether the app is at root or a subdirectory
+        $script_dir = dirname($_SERVER['SCRIPT_NAME']); // e.g. /Homme-d-Or/pages
+        $base_url   = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? 'https' : 'http')
             . '://' . $_SERVER['HTTP_HOST']
-            . '/Homme-d-Or';
-
+            . rtrim(dirname($script_dir), '/'); // goes up one level: /Homme-d-Or
+            
         $success_url = $base_url . '/pages/orderConfirmation.php?gcash=success&token=' . $token;
         $cancel_url = $base_url . '/pages/checkout.php?gcash=cancelled';
 
@@ -283,8 +321,18 @@ if (isset($_GET['gcash']) && $_GET['gcash'] === 'success' && isset($_GET['token'
 // DB INSERTS (skipped on refresh)
 if (!$skipDbInserts) {
 
-    $db_user_id = ($identity['type'] === 'user_id') ? $id_value : null;
-    $db_guest_id = ($identity['type'] === 'guest') ? $id_value : null;
+    $db_user_id  = ($identity['type'] === 'user_id')  ? $id_value : null;
+    $db_guest_id = ($identity['type'] === 'guest_id') ? $id_value : null;
+
+    // For guests, resolve session string → real integer guest_id for DB storage
+    if ($identity['type'] === 'guest_id') {
+        $g = $conn->prepare("SELECT guest_id FROM guests WHERE session_id = ?");
+        $g->bind_param("s", $id_value);
+        $g->execute();
+        $g_row = $g->get_result()->fetch_assoc();
+        $g->close();
+        $db_guest_id = $g_row ? intval($g_row['guest_id']) : null;
+    }
 
     $insertOrder = $conn->prepare("
         INSERT INTO orders (
@@ -336,13 +384,31 @@ if (!$skipDbInserts) {
         $deleteCart->execute();
     }
 
-    $updateStock = $conn->prepare("UPDATE products SET stock_qty = stock_qty - ? WHERE product_id = ?");
+    // Guard: only deduct if sufficient stock exists; roll back order if any product is out of stock
+    $updateStock = $conn->prepare("UPDATE products SET stock_qty = stock_qty - ? WHERE product_id = ? AND stock_qty >= ?");
     foreach ($purchasedItems as $item) {
-        $updateStock->bind_param("ii", $item['quantity'], $item['product_id']);
+        $updateStock->bind_param("iii", $item['quantity'], $item['product_id'], $item['quantity']);
         $updateStock->execute();
+        if ($updateStock->affected_rows === 0) {
+            // Stock insufficient — cancel the order we just created
+            $conn->query("UPDATE orders SET order_status = 'cancelled', cancellation_reason = 'Out of stock at time of order' WHERE order_id = $order_id");
+            // Re-add items to cart
+            $reAdd = $conn->prepare("INSERT INTO cart ($id_column, product_id, quantity) VALUES (?, ?, ?) ON DUPLICATE KEY UPDATE quantity = quantity + VALUES(quantity)");
+            foreach ($purchasedItems as $ri) {
+                $reAdd->bind_param("iii", $id_value, $ri['product_id'], $ri['quantity']);
+                $reAdd->execute();
+            }
+            $reAdd->close();
+            header("Location: cart.php?error=out_of_stock");
+            exit;
+        }
     }
 
-    $emailSent = sendOrderEmail($email, $fname, $orderFormatted, $purchasedItems, $total_amount, $paymentMethod);
+    $emailSent = false;
+    if (function_exists('PHPMailer\PHPMailer\PHPMailer') || class_exists('PHPMailer\PHPMailer\PHPMailer')) {
+        $emailSent = sendOrderEmail($email, $fname, $orderFormatted, $purchasedItems, $total_amount, $paymentMethod);
+    }
+    
     if (!$emailSent) {
         error_log("Order email failed for order ID: $order_id");
     }

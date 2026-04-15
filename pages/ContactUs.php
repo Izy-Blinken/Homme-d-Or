@@ -18,10 +18,19 @@
 
     <body>
         <?php
-            session_start();
+            if (session_status() === PHP_SESSION_NONE) session_start();
+            include_once '../backend/db_connect.php';
             $isLoggedIn = isset($_SESSION['user_id']);
+            $profilePhoto = '';
+            if ($isLoggedIn) {
+                $pp = $conn->prepare("SELECT profile_photo FROM users WHERE user_id = ?");
+                $pp->bind_param("i", $_SESSION['user_id']);
+                $pp->execute();
+                $ppRow = $pp->get_result()->fetch_assoc();
+                $pp->close();
+                $profilePhoto = $ppRow['profile_photo'] ?? '';
+            }
         ?>
-
         <?php include '../components/header.php'; ?>
 
         <main class="mainBG">
@@ -55,8 +64,7 @@
 
                         <div class="profileImageSection">
                             <div class="profileImageFrame">
-                                <img src="../assets/images/products_images/customerPic.png" alt="Profile" class="profileImage" id="currentProfileImage">
-                            </div>
+                                <img src="<?php echo $profilePhoto ? '../assets/images/profile_photos/' . htmlspecialchars($profilePhoto) : '../assets/images/products_images/customerPic.png'; ?>" alt="Profile" class="profileImage" id="currentProfileImage">                            </div>
                             <button class="addProfileBtn" onclick="document.getElementById('profilePhotoInput').click()">Add Profile Photo</button>
                             <input type="file" id="profilePhotoInput" accept="image/*" style="display:none;" onchange="uploadPhoto(this)">
                         </div>
@@ -183,8 +191,8 @@
                         <!-- Profile Photo -->
                         <div class="editModalPhotoSection">
                             <div class="editModalPhotoFrame">
-                                <img src="../assets/images/products_images/customerPic.png" alt="Profile" id="modalProfileImage">
-                            </div>
+                                <img src="<?php echo $profilePhoto ? '../assets/images/profile_photos/' . htmlspecialchars($profilePhoto) : '../assets/images/products_images/customerPic.png'; ?>" alt="Profile" id="modalProfileImage">
+                                                        </div>
                             <input type="file" id="modalPhotoInput" accept="image/*" style="display: none;" onchange="uploadPhoto(this)">
                             <button type="button" class="uploadPhotoBtn" onclick="document.getElementById('modalPhotoInput').click()">
                                 Upload Photo

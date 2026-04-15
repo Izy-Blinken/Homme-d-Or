@@ -1,5 +1,4 @@
 <?php
-session_start();
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
@@ -233,7 +232,7 @@ if (empty($allImages)) {
                             <i class="fa-solid fa-star-half-stroke"></i>
                         </div>
                         <p>Based on 24 reviews</p>
-                        <a href="viewReview.php" style="text-decoration: none;">
+                        <a href="viewReview.php?product_id=<?php echo $product_id; ?>" style="text-decoration: none;">
                             <button class="write-review-btn">Read All Reviews</button>
                         </a>
                     </div>

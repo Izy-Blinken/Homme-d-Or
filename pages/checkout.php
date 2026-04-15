@@ -22,14 +22,8 @@ if ($identity['type'] === 'stranger') {
         <link rel="stylesheet" href="../assets/icons/fontawesome/css/all.min.css">
         <link rel="stylesheet" href="../assets/css/HeaderHeroFooterStyle.css">
         <link rel="stylesheet" href="../assets/css/CheckoutPageStyle.css">
-        <link rel="stylesheet" href="../assets/css/OrderAgainStyle.css">
-        <link rel="stylesheet" href="../assets/css/BlogPageStyle.css">
-        <link rel="stylesheet" href="../assets/css/AboutUsPageStyle.css">
-        <link rel="stylesheet" href="../assets/css/ProductDetailsStyle.css">
         <link rel="stylesheet" href="../assets/css/CartPageStyle.css">
         <link rel="stylesheet" href="../assets/css/RegLoginModalStyle.css">
-        <link rel="stylesheet" href="../assets/css/ProfilePageStyle.css">
-        
     </head>
 
     <body>
@@ -53,6 +47,7 @@ if ($identity['type'] === 'stranger') {
                         </div>
                         
                         <form id="checkoutForm" action="orderConfirmation.php" method="POST">
+                            <input type="hidden" name="csrf_token" value="<?= htmlspecialchars(generateCsrfToken()) ?>">
                             <div class="formSection">
                                 <h3>Contact Details</h3>
                                 
@@ -211,7 +206,13 @@ if ($identity['type'] === 'stranger') {
                             if ($g_result->num_rows > 0) {
                                 $id_value  = $g_result->fetch_assoc()['guest_id'];
                                 $bind_type = 'i';
+                            } else {
+                                // Guest not found in DB — redirect to start fresh
+                                header("Location: index.php?error=session_expired");
+                                exit;
                             }
+                        } else {
+                            $bind_type = 'i'; // registered users always integer
                         }
 
                         $cartStmt = $conn->prepare("
@@ -299,7 +300,68 @@ if ($identity['type'] === 'stranger') {
 
         </main>
 
+        <!--
         <script src="../assets/js/orderAgainModal.js"></script>
+        -->
+        <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const promoInput = document.querySelector('.promoInput');
+            const applyBtn   = document.querySelector('.applyPromoBtn');
+            const discountEl = document.querySelector('.discount span:last-child');
+            const totalEl    = document.querySelector('.totalFinal span:last-child');
+
+            if (!applyBtn) return;
+
+            applyBtn.addEventListener('click', function () {
+                const code = promoInput ? promoInput.value.trim() : '';
+                if (!code) {
+                    alert('Please enter a promo code.');
+                    return;
+                }
+
+                applyBtn.disabled = true;
+                applyBtn.textContent = 'Checking...';
+
+                const rawTotal = document.querySelector('.totalFinal span:last-child').textContent.replace(/[₱,]/g, '');
+                const currentSubtotal = parseFloat(rawTotal) - 150;
+
+                fetch('../backend/apply_voucher.php', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                    body: 'code=' + encodeURIComponent(code) + '&subtotal=' + currentSubtotal.toFixed(2)
+                })
+
+                .then(r => r.json())
+                .then(data => {
+                    if (data.success) {
+                        if (discountEl) discountEl.textContent = '- ₱' + parseFloat(data.discount).toFixed(2);
+                        if (totalEl)    totalEl.textContent   = '₱' + parseFloat(data.new_total).toFixed(2);
+                        promoInput.disabled  = true;
+                        applyBtn.textContent = '✓ Applied';
+                        // Store voucher code in a hidden field so orderConfirmation.php can use it
+                        let hidden = document.getElementById('appliedVoucherCode');
+                        if (!hidden) {
+                            hidden = document.createElement('input');
+                            hidden.type = 'hidden';
+                            hidden.name = 'voucher_code';
+                            hidden.id   = 'appliedVoucherCode';
+                            document.getElementById('checkoutForm').appendChild(hidden);
+                        }
+                        hidden.value = code;
+                    } else {
+                        alert(data.message || 'Invalid promo code.');
+                        applyBtn.disabled    = false;
+                        applyBtn.textContent = 'Apply';
+                    }
+                })
+                .catch(() => {
+                    alert('Could not validate the promo code. Please try again.');
+                    applyBtn.disabled    = false;
+                    applyBtn.textContent = 'Apply';
+                });
+            });
+        });
+        </script>
         <?php include '../components/footer.php'; ?>
     </body>
 </html>

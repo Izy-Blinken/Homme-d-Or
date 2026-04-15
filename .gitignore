@@ -31,3 +31,5 @@ npm-debug.log*
 composer.phar
 composer-setup.php
 vendor/
+
+backend/config.php

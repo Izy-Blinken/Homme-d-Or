@@ -42,7 +42,11 @@ if (!$receiver_id) {
     $receiver_type = 'superadmin';
 }
 
-mysqli_query($conn, "INSERT INTO admin_messages (session_id, sender_id, sender_type, receiver_id, receiver_type, sender_name, content)
+$result = mysqli_query($conn, "INSERT INTO admin_messages (session_id, sender_id, sender_type, receiver_id, receiver_type, sender_name, content)
      VALUES ('$session_id', '$user_id', 'user', '$receiver_id', '$receiver_type', '$sender_name', '$safe_content')");
 
-echo json_encode(['success' => true]);
+if ($result) {
+    echo json_encode(['success' => true]);
+} else {
+    echo json_encode(['success' => false, 'error' => mysqli_error($conn)]);
+}

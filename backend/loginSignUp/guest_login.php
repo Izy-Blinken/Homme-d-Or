@@ -3,15 +3,11 @@ if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
-// 1. Connect to the database so we can register the guest
 include_once '../db_connect.php';
 
-// 2. Generate the unique ID
 $new_guest_id = uniqid('guest_', true);
 
-// 3. Formally insert the guest into the database's `guests` table
-// (This satisfies the foreign key constraint!)
-$stmt = $conn->prepare("INSERT INTO guests (guest_id) VALUES (?)");
+$stmt = $conn->prepare("INSERT INTO guests (session_id) VALUES (?)");
 $stmt->bind_param("s", $new_guest_id);
 $stmt->execute();
 

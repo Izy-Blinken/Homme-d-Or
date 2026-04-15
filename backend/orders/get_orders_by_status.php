@@ -2,14 +2,27 @@
 session_start();
 include '../db_connect.php';
 
-// Check if user is logged in
-if (empty($_SESSION['user_id'])) {
+// Allow both registered users and guests
+$identity = getCurrentUserId();
+if ($identity['type'] === 'stranger') {
     http_response_code(401);
     echo json_encode(['error' => 'Unauthorized']);
     exit;
 }
 
-$user_id = $_SESSION['user_id'];
+$id_column = ($identity['type'] === 'user_id') ? 'user_id' : 'guest_id';
+$id_value  = $identity['id'];
+
+// For guests, resolve session string → real integer guest_id
+if ($id_column === 'guest_id') {
+    $g = $conn->prepare("SELECT guest_id FROM guests WHERE session_id = ?");
+    $g->bind_param("s", $id_value);
+    $g->execute();
+    $g_row = $g->get_result()->fetch_assoc();
+    $g->close();
+    $id_value = $g_row ? intval($g_row['guest_id']) : 0;
+}
+
 $status = isset($_GET['status']) ? trim($_GET['status']) : '';
 
 if (empty($status)) {
@@ -45,7 +58,7 @@ $query = "
     SELECT o.*, p.method, p.payment_status, p.paid_at
     FROM orders o
     LEFT JOIN payments p ON p.order_id = o.order_id
-    WHERE o.user_id = ? AND o.order_status IN ('$statusList')
+    WHERE o.$id_column = ? AND o.order_status IN ('$statusList')
     ORDER BY o.created_at DESC
 ";
 
@@ -56,7 +69,7 @@ if (!$stmt) {
     exit;
 }
 
-$stmt->bind_param("s", $user_id);
+$stmt->bind_param("i", $id_value);
 $stmt->execute();
 $result = $stmt->get_result();
 

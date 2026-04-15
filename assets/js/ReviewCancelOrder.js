@@ -73,8 +73,7 @@ function submitReview(event) {
     formData.append('rating', currentRating);
     formData.append('comment', reviewText);
 
-    fetch('/Homme-d-Or/backend/products/submit_review.php', {
-        method: 'POST',
+    fetch('../backend/products/submit_review.php', {        method: 'POST',
         body: formData
     })
     .then(res => res.json())
@@ -115,18 +114,29 @@ function closeCancelModal() {
 
 function submitCancellation(event) {
     event.preventDefault();
-    const selectedReason = document.querySelector('input[name="cancelReason"]:checked').value;
+    const checkedRadio = document.querySelector('input[name="cancelReason"]:checked');
+    if (!checkedRadio) {
+        showGeneralToast('Please select a cancellation reason.', 'error');
+        return;
+    }
+    const selectedReason = checkedRadio.value;
     const otherReason = document.getElementById('otherReason').value;
     const orderId = document.getElementById('cancelOrderId').value;
     const finalReason = (selectedReason === 'Other' && otherReason)
         ? otherReason
         : selectedReason;
 
-    fetch('/Homme-d-Or/backend/cancelOrder.php', {
+    const csrfToken = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content') || '';
+    fetch('../backend/cancelOrder.php', {
     method: 'POST',
-    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+    headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'X-CSRF-Token': csrfToken
+    },
     body: `order_id=${orderId}&reason=${encodeURIComponent(finalReason)}`
+
 })
+
 .then(res => {
     console.log('Status:', res.status);
     return res.text();

@@ -12,8 +12,11 @@ if (!$order_id || !$new_status) {
     exit;
 }
 
-$current = mysqli_fetch_assoc(mysqli_query($conn,
-    "SELECT order_status, user_id FROM orders WHERE order_id = '$order_id'"));
+$stmt_check = $conn->prepare("SELECT order_status, user_id FROM orders WHERE order_id = ?");
+$stmt_check->bind_param("i", $order_id);
+$stmt_check->execute();
+$current = $stmt_check->get_result()->fetch_assoc();
+$stmt_check->close();
 
 if (!$current) {
     $_SESSION['error'] = 'Order not found.';
@@ -40,10 +43,10 @@ if (!isset($allowed[$current_status]) || !in_array($new_status, $allowed[$curren
     exit;
 }
 
-mysqli_query($conn, "UPDATE orders SET
-    order_status = '$new_status',
-    status_updated_at = NOW()
-    WHERE order_id = '$order_id'");
+$stmt_upd = $conn->prepare("UPDATE orders SET order_status = ?, status_updated_at = NOW() WHERE order_id = ?");
+$stmt_upd->bind_param("si", $new_status, $order_id);
+$stmt_upd->execute();
+$stmt_upd->close();
 
 // ── ORDER STATUS NOTIFICATION ──────────────────────────────────────
 // Only notify registered users (guests have no user_id)

@@ -30,6 +30,27 @@ if (!$chkProduct->get_result()->fetch_assoc()) {
 }
 $chkProduct->close();
 
+// Verify the user has actually purchased and received/completed this product
+$chkPurchase = $conn->prepare("
+    SELECT oi.item_id
+    FROM order_items oi
+    JOIN orders o ON o.order_id = oi.order_id
+    WHERE oi.product_id = ?
+      AND o.user_id = ?
+      AND o.order_status IN ('received', 'completed')
+    LIMIT 1
+");
+
+$chkPurchase->bind_param("ii", $product_id, $user_id);
+$chkPurchase->execute();
+$purchased = $chkPurchase->get_result()->fetch_assoc();
+$chkPurchase->close();
+
+if (!$purchased) {
+    echo json_encode(['success' => false, 'message' => 'You can only review products you have purchased and received.']);
+    exit;
+}
+
 // Check if already reviewed
 $chkStmt = $conn->prepare("SELECT review_id FROM product_reviews WHERE user_id = ? AND product_id = ?");
 $chkStmt->bind_param("ii", $user_id, $product_id);

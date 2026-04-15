@@ -1,6 +1,21 @@
-    <!DOCTYPE html>
-    <html lang="en">
-    <head>
+<?php
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+
+include_once '../backend/db_connect.php';
+
+$identity = getCurrentUserId();
+
+// Redirect strangers
+if ($identity['type'] === 'stranger') {
+    header("Location: index.php?login_required=true");
+    exit;
+}
+?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -77,7 +92,6 @@
 
     <body>
     <?php 
-    session_start();
     include '../backend/db_connect.php';
 
     $identity = getCurrentUserId();
@@ -111,7 +125,22 @@
         die("Query preparation failed: " . $conn->error);
     }
 
-    $stmt->bind_param("s", $id_value);
+    $bind_type = ($id_column === 'user_id') ? 'i' : 's';
+
+    // Guests: resolve session string → real integer guest_id
+    if ($id_column === 'guest_id') {
+        $g = $conn->prepare("SELECT guest_id FROM guests WHERE session_id = ?");
+        $g->bind_param("s", $id_value);
+        $g->execute();
+        $g_result = $g->get_result();
+        $g->close();
+        if ($g_result->num_rows > 0) {
+            $id_value  = intval($g_result->fetch_assoc()['guest_id']);
+            $bind_type = 'i';
+        }
+    }
+
+    $stmt->bind_param($bind_type, $id_value);
     $stmt->execute();
     $result = $stmt->get_result();
 
