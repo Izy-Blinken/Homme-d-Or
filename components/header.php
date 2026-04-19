@@ -129,7 +129,7 @@ $currentPage = basename($_SERVER['PHP_SELF']);
                 <div class="dropdown-menu profile-menu">
                     <?php if (!empty($_SESSION['user_id'])): ?>
                         <div class="profile-header">
-                            <?= htmlspecialchars($_SESSION['user_fname']) ?>
+                            <?= htmlspecialchars($_SESSION['user_fname'] ?? $_SESSION['admin_fname'] ?? 'User') ?>
                         </div>
                         <p class="profile-subtext">Welcome!</p>
                         <a href="../backend/loginSignUp/logout.php" class="profile-login-btn">Logout</a>

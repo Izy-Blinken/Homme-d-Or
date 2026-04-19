@@ -280,7 +280,6 @@
                         <div class="chatAvatar"><i class="fa-solid fa-user"></i></div>
                         <div class="chatHeaderText">
                             <h3>Customer Support</h3>
-                            <p class="chatStatus">Online just now</p>
                         </div>
                     </div>
                     <button class="chatCloseBtn" id="chatCloseID"><i class="fa-solid fa-xmark"></i></button>

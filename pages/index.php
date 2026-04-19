@@ -355,7 +355,7 @@ if ($reviews_result) {
                     </div>
                     <div class="promo-content">
                         <h3>Holiday gifts selection</h3>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. In commodo porta mi, ut vestibulum urna eros. Nam in lacinia est, vestibulum urna eros, sagittis et mollis gravida, tincidunt a lorem.</p>
+                        <p>Discover the perfect gift for the man who deserves the finest. Our Holiday Gift Selection brings together an exclusive range of men's fragrances — bold, sophisticated, and unforgettable. From warm woody notes to fresh citrus bursts, each scent is crafted to leave a lasting impression. This holiday season, give more than a gift — give an experience he'll carry with him every day.</p>
                         <a href="shop.php" class="promo-link">DISCOVER</a>
                     </div>
                 </div>
@@ -367,7 +367,7 @@ if ($reviews_result) {
                     </div>
                     <div class="promo-content">
                         <h3>Exclusive offers</h3>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. In commodo porta mi, ut vestibulum urna eros. Nam in lacinia est, vestibulum urna eros, sagittis et mollis gravida, tincidunt a lorem.</p>
+                        <p>Unwrap the season's most irresistible deals with our Holiday Exclusive Offers. For a limited time, enjoy special bundles, complimentary gift wrapping, and unbeatable prices on our finest men's fragrances. Whether you're treating yourself or someone special, now is the perfect moment to indulge in luxury without compromise. Don't miss out — these offers are as rare as the scents themselves.</p>
                         <a href="shop.php" class="promo-link">DISCOVER</a>
                     </div>
                 </div>
@@ -479,7 +479,7 @@ if ($reviews_result) {
                     </div>
                     <div class="promo-content">
                         <h3>Engraving Compliment</h3>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. In commodo porta mi, ut vestibulum urna eros. Nam in lacinia est, vestibulum urna eros, sagittis et mollis gravida, tincidunt a lorem.</p>
+                        <p>Leave your mark with something truly personal. Our Engraving Compliment service lets you add a custom message or name to his favorite fragrance bottle, turning a luxurious scent into a timeless keepsake. Perfect for anniversaries, birthdays, or the holiday season — because some gifts deserve to be remembered forever. Make it his, make it meaningful, make it unforgettable.</p>
                         <a href="#" class="promo-link">DISCOVER</a>
                     </div>
                 </div>
@@ -491,7 +491,7 @@ if ($reviews_result) {
                     </div>
                     <div class="promo-content">
                         <h3>Art of Gifting</h3>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. In commodo porta mi, ut vestibulum urna eros. Nam in lacinia est, vestibulum urna eros, sagittis et mollis gravida, tincidunt a lorem.</p>
+                        <p>Giving a gift is more than just a gesture — it is an art. The Art of Gifting celebrates the thoughtfulness behind every carefully chosen fragrance, beautifully presented in elegant packaging designed to impress from the very first glance. Each bottle tells a story, each scent evokes an emotion, and every detail is crafted with intention. Because the perfect gift is not just something you give — it is something they will never forget.</p>
                         <a href="#" class="promo-link">DISCOVER</a>
                     </div>
                 </div>

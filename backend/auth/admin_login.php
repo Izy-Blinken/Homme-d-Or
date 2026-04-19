@@ -42,6 +42,7 @@ if ($admin && password_verify($password, $admin['user_password'])) {
 
     $_SESSION['admin_id'] = $admin['admin_id'];
     $_SESSION['user_id'] = $admin['user_id'];
+    $_SESSION['user_fname'] = $admin['fname'];
     $_SESSION['admin_username'] = $admin['username'];
     $_SESSION['is_superadmin'] = false;
     header('Location: ../../pages/Admin Pages/adminSide.php');
