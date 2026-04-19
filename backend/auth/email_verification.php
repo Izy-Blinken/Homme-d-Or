@@ -52,6 +52,55 @@ unset(
     $_SESSION['pending_user_fname']
 );
 
+// ── GUEST MIGRATION ───────────────────────────────────────────────
+if (!empty($_SESSION['guest_id'])) {
+    $guest_session_id = mysqli_real_escape_string($conn, $_SESSION['guest_id']);
+
+    $g = mysqli_fetch_assoc(mysqli_query($conn,
+        "SELECT guest_id FROM guests WHERE session_id = '$guest_session_id'"
+    ));
+
+    if ($g) {
+        $guest_id_int = (int)$g['guest_id'];
+
+        // Migrate cart
+        mysqli_query($conn, "
+            INSERT INTO cart (user_id, product_id, quantity)
+            SELECT '$user_id', product_id, quantity
+            FROM cart c WHERE c.guest_id = '$guest_id_int'
+            ON DUPLICATE KEY UPDATE cart.quantity = cart.quantity + VALUES(quantity)
+        ");
+        mysqli_query($conn, "DELETE FROM cart WHERE guest_id = '$guest_id_int'");
+
+        // Migrate orders
+        mysqli_query($conn, "
+            UPDATE orders SET user_id = '$user_id', guest_id = NULL
+            WHERE guest_id = '$guest_id_int'
+        ");
+
+        // Migrate guest notifications
+        $notifs = mysqli_query($conn, "
+            SELECT notif_type, notif_message, reference_id, is_read, created_at
+            FROM guest_notifications
+            WHERE session_id = '$guest_session_id'
+        ");
+        while ($notif = mysqli_fetch_assoc($notifs)) {
+            $type    = mysqli_real_escape_string($conn, $notif['notif_type']);
+            $msg     = mysqli_real_escape_string($conn, $notif['notif_message']);
+            $ref     = $notif['reference_id'] ? (int)$notif['reference_id'] : 'NULL';
+            $is_read = (int)$notif['is_read'];
+            $created = mysqli_real_escape_string($conn, $notif['created_at']);
+            mysqli_query($conn, "
+                INSERT INTO notifications (user_id, notif_type, notif_message, reference_id, is_read, created_at)
+                VALUES ('$user_id', '$type', '$msg', $ref, '$is_read', '$created')
+            ");
+        }
+        mysqli_query($conn, "DELETE FROM guest_notifications WHERE session_id = '$guest_session_id'");
+
+        unset($_SESSION['guest_id']);
+    }
+}
+
 // Set logged-in session
 $_SESSION['user_id'] = $user['user_id'];
 $_SESSION['user_fname'] = $user['fname'];

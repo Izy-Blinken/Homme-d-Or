@@ -17,6 +17,8 @@ $id_column = ($identity['type'] === 'user_id') ? 'user_id' : 'guest_id';
 $id_value  = $identity['id'];
 $bind_type = 'i'; // user_id is always integer
 
+error_log("viewAllTabs — identity type=" . $identity['type'] . " | id_value=" . $id_value);
+
 // For guests, resolve session string → real integer guest_id
 if ($id_column === 'guest_id') {
     $g = $conn->prepare("SELECT guest_id FROM guests WHERE session_id = ?");

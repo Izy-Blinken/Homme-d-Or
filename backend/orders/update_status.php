@@ -49,11 +49,42 @@ $stmt_upd->execute();
 $stmt_upd->close();
 
 // ── ORDER STATUS NOTIFICATION ──────────────────────────────────────
-// Only notify registered users (guests have no user_id)
+$status_label = ucfirst($new_status);
+$order_num = str_pad($order_id, 6, '0', STR_PAD_LEFT);
+
 if ($order_user_id) {
-    $status_label = ucfirst($new_status);
+    // Registered user — save to DB
     insertNotif($conn, $order_user_id, 'order_status',
-        "Your order #{$order_id} has been updated to: {$status_label}.", $order_id);
+        "Your order #{$order_num} has been updated to: {$status_label}.", $order_id);
+} else {
+    // Guest — fetch guest_id from order and save to their session
+    $g_stmt = $conn->prepare("SELECT guest_id FROM orders WHERE order_id = ?");
+    $g_stmt->bind_param("i", $order_id);
+    $g_stmt->execute();
+    $g_row = $g_stmt->get_result()->fetch_assoc();
+    $g_stmt->close();
+
+    if ($g_row && $g_row['guest_id']) {
+        $guest_id = $g_row['guest_id'];
+
+        // Find the guest's session and inject the notification
+        $gs = $conn->prepare("SELECT session_id FROM guests WHERE guest_id = ?");
+        $gs->bind_param("i", $guest_id);
+        $gs->execute();
+        $gs_row = $gs->get_result()->fetch_assoc();
+        $gs->close();
+
+        if ($gs_row) {
+            // Save pending notif to DB for guest to pick up on next load
+            $notif_msg = mysqli_real_escape_string($conn,
+                "Your order #{$order_num} has been updated to: {$status_label}.");
+            $session_id = mysqli_real_escape_string($conn, $gs_row['session_id']);
+            mysqli_query($conn, "
+                INSERT INTO guest_notifications (session_id, notif_type, notif_message, reference_id, is_read, created_at)
+                VALUES ('$session_id', 'order_status', '$notif_msg', $order_id, 0, NOW())
+            ");
+        }
+    }
 }
 
 $_SESSION['success'] = 'Order status updated.';

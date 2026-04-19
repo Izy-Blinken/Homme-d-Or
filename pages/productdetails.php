@@ -223,46 +223,17 @@ if (empty($allImages)) {
                 <div class="reviews-header">
                     <h2>Customer Reviews</h2>
                     <div class="aggregate-rating">
-                        <div class="rating-score">4.8</div>
-                        <div class="stars">
-                            <i class="fa-solid fa-star"></i>
-                            <i class="fa-solid fa-star"></i>
-                            <i class="fa-solid fa-star"></i>
-                            <i class="fa-solid fa-star"></i>
-                            <i class="fa-solid fa-star-half-stroke"></i>
-                        </div>
-                        <p>Based on 24 reviews</p>
+                        <div class="rating-score" id="pdRatingScore">—</div>
+                        <div class="stars" id="pdStars"></div>
+                        <p id="pdReviewCount">Loading...</p>
                         <a href="viewReview.php?product_id=<?php echo $product_id; ?>" style="text-decoration: none;">
                             <button class="write-review-btn">Read All Reviews</button>
                         </a>
                     </div>
                 </div>
 
-                <div class="reviews-container">
-                    <div class="review-box">
-                        <img src="../assets/images/products_images/customerPic.png" alt="User">
-                        <div class="review-text">
-                            <div class="review-title-row">
-                                <h4>Wally B.</h4>
-                                <div class="review-stars">
-                                    <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
-                                </div>
-                            </div>
-                            <p>Long lasting smell. Worth the price.</p>
-                        </div>
-                    </div>
-                    <div class="review-box">
-                        <img src="../assets/images/products_images/customerPic.png" alt="User">
-                        <div class="review-text">
-                            <div class="review-title-row">
-                                <h4>Bayola W.</h4>
-                                <div class="review-stars">
-                                    <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-regular fa-star"></i>
-                                </div>
-                            </div>
-                            <p>Yiz galing. Highly recommended.</p>
-                        </div>
-                    </div>
+                <div class="reviews-container" id="pdReviewCards">
+                    <!-- dynamically populated -->
                 </div>
             </section>
 
@@ -360,8 +331,82 @@ if (empty($allImages)) {
                 })
                 .catch(err => console.error('Wishlist error:', err));
             }
-
         </script>
+
+        <script>
+        // ── Dynamic Reviews Section ───────────────────────────────────
+        (function () {
+            const PRODUCT_ID = <?= (int)$product_id ?>;
+
+            function renderStars(rating) {
+                let html = '';
+                for (let i = 1; i <= 5; i++) {
+                    if (rating >= i)           html += '<i class="fa-solid fa-star"></i>';
+                    else if (rating >= i - 0.5) html += '<i class="fa-solid fa-star-half-stroke"></i>';
+                    else                        html += '<i class="fa-regular fa-star"></i>';
+                }
+                return html;
+            }
+
+            function maskName(fname, lname) {
+                const mask = s => s.length <= 2
+                    ? s[0] + '*'
+                    : s[0] + '*'.repeat(s.length - 2) + s[s.length - 1];
+                return mask(fname) + ' ' + mask(lname);
+            }
+
+            document.addEventListener('DOMContentLoaded', function () {
+                fetch('../backend/products/get_reviews.php?product_id=' + PRODUCT_ID)
+                    .then(r => r.json())
+                    .then(data => {
+                        if (!data.success) return;
+
+                        const stats   = data.stats;
+                        const reviews = data.reviews;
+
+                        // ── Aggregate rating ──
+                        document.getElementById('pdRatingScore').textContent =
+                            stats.total > 0 ? stats.average : '—';
+                        document.getElementById('pdStars').innerHTML =
+                            stats.total > 0
+                                ? renderStars(stats.average)
+                                : '<i class="fa-regular fa-star"></i>'.repeat(5);
+                        document.getElementById('pdReviewCount').textContent =
+                            stats.total > 0
+                                ? 'Based on ' + stats.total + ' reviews'
+                                : 'No reviews yet';
+
+                        // ── Review cards (show latest 2) ──
+                        const container = document.getElementById('pdReviewCards');
+                        if (!reviews || reviews.length === 0) {
+                            container.innerHTML = '<p style="color:#aaa; text-align:center; padding:1rem;">No reviews yet.</p>';
+                            return;
+                        }
+
+                        container.innerHTML = reviews.slice(0, 2).map(r => {
+                            const photo = r.profile_photo
+                                ? '../assets/images/profiles/' + r.profile_photo
+                                : '../assets/images/products_images/customerPic.png';
+                            return `
+                            <div class="review-box">
+                                <img src="${photo}" alt="User">
+                                <div class="review-text">
+                                    <div class="review-title-row">
+                                        <h4>${maskName(r.fname, r.lname)}</h4>
+                                        <div class="review-stars">${renderStars(r.rating)}</div>
+                                    </div>
+                                    <p>${r.comment || ''}</p>
+                                </div>
+                            </div>`;
+                        }).join('');
+                    })
+                    .catch(() => {
+                        document.getElementById('pdReviewCount').textContent = 'Could not load reviews.';
+                    });
+            });
+        })();
+        </script>
+
         <div id="generalToast" class="generalToast"></div>
     </body>
 </html>

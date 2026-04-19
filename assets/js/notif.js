@@ -6,8 +6,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const markAllReadBtn = document.getElementById('mark-all-read');
 
     const isLoggedIn = notifBell.dataset.loggedin === 'true';
+    const isGuest = notifBell.dataset.isguest === 'true';
 
-    if (!isLoggedIn) return;
+    if (!isLoggedIn && !isGuest) return;
 
     // ── ICON MAP ───────────────────────────────────────────────────
     function getNotifIcon(type) {
@@ -110,7 +111,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // BELL TOGGLE
     notifBell.addEventListener('click', (e) => {
         e.preventDefault();
-        if (!isLoggedIn) return;
+        if (!isLoggedIn && !isGuest) return;
         notifPanel.classList.toggle('open');
         if (notifPanel.classList.contains('open')) loadNotifications();
     });

@@ -41,6 +41,9 @@ $_SESSION['user_fname'] = $user['fname'];
 $_SESSION['user_email'] = $user['email'];
 $_SESSION['user_username'] = $user['username'];
 
+// Clear guest session on login
+unset($_SESSION['guest_id']);
+
 // Remember me
 if ($remember) {
     $token = bin2hex(random_bytes(32));

@@ -1,6 +1,5 @@
 <?php
-function createPayMongoCheckout($amount_in_pesos, $description, $success_url, $cancel_url) {
-    // Key is defined in backend/config.php — include it if not already loaded
+function createPayMongoCheckout($amount_in_pesos, $description, $success_url, $cancel_url, $billing = []) {
     if (!defined('PAYMONGO_SECRET_KEY')) {
         require_once __DIR__ . '/config.php';
     }
@@ -17,7 +16,12 @@ function createPayMongoCheckout($amount_in_pesos, $description, $success_url, $c
                 'description'          => $description,
                 'statement_descriptor' => 'Homme dOr',
                 'payment_method_types' => ['gcash'],
-                'line_items'           => [
+                'billing' => [
+                    'name'  => $billing['name']  ?? '',
+                    'email' => $billing['email'] ?? '',
+                    'phone' => $billing['phone'] ?? '',
+                ],
+                'line_items' => [
                     [
                         'currency' => 'PHP',
                         'amount'   => $amount_in_centavos,
@@ -45,12 +49,13 @@ function createPayMongoCheckout($amount_in_pesos, $description, $success_url, $c
     $http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
     curl_close($ch);
 
-    // TEMP DEBUG
-    if ($http_code !== 201) {
-        error_log("PayMongo error — HTTP $http_code: $response");
-    }
-    
+    // TEMP DEBUG — remove after fix
+   
+
     $data = json_decode($response, true);
+    error_log("PayMongo full response: " . $response);
+    error_log("PayMongo HTTP: " . $http_code);
+    error_log("Payload sent: " . $payload);
     return $data['data']['attributes']['checkout_url'] ?? null;
 }
 ?>

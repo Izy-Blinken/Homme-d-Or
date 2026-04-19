@@ -59,11 +59,51 @@ $product_image = $product['image_url']
     <link rel="stylesheet" href="../assets/css/HeaderHeroFooterStyle.css">
     <link rel="stylesheet" href="../assets/css/ReviewCancelOrderStyle.css">
     <link rel="stylesheet" href="../assets/css/RegLoginModalStyle.css">
+    <style>
+        .vr-helpful-row {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            justify-content: flex-end;
+            flex-shrink: 0;
+        }
+        .vr-like-btn {
+            width: 2.4rem;
+            height: 2.4rem;
+            border-radius: 50%;
+            border: 1px solid rgba(201, 169, 97, 0.3);
+            background: rgba(201, 169, 97, 0.08);
+            color: #c9a961;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: background 0.2s ease, transform 0.2s ease;
+        }
+        .vr-like-btn:hover {
+            background: rgba(201, 169, 97, 0.18);
+            transform: translateY(-1px);
+        }
+        .vr-helpful-text {
+            font-size: 0.85rem;
+            color: #94a3b8;
+            white-space: nowrap;
+        }
+        .vr-card-stars {
+            margin-bottom: 1rem;
+            display: flex;
+            gap: 0.25rem;
+        }
+        .vr-card-stars i {
+            color: #c9a961;
+            font-size: 0.95rem;
+        }
+    </style>
 </head>
 <body>
     <?php include '../components/header.php'; ?>
 
-    <main class="mainBG">
+    <main style="background-image: url('../assets/images/brand_images/bg-image.jpg');">
         <a href="javascript:history.back()" class="vr-back-btn">
             <i class="fa-solid fa-chevron-left"></i> Back
         </a>
@@ -77,32 +117,12 @@ $product_image = $product['image_url']
                     <h2 class="vr-product-name"><?= htmlspecialchars($product['product_name']) ?></h2>
                     <div class="vr-score-wrap">
                         <span class="vr-avg-score" id="vrAvgScore">—</span>
-                        <div class="vr-stars" id="vrStarDisplay"></div>
+                        <div class="vr-stars" id="vrAvgStars"></div>
                     </div>
-                    <p class="vr-review-count" id="vrReviewCount">Loading reviews...</p>
+                    <p class="vr-review-count" id="vrReviewCount">Loading...</p>
+                    <div class="vr-breakdown" id="vrBreakdown"></div>
 
-                    <div class="vr-breakdown" id="vrBreakdown">
-                        <?php for ($i = 5; $i >= 1; $i--): ?>
-                        <div class="vr-bar-row">
-                            <span class="vr-bar-label"><?= $i ?> <i class="fa-solid fa-star"></i></span>
-                            <div class="vr-bar-track">
-                                <div class="vr-bar-fill" id="vrBar<?= $i ?>" style="width:0%"></div>
-                            </div>
-                            <span class="vr-bar-count" id="vrBarCount<?= $i ?>">0</span>
-                        </div>
-                        <?php endfor; ?>
-                    </div>
-
-                    <?php if ($is_logged_in): ?>
-                    <button class="vr-write-btn" id="openReviewModal">
-                        <i class="fa-solid fa-pen"></i>
-                        <?= $existing_review ? 'Edit Your Review' : 'Write a Review' ?>
-                    </button>
-                    <?php else: ?>
-                    <p class="vr-login-prompt">
-                        <a href="#" id="triggerLogin">Log in</a> to leave a review.
-                    </p>
-                    <?php endif; ?>
+                    
                 </aside>
 
                 <!-- Feed -->
@@ -117,9 +137,9 @@ $product_image = $product['image_url']
                     </div>
 
                     <div id="vrReviewList" class="vr-review-list">
-                        <div class="vr-loading">
-                            <i class="fa-solid fa-spinner fa-spin"></i> Loading reviews...
-                        </div>
+                        <p style="color:#aaa; text-align:center; padding:2rem;">
+                            Loading reviews...
+                        </p>
                     </div>
                 </div>
 
@@ -177,109 +197,7 @@ $product_image = $product['image_url']
     <?php include '../components/footer.php'; ?>
 
     <script>
-    const PRODUCT_ID = <?= $product_id ?>;
     const RATING_LABELS = ['', 'Poor', 'Fair', 'Good', 'Very Good', 'Excellent'];
-    let allReviews = [];
-
-    //  Fetch & render reviews 
-    function fetchReviews() {
-        fetch(`../backend/products/get_reviews.php?product_id=${PRODUCT_ID}`)
-            .then(r => r.json())
-            .then(data => {
-                if (!data.success) return;
-                allReviews = data.reviews;
-                renderStats(data.stats);
-                renderReviews(allReviews);
-            })
-            .catch(() => {
-                document.getElementById('vrReviewList').innerHTML =
-                    '<p class="vr-empty">Failed to load reviews.</p>';
-            });
-    }
-
-    function renderStats(stats) {
-        document.getElementById('vrAvgScore').textContent = stats.total > 0 ? stats.average : '—';
-        document.getElementById('vrReviewCount').textContent =
-            stats.total > 0 ? `Based on ${stats.total} review${stats.total !== 1 ? 's' : ''}` : 'No reviews yet';
-
-        renderStars('vrStarDisplay', stats.average);
-
-        for (let i = 1; i <= 5; i++) {
-            const count = stats.breakdown[i] || 0;
-            const pct = stats.total > 0 ? Math.round((count / stats.total) * 100) : 0;
-            document.getElementById(`vrBar${i}`).style.width = pct + '%';
-            document.getElementById(`vrBarCount${i}`).textContent = count;
-        }
-    }
-
-    function renderStars(containerId, rating) {
-        const el = document.getElementById(containerId);
-        if (!el) return;
-        let html = '';
-        for (let i = 1; i <= 5; i++) {
-            if (rating >= i) {
-                html += '<i class="fa-solid fa-star"></i>';
-            } else if (rating >= i - 0.5) {
-                html += '<i class="fa-solid fa-star-half-stroke"></i>';
-            } else {
-                html += '<i class="fa-regular fa-star"></i>';
-            }
-        }
-        el.innerHTML = html;
-    }
-
-    function renderReviews(reviews) {
-        const list = document.getElementById('vrReviewList');
-        if (!reviews.length) {
-            list.innerHTML = '<p class="vr-empty">No reviews yet. Be the first to review this product!</p>';
-            return;
-        }
-
-        list.innerHTML = reviews.map(r => {
-            const initials = (r.fname[0] || '') + (r.lname ? r.lname[0] : '');
-            const date = new Date(r.created_at).toLocaleDateString('en-US', {
-                year: 'numeric', month: 'long', day: 'numeric'
-            });
-            let starsHtml = '';
-            for (let i = 1; i <= 5; i++) {
-                starsHtml += `<i class="fa-${i <= r.rating ? 'solid' : 'regular'} fa-star"></i>`;
-            }
-            return `
-                <div class="vr-card">
-                    <div class="vr-card-header">
-                        <div class="vr-user-info">
-                            <div class="vr-avatar">${initials.toUpperCase()}</div>
-                            <div class="vr-name-date">
-                                <h4>${escHtml(r.fname)} ${escHtml(r.lname)}
-                                    <i class="fa-solid fa-circle-check vr-verified" title="Verified Buyer"></i>
-                                </h4>
-                                <span>${date}</span>
-                            </div>
-                        </div>
-                        <div class="vr-card-stars">${starsHtml}</div>
-                    </div>
-                    ${r.comment ? `<p class="vr-card-body">${escHtml(r.comment)}</p>` : ''}
-                </div>
-            `;
-        }).join('');
-    }
-
-    function escHtml(str) {
-        return String(str)
-            .replace(/&/g, '&amp;')
-            .replace(/</g, '&lt;')
-            .replace(/>/g, '&gt;')
-            .replace(/"/g, '&quot;');
-    }
-
-    //  Sort filter 
-    document.getElementById('vrFilter').addEventListener('change', function () {
-        let sorted = [...allReviews];
-        if (this.value === 'highest') sorted.sort((a, b) => b.rating - a.rating);
-        else if (this.value === 'lowest') sorted.sort((a, b) => a.rating - b.rating);
-        else sorted.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
-        renderReviews(sorted);
-    });
 
     //  Modal open/close 
     const modal = document.getElementById('reviewModal');
@@ -343,49 +261,121 @@ $product_image = $product['image_url']
         });
     });
 
-    // Submit review
+    // Submit review (static preview only)
     submitBtn && submitBtn.addEventListener('click', function () {
-        const rating = parseInt(selectedRatingInput.value);
-        const comment = document.getElementById('reviewComment').value.trim();
+        alert('Review submission is not available in this static preview.');
+    });
+    </script>
 
-        if (!rating) {
-            ratingText.textContent = 'Please select a rating.';
-            ratingText.style.color = '#e74c3c';
+    <script>
+    const PRODUCT_ID = <?= (int)$product_id ?>;
+    let allReviews = [];
+
+    function maskName(fname, lname) {
+        const mask = s => s.length <= 2
+            ? s[0] + '*'
+            : s[0] + '*'.repeat(s.length - 2) + s[s.length - 1];
+        return mask(fname) + ' ' + mask(lname);
+    }
+
+    function renderStars(rating) {
+        let html = '';
+        for (let i = 1; i <= 5; i++) {
+            if (rating >= i) html += '<i class="fa-solid fa-star"></i>';
+            else if (rating >= i - 0.5) html += '<i class="fa-solid fa-star-half-stroke"></i>';
+            else html += '<i class="fa-regular fa-star"></i>';
+        }
+        return html;
+    }
+
+    function formatDate(dateStr) {
+        return new Date(dateStr).toLocaleDateString('en-US', {
+            month: 'long', day: 'numeric', year: 'numeric'
+        });
+    }
+
+    function renderReviews(reviews) {
+        const list = document.getElementById('vrReviewList');
+        if (!reviews || reviews.length === 0) {
+            list.innerHTML = '<p style="color:#aaa; text-align:center; padding:2rem;">No reviews yet.</p>';
             return;
         }
+        list.innerHTML = reviews.map(r => {
+            const initials = (r.fname[0] + r.lname[0]).toUpperCase();
+            const masked = maskName(r.fname, r.lname);
+            return `
+            <div class="vr-card">
+                <div class="vr-card-header">
+                    <div class="vr-user-info">
+                        <div class="vr-avatar">${initials}</div>
+                        <div class="vr-name-date">
+                            <h4>${masked} <i class="fa-solid fa-circle-check vr-verified" title="Verified Buyer"></i></h4>
+                            <span>${formatDate(r.created_at)}</span>
+                        </div>
+                    </div>
+                    <div class="vr-helpful-row">
+                        <button class="vr-like-btn" aria-label="Like review">
+                            <i class="fa-regular fa-thumbs-up"></i>
+                        </button>
+                        <span class="vr-helpful-text">(0) users found this review helpful</span>
+                    </div>
+                </div>
+                <div class="vr-card-stars">${renderStars(r.rating)}</div>
+                <p class="vr-card-body">${r.comment || ''}</p>
+            </div>`;
+        }).join('');
+    }
 
-        submitBtn.disabled = true;
-        submitBtn.textContent = 'Submitting...';
+    function renderSidebar(stats) {
+        document.getElementById('vrAvgScore').textContent = stats.total > 0 ? stats.average : '—';
+        document.getElementById('vrAvgStars').innerHTML = stats.total > 0
+            ? renderStars(stats.average)
+            : '<i class="fa-regular fa-star"></i>'.repeat(5);
+        document.getElementById('vrReviewCount').textContent = stats.total > 0
+            ? 'Based on ' + stats.total + ' reviews'
+            : 'No reviews yet';
 
-        const formData = new FormData();
-        formData.append('product_id', PRODUCT_ID);
-        formData.append('rating', rating);
-        formData.append('comment', comment);
+        const breakdown = document.getElementById('vrBreakdown');
+        breakdown.innerHTML = [5,4,3,2,1].map(star => {
+            const count = stats.breakdown[star] || 0;
+            const pct = stats.total > 0 ? Math.round((count / stats.total) * 100) : 0;
+            return `
+            <div class="vr-bar-row">
+                <span class="vr-bar-label">${star} <i class="fa-solid fa-star"></i></span>
+                <div class="vr-bar-track">
+                    <div class="vr-bar-fill" style="width:${pct}%"></div>
+                </div>
+                <span class="vr-bar-count">${count}</span>
+            </div>`;
+        }).join('');
+    }
 
-        fetch('../backend/products/submit_review.php', {
-            method: 'POST',
-            body: formData
-        })
-        .then(r => r.json())
-        .then(data => {
-            if (data.success) {
-                closeModal();
-                fetchReviews();
-                if (openBtn) openBtn.textContent = 'Edit Your Review';
-            } else {
-                submitBtn.disabled = false;
-                submitBtn.textContent = 'Submit Review';
-                alert(data.message || 'Failed to submit review.');
-            }
-        })
-        .catch(() => {
-            submitBtn.disabled = false;
-            submitBtn.textContent = 'Submit Review';
-            alert('Network error. Please try again.');
+    function sortReviews(reviews, mode) {
+        const sorted = [...reviews];
+        if (mode === 'highest') sorted.sort((a, b) => b.rating - a.rating);
+        else if (mode === 'lowest') sorted.sort((a, b) => a.rating - b.rating);
+        else sorted.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+        return sorted;
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        fetch('../backend/products/get_reviews.php?product_id=' + PRODUCT_ID)
+            .then(r => r.json())
+            .then(data => {
+                if (!data.success) return;
+                allReviews = data.reviews;
+                renderSidebar(data.stats);
+                renderReviews(sortReviews(allReviews, 'newest'));
+            })
+            .catch(() => {
+                document.getElementById('vrReviewList').innerHTML =
+                    '<p style="color:#aaa; text-align:center;">Failed to load reviews.</p>';
+            });
+
+        document.getElementById('vrFilter').addEventListener('change', function() {
+            renderReviews(sortReviews(allReviews, this.value));
         });
     });
-
-    fetchReviews();
     </script>
 </body>
 </html>

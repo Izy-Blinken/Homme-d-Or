@@ -42,6 +42,6 @@ $expires = date('M d, Y', strtotime($voucher['expires_at']));
 $msg = mysqli_real_escape_string($conn, "You received a voucher: {$voucher['code']} — $label. Valid until $expires.");
 
 mysqli_query($conn, "INSERT INTO notifications (user_id, notif_type, notif_message)
-     VALUES ('$user_id', 'general', '$msg')");
+     VALUES ('$user_id', 'voucher', '$msg')");
 
 echo json_encode(['success' => true, 'code' => $voucher['code']]);

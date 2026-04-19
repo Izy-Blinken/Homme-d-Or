@@ -67,6 +67,21 @@ if ($existing) {
 }
 
 if ($stmt->execute()) {
+    // Mark the order as completed
+    $orderQuery = $conn->prepare("
+        SELECT oi.order_id 
+        FROM order_items oi 
+        JOIN orders o ON o.order_id = oi.order_id 
+        WHERE oi.product_id = ? AND o.user_id = ? AND o.order_status = 'received' 
+        LIMIT 1
+    ");
+    $orderQuery->bind_param("ii", $product_id, $user_id);
+    $orderQuery->execute();
+    $order = $orderQuery->get_result()->fetch_assoc();
+    if ($order) {
+        $conn->query("UPDATE orders SET order_status = 'completed' WHERE order_id = '{$order['order_id']}'");
+    }
+
     echo json_encode(['success' => true, 'message' => 'Review submitted successfully.']);
 } else {
     echo json_encode(['success' => false, 'message' => 'Failed to save review.']);

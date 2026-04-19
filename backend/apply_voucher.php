@@ -53,6 +53,9 @@ $_SESSION['applied_voucher'] = [
     'discount' => $discount,
 ];
 
+// Mark voucher as used
+$conn->query("UPDATE discounts SET used_count = used_count + 1 WHERE discount_id = '{$voucher['discount_id']}'");
+
 echo json_encode([
     'success'   => true,
     'discount'  => $discount,

@@ -13,11 +13,14 @@ function getProductsByCategory($conn) {
             c.category_id,
             c.category_name,
             pi.image_url,
-            COALESCE(ob.total_bought, 0) AS total_bought
+        COALESCE(ob.total_bought, 0) AS total_bought,
+        COALESCE(ROUND(AVG(pr.rating), 1), 0) AS avg_rating,
+        COUNT(pr.review_id) AS review_count
         FROM products p
         LEFT JOIN categories c ON p.category_id = c.category_id
         LEFT JOIN product_images pi
             ON pi.product_id = p.product_id AND pi.is_primary = 1
+        LEFT JOIN product_reviews pr ON pr.product_id = p.product_id
         LEFT JOIN (
             SELECT
                 oi.product_id,
@@ -27,6 +30,7 @@ function getProductsByCategory($conn) {
             WHERE o.order_status IN ('placed','processing','shipped','delivered','completed')
             GROUP BY oi.product_id
         ) ob ON ob.product_id = p.product_id
+        GROUP BY p.product_id, c.category_id, c.category_name, pi.image_url, ob.total_bought
         ORDER BY c.category_id ASC, p.created_at DESC
     ";
 
@@ -113,6 +117,26 @@ function renderProductCard($product, $imgBasePath = '../assets/images/products/'
             <?php else: ?>
                 <p class="shop-product-price">₱<?= $price ?></p>
             <?php endif; ?>
+            <?php
+                $avgRating   = isset($product['avg_rating'])   ? (float)$product['avg_rating']  : 0;
+                $reviewCount = isset($product['review_count']) ? (int)$product['review_count']   : 0;
+            ?>
+            <div class="product-card-rating" style="display:flex; align-items:center; gap:4px; margin-top:6px;">
+                <?php for ($i = 1; $i <= 5; $i++): ?>
+                    <?php if ($avgRating >= $i): ?>
+                        <i class="fa-solid fa-star" style="color:#c9a961; font-size:0.75rem;"></i>
+                    <?php elseif ($avgRating >= $i - 0.5): ?>
+                        <i class="fa-solid fa-star-half-stroke" style="color:#c9a961; font-size:0.75rem;"></i>
+                    <?php else: ?>
+                        <i class="fa-regular fa-star" style="color:#c9a961; font-size:0.75rem;"></i>
+                    <?php endif; ?>
+                <?php endfor; ?>
+                <?php if ($reviewCount > 0): ?>
+                    <span style="color:#aaa; font-size:0.72rem; margin-left:4px;"><?= $avgRating ?> (<?= $reviewCount ?>)</span>
+                <?php else: ?>
+                    <span style="color:#aaa; font-size:0.72rem; margin-left:4px;">No reviews yet</span>
+                <?php endif; ?>
+            </div>
         </div>
     </div>
     <?php

@@ -80,10 +80,13 @@ function selectSuggestion(inputId, value, suggestionsId, autoSubmit = false) {
 }
 
 // admin navbar live search
+// admin navbar live search
 (function () {
     const input = document.getElementById('navbar-search-input');
     const results = document.getElementById('navbar-search-results');
     let debounceTimer;
+
+    if (!input || !results) return;
 
     const SEARCH_URL = '../../backend/navbarLiveSearch.php';
 

@@ -20,7 +20,15 @@
         <?php
             if (session_status() === PHP_SESSION_NONE) session_start();
             include_once '../backend/db_connect.php';
+            
             $isLoggedIn = isset($_SESSION['user_id']);
+
+            if ($isLoggedIn && isset($_SESSION['guest_id'])) {
+                unset($_SESSION['guest_id']);
+            }
+
+            $isGuest = !isset($_SESSION['user_id']) && isset($_SESSION['guest_id']);
+
             $profilePhoto = '';
             if ($isLoggedIn) {
                 $pp = $conn->prepare("SELECT profile_photo FROM users WHERE user_id = ?");
@@ -32,13 +40,13 @@
             }
         ?>
         <?php include '../components/header.php'; ?>
+        
 
         <main class="mainBG">
 
 
             
-            <?php if (!$isLoggedIn): ?>
-
+            <?php if (!$isLoggedIn && !$isGuest): ?>
                 <div class="notLoggedInCTA">
                     <div class="ctaBox">
                         <div class="ctaIcon">
@@ -53,6 +61,40 @@
                     </div>
                 </div>
                    
+            <?php elseif ($isGuest): ?>
+                <div class="profileContainer">
+                    <div class="colFirst">
+                        <div class="headerRow"><h3>Account</h3></div>
+                        <div class="dividerF"></div>
+                        <div class="ctaBox" style="padding: 30px 0;">
+                            <div class="ctaIcon">
+                                <i class="fas fa-user-circle"></i>
+                            </div>
+                            <h2 style="font-size:1.1rem;">Login or Create an Account</h2>
+                            <p style="color:#aaa; font-size:13px; margin: 10px 0 20px;">
+                                Access full profile features, saved addresses, wishlist, and more.
+                            </p>
+                            <div class="ctaButtons">
+                                <button class="ctaLoginBtn" onclick="openLoginModal()">Log In</button>
+                                <button class="ctaRegisterBtn" onclick="openSignupModal()">Create Account</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="rightSide">
+                        <div class="colSecond">
+                            <div class="headerRow"><h3>Order Tracking</h3></div>
+                            <div class="divider"></div>
+                            <p style="color:#aaa; font-size:14px; margin-top:10px;">
+                                Tracking orders for your current session.
+                            </p>
+                            <button class="viewAllBtn" style="margin-top:20px;"
+                                onclick="window.location.href='viewAllTabs.php'">
+                                View My Orders
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
             <?php else: ?>
 
                 <div class="profileContainer">
@@ -64,7 +106,7 @@
 
                         <div class="profileImageSection">
                             <div class="profileImageFrame">
-                                <img src="<?php echo $profilePhoto ? '../assets/images/profile_photos/' . htmlspecialchars($profilePhoto) : '../assets/images/products_images/customerPic.png'; ?>" alt="Profile" class="profileImage" id="currentProfileImage">                            </div>
+                                <img src="<?php echo $profilePhoto ? '../assets/images/profile_photos/' . htmlspecialchars($profilePhoto) : '../assets/images/products_images/noPFP.png'; ?>" alt="Profile" class="profileImage" id="currentProfileImage">                            </div>
                             <button class="addProfileBtn" onclick="document.getElementById('profilePhotoInput').click()">Add Profile Photo</button>
                             <input type="file" id="profilePhotoInput" accept="image/*" style="display:none;" onchange="uploadPhoto(this)">
                         </div>
@@ -380,7 +422,7 @@
         <!-- Delete Account Modal -->
         <div id="deleteAccountModal" class="editProfileModal" style="display:none;">
             <div class="editModalOverlay" onclick="closeDeleteModal()"></div>
-            <div class="editModalContent" style="max-width:420px; height:40vh;" >
+            <div class="editModalContent" style="max-width:420px; min-height:30vh;" >
         
                 <!-- Step 1: Confirm intent -->
                 <div id="deleteStep1">

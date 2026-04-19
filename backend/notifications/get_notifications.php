@@ -5,9 +5,34 @@ include __DIR__ . '/../db_connect.php';
 header('Content-Type: application/json');
 
 $user_id = $_SESSION['user_id'] ?? null;
+$guest_id = $_SESSION['guest_id'] ?? null;
 
-if (!$user_id) {
+if (!$user_id && !$guest_id) {
     echo json_encode(['notifications' => [], 'unread_count' => 0]);
+    exit;
+}
+
+// Guest mode — serve from session only
+// Guest mode — fetch from guest_notifications table via session_id
+if (!$user_id && $guest_id) {
+    $safe_session = mysqli_real_escape_string($conn, $guest_id);
+    $gq = mysqli_query($conn, "
+        SELECT * FROM guest_notifications
+        WHERE session_id = '$safe_session'
+        ORDER BY created_at DESC
+        LIMIT 20
+    ");
+    $guestNotifs = [];
+    while ($grow = mysqli_fetch_assoc($gq)) {
+        $guestNotifs[] = $grow;
+    }
+    $unread = mysqli_fetch_assoc(mysqli_query($conn,
+        "SELECT COUNT(*) AS cnt FROM guest_notifications
+         WHERE session_id = '$safe_session' AND is_read = 0"));
+    echo json_encode([
+        'notifications' => $guestNotifs,
+        'unread_count'  => (int)$unread['cnt'],
+    ]);
     exit;
 }
 

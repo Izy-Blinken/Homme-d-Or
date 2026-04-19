@@ -15,7 +15,10 @@ if ($identity['type'] === 'stranger') {
 
 $id_column = ($identity['type'] === 'user_id') ? 'user_id' : 'guest_id';
 $id_value  = $identity['id'];
-$bind_type = 's';
+// FIX Issue 2: bind_type must reflect the resolved type for BOTH users and
+// guests.  Previously it stayed 's' for logged-in users, causing every
+// UPDATE/DELETE to silently fail because user_id is an integer column.
+$bind_type = 'i';   // default — users always have an integer id
 
 // Guests: resolve session string → real integer guest_id
 if ($id_column === 'guest_id') {
@@ -26,10 +29,10 @@ if ($id_column === 'guest_id') {
     $g->close();
     if ($g_result->num_rows === 0) {
         $id_value  = 0;
-        $bind_type = 'i';
+        // bind_type stays 'i'
     } else {
         $id_value  = $g_result->fetch_assoc()['guest_id'];
-        $bind_type = 'i';
+        // bind_type stays 'i'
     }
 }
 
@@ -43,23 +46,53 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $cart_id = intval($_POST['cart_id']);
 
     if (isset($_POST['increase'])) {
-        $stmt = $conn->prepare("UPDATE cart SET quantity = quantity + 1 WHERE cart_id = ? AND $id_column = ?");
-        $stmt->bind_param("i{$bind_type}", $cart_id, $id_value);
-        $stmt->execute();
+        // FIX Issue 2: cap quantity at available stock before incrementing
+        $stockStmt = $conn->prepare(
+            "SELECT p.stock_qty, c.quantity
+             FROM cart c
+             JOIN products p ON c.product_id = p.product_id
+             WHERE c.cart_id = ? AND c.$id_column = ?"
+        );
+        $stockStmt->bind_param("i{$bind_type}", $cart_id, $id_value);
+        $stockStmt->execute();
+        $stockRow = $stockStmt->get_result()->fetch_assoc();
+        $stockStmt->close();
+
+        if ($stockRow && (int)$stockRow['quantity'] < (int)$stockRow['stock_qty']) {
+            $stmt = $conn->prepare(
+                "UPDATE cart SET quantity = quantity + 1
+                 WHERE cart_id = ? AND $id_column = ?"
+            );
+            $stmt->bind_param("i{$bind_type}", $cart_id, $id_value);
+            $stmt->execute();
+            $stmt->close();
+        }
+        // If already at stock limit, silently do nothing (quantity unchanged)
     }
+
     if (isset($_POST['decrease'])) {
-        $stmt = $conn->prepare("UPDATE cart SET quantity = GREATEST(quantity - 1, 1) WHERE cart_id = ? AND $id_column = ?");
+        // Quantity floor is 1 — GREATEST(quantity - 1, 1) ensures it
+        $stmt = $conn->prepare(
+            "UPDATE cart SET quantity = GREATEST(quantity - 1, 1)
+             WHERE cart_id = ? AND $id_column = ?"
+        );
         $stmt->bind_param("i{$bind_type}", $cart_id, $id_value);
         $stmt->execute();
+        $stmt->close();
     }
+
     if (isset($_POST['remove'])) {
-        $stmt = $conn->prepare("DELETE FROM cart WHERE cart_id = ? AND $id_column = ?");
+        $stmt = $conn->prepare(
+            "DELETE FROM cart WHERE cart_id = ? AND $id_column = ?"
+        );
         $stmt->bind_param("i{$bind_type}", $cart_id, $id_value);
         $stmt->execute();
+        $stmt->close();
         if (($key = array_search($cart_id, $_SESSION['selected_items'])) !== false) {
             unset($_SESSION['selected_items'][$key]);
         }
     }
+
     if (isset($_POST['toggle_select'])) {
         if (in_array($cart_id, $_SESSION['selected_items'])) {
             $key = array_search($cart_id, $_SESSION['selected_items']);
@@ -68,12 +101,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $_SESSION['selected_items'][] = $cart_id;
         }
     }
+
     header("Location: cart.php");
     exit;
 }
 
 // FETCH CART ITEMS FROM DATABASE
-$sql = "SELECT c.cart_id, c.quantity, p.product_name, p.price, pi.image_url
+$sql = "SELECT c.cart_id, c.quantity, p.product_name, p.price, p.stock_qty, pi.image_url
         FROM cart c
         JOIN products p ON c.product_id = p.product_id
         LEFT JOIN product_images pi ON pi.product_id = p.product_id AND pi.is_primary = 1
@@ -83,6 +117,7 @@ $stmt = $conn->prepare($sql);
 $stmt->bind_param($bind_type, $id_value);
 $stmt->execute();
 $result = $stmt->get_result();
+$stmt->close();
 
 $cartItems = [];
 while ($row = $result->fetch_assoc()) {
@@ -121,54 +156,82 @@ $_SESSION['initialized_cart_selections'] = true;
             <div class="cart-wrapper">
                 <section class="cart-items">
                     <?php
-                    $subtotal = 0;
+                    
+                    $subtotal      = 0.0;
                     $selectedCount = 0;
+                    $totalQty      = 0;
+
                     if (empty($cartItems)) {
                         echo "<div class='empty-cart-msg'>Your cart is completely empty. Time to find a new signature scent!</div>";
                     }
-                    foreach($cartItems as $item):
+
+                    foreach ($cartItems as $item):
                         $isSelected = in_array($item['cart_id'], $_SESSION['selected_items']);
-                        $totalPrice = $item['price'] * $item['quantity'];
+                        $itemTotal  = (float)$item['price'] * (int)$item['quantity'];
                         if ($isSelected) {
-                            $subtotal += $totalPrice;
+                            $subtotal += $itemTotal;
                             $selectedCount++;
+                            $totalQty += (int)$item['quantity'];
                         }
-                        $imgSrc = $item['image_url'] ? '../assets/images/products/' . htmlspecialchars($item['image_url']) : '../assets/images/brand_images/nocturne.png';
+                        $imgSrc = $item['image_url']
+                            ? '../assets/images/products/' . htmlspecialchars($item['image_url'])
+                            : '../assets/images/brand_images/nocturne.png';
+
+                            $atStockLimit = ((int)$item['quantity'] >= (int)$item['stock_qty']);
                     ?>
-                    <div class="cart-item" style="<?php echo !$isSelected ? 'opacity: 0.4; filter: grayscale(50%);' : ''; ?>">
+                    <div class="cart-item" style="<?= !$isSelected ? 'opacity: 0.4; filter: grayscale(50%);' : '' ?>">
                         <form method="POST" style="margin-right: 35px; margin-top: 5px;">
-                            <input type="hidden" name="cart_id" value="<?php echo $item['cart_id']; ?>">
+                            <input type="hidden" name="cart_id" value="<?= $item['cart_id'] ?>">
                             <input type="hidden" name="toggle_select" value="1">
                             <label class="custom-checkbox">
-                                <input type="checkbox" onChange="this.form.submit()" <?php echo $isSelected ? 'checked' : ''; ?>>
+                                <input type="checkbox" onChange="this.form.submit()" <?= $isSelected ? 'checked' : '' ?>>
                                 <span class="checkmark"></span>
                             </label>
                         </form>
-                        <img src="<?php echo $imgSrc; ?>" alt="Perfume">
+                        <img src="<?= $imgSrc ?>" alt="Perfume">
                         <div class="cart-info">
-                            <h4><?php echo htmlspecialchars($item['product_name']); ?></h4>
+                            <h4><?= htmlspecialchars($item['product_name']) ?></h4>
                             <div class="cart-actions">
                                 <form method="POST" class="qty-form">
-                                    <input type="hidden" name="cart_id" value="<?php echo $item['cart_id']; ?>">
+                                    <input type="hidden" name="cart_id" value="<?= $item['cart_id'] ?>">
+                                    <!-- Disable + when already at stock limit -->
                                     <button type="submit" name="decrease">-</button>
-                                    <span><?php echo $item['quantity']; ?></span>
-                                    <button type="submit" name="increase">+</button>
+                                    <span><?= (int)$item['quantity'] ?></span>
+                                    <button type="submit" name="increase"
+                                        <?= $atStockLimit ? 'disabled title="Maximum stock reached"' : '' ?>>+</button>
                                 </form>
                                 <form method="POST" class="remove-form">
-                                    <input type="hidden" name="cart_id" value="<?php echo $item['cart_id']; ?>">
+                                    <input type="hidden" name="cart_id" value="<?= $item['cart_id'] ?>">
                                     <button type="submit" name="remove" class="remove-item">Remove</button>
                                 </form>
                             </div>
                         </div>
-                        <div class="cart-price">₱<?php echo number_format($totalPrice, 2); ?></div>
+                        <div class="cart-price">₱<?= number_format($itemTotal, 2) ?></div>
                     </div>
                     <?php endforeach; ?>
                 </section>
+
+                <?php
+                // FIX Issue 1: shipping and total use the same formula as
+                // checkout.php and orderConfirmation.php — no hardcoded literals
+                // in the HTML template below.
+                $shipping_fee   = ($selectedCount > 0) ? 150.00 : 0.00;
+                $cart_total     = $subtotal + $shipping_fee;
+                ?>
                 <aside class="cart-summary">
                     <h3>Order Summary</h3>
-                    <div class="summary-row"><span>Subtotal (<?php echo $selectedCount; ?> items)</span><span>₱<?php echo number_format($subtotal, 2); ?></span></div>
-                    <div class="summary-row"><span>Shipping</span><span>₱<?php echo $selectedCount > 0 ? '150.00' : '0.00'; ?></span></div>
-                    <div class="summary-row total"><span>Total</span><span>₱<?php echo $selectedCount > 0 ? number_format($subtotal + 150, 2) : '0.00'; ?></span></div>
+                    <div class="summary-row">
+                        <span>Subtotal (<?= $totalQty ?> items)</span>
+                        <span>₱<?= number_format($subtotal, 2) ?></span>
+                    </div>
+                    <div class="summary-row">
+                        <span>Shipping</span>
+                        <span>₱<?= number_format($shipping_fee, 2) ?></span>
+                    </div>
+                    <div class="summary-row total">
+                        <span>Total</span>
+                        <span>₱<?= number_format($cart_total, 2) ?></span>
+                    </div>
                     <?php if ($selectedCount > 0): ?>
                         <a href="checkout.php" class="checkout-btn">Proceed to Checkout</a>
                     <?php else: ?>

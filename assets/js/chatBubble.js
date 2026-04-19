@@ -148,7 +148,7 @@ function handleEscalate() {
 
         appendMessage('Connecting you to a customer service representative. Please wait while an agent is assigned to you.', 'left');
 
-        fetch('/Homme-d-Or/backend/chat/escalate.php', {
+        fetch('/Homme_dOr/backend/chat/escalate.php', {
 
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -191,7 +191,7 @@ function sendLiveMessage() {
     appendMessage(text, 'right');
     input.value = '';
 
-    fetch('/Homme-d-Or/backend/chat/send_customer_message.php', {
+    fetch('/Homme_dOr/backend/chat/send_customer_message.php', {
 
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -216,7 +216,7 @@ function pollMessages() {
 
         if (!sessionId) return;
 
-        fetch(`/Homme-d-Or/backend/chat/get_customer_messages.php?session_id=${sessionId}&last_id=${lastMsgId}`)
+        fetch(`/Homme_dOr/backend/chat/get_customer_messages.php?session_id=${sessionId}&last_id=${lastMsgId}`)
             .then(res => res.json())
             .then(data => {
 
@@ -236,7 +236,7 @@ function pollMessages() {
 
 function saveChatLog(message, sender) {
 
-    fetch('/Homme-d-Or/backend/chat/save_log.php', {
+    fetch('../../backend/chat/save_log.php', {
 
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -255,7 +255,7 @@ function initChat() {
     }
 
     // create or resume session
-    fetch('/Homme-d-Or/backend/chat/init_session.php', { method: 'POST' })
+    fetch('../backend/chat/init_session.php', { method: 'POST' })
         .then(res => res.json())
         .then(data => {
 
@@ -266,7 +266,7 @@ function initChat() {
 
                 if (escalated) {
 
-                    fetch(`/Homme-d-Or/backend/chat/get_customer_messages.php?session_id=${data.session_id}&history=1`)
+                    fetch(`../backend/chat/get_customer_messages.php?session_id=${data.session_id}&history=1`)
                         .then(res => res.json())
                         .then(hist => {
 

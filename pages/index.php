@@ -1,5 +1,5 @@
 <?php
-session_start(); // ← ADD THIS
+session_start(); 
 include '../backend/db_connect.php';
 include '../backend/get_products_by_category.php';
 $productsByCategory = getProductsByCategory($conn);
@@ -7,11 +7,16 @@ $productsByCategory = getProductsByCategory($conn);
 $newArrivals = $productsByCategory['New Arrivals'] ?? [];
 
 $sql = "SELECT p.product_id, p.product_name, p.price, p.discounted_price,
-               p.product_status, pi.image_url
+               p.product_status, pi.image_url,
+               COALESCE(ROUND(AVG(pr.rating), 1), 0) AS avg_rating,
+               COUNT(pr.review_id) AS review_count
         FROM products p
         LEFT JOIN product_images pi 
             ON pi.product_id = p.product_id AND pi.is_primary = 1
+        LEFT JOIN product_reviews pr ON pr.product_id = p.product_id
+        GROUP BY p.product_id, p.product_name, p.price, p.discounted_price, p.product_status, pi.image_url
         ORDER BY p.created_at DESC";
+
 $allProducts = [];
 $result = $conn->query($sql);
 while ($row = $result->fetch_assoc()) {
@@ -197,10 +202,14 @@ if ($reviews_result) {
                             <?php
                             $sql = "
                                 SELECT p.product_id, p.product_name, p.price, p.discounted_price,
-                                    p.product_status, pi.image_url
+                                    p.product_status, pi.image_url,
+                                    COALESCE(ROUND(AVG(pr.rating), 1), 0) AS avg_rating,
+                                    COUNT(pr.review_id) AS review_count
                                 FROM products p
                                 LEFT JOIN product_images pi 
                                     ON pi.product_id = p.product_id AND pi.is_primary = 1
+                                LEFT JOIN product_reviews pr ON pr.product_id = p.product_id
+                                GROUP BY p.product_id, p.product_name, p.price, p.discounted_price, p.product_status, pi.image_url
                                 ORDER BY p.created_at DESC
                             ";
                             
@@ -252,6 +261,25 @@ if ($reviews_result) {
                                 <div class="shop-product-info">
                                     <h3 class="shop-product-title"><?= $name ?></h3>
                                     <p class="shop-product-price">₱<?= $price ?></p>
+                                    <div class="product-card-rating" style="display:flex; align-items:center; gap:4px; margin-top:6px;">
+                                        <?php
+                                        $avgRating   = isset($product['avg_rating'])   ? (float)$product['avg_rating']  : 0;
+                                        $reviewCount = isset($product['review_count']) ? (int)$product['review_count']   : 0;
+                                        for ($i = 1; $i <= 5; $i++):
+                                            if ($avgRating >= $i): ?>
+                                                <i class="fa-solid fa-star" style="color:#c9a961; font-size:0.75rem;"></i>
+                                            <?php elseif ($avgRating >= $i - 0.5): ?>
+                                                <i class="fa-solid fa-star-half-stroke" style="color:#c9a961; font-size:0.75rem;"></i>
+                                            <?php else: ?>
+                                                <i class="fa-regular fa-star" style="color:#c9a961; font-size:0.75rem;"></i>
+                                            <?php endif;
+                                        endfor; ?>
+                                        <?php if ($reviewCount > 0): ?>
+                                            <span style="color:#aaa; font-size:0.72rem; margin-left:4px;"><?= $avgRating ?> (<?= $reviewCount ?>)</span>
+                                        <?php else: ?>
+                                            <span style="color:#aaa; font-size:0.72rem; margin-left:4px;">No reviews yet</span>
+                                        <?php endif; ?>
+                                    </div>
                                 </div>
                             </div>
                             <?php endwhile; ?>
@@ -408,6 +436,25 @@ if ($reviews_result) {
                                 <div class="shop-product-info">
                                     <h3 class="shop-product-title"><?= $name ?></h3>
                                     <p class="shop-product-price">₱<?= $price ?></p>
+                                    <div class="product-card-rating" style="display:flex; align-items:center; gap:4px; margin-top:6px;">
+                                        <?php
+                                        $avgRating   = isset($product['avg_rating'])   ? (float)$product['avg_rating']  : 0;
+                                        $reviewCount = isset($product['review_count']) ? (int)$product['review_count']   : 0;
+                                        for ($i = 1; $i <= 5; $i++):
+                                            if ($avgRating >= $i): ?>
+                                                <i class="fa-solid fa-star" style="color:#c9a961; font-size:0.75rem;"></i>
+                                            <?php elseif ($avgRating >= $i - 0.5): ?>
+                                                <i class="fa-solid fa-star-half-stroke" style="color:#c9a961; font-size:0.75rem;"></i>
+                                            <?php else: ?>
+                                                <i class="fa-regular fa-star" style="color:#c9a961; font-size:0.75rem;"></i>
+                                            <?php endif;
+                                        endfor; ?>
+                                        <?php if ($reviewCount > 0): ?>
+                                            <span style="color:#aaa; font-size:0.72rem; margin-left:4px;"><?= $avgRating ?> (<?= $reviewCount ?>)</span>
+                                        <?php else: ?>
+                                            <span style="color:#aaa; font-size:0.72rem; margin-left:4px;">No reviews yet</span>
+                                        <?php endif; ?>
+                                    </div>
                                 </div>
                             </div>
                             <?php endforeach; ?>
@@ -516,6 +563,25 @@ if ($reviews_result) {
                                 <div class="shop-product-info">
                                     <h3 class="shop-product-title"><?= $name ?></h3>
                                     <p class="shop-product-price">₱<?= $price ?></p>
+                                    <div class="product-card-rating" style="display:flex; align-items:center; gap:4px; margin-top:6px;">
+                                        <?php
+                                        $avgRating   = isset($product['avg_rating'])   ? (float)$product['avg_rating']  : 0;
+                                        $reviewCount = isset($product['review_count']) ? (int)$product['review_count']   : 0;
+                                        for ($i = 1; $i <= 5; $i++):
+                                            if ($avgRating >= $i): ?>
+                                                <i class="fa-solid fa-star" style="color:#c9a961; font-size:0.75rem;"></i>
+                                            <?php elseif ($avgRating >= $i - 0.5): ?>
+                                                <i class="fa-solid fa-star-half-stroke" style="color:#c9a961; font-size:0.75rem;"></i>
+                                            <?php else: ?>
+                                                <i class="fa-regular fa-star" style="color:#c9a961; font-size:0.75rem;"></i>
+                                            <?php endif;
+                                        endfor; ?>
+                                        <?php if ($reviewCount > 0): ?>
+                                            <span style="color:#aaa; font-size:0.72rem; margin-left:4px;"><?= $avgRating ?> (<?= $reviewCount ?>)</span>
+                                        <?php else: ?>
+                                            <span style="color:#aaa; font-size:0.72rem; margin-left:4px;">No reviews yet</span>
+                                        <?php endif; ?>
+                                    </div>
                                 </div>
                             </div>
                             <?php endforeach; ?>

@@ -1,5 +1,5 @@
 <?php
-// 1. WAKE UP THE SESSION FIRST!
+// WAKE UP THE SESSION FIRST!
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
@@ -12,6 +12,57 @@ $identity = getCurrentUserId();
 if ($identity['type'] === 'stranger') {
     header("Location: index.php?login_required=true");
     exit;
+}
+
+// ─── PREFILL DATA (logged-in users only) ─────────────────────────────────────
+$prefill = [
+    'fullName' => '',
+    'email'    => '',
+    'phone'    => '',
+    'address'  => '',
+    'city'     => '',
+    'province' => '',
+    'zipCode'  => '',
+    'country'  => '',
+];
+
+if ($identity['type'] === 'user_id') {
+    $uid = (int) $identity['id'];
+
+    $uStmt = $conn->prepare("SELECT fname, lname, email, phone FROM users WHERE user_id = ?");
+    $uStmt->bind_param('i', $uid);
+    $uStmt->execute();
+    $uRow = $uStmt->get_result()->fetch_assoc();
+    $uStmt->close();
+
+    if ($uRow) {
+        $prefill['fullName'] = trim($uRow['fname'] . ' ' . $uRow['lname']);
+        $prefill['email']    = $uRow['email']  ?? '';
+        $prefill['phone']    = $uRow['phone']  ?? '';
+    }
+
+    $aStmt = $conn->prepare(
+        "SELECT street, city, province, zip_code, country
+         FROM orders
+         WHERE user_id = ? AND street IS NOT NULL AND street != ''
+         ORDER BY created_at DESC LIMIT 1"
+    );
+    $aStmt->bind_param('i', $uid);
+    $aStmt->execute();
+    $aRow = $aStmt->get_result()->fetch_assoc();
+    $aStmt->close();
+
+    if ($aRow) {
+        $prefill['address']  = $aRow['street']   ?? '';
+        $prefill['city']     = $aRow['city']      ?? '';
+        $prefill['province'] = $aRow['province']  ?? '';
+        $prefill['zipCode']  = $aRow['zip_code']  ?? '';
+        $prefill['country']  = $aRow['country']   ?? '';
+    }
+}
+
+function pv(string $key, array $prefill): string {
+    return htmlspecialchars($prefill[$key] ?? '', ENT_QUOTES, 'UTF-8');
 }
 ?>
 <!DOCTYPE html>
@@ -34,7 +85,6 @@ if ($identity['type'] === 'stranger') {
             <div class="checkoutWrapper">
                 <div class="checkoutHeader">
                     <h1>Checkout</h1>
-                
                 </div>
 
                 <div id="checkoutContainer">
@@ -42,29 +92,42 @@ if ($identity['type'] === 'stranger') {
                     <!--billing information--> 
                     <div class="billingInfo">
                         <div class="sectionHeader">
-                            
                             <h2>Billing Information</h2>
                         </div>
                         
                         <form id="checkoutForm" action="orderConfirmation.php" method="POST">
                             <input type="hidden" name="csrf_token" value="<?= htmlspecialchars(generateCsrfToken()) ?>">
+
+                            <!-- ── Voucher fields: always present, JS fills them on apply ── -->
+                            <input type="hidden" name="voucher_code"    id="hiddenVoucherCode"    value="">
+                            <input type="hidden" name="discount_amount" id="hiddenDiscountAmount" value="0">
+
                             <div class="formSection">
                                 <h3>Contact Details</h3>
                                 
                                 <div class="formGroup">
                                     <label for="fullName">Full Name <span class="required">*</span></label>
-                                    <input type="text" id="fullName" name="fullName" placeholder="ex. John Doe" required>
+                                    <input type="text" id="fullName" name="fullName"
+                                           placeholder="ex. John Doe"
+                                           value="<?= pv('fullName', $prefill) ?>"
+                                           required>
                                 </div>
                                 
                                 <div class="formRow">
                                     <div class="formGroup">
                                         <label for="email">Email Address <span class="required">*</span></label>
-                                        <input type="email" id="email" name="email" placeholder="ex. johndoe@example.com" required>
+                                        <input type="email" id="email" name="email"
+                                               placeholder="ex. johndoe@example.com"
+                                               value="<?= pv('email', $prefill) ?>"
+                                               required>
                                     </div>
                                     
                                     <div class="formGroup">
                                         <label for="phone">Phone Number <span class="required">*</span></label>
-                                        <input type="tel" id="phone" name="phone" placeholder="ex. +63 912 345 6789" required>
+                                        <input type="tel" id="phone" name="phone"
+                                               placeholder="ex. +63 912 345 6789"
+                                               value="<?= pv('phone', $prefill) ?>"
+                                               required>
                                     </div>
                                 </div>
                             </div>
@@ -74,34 +137,50 @@ if ($identity['type'] === 'stranger') {
                                 
                                 <div class="formGroup">
                                     <label for="address">Street Address <span class="required">*</span></label>
-                                    <input type="text" id="address" name="address" placeholder="ex. 123 Main Street" required>
+                                    <input type="text" id="address" name="address"
+                                           placeholder="ex. 123 Main Street"
+                                           value="<?= pv('address', $prefill) ?>"
+                                           required>
                                 </div>
                                 
                                 <div class="formRow">
                                     <div class="formGroup">
                                         <label for="city">City <span class="required">*</span></label>
-                                        <input type="text" id="city" name="city" placeholder="ex. Manila" required>
+                                        <input type="text" id="city" name="city"
+                                               placeholder="ex. Manila"
+                                               value="<?= pv('city', $prefill) ?>"
+                                               required>
                                     </div>
                                     
                                     <div class="formGroup">
                                         <label for="province">Province <span class="required">*</span></label>
-                                        <input type="text" id="province" name="province" placeholder="ex. Metro Manila" required>
+                                        <input type="text" id="province" name="province"
+                                               placeholder="ex. Metro Manila"
+                                               value="<?= pv('province', $prefill) ?>"
+                                               required>
                                     </div>
                                 </div>
                                 
                                 <div class="formRow">
                                     <div class="formGroup">
                                         <label for="zipCode">Zip Code <span class="required">*</span></label>
-                                        <input type="text" id="zipCode" name="zipCode" placeholder="ex. 1000" required>
+                                        <input type="text" id="zipCode" name="zipCode"
+                                               placeholder="ex. 1000"
+                                               value="<?= pv('zipCode', $prefill) ?>"
+                                               required>
                                     </div>
                                     
                                     <div class="formGroup">
                                         <label for="country">Country <span class="required">*</span></label>
-                                        <select name="country" required>
-                                            <option value="" disabled selected>Select Country</option>
-                                            <option value="Philippines">Philippines</option>
-                                            <option value="Japan">Japan</option>
-                                            <option value="Switzerland">Switzerland</option>
+                                        <select id="country" name="country" required>
+                                            <option value="" disabled <?= empty($prefill['country']) ? 'selected' : '' ?>>Select Country</option>
+                                            <?php
+                                            $countries = ['Philippines', 'Japan', 'Switzerland'];
+                                            foreach ($countries as $c):
+                                                $sel = ($prefill['country'] === $c) ? 'selected' : '';
+                                            ?>
+                                            <option value="<?= htmlspecialchars($c) ?>" <?= $sel ?>><?= htmlspecialchars($c) ?></option>
+                                            <?php endforeach; ?>
                                         </select>
                                     </div>
                                 </div>
@@ -139,43 +218,12 @@ if ($identity['type'] === 'stranger') {
                                         </div>
                                     </div>
 
-                                    <!-- <div class="paymentOption">
-                                        <input type="radio" name="paymentMethod" disabled id="pay-card" value="card">
-                                        <label for="pay-card" class="paymentCard">
-                                            <div class="paymentInfo">
-                                                <span class="paymentName">Credit/Debit Card</span>
-                                                <span class="paymentDesc">Visa, Mastercard, etc.</span>
-                                            </div>
-                                        </label>
-                                        
-                                        <div class="paymentDetails">
-                                            <div class="formGroup">
-                                                <label>Cardholder Name <span class="required">*</span></label>
-                                                <input type="text" name="cardName" placeholder="Name on card">
-                                            </div>
-                                            <div class="formGroup">
-                                                <label>Card Number <span class="required">*</span></label>
-                                                <input type="text" name="cardNumber" placeholder="0000 0000 0000 0000">
-                                            </div>
-                                            <div class="formRow">
-                                                <div class="formGroup" style="margin-bottom: 0;">
-                                                    <label>Expiry Date <span class="required">*</span></label>
-                                                    <input type="text" name="cardExpiry" placeholder="MM/YY">
-                                                </div>
-                                                <div class="formGroup" style="margin-bottom: 0;">
-                                                    <label>CVV <span class="required">*</span></label>
-                                                    <input type="password" name="cardCvv" placeholder="123" maxlength="4">
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div> -->
-                                    
                                 </div>
                             </div>
 
                             <div class="formActions">
                                 <button type="button" class="backToCartBtn" onclick="window.location.href='cart.php'">
-                                    <i class="fas fa-arrow-left"></i> Back to Cart
+                                    <i class="fas fa-left"></i> Back to Cart
                                 </button>
                                 <button type="submit" class="placeOrderBtn">
                                     Place Order
@@ -187,57 +235,64 @@ if ($identity['type'] === 'stranger') {
                     <!--order summary--> 
                     <div class="orderSummary">
                         <div class="sectionHeader">
-
-                        <h2>Order Summary</h2>
+                            <h2>Order Summary</h2>
                         </div>
 
                         <?php
-                        $id_column = ($identity['type'] === 'user_id') ? 'user_id' : 'guest_id';
-                        $id_value  = $identity['id'];
-                        $bind_type = 's';
+                        $co_id_column = ($identity['type'] === 'user_id') ? 'user_id' : 'guest_id';
+                        $co_id_value  = $identity['id'];
+                        // FIX Issue 1: bind_type must be 'i' for users (integer),
+                        // and resolved to 'i' for guests after lookup.
+                        // Original code left bind_type as 's' for users — fixed here.
+                        $co_bind_type = 'i';   // users always have integer ids
 
-                        // Guests: resolve session string → real integer guest_id
-                        if ($id_column === 'guest_id') {
+                        if ($co_id_column === 'guest_id') {
                             $g = $conn->prepare("SELECT guest_id FROM guests WHERE session_id = ?");
-                            $g->bind_param("s", $id_value);
+                            $g->bind_param("s", $co_id_value);
                             $g->execute();
                             $g_result = $g->get_result();
                             $g->close();
                             if ($g_result->num_rows > 0) {
-                                $id_value  = $g_result->fetch_assoc()['guest_id'];
-                                $bind_type = 'i';
+                                $co_id_value  = $g_result->fetch_assoc()['guest_id'];
+                                // co_bind_type stays 'i'
                             } else {
-                                // Guest not found in DB — redirect to start fresh
                                 header("Location: index.php?error=session_expired");
                                 exit;
                             }
-                        } else {
-                            $bind_type = 'i'; // registered users always integer
                         }
 
                         $cartStmt = $conn->prepare("
-                            SELECT c.cart_id, c.product_id, c.quantity, p.product_name, p.price, pi.image_url 
+                            SELECT c.cart_id, c.product_id, c.quantity,
+                                   p.product_name, p.price, pi.image_url 
                             FROM cart c 
                             JOIN products p ON c.product_id = p.product_id
-                            LEFT JOIN product_images pi ON pi.product_id = p.product_id AND pi.is_primary = 1
-                            WHERE c.$id_column = ?
+                            LEFT JOIN product_images pi
+                                   ON pi.product_id = p.product_id AND pi.is_primary = 1
+                            WHERE c.$co_id_column = ?
                         ");
-                        $cartStmt->bind_param($bind_type, $id_value);
+                        $cartStmt->bind_param($co_bind_type, $co_id_value);
                         $cartStmt->execute();
                         $cartResult = $cartStmt->get_result();
+                        $cartStmt->close();
+
 
                         $checkoutItems = [];
-                        $subtotal = 0;
+                        $subtotal = 0.0;
+                        $totalQty = 0;
 
                         while ($row = $cartResult->fetch_assoc()) {
-                            if (!empty($_SESSION['selected_items']) && in_array($row['cart_id'], $_SESSION['selected_items'])) {
+                            if (!empty($_SESSION['selected_items'])
+                                && in_array($row['cart_id'], $_SESSION['selected_items'])
+                            ) {
                                 $checkoutItems[] = $row;
-                                $subtotal += $row['price'] * $row['quantity'];
+                                $subtotal += (float)$row['price'] * (int)$row['quantity'];
+                                $totalQty += (int)$row['quantity'];
                             }
                         }
 
-                        $shipping_fee = ($subtotal > 0) ? 150.00 : 0.00;
-                        $total = $subtotal + $shipping_fee;
+                      
+                        $shipping_fee = (count($checkoutItems) > 0) ? 150.00 : 0.00;
+                        $total        = $subtotal + $shipping_fee;
                         ?>
 
                         <div class="orderItems">
@@ -251,11 +306,11 @@ if ($identity['type'] === 'stranger') {
                                 <div class="itemDetails">
                                     <h4><?= htmlspecialchars($item['product_name']) ?></h4>
                                     <div class="itemQuantity">
-                                        <span>Qty: <?= $item['quantity'] ?></span>
+                                        <span>Qty: <?= (int)$item['quantity'] ?></span>
                                     </div>
                                 </div>
                                 <div class="itemPrice">
-                                    <p>₱<?= number_format($item['price'] * $item['quantity'], 2) ?></p>
+                                    <p>₱<?= number_format((float)$item['price'] * (int)$item['quantity'], 2) ?></p>
                                 </div>
                             </div>
                             <?php endforeach; ?>
@@ -266,11 +321,11 @@ if ($identity['type'] === 'stranger') {
                         </div>
 
                         <div class="promoSection">
-                            <input type="text" placeholder="Enter promo code" class="promoInput">
-                            <button class="applyPromoBtn">Apply</button>
+                            <input type="text" placeholder="Enter promo code" class="promoInput" id="promoInput">
+                            <button type="button" class="applyPromoBtn" id="applyPromoBtn">Apply</button>
                         </div>
                         
-                         <div class="orderTotal">
+                        <div class="orderTotal">
                             <div class="totalRow">
                                 <span>Subtotal:</span>
                                 <span>₱<?= number_format($subtotal, 2) ?></span>
@@ -281,12 +336,12 @@ if ($identity['type'] === 'stranger') {
                             </div>
                             <div class="totalRow discount">
                                 <span>Discount:</span>
-                                <span>- ₱0.00</span>
+                                <span id="discountDisplay">- ₱0.00</span>
                             </div>
                             <div class="totalDivider"></div>
                             <div class="totalRow totalFinal">
                                 <span>Total:</span>
-                                <span>₱<?= number_format($total, 2) ?></span>
+                                <span id="totalDisplay">₱<?= number_format($total, 2) ?></span>
                             </div>
                         </div>
 
@@ -300,15 +355,17 @@ if ($identity['type'] === 'stranger') {
 
         </main>
 
-        <!--
-        <script src="../assets/js/orderAgainModal.js"></script>
-        -->
         <script>
         document.addEventListener('DOMContentLoaded', function () {
-            const promoInput = document.querySelector('.promoInput');
-            const applyBtn   = document.querySelector('.applyPromoBtn');
-            const discountEl = document.querySelector('.discount span:last-child');
-            const totalEl    = document.querySelector('.totalFinal span:last-child');
+            const promoInput     = document.getElementById('promoInput');
+            const applyBtn       = document.getElementById('applyPromoBtn');
+            const discountEl     = document.getElementById('discountDisplay');
+            const totalEl        = document.getElementById('totalDisplay');
+            const hiddenCode     = document.getElementById('hiddenVoucherCode');
+            const hiddenDiscount = document.getElementById('hiddenDiscountAmount');
+
+            const baseSubtotal  = <?= json_encode((float)$subtotal) ?>;
+            const shippingFee   = <?= json_encode((float)$shipping_fee) ?>;
 
             if (!applyBtn) return;
 
@@ -322,32 +379,29 @@ if ($identity['type'] === 'stranger') {
                 applyBtn.disabled = true;
                 applyBtn.textContent = 'Checking...';
 
-                const rawTotal = document.querySelector('.totalFinal span:last-child').textContent.replace(/[₱,]/g, '');
-                const currentSubtotal = parseFloat(rawTotal) - 150;
-
                 fetch('../backend/apply_voucher.php', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-                    body: 'code=' + encodeURIComponent(code) + '&subtotal=' + currentSubtotal.toFixed(2)
+                    body: 'code=' + encodeURIComponent(code)
+                         + '&subtotal=' + baseSubtotal.toFixed(2)
                 })
-
                 .then(r => r.json())
                 .then(data => {
                     if (data.success) {
-                        if (discountEl) discountEl.textContent = '- ₱' + parseFloat(data.discount).toFixed(2);
-                        if (totalEl)    totalEl.textContent   = '₱' + parseFloat(data.new_total).toFixed(2);
+                        const discountAmt = parseFloat(data.discount);
+                        // apply_voucher returns new_total as discounted subtotal;
+                        // add shipping to get the true order total — same formula
+                        // as orderConfirmation.php uses server-side.
+                        const newTotal = (baseSubtotal + shippingFee) - discountAmt;
+
+                        if (discountEl) discountEl.textContent = '- ₱' + discountAmt.toFixed(2);
+                        if (totalEl)    totalEl.textContent    = '₱'   + newTotal.toFixed(2);
+
+                        hiddenCode.value     = code;
+                        hiddenDiscount.value = discountAmt.toFixed(2);
+
                         promoInput.disabled  = true;
                         applyBtn.textContent = '✓ Applied';
-                        // Store voucher code in a hidden field so orderConfirmation.php can use it
-                        let hidden = document.getElementById('appliedVoucherCode');
-                        if (!hidden) {
-                            hidden = document.createElement('input');
-                            hidden.type = 'hidden';
-                            hidden.name = 'voucher_code';
-                            hidden.id   = 'appliedVoucherCode';
-                            document.getElementById('checkoutForm').appendChild(hidden);
-                        }
-                        hidden.value = code;
                     } else {
                         alert(data.message || 'Invalid promo code.');
                         applyBtn.disabled    = false;

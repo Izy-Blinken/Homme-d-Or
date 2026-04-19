@@ -100,9 +100,11 @@ $currentPage = basename($_SERVER['PHP_SELF']);
             
 
             <li class="notif-dropdown" id="notif-item" style="position:relative;">
-                <?php $userLoggedIn = !empty($_SESSION['user_id']) ? 'true' : 'false'; ?>
-                <a href="#" id="notif-bell" data-loggedin="<?php echo $userLoggedIn; ?>" onclick="return false;">
-                    <i class="fa-solid fa-bell"></i>
+                <?php 
+                    $userLoggedIn = !empty($_SESSION['user_id']) ? 'true' : 'false';
+                    $headerIsGuest = (!empty($_SESSION['guest_id'])) ? 'true' : 'false';
+                ?>
+                <a href="#" id="notif-bell" data-loggedin="<?php echo $userLoggedIn; ?>" data-isguest="<?php echo $headerIsGuest; ?>" onclick="return false;">                    <i class="fa-solid fa-bell"></i>
                     <span class="notif-count" id="notif-count" style="display:none;">0</span>
                 </a>
             
