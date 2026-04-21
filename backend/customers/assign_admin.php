@@ -4,7 +4,7 @@ include __DIR__ . '/../db_connect.php';
 require_once __DIR__ . '/../notifications/notify.php';
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-    header('Location: ../../pages/Admin Pages/customerList.php');
+    header('Location: ../../pages/Admin Pages/adminManagement.php');
     exit;
 }
 
@@ -13,7 +13,7 @@ $action = $_POST['action'] ?? 'assign';
 
 if (!$user_id) {
     $_SESSION['error'] = 'Invalid user.';
-    header('Location: ../../pages/Admin Pages/customerList.php');
+    header('Location: ../../pages/Admin Pages/adminManagement.php');
     exit;
 }
 
@@ -34,7 +34,7 @@ if ($action === 'remove') {
     }
 
     $_SESSION['success'] = 'Admin access removed.';
-    header('Location: ../../pages/Admin Pages/customerList.php');
+    header('Location: ../../pages/Admin Pages/adminManagement.php');
     exit;
 }
 
@@ -57,7 +57,7 @@ $existing = mysqli_fetch_assoc(mysqli_query($conn,
 
 if ($existing) {
     $_SESSION['error'] = 'User is already an admin.';
-    header('Location: ../../pages/Admin Pages/customerList.php');
+    header('Location: ../../pages/Admin Pages/adminManagement.php');
     exit;
 }
 
@@ -74,6 +74,6 @@ insertNotif($conn, $user_id, 'admin_assignment',
     "You have been assigned as an admin. Welcome to the team!", null);
 
 $_SESSION['success'] = 'Admin assigned successfully.';
-header('Location: ../../pages/Admin Pages/customerList.php');
+header('Location: ../../pages/Admin Pages/adminManagement.php');
 exit;
 ?>

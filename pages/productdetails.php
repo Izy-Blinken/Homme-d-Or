@@ -284,7 +284,7 @@ if (empty($allImages)) {
         <script src="../assets/js/productDetails.js"></script>
 
         <script>
-           // ── Add to Cart ──────────────────────────────────────────
+           //  Add to Cart 
             function addToCart(productId) {
                 fetch('../backend/add_to_cart.php', {
                     method: 'POST',
@@ -305,7 +305,7 @@ if (empty($allImages)) {
                 });
             }
 
-            // ── Toggle Wishlist Heart ─────────────────────────────────
+            //  Toggle Wishlist Heart 
             function toggleWishlist(productId) {
                 const btn = document.getElementById('wishlist-btn');
                 const icon = btn.querySelector('i');
@@ -334,7 +334,7 @@ if (empty($allImages)) {
         </script>
 
         <script>
-        // ── Dynamic Reviews Section ───────────────────────────────────
+        // Dynamic Reviews Section 
         (function () {
             const PRODUCT_ID = <?= (int)$product_id ?>;
 
@@ -364,7 +364,7 @@ if (empty($allImages)) {
                         const stats   = data.stats;
                         const reviews = data.reviews;
 
-                        // ── Aggregate rating ──
+                        //  Aggregate rating 
                         document.getElementById('pdRatingScore').textContent =
                             stats.total > 0 ? stats.average : '—';
                         document.getElementById('pdStars').innerHTML =
@@ -376,7 +376,7 @@ if (empty($allImages)) {
                                 ? 'Based on ' + stats.total + ' reviews'
                                 : 'No reviews yet';
 
-                        // ── Review cards (show latest 2) ──
+                        //  Review cards (show latest 2) 
                         const container = document.getElementById('pdReviewCards');
                         if (!reviews || reviews.length === 0) {
                             container.innerHTML = '<p style="color:#aaa; text-align:center; padding:1rem;">No reviews yet.</p>';
@@ -385,8 +385,8 @@ if (empty($allImages)) {
 
                         container.innerHTML = reviews.slice(0, 2).map(r => {
                             const photo = r.profile_photo
-                                ? '../assets/images/profiles/' + r.profile_photo
-                                : '../assets/images/products_images/customerPic.png';
+                                ? '../assets/images/profile_photos/' + r.profile_photo
+                                : '../assets/images/products_images/noPFP.png';
                             return `
                             <div class="review-box">
                                 <img src="${photo}" alt="User">

@@ -195,33 +195,6 @@ $admins = mysqli_query($conn,
                                             </button>
                                             <?php endif; ?>
 
-                                            <!-- Make/Remove Admin -->
-                                            <?php if ($can_assign): ?>
-
-                                                <?php if (!$c['is_admin']): ?>
-
-                                                <button class="btn-edit assign-admin-btn"
-                                                    data-id="<?= $c['user_id'] ?>"
-                                                    data-name="<?= htmlspecialchars($c['fname'] . ' ' . $c['lname']) ?>">
-                                                    Make Admin
-                                                </button>
-
-                                                <?php else: ?>
-
-                                                <form method="POST" action="../../backend/customers/assign_admin.php" style="display:inline;"
-                                                    onsubmit="return confirm('Remove admin access from <?= htmlspecialchars($c['fname']) ?>?')">
-                                                    <input type="hidden" name="user_id" value="<?= $c['user_id'] ?>">
-                                                    <input type="hidden" name="action" value="remove">
-                                                    <button type="button" class="btn-delete"
-                                                        onclick="openConfirmModal('<?= $c['user_id'] ?>', '<?= htmlspecialchars($c['fname']) ?>', 'remove-admin', this)">
-                                                        Remove Admin
-                                                    </button>
-                                                </form>
-
-                                                <?php endif; ?>
-
-                                            <?php endif; ?>
-
                                             <?php endif; ?>
 
                                             <!-- Block/Unblock -->
@@ -300,29 +273,7 @@ $admins = mysqli_query($conn,
                                             <a href="messages.php?admin_id=<?= $a['admin_id'] ?>" class="btn-edit">Message</a>
                                             <?php endif; ?>
 
-                                            <!-- View/Edit Permissions -->
-                                            <?php if ($can_assign || $isSuperadmin): ?>
-                                            <button class="btn-view-details view-permissions-btn"
-                                                data-admin-id="<?= $a['admin_id'] ?>"
-                                                data-name="<?= htmlspecialchars($a['fname'] . ' ' . $a['lname']) ?>"
-                                                data-perms="<?= htmlspecialchars(json_encode($a)) ?>">
-                                                View Permissions
-                                            </button>
-                                            <?php endif; ?>
-
-                                            <!-- Remove Admin -->
-                                            <?php if ($can_assign || $isSuperadmin): ?>
-                                            <form method="POST" action="../../backend/customers/assign_admin.php" style="display:inline;"
-                                                onsubmit="return confirm('Remove admin access from <?= htmlspecialchars($c['fname']) ?>?')">
-                                                <input type="hidden" name="user_id" value="<?= $c['user_id'] ?>">
-                                                <input type="hidden" name="action" value="remove">
-                                                <button type="button" class="btn-delete"
-                                                    onclick="openRemoveAdminModal('<?= $a['user_id'] ?>', '<?= htmlspecialchars($a['fname'] . ' ' . $a['lname']) ?>')">
-                                                    Remove Admin
-                                                </button>
-                                            </form>
-                                            <?php endif; ?>
-
+                                            
                                         </td>
                                     </tr>
 
@@ -458,86 +409,6 @@ $admins = mysqli_query($conn,
 
         </div>
 
-
-        <!-- Assign Admin Modal -->
-        <?php if ($can_assign || $isSuperadmin): ?>
-
-        <div class="modal-overlay" id="assign-admin-modal">
-
-            <div class="modal" style="max-width:450px;">
-
-                <div class="modal-header">
-                    <span class="modal-title">Assign Admin — <span id="assign-admin-name"></span></span>
-                    <button class="modal-close" id="assign-admin-modal-close">&times;</button>
-                </div>
-
-                <form method="POST" action="../../backend/customers/assign_admin.php">
-
-                    <input type="hidden" name="user_id" id="assign-user-id">
-                    <p style="margin-bottom:1rem; font-size:0.9rem; color:#555;">Select permissions to grant:</p>
-
-                    <?php foreach ($all_perms_list as $key => $label): ?>
-                        <?php if ($my_perms !== null && empty($my_perms[$key])) continue; ?>
-
-                    <div class="form-group" style="margin-bottom:0.5rem;">
-                        <label style="display:flex; align-items:center; gap:0.5rem; cursor:pointer;">
-                            <input type="checkbox" name="permissions[]" value="<?= $key ?>">
-                            <?= $label ?>
-                        </label>
-                    </div>
-
-                    <?php endforeach; ?>
-
-                    <div class="modal-footer">
-                        <button type="button" class="btn-cancel" id="assign-admin-cancel">Cancel</button>
-                        <button type="submit" class="btn-save">Assign Admin</button>
-                    </div>
-
-                </form>
-
-            </div>
-
-        </div>
-
-
-        <!-- View/Edit Permissions Modal -->
-        <div class="modal-overlay" id="permissions-modal">
-
-            <div class="modal" style="max-width:450px;">
-
-                <div class="modal-header">
-                    <span class="modal-title">Permissions — <span id="permissions-modal-name"></span></span>
-                    <button class="modal-close" id="permissions-modal-close">&times;</button>
-                </div>
-
-                <form method="POST" action="../../backend/customers/update_permissions.php">
-
-                    <input type="hidden" name="admin_id" id="permissions-admin-id">
-                    <p style="margin-bottom:1rem; font-size:0.9rem; color:#555;">Update permissions:</p>
-
-                    <?php foreach ($all_perms_list as $key => $label): ?>
-                        <?php if ($my_perms !== null && empty($my_perms[$key])) continue; ?>
-
-                    <div class="form-group" style="margin-bottom:0.5rem;">
-                        <label style="display:flex; align-items:center; gap:0.5rem; cursor:pointer;">
-                            <input type="checkbox" class="perm-checkbox" name="permissions[]" value="<?= $key ?>" data-perm="<?= $key ?>">
-                            <?= $label ?>
-                        </label>
-                    </div>
-
-                    <?php endforeach; ?>
-
-                    <div class="modal-footer">
-                        <button type="button" class="btn-cancel" id="permissions-modal-cancel">Cancel</button>
-                        <button type="submit" class="btn-save">Save</button>
-                    </div>
-
-                </form>
-
-            </div>
-
-        </div>
-        <?php endif; ?>
 
         <!-- Send Voucher Modal -->
         <?php if ($isSuperadmin): ?>

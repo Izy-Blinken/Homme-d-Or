@@ -3,7 +3,7 @@ session_start();
 include __DIR__ . '/../db_connect.php';
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-    header('Location: ../../pages/Admin Pages/customerList.php');
+    header('Location: ../../pages/Admin Pages/adminManagement.php');
     exit;
 }
 
@@ -12,7 +12,7 @@ $permissions = $_POST['permissions'] ?? [];
 
 if (!$admin_id) {
     $_SESSION['error'] = 'Invalid admin.';
-    header('Location: ../../pages/Admin Pages/customerList.php');
+    header('Location: ../../pages/Admin Pages/adminManagement.php');
     exit;
 }
 
@@ -34,5 +34,5 @@ $updates = implode(', ', array_map(fn($p) => "$p = " . (in_array($p, $permission
 mysqli_query($conn, "UPDATE admin_permissions SET $updates WHERE admin_id = '$admin_id'");
 
 $_SESSION['success'] = 'Permissions updated.';
-header('Location: ../../pages/Admin Pages/customerList.php?view=admins');
+header('Location: ../../pages/Admin Pages/adminManagement.php?view=admins');
 exit;
